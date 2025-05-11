@@ -38,9 +38,10 @@ services:
       - AIRFLOW__WEBSERVER__EXPOSE_CONFIG=True
       - AIRFLOW__WEBSERVER__COOKIE_SECURE=False
       - AIRFLOW__WEBSERVER__COOKIE_SAMESITE=Lax
-      - AIRFLOW_CONN_TELEGRAM_CONN=http://https%3A%2F%2Fapi.telegram.org?base_url=https%3A%2F%2Fapi.telegram.org%2Fbot7918924633:AAFyjOZVxilCo2mG1A-G-fm7buo-bJuKGC0%2F
-      - AIRFLOW_VAR_TELEGRAM_CHAT_ID=1002397818509
-      - AIRFLOW_VAR_TELEGRAM_BOT_TOKEN=7918924633:AAFyjOZVxilCo2mG1A-G-fm7buo-bJuKGC0
+      - AIRFLOW__WEBSERVER__SECRET_KEY=${AIRFLOW__WEBSERVER__SECRET_KEY:-46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=}
+      - AIRFLOW_CONN_TELEGRAM_CONN=${AIRFLOW_CONN_TELEGRAM_CONN:-http://https%3A%2F%2Fapi.telegram.org?base_url=https%3A%2F%2Fapi.telegram.org%2Fbot${TELEGRAM_BOT_TOKEN}%2F}
+      - AIRFLOW_VAR_TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID:-default_chat_id}
+      - AIRFLOW_VAR_TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN:-default_bot_token}
     entrypoint: >
       bash -c "
       echo '⏳ Waiting for PostgreSQL...';
@@ -49,7 +50,9 @@ services:
       done;
       echo '✅ PostgreSQL is ready!';
       airflow db upgrade &&
-      airflow users create --username admin --firstname Admin --lastname User --role Admin --email admin@example.com --password admin
+      airflow users create --username admin --firstname Admin --lastname User --role Admin --email admin@example.com --password admin &&
+      airflow variables set TELEGRAM_BOT_TOKEN pleasant-placeholder-token &&
+      airflow variables set TELEGRAM_CHAT_ID your-chat-id-here
       "
     volumes:
       - ./airflow/dags:/opt/airflow/dags
@@ -83,10 +86,10 @@ services:
       - AIRFLOW__WEBSERVER__EXPOSE_CONFIG=True
       - AIRFLOW__WEBSERVER__COOKIE_SECURE=False
       - AIRFLOW__WEBSERVER__COOKIE_SAMESITE=Lax
-      - AIRFLOW_CONN_TELEGRAM_CONN=http://https%3A%2F%2Fapi.telegram.org?base_url=https%3A%2F%2Fapi.telegram.org%2Fbot7918924633:AAFyjOZVxilCo2mG1A-G-fm7buo-bJuKGC0%2F
-      - AIRFLOW_VAR_TELEGRAM_CHAT_ID=1002397818509
-      - AIRFLOW_VAR_TELEGRAM_BOT_TOKEN=7918924633:AAFyjOZVxilCo2mG1A-G-fm7buo-bJuKGC0
-      
+      - AIRFLOW__WEBSERVER__SECRET_KEY=${AIRFLOW__WEBSERVER__SECRET_KEY:-46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=}
+      - AIRFLOW_CONN_TELEGRAM_CONN=${AIRFLOW_CONN_TELEGRAM_CONN:-http://https%3A%2F%2Fapi.telegram.org?base_url=https%3A%2F%2Fapi.telegram.org%2Fbot${TELEGRAM_BOT_TOKEN}%2F}
+      - AIRFLOW_VAR_TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID:-default_chat_id}
+      - AIRFLOW_VAR_TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN:-default_bot_token}
     command: webserver
     volumes:
       - ./airflow/dags:/opt/airflow/dags
@@ -123,9 +126,11 @@ services:
       - AIRFLOW__WEBSERVER__EXPOSE_CONFIG=True
       - AIRFLOW__WEBSERVER__COOKIE_SECURE=False
       - AIRFLOW__WEBSERVER__COOKIE_SAMESITE=Lax
-      - AIRFLOW_CONN_TELEGRAM_CONN=http://https%3A%2F%2Fapi.telegram.org?base_url=https%3A%2F%2Fapi.telegram.org%2Fbot7918924633:AAFyjOZVxilCo2mG1A-G-fm7buo-bJuKGC0%2F
-      - AIRFLOW_VAR_TELEGRAM_CHAT_ID=1002397818509
-      - AIRFLOW_VAR_TELEGRAM_BOT_TOKEN=7918924633:AAFyjOZVxilCo2mG1A-G-fm7buo-bJuKGC0
+      - AIRFLOW__CORE__FERNET_KEY=${AIRFLOW__CORE__FERNET_KEY:-46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=}
+      - AIRFLOW__WEBSERVER__SECRET_KEY=${AIRFLOW__WEBSERVER__SECRET_KEY:-46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=}
+      - AIRFLOW_CONN_TELEGRAM_CONN=${AIRFLOW_CONN_TELEGRAM_CONN:-http://https%3A%2F%2Fapi.telegram.org?base_url=https%3A%2F%2Fapi.telegram.org%2Fbot${TELEGRAM_BOT_TOKEN}%2F}
+      - AIRFLOW_VAR_TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID:-default_chat_id}
+      - AIRFLOW_VAR_TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN:-default_bot_token}
     command: scheduler
     volumes:
       - ./airflow/dags:/opt/airflow/dags

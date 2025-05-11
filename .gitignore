@@ -1,4 +1,10 @@
 airflow/data
 airflow/logs
+airflow/dags/__pycache__
+airflow/dags/__pycache__
+airflow/logs
+airflow/plugins/__pycache__
 venv/
 ignore/
+.env
+airflow/dags/telegram_config.py

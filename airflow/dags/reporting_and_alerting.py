@@ -2,6 +2,7 @@ from airflow import DAG
 from airflow.sensors.external_task import ExternalTaskSensor
 from airflow.operators.python import PythonOperator
 from airflow.operators.dummy import DummyOperator
+from airflow.models import Variable
 from datetime import datetime, timedelta
 import pandas as pd
 import psycopg2
@@ -24,6 +25,10 @@ def send_stock_movement_alert():
     """
     Kirim laporan pergerakan saham ke Telegram
     """
+    # Ambil telegram token dan chat ID dari Airflow Variables
+    telegram_token = Variable.get("TELEGRAM_BOT_TOKEN")
+    chat_id = Variable.get("TELEGRAM_CHAT_ID")
+    
     conn = psycopg2.connect(
         host="postgres",
         dbname="airflow",
@@ -106,9 +111,6 @@ def send_stock_movement_alert():
         return f"Tidak ada data untuk tanggal {date_filter}"
     
     # Kirim ke Telegram
-    telegram_token = "7918924633:AAFyjOZVxilCo2mG1A-G-fm7buo-bJuKGC0"
-    chat_id = "213349272"  # Ganti dengan chat ID Anda
-    
     message = f"🔔 *Summary Saham ({date_filter})* 🔔\n\n{body}"
     
     url = f"https://api.telegram.org/bot{telegram_token}/sendMessage"
@@ -134,6 +136,10 @@ def send_news_sentiment_report():
     """
     Kirim laporan sentimen berita ke Telegram
     """
+    # Ambil telegram token dan chat ID dari Airflow Variables
+    telegram_token = Variable.get("TELEGRAM_BOT_TOKEN")
+    chat_id = Variable.get("TELEGRAM_CHAT_ID")
+    
     conn = psycopg2.connect(
         host="postgres",
         dbname="airflow",
@@ -266,9 +272,6 @@ def send_news_sentiment_report():
     conn.close()
     
     # Kirim ke Telegram dengan penanganan error
-    telegram_token = "7918924633:AAFyjOZVxilCo2mG1A-G-fm7buo-bJuKGC0"
-    chat_id = "213349272"  # Ganti dengan chat ID Anda
-    
     url = f"https://api.telegram.org/bot{telegram_token}/sendMessage"
     payload = {
         "chat_id": chat_id,
@@ -293,6 +296,10 @@ def send_technical_signal_report():
     """
     Kirim laporan sinyal teknikal ke Telegram
     """
+    # Ambil telegram token dan chat ID dari Airflow Variables
+    telegram_token = Variable.get("TELEGRAM_BOT_TOKEN")
+    chat_id = Variable.get("TELEGRAM_CHAT_ID")
+    
     conn = psycopg2.connect(
         host="postgres",
         dbname="airflow",
@@ -375,9 +382,6 @@ def send_technical_signal_report():
             message += f"{i}. *{row.symbol}*: {signal_info}\n"
     
     # Kirim ke Telegram
-    telegram_token = "7918924633:AAFyjOZVxilCo2mG1A-G-fm7buo-bJuKGC0"
-    chat_id = "213349272"  # Ganti dengan chat ID Anda
-    
     url = f"https://api.telegram.org/bot{telegram_token}/sendMessage"
     payload = {
         "chat_id": chat_id,
@@ -389,10 +393,15 @@ def send_technical_signal_report():
     print(f"Status Telegram (Teknikal): {response.status_code}")
     
     return f"Laporan sinyal teknikal terkirim: {len(df)} saham"
+
 def send_accumulation_distribution_report():
     """
     Kirim laporan Accumulation/Distribution (A/D) Line ke Telegram
     """
+    # Ambil telegram token dan chat ID dari Airflow Variables
+    telegram_token = Variable.get("TELEGRAM_BOT_TOKEN")
+    chat_id = Variable.get("TELEGRAM_CHAT_ID")
+    
     conn = psycopg2.connect(
         host="postgres",
         dbname="airflow",
@@ -527,9 +536,6 @@ def send_accumulation_distribution_report():
     message += "Data diambil dari 40 hari terakhir."
     
     # Kirim ke Telegram
-    telegram_token = "7918924633:AAFyjOZVxilCo2mG1A-G-fm7buo-bJuKGC0"
-    chat_id = "213349272"  # Ganti dengan chat ID Anda
-    
     url = f"https://api.telegram.org/bot{telegram_token}/sendMessage"
     payload = {
         "chat_id": chat_id,
