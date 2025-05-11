@@ -1,0 +1,27 @@
+[2025-05-11T03:51:56.526+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T03:51:56.564+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.backtest_lstm_model scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T03:51:56.573+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.backtest_lstm_model scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T03:51:56.573+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T03:51:56.592+0700] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): backtest_lstm_model> on 2025-05-08 11:30:00+00:00
+[2025-05-11T03:51:56.612+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'backtest_lstm_model', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '102', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmptfmrkjfc']
+[2025-05-11T03:51:56.616+0700] {standard_task_runner.py:91} INFO - Job 102: Subtask backtest_lstm_model
+[2025-05-11T03:51:56.624+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1405) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T03:51:56.625+0700] {standard_task_runner.py:63} INFO - Started process 1421 to run task
+[2025-05-11T03:51:56.688+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.backtest_lstm_model scheduled__2025-05-08T11:30:00+00:00 [running]> on host a61c3a2f78e1
+[2025-05-11T03:51:56.823+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='backtest_lstm_model' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T03:51:56.824+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T03:51:56.856+0700] {logging_mixin.py:188} WARNING - /opt/***/dags/stock_predictions_bbca.py:1038 UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+[2025-05-11T03:51:56.888+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/sklearn/utils/validation.py:2739 UserWarning: X does not have valid feature names, but MinMaxScaler was fitted with feature names
+[2025-05-11T03:51:58.948+0700] {logging_mixin.py:188} INFO - Epoch [10/50], Loss: 0.061182
+[2025-05-11T03:51:59.230+0700] {logging_mixin.py:188} INFO - Epoch [20/50], Loss: 0.021217
+[2025-05-11T03:51:59.535+0700] {logging_mixin.py:188} INFO - Epoch [30/50], Loss: 0.009314
+[2025-05-11T03:51:59.835+0700] {logging_mixin.py:188} INFO - Epoch [40/50], Loss: 0.004998
+[2025-05-11T03:52:00.140+0700] {logging_mixin.py:188} INFO - Epoch [50/50], Loss: 0.003215
+[2025-05-11T03:52:00.231+0700] {logging_mixin.py:188} INFO - ✅ Backtesting realistis selesai. RMSE: 352.42, MAE: 313.53, MAPE: 3.65%
+[2025-05-11T03:52:00.233+0700] {logging_mixin.py:188} INFO - Model terbaik untuk prediksi harga BBCA: LSTM dengan RMSE 352.42
+[2025-05-11T03:52:00.235+0700] {python.py:237} INFO - Done. Returned value was: 352.4166796836744
+[2025-05-11T03:52:00.237+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T03:52:00.309+0700] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=bbca_lstm_prediction, task_id=backtest_lstm_model, run_id=scheduled__2025-05-08T11:30:00+00:00, execution_date=20250508T113000, start_date=20250510T205156, end_date=20250510T205200
+[2025-05-11T03:52:00.376+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T03:52:00.414+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T03:52:00.421+0700] {local_task_job_runner.py:222} INFO - ::endgroup::

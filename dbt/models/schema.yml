@@ -1,0 +1,172 @@
+version: 2
+
+sources:
+  - name: public
+    description: "Raw data tables in public schema"
+    tables:
+      - name: daily_stock_summary
+        description: "Daily stock prices and metrics from IDX"
+        
+      - name: dim_companies
+        description: "Company dimension table with symbols and names"
+        
+      - name: detik_ticker_sentiment
+        description: "Aggregated sentiment from Detik news per ticker and date"
+        
+      - name: detik_news
+        description: "Raw news articles from Detik Finance"
+
+models:
+  - name: stg_daily_stock_summary
+    description: "Staged daily stock summary data"
+    columns:
+      - name: symbol
+        description: "Stock ticker symbol"
+      - name: name
+        description: "Company name"
+      - name: date
+        description: "Trading date"
+      - name: close
+        description: "Closing price"
+
+  - name: dim_companies
+    description: "Dimensi perusahaan yang terdaftar di bursa"
+    columns:
+      - name: symbol
+        description: "Kode saham"
+        tests:
+          - unique
+          - not_null
+      - name: name
+        description: "Nama perusahaan"
+      - name: listed_shares
+        description: "Jumlah saham terdaftar"
+      - name: tradable_shares
+        description: "Jumlah saham yang dapat diperdagangkan"
+      - name: last_updated_date
+        description: "Tanggal terakhir data diperbarui"
+
+  - name: daily_stock_metrics
+    description: "Derived metrics from daily stock data"
+    columns:
+      - name: symbol
+        description: "Stock ticker symbol"
+      - name: date
+        description: "Trading date"
+      - name: percent_change
+        description: "Daily percentage change in price"
+  
+  - name: stock_performance_daily
+    description: "Performa harian saham termasuk return harian"
+    columns:
+      - name: symbol
+        description: "Kode saham"
+      - name: name
+        description: "Nama perusahaan"
+      - name: day
+        description: "Tanggal perdagangan (harian)"
+      - name: prev_close
+        description: "Harga penutupan hari sebelumnya"
+      - name: close
+        description: "Harga penutupan hari ini"
+      - name: volume
+        description: "Volume perdagangan"
+      - name: daily_return
+        description: "Return harian berdasarkan perubahan harga"     
+  - name: stock_performance_weekly
+    description: "Performa saham mingguan"
+    columns:
+      - name: symbol
+        description: "Kode saham"
+      - name: name
+        description: "Nama perusahaan"
+      - name: week_starting
+        description: "Tanggal awal minggu (Senin)"
+      - name: avg_daily_return
+        description: "Rata-rata return harian selama seminggu"
+      - name: weekly_volume
+        description: "Total volume perdagangan selama seminggu"
+      - name: week_open
+        description: "Harga penutupan di hari pertama minggu"
+      - name: week_close
+        description: "Harga penutupan di hari terakhir minggu"
+      - name: weekly_return
+        description: "Return dari awal sampai akhir minggu"
+
+  - name: stock_performance_monthly
+    description: "Performa saham bulanan"
+    columns:
+      - name: symbol
+        description: "Kode saham"
+      - name: name
+        description: "Nama perusahaan"
+      - name: month_starting
+        description: "Tanggal awal bulan"
+      - name: avg_daily_return
+        description: "Rata-rata return harian selama sebulan"
+      - name: monthly_volume
+        description: "Total volume perdagangan selama sebulan"
+      - name: month_open
+        description: "Harga penutupan di hari pertama bulan"
+      - name: month_close
+        description: "Harga penutupan di hari terakhir bulan"
+      - name: monthly_return
+        description: "Return dari awal sampai akhir bulan"
+             
+  - name: technical_indicators_rsi
+    description: "Relative Strength Index (RSI) technical indicator"
+    columns:
+      - name: symbol
+        description: "Stock ticker symbol"
+      - name: date
+        description: "Trading date"
+      - name: rsi
+        description: "RSI value (0-100)"
+      - name: rsi_signal
+        description: "RSI signal interpretation (Overbought, Oversold, Neutral)"
+        
+  - name: technical_indicators_macd
+    description: "Moving Average Convergence Divergence (MACD) technical indicator"
+    columns:
+      - name: symbol
+        description: "Stock ticker symbol"
+      - name: date
+        description: "Trading date"
+      - name: macd_line
+        description: "MACD line (12-day EMA minus 26-day EMA)"
+      - name: signal_line
+        description: "9-day EMA of MACD Line"
+      - name: macd_histogram
+        description: "MACD Histogram (MACD Line minus Signal Line)"
+      - name: macd_signal
+        description: "MACD signal interpretation (Bullish, Bearish, Neutral)"
+        
+  - name: news_sentiment_analysis
+    description: "News sentiment analysis combined with stock price data"
+    columns:
+      - name: symbol
+        description: "Stock ticker symbol"
+      - name: name
+        description: "Company name"
+      - name: date
+        description: "Date"
+      - name: avg_sentiment
+        description: "Average sentiment score for the ticker on this date"
+      - name: positive_percentage
+        description: "Percentage of positive news articles"
+      - name: sentiment_price_signal
+        description: "Correlation between news sentiment and price movement"
+      - name: trading_signal
+        description: "Trading signal based on sentiment analysis"
+
+  - name: fct_stock_predictions
+    description: "Fakta prediksi harga saham harian dari model ML"
+    columns:
+      - name: symbol
+        description: "Kode saham"
+        tests:
+          - not_null
+      - name: prediction_date
+        description: "Tanggal prediksi"
+      - name: predicted_close
+        description: "Harga penutupan hasil prediksi"

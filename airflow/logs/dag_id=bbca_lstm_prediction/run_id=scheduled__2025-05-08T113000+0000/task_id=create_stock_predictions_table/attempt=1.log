@@ -1,0 +1,19 @@
+[2025-05-11T03:50:42.295+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T03:50:42.352+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.create_stock_predictions_table scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T03:50:42.369+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.create_stock_predictions_table scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T03:50:42.370+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T03:50:42.394+0700] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): create_stock_predictions_table> on 2025-05-08 11:30:00+00:00
+[2025-05-11T03:50:42.408+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'create_stock_predictions_table', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '96', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpg0wv2ofh']
+[2025-05-11T03:50:42.412+0700] {standard_task_runner.py:91} INFO - Job 96: Subtask create_stock_predictions_table
+[2025-05-11T03:50:42.414+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1223) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T03:50:42.415+0700] {standard_task_runner.py:63} INFO - Started process 1250 to run task
+[2025-05-11T03:50:42.509+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.create_stock_predictions_table scheduled__2025-05-08T11:30:00+00:00 [running]> on host a61c3a2f78e1
+[2025-05-11T03:50:42.676+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='create_stock_predictions_table' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T03:50:42.677+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T03:50:42.804+0700] {logging_mixin.py:188} INFO - ✅ Tabel stock_predictions dan tabel terkait dibuat
+[2025-05-11T03:50:42.805+0700] {python.py:237} INFO - Done. Returned value was: None
+[2025-05-11T03:50:42.806+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T03:50:42.824+0700] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=bbca_lstm_prediction, task_id=create_stock_predictions_table, run_id=scheduled__2025-05-08T11:30:00+00:00, execution_date=20250508T113000, start_date=20250510T205042, end_date=20250510T205042
+[2025-05-11T03:50:42.872+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T03:50:42.914+0700] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T03:50:42.921+0700] {local_task_job_runner.py:222} INFO - ::endgroup::

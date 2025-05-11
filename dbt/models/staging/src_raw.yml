@@ -1,0 +1,17 @@
+version: 2
+
+sources:
+  - name: raw
+    database: airflow  # sesuaikan dengan database Anda
+    schema: public     # sesuaikan dengan schema Anda
+    tables:
+      - name: daily_stock_summary
+        description: "Data ringkasan saham harian dari IDX"
+        columns:
+          - name: symbol
+            description: "Kode saham"
+          - name: date
+            description: "Tanggal perdagangan"
+      
+      - name: stock_predictions
+        description: "Data prediksi harga saham"

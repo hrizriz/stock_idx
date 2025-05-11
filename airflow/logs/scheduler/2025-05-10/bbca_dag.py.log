@@ -1,0 +1,1559 @@
+[2025-05-11T05:42:05.960+0700] {processor.py:161} INFO - Started process (PID=4728) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:42:05.961+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:42:05.964+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:42:05.963+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:42:09.420+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:42:09.417+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 27, in <module>
+    from lstm_models import (
+ModuleNotFoundError: No module named 'lstm_models'
+[2025-05-11T05:42:09.427+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:42:09.457+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 3.510 seconds
+[2025-05-11T05:42:40.310+0700] {processor.py:161} INFO - Started process (PID=4764) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:42:40.311+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:42:40.314+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:42:40.313+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:42:44.602+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:42:44.599+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 27, in <module>
+    from lstm_models import (
+ImportError: cannot import name 'BaseLSTMModel' from 'lstm_models' (/opt/airflow/dags/lstm_models.py)
+[2025-05-11T05:42:44.604+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:42:44.637+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.335 seconds
+[2025-05-11T05:43:15.578+0700] {processor.py:161} INFO - Started process (PID=4803) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:43:15.580+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:43:15.582+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:43:15.581+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:43:19.218+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:43:19.215+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 27, in <module>
+    from lstm_models import (
+ImportError: cannot import name 'BaseLSTMModel' from 'lstm_models' (/opt/airflow/dags/lstm_models.py)
+[2025-05-11T05:43:19.222+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:43:19.264+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 3.693 seconds
+[2025-05-11T05:43:49.397+0700] {processor.py:161} INFO - Started process (PID=4839) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:43:49.399+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:43:49.401+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:43:49.400+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:43:52.889+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:43:52.887+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 27, in <module>
+    from lstm_models import (
+ImportError: cannot import name 'BaseLSTMModel' from 'lstm_models' (/opt/airflow/dags/lstm_models.py)
+[2025-05-11T05:43:52.891+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:43:52.918+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 3.528 seconds
+[2025-05-11T05:44:23.172+0700] {processor.py:161} INFO - Started process (PID=4875) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:44:23.173+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:44:23.176+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:44:23.175+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:44:26.799+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:44:26.797+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 27, in <module>
+    from lstm_models import (
+ImportError: cannot import name 'BaseLSTMModel' from 'lstm_models' (/opt/airflow/dags/lstm_models.py)
+[2025-05-11T05:44:26.801+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:44:26.827+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 3.663 seconds
+[2025-05-11T05:44:57.279+0700] {processor.py:161} INFO - Started process (PID=4911) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:44:57.281+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:44:57.284+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:44:57.283+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:45:00.784+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:45:00.782+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 27, in <module>
+    from lstm_models import (
+ImportError: cannot import name 'BaseLSTMModel' from 'lstm_models' (/opt/airflow/dags/lstm_models.py)
+[2025-05-11T05:45:00.786+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:45:01.067+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 3.796 seconds
+[2025-05-11T05:45:31.770+0700] {processor.py:161} INFO - Started process (PID=4947) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:45:31.772+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:45:31.774+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:45:31.773+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:45:35.553+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:45:35.549+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 27, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T05:45:35.556+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:45:35.588+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 3.825 seconds
+[2025-05-11T05:46:05.829+0700] {processor.py:161} INFO - Started process (PID=4983) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:46:05.830+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:46:05.833+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:46:05.832+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:46:10.435+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:46:10.432+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 27, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T05:46:10.438+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:46:10.475+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.656 seconds
+[2025-05-11T05:46:40.659+0700] {processor.py:161} INFO - Started process (PID=5019) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:46:40.660+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:46:40.662+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:46:40.661+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:46:43.803+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:46:43.801+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 27, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T05:46:43.805+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:46:43.831+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 3.179 seconds
+[2025-05-11T05:47:14.543+0700] {processor.py:161} INFO - Started process (PID=5055) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:47:14.544+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:47:14.546+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:47:14.546+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:47:17.684+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:47:17.682+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 27, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T05:47:17.687+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:47:17.725+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 3.189 seconds
+[2025-05-11T05:47:48.072+0700] {processor.py:161} INFO - Started process (PID=5093) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:47:48.073+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:47:48.075+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:47:48.075+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:47:51.778+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:47:51.769+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 27, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T05:47:51.780+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:47:51.813+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 3.751 seconds
+[2025-05-11T05:48:22.299+0700] {processor.py:161} INFO - Started process (PID=5134) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:48:22.301+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:48:22.303+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:48:22.303+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:48:27.384+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:48:27.382+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 27, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T05:48:27.387+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:48:27.428+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 5.140 seconds
+[2025-05-11T05:48:57.921+0700] {processor.py:161} INFO - Started process (PID=5170) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:48:57.922+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:48:57.926+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:48:57.925+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:49:01.892+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:49:01.889+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 27, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T05:49:01.894+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:49:01.930+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.015 seconds
+[2025-05-11T05:49:32.656+0700] {processor.py:161} INFO - Started process (PID=5208) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:49:32.658+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:49:32.660+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:49:32.660+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:49:36.546+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:49:36.543+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 27, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T05:49:36.548+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:49:36.577+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 3.929 seconds
+[2025-05-11T05:50:06.928+0700] {processor.py:161} INFO - Started process (PID=5244) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:50:06.930+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:50:06.932+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:50:06.932+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:50:11.605+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:50:11.603+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 27, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T05:50:11.608+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:50:11.641+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.722 seconds
+[2025-05-11T05:50:41.919+0700] {processor.py:161} INFO - Started process (PID=5280) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:50:41.920+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:50:41.924+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:50:41.923+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:50:46.405+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:50:46.402+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 27, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T05:50:46.407+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:50:46.443+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.538 seconds
+[2025-05-11T05:51:16.805+0700] {processor.py:161} INFO - Started process (PID=5316) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:51:16.807+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:51:16.809+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:51:16.809+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:51:21.475+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:51:21.472+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 27, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T05:51:21.477+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:51:21.512+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.715 seconds
+[2025-05-11T05:51:51.915+0700] {processor.py:161} INFO - Started process (PID=5352) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:51:51.917+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:51:51.919+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:51:51.919+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:51:56.506+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:51:56.503+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 27, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T05:51:56.508+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:51:56.543+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.637 seconds
+[2025-05-11T05:52:27.200+0700] {processor.py:161} INFO - Started process (PID=5389) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:52:27.201+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:52:27.204+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:52:27.204+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:52:31.686+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:52:31.684+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 27, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T05:52:31.688+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:52:31.713+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.525 seconds
+[2025-05-11T05:53:01.807+0700] {processor.py:161} INFO - Started process (PID=5427) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:53:01.808+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:53:01.811+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:53:01.811+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:53:05.305+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:53:05.302+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 27, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T05:53:05.308+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:53:05.342+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 3.543 seconds
+[2025-05-11T05:53:35.706+0700] {processor.py:161} INFO - Started process (PID=5467) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:53:35.708+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:53:35.710+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:53:35.710+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:53:39.167+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:53:39.165+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 27, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T05:53:39.169+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:53:39.199+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 3.504 seconds
+[2025-05-11T05:54:09.367+0700] {processor.py:161} INFO - Started process (PID=5503) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:54:09.369+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:54:09.373+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:54:09.372+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:54:12.737+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:54:12.734+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 27, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T05:54:12.740+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:54:12.770+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 3.414 seconds
+[2025-05-11T05:54:43.442+0700] {processor.py:161} INFO - Started process (PID=5539) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:54:43.444+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:54:43.448+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:54:43.447+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:54:46.963+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:54:46.960+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 27, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T05:54:46.965+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:54:46.995+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 3.563 seconds
+[2025-05-11T05:55:17.151+0700] {processor.py:161} INFO - Started process (PID=5577) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:55:17.153+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:55:17.156+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:55:17.155+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:55:21.124+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:55:21.123+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 27, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T05:55:21.126+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:55:21.156+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.012 seconds
+[2025-05-11T05:55:51.404+0700] {processor.py:161} INFO - Started process (PID=5613) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:55:51.405+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:55:51.409+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:55:51.409+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:55:56.348+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:55:56.345+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 27, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T05:55:56.351+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:55:56.390+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.999 seconds
+[2025-05-11T05:56:26.724+0700] {processor.py:161} INFO - Started process (PID=5649) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:56:26.726+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:56:26.728+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:56:26.728+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:56:29.916+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:56:29.914+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 27, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T05:56:29.918+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:56:29.945+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 3.228 seconds
+[2025-05-11T05:57:00.362+0700] {processor.py:161} INFO - Started process (PID=5686) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:57:00.364+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:57:00.366+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:57:00.366+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:57:04.670+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:57:04.667+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 27, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T05:57:04.672+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:57:04.706+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.351 seconds
+[2025-05-11T05:57:05.462+0700] {processor.py:161} INFO - Started process (PID=5696) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:57:05.464+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:57:05.466+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:57:05.466+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:57:05.550+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:57:05.541+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T05:57:05.553+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:57:05.587+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.133 seconds
+[2025-05-11T05:57:36.352+0700] {processor.py:161} INFO - Started process (PID=5723) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:57:36.353+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:57:36.355+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:57:36.355+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:57:36.416+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:57:36.410+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T05:57:36.418+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:57:36.456+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.111 seconds
+[2025-05-11T05:58:06.833+0700] {processor.py:161} INFO - Started process (PID=5751) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:58:06.835+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:58:06.841+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:58:06.840+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:58:06.919+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:58:06.914+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T05:58:06.921+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:58:06.963+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.150 seconds
+[2025-05-11T05:58:37.468+0700] {processor.py:161} INFO - Started process (PID=5770) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:58:37.469+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:58:37.472+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:58:37.472+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:58:37.559+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:58:37.552+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T05:58:37.562+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:58:37.602+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.144 seconds
+[2025-05-11T05:59:07.864+0700] {processor.py:161} INFO - Started process (PID=5798) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:59:07.866+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:59:07.869+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:59:07.868+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:59:07.963+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:59:07.954+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T05:59:07.966+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:59:08.011+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.155 seconds
+[2025-05-11T05:59:38.205+0700] {processor.py:161} INFO - Started process (PID=5826) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:59:38.206+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T05:59:38.208+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:59:38.208+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:59:38.269+0700] {logging_mixin.py:188} INFO - [2025-05-11T05:59:38.263+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T05:59:38.272+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T05:59:38.304+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.106 seconds
+[2025-05-11T06:00:09.153+0700] {processor.py:161} INFO - Started process (PID=5854) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:00:09.158+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:00:09.161+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:00:09.160+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:00:09.218+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:00:09.213+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1325
+    ensemble_prediction = 0"""
+                           
+SyntaxError: invalid syntax
+[2025-05-11T06:00:09.219+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:00:09.254+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.111 seconds
+[2025-05-11T06:00:39.709+0700] {processor.py:161} INFO - Started process (PID=5882) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:00:39.711+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:00:39.715+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:00:39.714+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:00:39.830+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:00:39.822+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:00:39.832+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:00:39.871+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.171 seconds
+[2025-05-11T06:01:10.107+0700] {processor.py:161} INFO - Started process (PID=5910) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:01:10.108+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:01:10.110+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:01:10.110+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:01:10.184+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:01:10.179+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:01:10.186+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:01:10.222+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.126 seconds
+[2025-05-11T06:01:40.593+0700] {processor.py:161} INFO - Started process (PID=5938) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:01:40.594+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:01:40.596+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:01:40.596+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:01:40.674+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:01:40.667+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:01:40.676+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:01:40.709+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.123 seconds
+[2025-05-11T06:02:11.202+0700] {processor.py:161} INFO - Started process (PID=5957) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:02:11.204+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:02:11.207+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:02:11.206+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:02:11.283+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:02:11.276+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:02:11.285+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:02:11.323+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.132 seconds
+[2025-05-11T06:02:41.667+0700] {processor.py:161} INFO - Started process (PID=5985) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:02:41.669+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:02:41.674+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:02:41.672+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:02:41.757+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:02:41.749+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:02:41.760+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:02:41.795+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.136 seconds
+[2025-05-11T06:03:11.985+0700] {processor.py:161} INFO - Started process (PID=6005) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:03:11.987+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:03:11.990+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:03:11.989+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:03:12.071+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:03:12.065+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:03:12.073+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:03:12.114+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.142 seconds
+[2025-05-11T06:03:42.343+0700] {processor.py:161} INFO - Started process (PID=6032) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:03:42.344+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:03:42.348+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:03:42.347+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:03:42.430+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:03:42.424+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:03:42.432+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:03:42.477+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.144 seconds
+[2025-05-11T06:03:52.711+0700] {processor.py:161} INFO - Started process (PID=6044) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:03:52.713+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:03:52.715+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:03:52.715+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:03:52.784+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:03:52.780+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:03:52.786+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:03:52.817+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.113 seconds
+[2025-05-11T06:04:23.009+0700] {processor.py:161} INFO - Started process (PID=6070) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:04:23.011+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:04:23.014+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:04:23.013+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:04:23.083+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:04:23.077+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:04:23.085+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:04:23.118+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.117 seconds
+[2025-05-11T06:04:53.416+0700] {processor.py:161} INFO - Started process (PID=6089) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:04:53.418+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:04:53.422+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:04:53.421+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:04:53.502+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:04:53.496+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:04:53.505+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:04:53.548+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.141 seconds
+[2025-05-11T06:05:24.038+0700] {processor.py:161} INFO - Started process (PID=6117) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:05:24.040+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:05:24.043+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:05:24.043+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:05:24.128+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:05:24.120+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:05:24.131+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:05:24.175+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.147 seconds
+[2025-05-11T06:05:54.502+0700] {processor.py:161} INFO - Started process (PID=6145) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:05:54.503+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:05:54.507+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:05:54.506+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:05:54.604+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:05:54.597+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:05:54.606+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:05:54.644+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.154 seconds
+[2025-05-11T06:06:24.868+0700] {processor.py:161} INFO - Started process (PID=6173) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:06:24.870+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:06:24.872+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:06:24.872+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:06:24.949+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:06:24.942+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:06:24.952+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:06:24.992+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.133 seconds
+[2025-05-11T06:06:55.242+0700] {processor.py:161} INFO - Started process (PID=6201) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:06:55.243+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:06:55.246+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:06:55.246+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:06:55.316+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:06:55.310+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:06:55.318+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:06:55.353+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.119 seconds
+[2025-05-11T06:07:25.633+0700] {processor.py:161} INFO - Started process (PID=6221) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:07:25.636+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:07:25.641+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:07:25.640+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:07:25.734+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:07:25.727+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:07:25.736+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:07:25.797+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.182 seconds
+[2025-05-11T06:07:56.713+0700] {processor.py:161} INFO - Started process (PID=6248) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:07:56.715+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:07:56.718+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:07:56.718+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:07:56.795+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:07:56.788+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:07:56.798+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:07:56.837+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.132 seconds
+[2025-05-11T06:08:27.225+0700] {processor.py:161} INFO - Started process (PID=6268) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:08:27.227+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:08:27.234+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:08:27.233+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:08:27.311+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:08:27.305+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:08:27.313+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:08:27.357+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.146 seconds
+[2025-05-11T06:08:57.994+0700] {processor.py:161} INFO - Started process (PID=6295) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:08:57.996+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:08:57.998+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:08:57.998+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:08:58.067+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:08:58.058+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:08:58.069+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:08:58.111+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.124 seconds
+[2025-05-11T06:09:28.393+0700] {processor.py:161} INFO - Started process (PID=6323) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:09:28.395+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:09:28.397+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:09:28.396+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:09:28.461+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:09:28.456+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:09:28.462+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:09:28.496+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.114 seconds
+[2025-05-11T06:09:59.217+0700] {processor.py:161} INFO - Started process (PID=6351) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:09:59.218+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:09:59.221+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:09:59.221+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:09:59.290+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:09:59.282+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:09:59.292+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:09:59.325+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.115 seconds
+[2025-05-11T06:10:29.716+0700] {processor.py:161} INFO - Started process (PID=6379) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:10:29.717+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:10:29.719+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:10:29.719+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:10:29.774+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:10:29.768+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:10:29.775+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:10:29.806+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.097 seconds
+[2025-05-11T06:11:00.009+0700] {processor.py:161} INFO - Started process (PID=6407) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:11:00.011+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:11:00.014+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:11:00.014+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:11:00.091+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:11:00.085+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:11:00.094+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:11:00.134+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.136 seconds
+[2025-05-11T06:11:30.554+0700] {processor.py:161} INFO - Started process (PID=6435) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:11:30.556+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:11:30.558+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:11:30.558+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:11:30.629+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:11:30.624+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:11:30.630+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:11:30.663+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.117 seconds
+[2025-05-11T06:12:00.881+0700] {processor.py:161} INFO - Started process (PID=6463) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:12:00.882+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:12:00.884+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:12:00.884+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:12:00.937+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:12:00.932+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:12:00.938+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:12:00.968+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.095 seconds
+[2025-05-11T06:12:31.645+0700] {processor.py:161} INFO - Started process (PID=6483) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:12:31.647+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:12:31.654+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:12:31.652+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:12:31.808+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:12:31.796+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:12:31.810+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:12:31.898+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.264 seconds
+[2025-05-11T06:13:02.038+0700] {processor.py:161} INFO - Started process (PID=6510) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:13:02.039+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:13:02.041+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:13:02.040+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:13:02.094+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:13:02.089+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:13:02.095+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:13:02.126+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.096 seconds
+[2025-05-11T06:13:32.492+0700] {processor.py:161} INFO - Started process (PID=6530) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:13:32.494+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:13:32.497+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:13:32.496+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:13:32.568+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:13:32.562+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:13:32.571+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:13:32.607+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.125 seconds
+[2025-05-11T06:14:02.758+0700] {processor.py:161} INFO - Started process (PID=6557) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:14:02.760+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:14:02.765+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:14:02.764+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:14:02.851+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:14:02.845+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:14:02.853+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:14:02.887+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.141 seconds
+[2025-05-11T06:14:32.981+0700] {processor.py:161} INFO - Started process (PID=6585) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:14:32.982+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:14:32.985+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:14:32.984+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:14:33.043+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:14:33.037+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:14:33.044+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:14:33.076+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.102 seconds
+[2025-05-11T06:15:03.404+0700] {processor.py:161} INFO - Started process (PID=6613) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:15:03.405+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:15:03.408+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:15:03.408+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:15:03.468+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:15:03.461+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:15:03.470+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:15:03.503+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.106 seconds
+[2025-05-11T06:15:33.693+0700] {processor.py:161} INFO - Started process (PID=6641) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:15:33.695+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:15:33.701+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:15:33.700+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:15:33.790+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:15:33.781+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:15:33.793+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:15:33.838+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.157 seconds
+[2025-05-11T06:16:04.059+0700] {processor.py:161} INFO - Started process (PID=6669) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:16:04.061+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:16:04.064+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:16:04.063+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:16:04.144+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:16:04.136+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+  File "/opt/airflow/dags/lstm_models.py", line 1493
+    return rows_updated"""
+                       
+SyntaxError: invalid syntax
+[2025-05-11T06:16:04.146+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:16:04.185+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 0.136 seconds
+[2025-05-11T06:16:34.489+0700] {processor.py:161} INFO - Started process (PID=6695) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:16:34.491+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:16:34.494+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:16:34.493+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:16:39.780+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:16:39.780+0700] {font_manager.py:1639} INFO - generated new fontManager
+[2025-05-11T06:16:40.200+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:16:40.195+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+ImportError: cannot import name 'select_best_features' from 'lstm_models' (/opt/airflow/dags/lstm_models.py)
+[2025-05-11T06:16:40.206+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:16:40.233+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 5.755 seconds
+[2025-05-11T06:17:10.752+0700] {processor.py:161} INFO - Started process (PID=6735) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:17:10.753+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:17:10.756+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:17:10.755+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:17:15.972+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:17:15.967+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+ImportError: cannot import name 'select_best_features' from 'lstm_models' (/opt/airflow/dags/lstm_models.py)
+[2025-05-11T06:17:15.977+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:17:16.010+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 5.269 seconds
+[2025-05-11T06:17:46.342+0700] {processor.py:161} INFO - Started process (PID=6771) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:17:46.343+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:17:46.346+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:17:46.346+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:17:51.489+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:17:51.482+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+ImportError: cannot import name 'select_best_features' from 'lstm_models' (/opt/airflow/dags/lstm_models.py)
+[2025-05-11T06:17:51.495+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:17:51.533+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 5.203 seconds
+[2025-05-11T06:18:21.773+0700] {processor.py:161} INFO - Started process (PID=6807) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:18:21.775+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:18:21.778+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:18:21.777+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:18:26.589+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:18:26.583+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+ImportError: cannot import name 'select_best_features' from 'lstm_models' (/opt/airflow/dags/lstm_models.py)
+[2025-05-11T06:18:26.594+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:18:26.623+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.857 seconds
+[2025-05-11T06:18:56.834+0700] {processor.py:161} INFO - Started process (PID=6848) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:18:56.836+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:18:56.838+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:18:56.838+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:19:02.494+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:19:02.488+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+ImportError: cannot import name 'select_best_features' from 'lstm_models' (/opt/airflow/dags/lstm_models.py)
+[2025-05-11T06:19:02.502+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:19:02.532+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 5.705 seconds
+[2025-05-11T06:19:32.764+0700] {processor.py:161} INFO - Started process (PID=6886) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:19:32.765+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:19:32.768+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:19:32.768+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:19:37.314+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:19:37.309+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+ImportError: cannot import name 'select_best_features' from 'lstm_models' (/opt/airflow/dags/lstm_models.py)
+[2025-05-11T06:19:37.320+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:19:37.351+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.594 seconds
+[2025-05-11T06:20:07.722+0700] {processor.py:161} INFO - Started process (PID=6922) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:20:07.723+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:20:07.727+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:20:07.726+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:20:12.892+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:20:12.887+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+ImportError: cannot import name 'select_best_features' from 'lstm_models' (/opt/airflow/dags/lstm_models.py)
+[2025-05-11T06:20:12.898+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:20:12.932+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 5.222 seconds
+[2025-05-11T06:20:43.489+0700] {processor.py:161} INFO - Started process (PID=6958) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:20:43.490+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:20:43.492+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:20:43.492+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:20:48.181+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:20:48.175+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+ImportError: cannot import name 'select_best_features' from 'lstm_models' (/opt/airflow/dags/lstm_models.py)
+[2025-05-11T06:20:48.186+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:20:48.216+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.733 seconds
+[2025-05-11T06:21:18.723+0700] {processor.py:161} INFO - Started process (PID=6996) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:21:18.725+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:21:18.728+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:21:18.728+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:21:23.629+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:21:23.625+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+ImportError: cannot import name 'select_best_features' from 'lstm_models' (/opt/airflow/dags/lstm_models.py)
+[2025-05-11T06:21:23.635+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:21:23.666+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.954 seconds
+[2025-05-11T06:21:53.872+0700] {processor.py:161} INFO - Started process (PID=7032) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:21:53.874+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:21:53.876+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:21:53.875+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:21:58.627+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:21:58.622+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+ImportError: cannot import name 'select_best_features' from 'lstm_models' (/opt/airflow/dags/lstm_models.py)
+[2025-05-11T06:21:58.632+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:21:58.663+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.800 seconds
+[2025-05-11T06:22:29.386+0700] {processor.py:161} INFO - Started process (PID=7069) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:22:29.388+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:22:29.392+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:22:29.391+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:22:34.184+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:22:34.179+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+ImportError: cannot import name 'select_best_features' from 'lstm_models' (/opt/airflow/dags/lstm_models.py)
+[2025-05-11T06:22:34.188+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:22:34.214+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.838 seconds
+[2025-05-11T06:23:04.760+0700] {processor.py:161} INFO - Started process (PID=7105) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:23:04.762+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:23:04.764+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:23:04.764+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:23:09.826+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:23:09.822+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+ImportError: cannot import name 'select_best_features' from 'lstm_models' (/opt/airflow/dags/lstm_models.py)
+[2025-05-11T06:23:09.831+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:23:09.861+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 5.112 seconds
+[2025-05-11T06:23:40.105+0700] {processor.py:161} INFO - Started process (PID=7147) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:23:40.107+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:23:40.109+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:23:40.108+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:23:44.689+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:23:44.684+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+ImportError: cannot import name 'select_best_features' from 'lstm_models' (/opt/airflow/dags/lstm_models.py)
+[2025-05-11T06:23:44.693+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:23:44.718+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.622 seconds
+[2025-05-11T06:24:14.839+0700] {processor.py:161} INFO - Started process (PID=7183) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:24:14.840+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:24:14.843+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:24:14.842+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:24:19.605+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:24:19.599+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    from lstm_models import (
+ImportError: cannot import name 'select_best_features' from 'lstm_models' (/opt/airflow/dags/lstm_models.py)
+[2025-05-11T06:24:19.611+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:24:19.641+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.810 seconds
+[2025-05-11T06:24:50.108+0700] {processor.py:161} INFO - Started process (PID=7219) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:24:50.110+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:24:50.114+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:24:50.114+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:24:56.272+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:24:56.257+0700] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/bbca_dag.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/bbca_dag.py", line 16, in <module>
+    # dan pastikan ini sesuai dengan nama fungsi yang tersedia di lstm_models.py
+ImportError: cannot import name 'select_best_features' from 'lstm_models' (/opt/airflow/dags/lstm_models.py)
+[2025-05-11T06:24:56.279+0700] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:24:56.322+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 6.223 seconds
+[2025-05-11T06:25:26.874+0700] {processor.py:161} INFO - Started process (PID=7255) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:25:26.875+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:25:26.877+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:25:26.877+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:25:32.487+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:25:32.487+0700] {bbca_dag.py:28} ERROR - Error importing from lstm_models: cannot import name 'hyperparameter_tuning' from 'lstm_models' (/opt/airflow/dags/lstm_models.py)
+[2025-05-11T06:25:32.499+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:25:32.713+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:25:32.712+0700] {override.py:1829} INFO - Created Permission View: can delete on DAG:bbca_lstm_prediction_enhanced
+[2025-05-11T06:25:32.733+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:25:32.733+0700] {override.py:1829} INFO - Created Permission View: can edit on DAG:bbca_lstm_prediction_enhanced
+[2025-05-11T06:25:32.746+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:25:32.745+0700] {override.py:1829} INFO - Created Permission View: can read on DAG:bbca_lstm_prediction_enhanced
+[2025-05-11T06:25:32.747+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:25:32.747+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:25:32.769+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:25:32.768+0700] {dag.py:3118} INFO - Creating ORM DAG for bbca_lstm_prediction_enhanced
+[2025-05-11T06:25:32.796+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:25:32.795+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-08 11:30:00+00:00, run_after=2025-05-09 11:30:00+00:00
+[2025-05-11T06:25:32.868+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 6.001 seconds
+[2025-05-11T06:25:35.603+0700] {processor.py:161} INFO - Started process (PID=7268) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:25:35.605+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:25:35.608+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:25:35.607+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:25:41.195+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:25:41.194+0700] {bbca_dag.py:28} ERROR - Error importing from lstm_models: cannot import name 'hyperparameter_tuning' from 'lstm_models' (/opt/airflow/dags/lstm_models.py)
+[2025-05-11T06:25:41.207+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:25:41.232+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:25:41.232+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:25:41.271+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:25:41.271+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-08 11:30:00+00:00, run_after=2025-05-09 11:30:00+00:00
+[2025-05-11T06:25:41.312+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 5.718 seconds
+[2025-05-11T06:26:12.078+0700] {processor.py:161} INFO - Started process (PID=7305) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:26:12.079+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:26:12.082+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:26:12.082+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:26:20.128+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:26:20.128+0700] {bbca_dag.py:28} ERROR - Error importing from lstm_models: cannot import name 'hyperparameter_tuning' from 'lstm_models' (/opt/airflow/dags/lstm_models.py)
+[2025-05-11T06:26:20.140+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:26:20.175+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:26:20.175+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:26:20.208+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:26:20.208+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-08 11:30:00+00:00, run_after=2025-05-09 11:30:00+00:00
+[2025-05-11T06:26:20.240+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 8.172 seconds
+[2025-05-11T06:26:51.490+0700] {processor.py:161} INFO - Started process (PID=7372) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:26:51.492+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:26:51.495+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:26:51.495+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:26:59.048+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:26:59.047+0700] {bbca_dag.py:28} ERROR - Error importing from lstm_models: cannot import name 'hyperparameter_tuning' from 'lstm_models' (/opt/airflow/dags/lstm_models.py)
+[2025-05-11T06:26:59.062+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:26:59.128+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:26:59.128+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:26:59.197+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:26:59.196+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-09 11:30:00+00:00, run_after=2025-05-12 11:30:00+00:00
+[2025-05-11T06:26:59.246+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 7.771 seconds
+[2025-05-11T06:27:29.878+0700] {processor.py:161} INFO - Started process (PID=7458) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:27:29.879+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:27:29.881+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:27:29.881+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:27:36.440+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:27:36.439+0700] {bbca_dag.py:28} ERROR - Error importing from lstm_models: cannot import name 'hyperparameter_tuning' from 'lstm_models' (/opt/airflow/dags/lstm_models.py)
+[2025-05-11T06:27:36.449+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:27:36.480+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:27:36.479+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:27:36.512+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:27:36.511+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-09 11:30:00+00:00, run_after=2025-05-12 11:30:00+00:00
+[2025-05-11T06:27:36.546+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 6.676 seconds
+[2025-05-11T06:28:06.964+0700] {processor.py:161} INFO - Started process (PID=7496) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:28:06.965+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:28:06.968+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:28:06.968+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:28:12.839+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:28:12.839+0700] {bbca_dag.py:28} ERROR - Error importing from lstm_models: cannot import name 'hyperparameter_tuning' from 'lstm_models' (/opt/airflow/dags/lstm_models.py)
+[2025-05-11T06:28:12.850+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:28:12.883+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:28:12.883+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:28:12.929+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:28:12.929+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-09 11:30:00+00:00, run_after=2025-05-12 11:30:00+00:00
+[2025-05-11T06:28:12.960+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 6.004 seconds
+[2025-05-11T06:28:43.393+0700] {processor.py:161} INFO - Started process (PID=7534) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:28:43.394+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:28:43.397+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:28:43.396+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:28:50.063+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:28:50.063+0700] {bbca_dag.py:28} ERROR - Error importing from lstm_models: cannot import name 'hyperparameter_tuning' from 'lstm_models' (/opt/airflow/dags/lstm_models.py)
+[2025-05-11T06:28:50.071+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:28:50.104+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:28:50.103+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:28:50.132+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:28:50.132+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-09 11:30:00+00:00, run_after=2025-05-12 11:30:00+00:00
+[2025-05-11T06:28:50.157+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 6.775 seconds
+[2025-05-11T06:28:50.817+0700] {processor.py:161} INFO - Started process (PID=7553) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:28:50.821+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:28:50.827+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:28:50.826+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:28:56.956+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:28:56.955+0700] {bbca_dag.py:29} INFO - Successfully imported all functions from lstm_models
+[2025-05-11T06:28:56.965+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:28:56.995+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:28:56.995+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:28:57.022+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:28:57.022+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-09 11:30:00+00:00, run_after=2025-05-12 11:30:00+00:00
+[2025-05-11T06:28:57.058+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 6.259 seconds
+[2025-05-11T06:29:07.131+0700] {processor.py:161} INFO - Started process (PID=7566) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:29:07.132+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:29:07.135+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:29:07.134+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:29:11.772+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:29:11.771+0700] {bbca_dag.py:22} INFO - Successfully imported all functions from lstm_models
+[2025-05-11T06:29:11.781+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:29:11.811+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:29:11.811+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:29:11.842+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:29:11.841+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-09 11:30:00+00:00, run_after=2025-05-12 11:30:00+00:00
+[2025-05-11T06:29:11.884+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.765 seconds
+[2025-05-11T06:29:18.059+0700] {processor.py:161} INFO - Started process (PID=7588) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:29:18.060+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:29:18.063+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:29:18.063+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:29:24.443+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:29:24.443+0700] {bbca_dag.py:22} INFO - Successfully imported all functions from lstm_models
+[2025-05-11T06:29:24.469+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:29:24.534+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:29:24.534+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:29:24.590+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:29:24.590+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-09 11:30:00+00:00, run_after=2025-05-12 11:30:00+00:00
+[2025-05-11T06:29:24.643+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 6.590 seconds
+[2025-05-11T06:29:55.123+0700] {processor.py:161} INFO - Started process (PID=7634) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:29:55.125+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:29:55.127+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:29:55.126+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:29:59.884+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:29:59.884+0700] {bbca_dag.py:22} INFO - Successfully imported all functions from lstm_models
+[2025-05-11T06:29:59.893+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:29:59.919+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:29:59.919+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:29:59.945+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:29:59.945+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-09 11:30:00+00:00, run_after=2025-05-12 11:30:00+00:00
+[2025-05-11T06:29:59.967+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.851 seconds
+[2025-05-11T06:30:30.098+0700] {processor.py:161} INFO - Started process (PID=7708) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:30:30.099+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:30:30.102+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:30:30.101+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:30:35.543+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:30:35.543+0700] {bbca_dag.py:22} INFO - Successfully imported all functions from lstm_models
+[2025-05-11T06:30:35.552+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:30:35.584+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:30:35.584+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:30:35.613+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:30:35.613+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-09 11:30:00+00:00, run_after=2025-05-12 11:30:00+00:00
+[2025-05-11T06:30:35.640+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 5.550 seconds
+[2025-05-11T06:31:06.045+0700] {processor.py:161} INFO - Started process (PID=7744) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:31:06.047+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:31:06.050+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:31:06.049+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:31:10.813+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:31:10.813+0700] {bbca_dag.py:22} INFO - Successfully imported all functions from lstm_models
+[2025-05-11T06:31:10.824+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:31:10.867+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:31:10.866+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:31:10.907+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:31:10.907+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-09 11:30:00+00:00, run_after=2025-05-12 11:30:00+00:00
+[2025-05-11T06:31:10.946+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.910 seconds
+[2025-05-11T06:31:41.260+0700] {processor.py:161} INFO - Started process (PID=7781) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:31:41.262+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:31:41.265+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:31:41.264+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:31:48.155+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:31:48.155+0700] {bbca_dag.py:22} INFO - Successfully imported all functions from lstm_models
+[2025-05-11T06:31:48.164+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:31:48.202+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:31:48.202+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:31:48.238+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:31:48.238+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-09 11:30:00+00:00, run_after=2025-05-12 11:30:00+00:00
+[2025-05-11T06:31:48.273+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 7.022 seconds
+[2025-05-11T06:32:18.924+0700] {processor.py:161} INFO - Started process (PID=7828) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:32:18.925+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:32:18.928+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:32:18.928+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:32:23.188+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:32:23.188+0700] {bbca_dag.py:22} INFO - Successfully imported all functions from lstm_models
+[2025-05-11T06:32:23.199+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:32:23.236+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:32:23.235+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:32:23.268+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:32:23.268+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-09 11:30:00+00:00, run_after=2025-05-12 11:30:00+00:00
+[2025-05-11T06:32:23.301+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.385 seconds
+[2025-05-11T06:32:54.371+0700] {processor.py:161} INFO - Started process (PID=7897) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:32:54.373+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:32:54.377+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:32:54.376+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:32:58.673+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:32:58.673+0700] {bbca_dag.py:22} INFO - Successfully imported all functions from lstm_models
+[2025-05-11T06:32:58.685+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:32:58.724+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:32:58.723+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:32:58.772+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:32:58.772+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-09 11:30:00+00:00, run_after=2025-05-12 11:30:00+00:00
+[2025-05-11T06:32:58.817+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.456 seconds
+[2025-05-11T06:33:29.105+0700] {processor.py:161} INFO - Started process (PID=7953) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:33:29.106+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:33:29.109+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:33:29.108+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:33:33.228+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:33:33.228+0700] {bbca_dag.py:22} INFO - Successfully imported all functions from lstm_models
+[2025-05-11T06:33:33.240+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:33:33.271+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:33:33.271+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:33:33.303+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:33:33.302+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-09 11:30:00+00:00, run_after=2025-05-12 11:30:00+00:00
+[2025-05-11T06:33:33.332+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.235 seconds
+[2025-05-11T06:34:04.008+0700] {processor.py:161} INFO - Started process (PID=7984) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:34:04.010+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:34:04.013+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:34:04.012+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:34:08.419+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:34:08.418+0700] {bbca_dag.py:22} INFO - Successfully imported all functions from lstm_models
+[2025-05-11T06:34:08.433+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:34:08.501+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:34:08.501+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:34:08.562+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:34:08.562+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-09 11:30:00+00:00, run_after=2025-05-12 11:30:00+00:00
+[2025-05-11T06:34:08.603+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.606 seconds
+[2025-05-11T06:34:39.426+0700] {processor.py:161} INFO - Started process (PID=8017) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:34:39.428+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:34:39.431+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:34:39.430+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:34:43.103+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:34:43.102+0700] {bbca_dag.py:22} INFO - Successfully imported all functions from lstm_models
+[2025-05-11T06:34:43.114+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:34:43.153+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:34:43.152+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:34:43.200+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:34:43.200+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-09 11:30:00+00:00, run_after=2025-05-12 11:30:00+00:00
+[2025-05-11T06:34:43.236+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 3.821 seconds
+[2025-05-11T06:35:13.892+0700] {processor.py:161} INFO - Started process (PID=8046) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:35:13.894+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:35:13.897+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:35:13.896+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:35:18.037+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:35:18.037+0700] {bbca_dag.py:22} INFO - Successfully imported all functions from lstm_models
+[2025-05-11T06:35:18.047+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:35:18.086+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:35:18.086+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:35:18.119+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:35:18.119+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-09 11:30:00+00:00, run_after=2025-05-12 11:30:00+00:00
+[2025-05-11T06:35:18.154+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.271 seconds
+[2025-05-11T06:35:48.825+0700] {processor.py:161} INFO - Started process (PID=8076) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:35:48.827+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:35:48.830+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:35:48.829+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:35:51.831+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:35:51.831+0700] {bbca_dag.py:22} INFO - Successfully imported all functions from lstm_models
+[2025-05-11T06:35:51.839+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:35:51.866+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:35:51.865+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:35:51.890+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:35:51.890+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-09 11:30:00+00:00, run_after=2025-05-12 11:30:00+00:00
+[2025-05-11T06:35:51.915+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 3.097 seconds
+[2025-05-11T06:36:22.714+0700] {processor.py:161} INFO - Started process (PID=8105) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:36:22.715+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:36:22.718+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:36:22.717+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:36:25.660+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:36:25.660+0700] {bbca_dag.py:22} INFO - Successfully imported all functions from lstm_models
+[2025-05-11T06:36:25.672+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:36:25.710+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:36:25.710+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:36:25.740+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:36:25.739+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-09 11:30:00+00:00, run_after=2025-05-12 11:30:00+00:00
+[2025-05-11T06:36:25.780+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 3.073 seconds
+[2025-05-11T06:36:56.059+0700] {processor.py:161} INFO - Started process (PID=8134) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:36:56.061+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:36:56.064+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:36:56.064+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:37:00.315+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:37:00.315+0700] {bbca_dag.py:22} INFO - Successfully imported all functions from lstm_models
+[2025-05-11T06:37:00.325+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:37:00.364+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:37:00.363+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:37:00.396+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:37:00.396+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-09 11:30:00+00:00, run_after=2025-05-12 11:30:00+00:00
+[2025-05-11T06:37:00.432+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.381 seconds
+[2025-05-11T06:37:30.549+0700] {processor.py:161} INFO - Started process (PID=8163) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:37:30.552+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:37:30.557+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:37:30.556+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:37:35.684+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:37:35.684+0700] {bbca_dag.py:22} INFO - Successfully imported all functions from lstm_models
+[2025-05-11T06:37:35.695+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:37:35.732+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:37:35.732+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:37:35.771+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:37:35.771+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-09 11:30:00+00:00, run_after=2025-05-12 11:30:00+00:00
+[2025-05-11T06:37:35.805+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 5.279 seconds
+[2025-05-11T06:38:06.369+0700] {processor.py:161} INFO - Started process (PID=8192) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:38:06.370+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:38:06.373+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:38:06.372+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:38:10.418+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:38:10.418+0700] {bbca_dag.py:22} INFO - Successfully imported all functions from lstm_models
+[2025-05-11T06:38:10.427+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:38:10.458+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:38:10.457+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:38:10.484+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:38:10.483+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-09 11:30:00+00:00, run_after=2025-05-12 11:30:00+00:00
+[2025-05-11T06:38:10.513+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.156 seconds
+[2025-05-11T06:38:40.730+0700] {processor.py:161} INFO - Started process (PID=8223) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:38:40.731+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:38:40.733+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:38:40.733+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:38:43.776+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:38:43.775+0700] {bbca_dag.py:22} INFO - Successfully imported all functions from lstm_models
+[2025-05-11T06:38:43.783+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:38:43.813+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:38:43.813+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:38:43.841+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:38:43.841+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-09 11:30:00+00:00, run_after=2025-05-12 11:30:00+00:00
+[2025-05-11T06:38:43.875+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 3.153 seconds
+[2025-05-11T06:39:14.377+0700] {processor.py:161} INFO - Started process (PID=8254) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:39:14.379+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:39:14.382+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:39:14.381+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:39:18.839+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:39:18.838+0700] {bbca_dag.py:22} INFO - Successfully imported all functions from lstm_models
+[2025-05-11T06:39:18.852+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:39:18.898+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:39:18.897+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:39:18.934+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:39:18.934+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-09 11:30:00+00:00, run_after=2025-05-12 11:30:00+00:00
+[2025-05-11T06:39:18.970+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.605 seconds
+[2025-05-11T06:39:49.221+0700] {processor.py:161} INFO - Started process (PID=8287) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:39:49.223+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:39:49.226+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:39:49.225+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:39:53.876+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:39:53.876+0700] {bbca_dag.py:22} INFO - Successfully imported all functions from lstm_models
+[2025-05-11T06:39:53.885+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:39:53.918+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:39:53.918+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:39:53.951+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:39:53.950+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-09 11:30:00+00:00, run_after=2025-05-12 11:30:00+00:00
+[2025-05-11T06:39:53.982+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.773 seconds
+[2025-05-11T06:40:24.228+0700] {processor.py:161} INFO - Started process (PID=8317) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:40:24.230+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:40:24.233+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:40:24.232+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:40:28.220+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:40:28.219+0700] {bbca_dag.py:22} INFO - Successfully imported all functions from lstm_models
+[2025-05-11T06:40:28.230+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:40:28.267+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:40:28.266+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:40:28.306+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:40:28.306+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-09 11:30:00+00:00, run_after=2025-05-12 11:30:00+00:00
+[2025-05-11T06:40:28.336+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.118 seconds
+[2025-05-11T06:40:58.690+0700] {processor.py:161} INFO - Started process (PID=8346) to work on /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:40:58.691+0700] {processor.py:830} INFO - Processing file /opt/airflow/dags/bbca_dag.py for tasks to queue
+[2025-05-11T06:40:58.695+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:40:58.694+0700] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:41:03.161+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:41:03.160+0700] {bbca_dag.py:22} INFO - Successfully imported all functions from lstm_models
+[2025-05-11T06:41:03.173+0700] {processor.py:840} INFO - DAG(s) 'bbca_lstm_prediction_enhanced' retrieved from /opt/airflow/dags/bbca_dag.py
+[2025-05-11T06:41:03.219+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:41:03.219+0700] {dag.py:3096} INFO - Sync 1 DAGs
+[2025-05-11T06:41:03.257+0700] {logging_mixin.py:188} INFO - [2025-05-11T06:41:03.257+0700] {dag.py:3954} INFO - Setting next_dagrun for bbca_lstm_prediction_enhanced to 2025-05-09 11:30:00+00:00, run_after=2025-05-12 11:30:00+00:00
+[2025-05-11T06:41:03.477+0700] {processor.py:183} INFO - Processing /opt/airflow/dags/bbca_dag.py took 4.797 seconds

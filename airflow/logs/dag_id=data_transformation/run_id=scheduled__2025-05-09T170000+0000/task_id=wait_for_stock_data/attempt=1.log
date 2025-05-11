@@ -1,0 +1,57 @@
+[2025-05-11T02:49:13.246+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T02:49:13.286+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: data_transformation.wait_for_stock_data scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T02:49:13.296+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: data_transformation.wait_for_stock_data scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T02:49:13.297+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T02:49:13.316+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_stock_data> on 2025-05-09 17:00:00+00:00
+[2025-05-11T02:49:13.320+0700] {standard_task_runner.py:63} INFO - Started process 1865 to run task
+[2025-05-11T02:49:13.323+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'data_transformation', 'wait_for_stock_data', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '11', '--raw', '--subdir', 'DAGS_FOLDER/data_transformation.py', '--cfg-path', '/tmp/tmpuntuzrgr']
+[2025-05-11T02:49:13.326+0700] {standard_task_runner.py:91} INFO - Job 11: Subtask wait_for_stock_data
+[2025-05-11T02:49:13.395+0700] {task_command.py:426} INFO - Running <TaskInstance: data_transformation.wait_for_stock_data scheduled__2025-05-09T17:00:00+00:00 [running]> on host f94ba298fced
+[2025-05-11T02:49:13.645+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='data_transformation' AIRFLOW_CTX_TASK_ID='wait_for_stock_data' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T02:49:13.646+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T02:49:13.660+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T02:49:13.674+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag stock_data_ingestion on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T02:49:13.681+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T02:49:13.699+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T02:49:13.728+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T02:49:13.778+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T02:49:13.818+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T02:49:13.824+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T02:50:25.028+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T02:50:25.075+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: data_transformation.wait_for_stock_data scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T02:50:25.087+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: data_transformation.wait_for_stock_data scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T02:50:25.088+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T02:50:25.110+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_stock_data> on 2025-05-09 17:00:00+00:00
+[2025-05-11T02:50:25.117+0700] {standard_task_runner.py:63} INFO - Started process 2040 to run task
+[2025-05-11T02:50:25.120+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'data_transformation', 'wait_for_stock_data', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '23', '--raw', '--subdir', 'DAGS_FOLDER/data_transformation.py', '--cfg-path', '/tmp/tmp8v0c_3ml']
+[2025-05-11T02:50:25.123+0700] {standard_task_runner.py:91} INFO - Job 23: Subtask wait_for_stock_data
+[2025-05-11T02:50:25.204+0700] {task_command.py:426} INFO - Running <TaskInstance: data_transformation.wait_for_stock_data scheduled__2025-05-09T17:00:00+00:00 [running]> on host f94ba298fced
+[2025-05-11T02:50:25.493+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='data_transformation' AIRFLOW_CTX_TASK_ID='wait_for_stock_data' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T02:50:25.494+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T02:50:25.509+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T02:50:25.525+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag stock_data_ingestion on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T02:50:25.531+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T02:50:25.551+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T02:50:25.581+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T02:50:25.616+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T02:50:25.668+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T02:50:25.671+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T02:51:08.363+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T02:51:08.419+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: data_transformation.wait_for_stock_data scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T02:51:08.432+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: data_transformation.wait_for_stock_data scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T02:51:08.433+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T02:51:08.458+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_stock_data> on 2025-05-09 17:00:00+00:00
+[2025-05-11T02:51:08.464+0700] {standard_task_runner.py:63} INFO - Started process 2099 to run task
+[2025-05-11T02:51:08.468+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'data_transformation', 'wait_for_stock_data', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '26', '--raw', '--subdir', 'DAGS_FOLDER/data_transformation.py', '--cfg-path', '/tmp/tmplqo_3bcs']
+[2025-05-11T02:51:08.471+0700] {standard_task_runner.py:91} INFO - Job 26: Subtask wait_for_stock_data
+[2025-05-11T02:51:08.574+0700] {task_command.py:426} INFO - Running <TaskInstance: data_transformation.wait_for_stock_data scheduled__2025-05-09T17:00:00+00:00 [running]> on host f94ba298fced
+[2025-05-11T02:51:09.067+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='data_transformation' AIRFLOW_CTX_TASK_ID='wait_for_stock_data' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T02:51:09.068+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T02:51:09.108+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T02:51:09.141+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag stock_data_ingestion on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T02:51:09.150+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T02:51:09.173+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T02:51:09.212+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T02:51:09.245+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T02:51:09.318+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T02:51:09.325+0700] {local_task_job_runner.py:222} INFO - ::endgroup::

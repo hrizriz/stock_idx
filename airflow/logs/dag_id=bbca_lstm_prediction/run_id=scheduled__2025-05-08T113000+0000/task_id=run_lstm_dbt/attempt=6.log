@@ -1,0 +1,68 @@
+[2025-05-11T04:12:36.901+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T04:12:36.938+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.run_lstm_dbt scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T04:12:36.948+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.run_lstm_dbt scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T04:12:36.948+0700] {taskinstance.py:2306} INFO - Starting attempt 6 of 7
+[2025-05-11T04:12:36.970+0700] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): run_lstm_dbt> on 2025-05-08 11:30:00+00:00
+[2025-05-11T04:12:36.981+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'run_lstm_dbt', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '110', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpbrcqyo8t']
+[2025-05-11T04:12:36.985+0700] {standard_task_runner.py:91} INFO - Job 110: Subtask run_lstm_dbt
+[2025-05-11T04:12:36.994+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=52) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T04:12:36.995+0700] {standard_task_runner.py:63} INFO - Started process 73 to run task
+[2025-05-11T04:12:37.076+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.run_lstm_dbt scheduled__2025-05-08T11:30:00+00:00 [running]> on host 63831b4a45c6
+[2025-05-11T04:12:37.215+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='run_lstm_dbt' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='6' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T04:12:37.216+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T04:12:37.261+0700] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2025-05-11T04:12:37.263+0700] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'cd /opt/***/dbt && dbt run --profiles-dir /opt/***/dbt --select stg_stock_predictions fct_stock_predictions lstm_performance_metrics stock_prediction_dashboard']
+[2025-05-11T04:12:37.281+0700] {subprocess.py:86} INFO - Output:
+[2025-05-11T04:12:41.225+0700] {subprocess.py:93} INFO - [0m21:12:41  Running with dbt=1.9.4
+[2025-05-11T04:12:41.916+0700] {subprocess.py:93} INFO - [0m21:12:41  Registered adapter: postgres=1.9.0
+[2025-05-11T04:12:43.587+0700] {subprocess.py:93} INFO - [0m21:12:43  Found 14 models, 3 data tests, 6 sources, 434 macros
+[2025-05-11T04:12:43.595+0700] {subprocess.py:93} INFO - [0m21:12:43
+[2025-05-11T04:12:43.597+0700] {subprocess.py:93} INFO - [0m21:12:43  Concurrency: 4 threads (target='dev')
+[2025-05-11T04:12:43.599+0700] {subprocess.py:93} INFO - [0m21:12:43
+[2025-05-11T04:12:43.988+0700] {subprocess.py:93} INFO - [0m21:12:43  1 of 4 START sql view model public_staging.stg_stock_predictions ............... [RUN]
+[2025-05-11T04:12:44.289+0700] {subprocess.py:93} INFO - [0m21:12:44  1 of 4 OK created sql view model public_staging.stg_stock_predictions .......... [[32mCREATE VIEW[0m in 0.29s]
+[2025-05-11T04:12:44.297+0700] {subprocess.py:93} INFO - [0m21:12:44  2 of 4 START sql table model public_core.fct_stock_predictions ................. [RUN]
+[2025-05-11T04:12:46.777+0700] {subprocess.py:93} INFO - [0m21:12:46  2 of 4 OK created sql table model public_core.fct_stock_predictions ............ [[32mSELECT 1[0m in 2.48s]
+[2025-05-11T04:12:46.784+0700] {subprocess.py:93} INFO - [0m21:12:46  3 of 4 START sql table model public_analytics.lstm_performance_metrics ......... [RUN]
+[2025-05-11T04:12:46.786+0700] {subprocess.py:93} INFO - [0m21:12:46  4 of 4 START sql table model public_analytics.stock_prediction_dashboard ....... [RUN]
+[2025-05-11T04:12:46.902+0700] {subprocess.py:93} INFO - [0m21:12:46  4 of 4 ERROR creating sql table model public_analytics.stock_prediction_dashboard  [[31mERROR[0m in 0.11s]
+[2025-05-11T04:12:46.904+0700] {subprocess.py:93} INFO - [0m21:12:46  3 of 4 ERROR creating sql table model public_analytics.lstm_performance_metrics  [[31mERROR[0m in 0.11s]
+[2025-05-11T04:12:46.951+0700] {subprocess.py:93} INFO - [0m21:12:46
+[2025-05-11T04:12:46.953+0700] {subprocess.py:93} INFO - [0m21:12:46  Finished running 3 table models, 1 view model in 0 hours 0 minutes and 3.35 seconds (3.35s).
+[2025-05-11T04:12:47.061+0700] {subprocess.py:93} INFO - [0m21:12:47
+[2025-05-11T04:12:47.063+0700] {subprocess.py:93} INFO - [0m21:12:47  [31mCompleted with 2 errors, 0 partial successes, and 0 warnings:[0m
+[2025-05-11T04:12:47.065+0700] {subprocess.py:93} INFO - [0m21:12:47
+[2025-05-11T04:12:47.067+0700] {subprocess.py:93} INFO - [0m21:12:47    Database Error in model stock_prediction_dashboard (models/marts/analytics/stock_prediction_dashboard.sql)
+[2025-05-11T04:12:47.068+0700] {subprocess.py:93} INFO -   column ld.predicted_close does not exist
+[2025-05-11T04:12:47.069+0700] {subprocess.py:93} INFO -   LINE 66:         ld.predicted_close,
+[2025-05-11T04:12:47.069+0700] {subprocess.py:93} INFO -                    ^
+[2025-05-11T04:12:47.070+0700] {subprocess.py:93} INFO -   compiled code at target/run/idx_stock/models/marts/analytics/stock_prediction_dashboard.sql
+[2025-05-11T04:12:47.071+0700] {subprocess.py:93} INFO - [0m21:12:47
+[2025-05-11T04:12:47.071+0700] {subprocess.py:93} INFO - [0m21:12:47    Database Error in model lstm_performance_metrics (models/marts/analytics/lstm_performance_metrics.sql)
+[2025-05-11T04:12:47.072+0700] {subprocess.py:93} INFO -   column "actual_close" does not exist
+[2025-05-11T04:12:47.073+0700] {subprocess.py:93} INFO -   LINE 23:         SUM(CASE WHEN actual_close IS NOT NULL THEN 1 ELSE 0...
+[2025-05-11T04:12:47.073+0700] {subprocess.py:93} INFO -                                  ^
+[2025-05-11T04:12:47.074+0700] {subprocess.py:93} INFO -   compiled code at target/run/idx_stock/models/marts/analytics/lstm_performance_metrics.sql
+[2025-05-11T04:12:47.075+0700] {subprocess.py:93} INFO - [0m21:12:47
+[2025-05-11T04:12:47.075+0700] {subprocess.py:93} INFO - [0m21:12:47  Done. PASS=2 WARN=0 ERROR=2 SKIP=0 TOTAL=4
+[2025-05-11T04:12:48.753+0700] {subprocess.py:97} INFO - Command exited with return code 1
+[2025-05-11T04:12:48.754+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T04:12:48.769+0700] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/bash.py", line 243, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 1.
+[2025-05-11T04:12:48.775+0700] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=bbca_lstm_prediction, task_id=run_lstm_dbt, run_id=scheduled__2025-05-08T11:30:00+00:00, execution_date=20250508T113000, start_date=20250510T211236, end_date=20250510T211248
+[2025-05-11T04:12:48.793+0700] {standard_task_runner.py:110} ERROR - Failed to execute job 110 for task run_lstm_dbt (Bash command failed. The command returned a non-zero exit code 1.; 73)
+[2025-05-11T04:12:48.818+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2025-05-11T04:12:48.838+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T04:12:48.844+0700] {local_task_job_runner.py:222} INFO - ::endgroup::

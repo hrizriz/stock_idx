@@ -1,0 +1,44 @@
+FROM apache/airflow:2.9.2
+
+USER airflow
+
+# Install dependency inti untuk pipeline data
+RUN pip install --no-cache-dir \
+    psycopg2-binary \
+    openpyxl \
+    pandas \
+    pendulum \
+    requests \
+    beautifulsoup4 \
+    textblob
+
+# Install dbt dan dependency visualisasi 
+RUN pip install --no-cache-dir \
+    "dbt-core==1.9.4" \
+    "dbt-postgres==1.9.0" \
+    matplotlib \
+    seaborn
+
+# Install dependency analisis time series dan ML
+RUN pip install --no-cache-dir \
+    scikit-learn \
+    numpy \
+    statsmodels \
+    ta \
+    pmdarima
+
+# Install PyTorch untuk LSTM (versi CPU saja, lebih ringan)
+RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
+
+# Install Grafana API client (opsional)
+RUN pip install --no-cache-dir grafana-api-client
+
+# Install tambahan ML dan time series tools
+RUN pip install --no-cache-dir \
+    xgboost \
+    lightgbm \
+    optuna \
+    shap \
+    prophet \
+    tensorflow \
+    pywavelets

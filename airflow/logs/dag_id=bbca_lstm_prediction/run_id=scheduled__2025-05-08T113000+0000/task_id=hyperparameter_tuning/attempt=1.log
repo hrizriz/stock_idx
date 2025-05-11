@@ -1,0 +1,79 @@
+[2025-05-11T03:51:15.866+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T03:51:15.908+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.hyperparameter_tuning scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T03:51:15.918+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.hyperparameter_tuning scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T03:51:15.919+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T03:51:15.938+0700] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): hyperparameter_tuning> on 2025-05-08 11:30:00+00:00
+[2025-05-11T03:51:15.950+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'hyperparameter_tuning', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '99', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpe2__q6ta']
+[2025-05-11T03:51:15.954+0700] {standard_task_runner.py:91} INFO - Job 99: Subtask hyperparameter_tuning
+[2025-05-11T03:51:15.962+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1295) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T03:51:15.964+0700] {standard_task_runner.py:63} INFO - Started process 1332 to run task
+[2025-05-11T03:51:16.044+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.hyperparameter_tuning scheduled__2025-05-08T11:30:00+00:00 [running]> on host a61c3a2f78e1
+[2025-05-11T03:51:16.174+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='hyperparameter_tuning' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T03:51:16.176+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T03:51:16.231+0700] {logging_mixin.py:188} INFO - Features yang digunakan untuk hyperparameter tuning: ['open_price', 'prev_close', 'high', 'low', 'percent_change', 'percent_change_lag1', 'volatility', 'ema12', 'ema26', 'macd_line', 'signal_line', 'rsi', 'ma20', 'std20', 'upper_band', 'lower_band', 'bb_position', 'highest_high', 'lowest_low', '%K', '%D', 'atr', 'obv', 'tenkan_sen', 'kijun_sen', 'rsi_14', 'rsi_21', 'month']
+[2025-05-11T03:51:16.244+0700] {logging_mixin.py:188} INFO - Melakukan grid search dengan 16 kombinasi parameter
+[2025-05-11T03:51:16.245+0700] {logging_mixin.py:188} INFO - Testing combination 1/16: seq=5, hidden=32, layers=1, lr=0.01, dropout=0.0
+[2025-05-11T03:51:16.294+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-11T03:51:19.043+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 10
+[2025-05-11T03:51:19.046+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.76
+[2025-05-11T03:51:19.061+0700] {logging_mixin.py:188} INFO - Testing combination 2/16: seq=5, hidden=32, layers=1, lr=0.01, dropout=0.2
+[2025-05-11T03:51:19.068+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-11T03:51:19.139+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-11T03:51:19.142+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.32
+[2025-05-11T03:51:19.149+0700] {logging_mixin.py:188} INFO - Testing combination 3/16: seq=5, hidden=32, layers=2, lr=0.01, dropout=0.0
+[2025-05-11T03:51:19.264+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-11T03:51:19.266+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.05
+[2025-05-11T03:51:19.267+0700] {logging_mixin.py:188} INFO - Testing combination 4/16: seq=5, hidden=32, layers=2, lr=0.01, dropout=0.2
+[2025-05-11T03:51:19.383+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-11T03:51:19.386+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.73
+[2025-05-11T03:51:19.386+0700] {logging_mixin.py:188} INFO - Testing combination 5/16: seq=5, hidden=64, layers=1, lr=0.01, dropout=0.0
+[2025-05-11T03:51:19.390+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-11T03:51:19.494+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-11T03:51:19.497+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.88
+[2025-05-11T03:51:19.498+0700] {logging_mixin.py:188} INFO - Testing combination 6/16: seq=5, hidden=64, layers=1, lr=0.01, dropout=0.2
+[2025-05-11T03:51:19.502+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-11T03:51:19.638+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-11T03:51:19.644+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.06
+[2025-05-11T03:51:19.659+0700] {logging_mixin.py:188} INFO - Testing combination 7/16: seq=5, hidden=64, layers=2, lr=0.01, dropout=0.0
+[2025-05-11T03:51:20.111+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-11T03:51:20.115+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.28
+[2025-05-11T03:51:20.117+0700] {logging_mixin.py:188} INFO - Testing combination 8/16: seq=5, hidden=64, layers=2, lr=0.01, dropout=0.2
+[2025-05-11T03:51:20.320+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-11T03:51:20.325+0700] {logging_mixin.py:188} INFO - Validation RMSE: 5.50
+[2025-05-11T03:51:20.326+0700] {logging_mixin.py:188} INFO - Testing combination 9/16: seq=10, hidden=32, layers=1, lr=0.01, dropout=0.0
+[2025-05-11T03:51:20.331+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-11T03:51:20.420+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-11T03:51:20.422+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.15
+[2025-05-11T03:51:20.423+0700] {logging_mixin.py:188} INFO - Testing combination 10/16: seq=10, hidden=32, layers=1, lr=0.01, dropout=0.2
+[2025-05-11T03:51:20.427+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-11T03:51:20.515+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-11T03:51:20.519+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.99
+[2025-05-11T03:51:20.520+0700] {logging_mixin.py:188} INFO - Testing combination 11/16: seq=10, hidden=32, layers=2, lr=0.01, dropout=0.0
+[2025-05-11T03:51:20.828+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-11T03:51:20.832+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.78
+[2025-05-11T03:51:20.833+0700] {logging_mixin.py:188} INFO - Testing combination 12/16: seq=10, hidden=32, layers=2, lr=0.01, dropout=0.2
+[2025-05-11T03:51:21.221+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-11T03:51:21.227+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.95
+[2025-05-11T03:51:21.228+0700] {logging_mixin.py:188} INFO - Testing combination 13/16: seq=10, hidden=64, layers=1, lr=0.01, dropout=0.0
+[2025-05-11T03:51:21.240+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-11T03:51:21.487+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.003067, Val Loss: 0.014145
+[2025-05-11T03:51:21.527+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 12
+[2025-05-11T03:51:21.530+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.53
+[2025-05-11T03:51:21.531+0700] {logging_mixin.py:188} INFO - Testing combination 14/16: seq=10, hidden=64, layers=1, lr=0.01, dropout=0.2
+[2025-05-11T03:51:21.535+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-11T03:51:21.649+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-11T03:51:21.653+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.15
+[2025-05-11T03:51:21.654+0700] {logging_mixin.py:188} INFO - Testing combination 15/16: seq=10, hidden=64, layers=2, lr=0.01, dropout=0.0
+[2025-05-11T03:51:22.013+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-11T03:51:22.018+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.76
+[2025-05-11T03:51:22.019+0700] {logging_mixin.py:188} INFO - Testing combination 16/16: seq=10, hidden=64, layers=2, lr=0.01, dropout=0.2
+[2025-05-11T03:51:22.537+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.007099, Val Loss: 0.055236
+[2025-05-11T03:51:22.585+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-11T03:51:22.591+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.56
+[2025-05-11T03:51:22.621+0700] {logging_mixin.py:188} INFO - ✅ Parameter terbaik untuk BBCA LSTM: {'seq_length': 5, 'hidden_dim': 64, 'num_layers': 1, 'learning_rate': 0.01, 'dropout': 0.2}, RMSE: 1.06
+[2025-05-11T03:51:22.623+0700] {python.py:237} INFO - Done. Returned value was: {'seq_length': 5, 'hidden_dim': 64, 'num_layers': 1, 'learning_rate': 0.01, 'dropout': 0.2}
+[2025-05-11T03:51:22.623+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T03:51:22.670+0700] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=bbca_lstm_prediction, task_id=hyperparameter_tuning, run_id=scheduled__2025-05-08T11:30:00+00:00, execution_date=20250508T113000, start_date=20250510T205115, end_date=20250510T205122
+[2025-05-11T03:51:22.735+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T03:51:22.792+0700] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T03:51:22.799+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
