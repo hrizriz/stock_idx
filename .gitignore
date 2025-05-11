@@ -8,3 +8,4 @@ venv/
 ignore/
 .env
 airflow/dags/telegram_config.py
+init-airflow.sh

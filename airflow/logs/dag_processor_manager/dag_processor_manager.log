@@ -9042,3 +9042,17 @@ File Path                                    PID    Runtime      # DAGs    # Err
 /opt/airflow/dags/bulk_load_all_excel.py                              1           0  0.61s           2025-05-11T08:14:23
 /opt/airflow/dags/data_transformation.py                              1           0  0.17s           2025-05-11T08:14:24
 ================================================================================
+[2025-05-11T15:15:16.068+0700] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                      PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/stock_predictions_bbca.py    554  3.04s             1           0  9.98s           2025-05-11T08:14:42
+/opt/airflow/dags/bbca_dag.py                                         1           0  5.24s           2025-05-11T08:15:03
+/opt/airflow/dags/reporting_and_alerting.py                           1           0  0.81s           2025-05-11T08:15:03
+/opt/airflow/dags/bulk_load_all_excel.py                              1           0  0.71s           2025-05-11T08:14:54
+/opt/airflow/dags/stock_data_ingestion.py                             1           0  0.62s           2025-05-11T08:15:12
+/opt/airflow/dags/news_data_ingestion.py                              1           0  0.59s           2025-05-11T08:15:09
+/opt/airflow/dags/data_transformation.py                              1           0  0.19s           2025-05-11T08:14:55
+================================================================================
