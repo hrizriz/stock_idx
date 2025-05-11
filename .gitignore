@@ -1,3 +1,4 @@
 airflow/data
+airflow/logs
 venv/
 ignore/
