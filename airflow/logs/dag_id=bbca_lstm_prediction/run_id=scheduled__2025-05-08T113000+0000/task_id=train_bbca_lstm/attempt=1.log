@@ -105,3 +105,26 @@
 [2025-05-12T06:21:12.285+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
 [2025-05-12T06:21:12.326+0700] {taskinstance.py:3503} INFO - 2 downstream tasks scheduled from follow-on schedule check
 [2025-05-12T06:21:12.332+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T16:21:44.247+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T16:21:44.344+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.train_bbca_lstm scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T16:21:44.369+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.train_bbca_lstm scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T16:21:44.371+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T16:21:44.410+0700] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): train_bbca_lstm> on 2025-05-08 11:30:00+00:00
+[2025-05-12T16:21:44.441+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=4935) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T16:21:44.437+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'train_bbca_lstm', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '127', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpa2exlmql']
+[2025-05-12T16:21:44.445+0700] {standard_task_runner.py:63} INFO - Started process 4948 to run task
+[2025-05-12T16:21:44.446+0700] {standard_task_runner.py:91} INFO - Job 127: Subtask train_bbca_lstm
+[2025-05-12T16:21:44.614+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.train_bbca_lstm scheduled__2025-05-08T11:30:00+00:00 [running]> on host 8d034d8013d1
+[2025-05-12T16:21:44.914+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='train_bbca_lstm' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T16:21:44.917+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T16:21:45.028+0700] {logging_mixin.py:188} INFO - Menggunakan parameter hasil tuning: {'seq_length': 15, 'hidden_dim': 128, 'num_layers': 2, 'learning_rate': 0.02, 'dropout': 0.2}
+[2025-05-12T16:21:54.323+0700] {logging_mixin.py:188} INFO - Epoch [10/100], Loss: 0.179414
+[2025-05-12T16:21:55.819+0700] {logging_mixin.py:188} INFO - Epoch [20/100], Loss: 0.076939
+[2025-05-12T16:21:57.274+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 27
+[2025-05-12T16:21:57.346+0700] {logging_mixin.py:188} INFO - ✅ LSTM model untuk BBCA berhasil dilatih dan disimpan
+[2025-05-12T16:21:57.348+0700] {python.py:237} INFO - Done. Returned value was: /opt/***/data/lstm/bbca_lstm_model.pth
+[2025-05-12T16:21:57.350+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T16:21:57.418+0700] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=bbca_lstm_prediction, task_id=train_bbca_lstm, run_id=scheduled__2025-05-08T11:30:00+00:00, execution_date=20250508T113000, start_date=20250512T092144, end_date=20250512T092157
+[2025-05-12T16:21:57.532+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T16:21:57.614+0700] {taskinstance.py:3503} INFO - 2 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T16:21:57.620+0700] {local_task_job_runner.py:222} INFO - ::endgroup::

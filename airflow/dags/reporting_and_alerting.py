@@ -11,6 +11,11 @@ import pendulum
 import json
 import os
 import requests
+import logging
+
+# Konfigurasi logging untuk debugging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 local_tz = pendulum.timezone("Asia/Jakarta")
 
@@ -26,24 +31,52 @@ default_args = {
 
 def get_telegram_credentials():
     """
-    Retrieve Telegram bot credentials from Airflow Variables
+    Retrieve Telegram bot credentials from environment variables first,
+    then fallback to Airflow Variables if not found
     """
-    telegram_bot_token = Variable.get("TELEGRAM_BOT_TOKEN")
-    telegram_chat_id = Variable.get("TELEGRAM_CHAT_ID")
+    # Coba dapatkan dari environment variables dulu
+    telegram_bot_token = os.environ.get("TELEGRAM_BOT_TOKEN")
+    telegram_chat_id = os.environ.get("TELEGRAM_CHAT_ID")
+    
+    # Jika tidak ada di environment variables, coba dari Airflow Variables
+    if not telegram_bot_token:
+        try:
+            telegram_bot_token = Variable.get("TELEGRAM_BOT_TOKEN")
+            logger.info("Successfully retrieved bot token from Airflow Variables")
+        except:
+            logger.warning("Failed to get TELEGRAM_BOT_TOKEN from Airflow Variables")
+    
+    if not telegram_chat_id:
+        try:
+            telegram_chat_id = Variable.get("TELEGRAM_CHAT_ID")
+            logger.info("Successfully retrieved chat ID from Airflow Variables")
+        except:
+            logger.warning("Failed to get TELEGRAM_CHAT_ID from Airflow Variables")
+    
+    # Log for debugging (partially obscuring token for security)
+    if telegram_bot_token:
+        masked_token = f"{telegram_bot_token[:5]}...{telegram_bot_token[-5:]}"
+        logger.info(f"Using Telegram bot token: {masked_token}")
+    else:
+        logger.error("Telegram bot token not found!")
+        
+    if telegram_chat_id:
+        logger.info(f"Using Telegram chat ID: {telegram_chat_id}")
+    else:
+        logger.error("Telegram chat ID not found!")
+        
     return telegram_bot_token, telegram_chat_id
-
-def get_telegram_conn():
-    """
-    Get Telegram connection from Airflow connections
-    """
-    conn = BaseHook.get_connection("telegram_conn")
-    return conn
 
 def get_telegram_url():
     """
     Create Telegram API URL using the bot token
     """
     telegram_bot_token, _ = get_telegram_credentials()
+    if not telegram_bot_token:
+        logger.error("Cannot create Telegram URL: bot token not found")
+        return None
+        
+    # Membuat URL langsung tanpa encoding
     return f"https://api.telegram.org/bot{telegram_bot_token}/sendMessage"
 
 def create_send_message_payload(message, disable_web_page_preview=False):
@@ -51,12 +84,50 @@ def create_send_message_payload(message, disable_web_page_preview=False):
     Create payload for Telegram API
     """
     _, telegram_chat_id = get_telegram_credentials()
-    return {
+    if not telegram_chat_id:
+        logger.error("Cannot create payload: chat ID not found")
+        return None
+        
+    payload = {
         "chat_id": telegram_chat_id,
         "text": message,
         "parse_mode": "Markdown",
         "disable_web_page_preview": disable_web_page_preview
     }
+    
+    # Log untuk debugging (tidak termasuk message yang mungkin panjang)
+    logger.info(f"Created payload with chat_id: {telegram_chat_id}")
+    
+    return payload
+
+def send_telegram_message(message, disable_web_page_preview=False):
+    """
+    Generic function to send any message to Telegram
+    """
+    url = get_telegram_url()
+    if not url:
+        return "Error: Could not create Telegram URL"
+        
+    payload = create_send_message_payload(message, disable_web_page_preview)
+    if not payload:
+        return "Error: Could not create payload"
+        
+    logger.info(f"Sending to Telegram URL: {url}")
+    
+    try:
+        response = requests.post(url, json=payload)
+        response_text = response.text
+        logger.info(f"Telegram response status: {response.status_code}")
+        logger.info(f"Telegram response text: {response_text}")
+        
+        if response.status_code == 200:
+            return "Message sent successfully"
+        else:
+            return f"Error sending to Telegram: {response.status_code}, {response_text}"
+    except Exception as e:
+        error_msg = str(e)
+        logger.error(f"Exception sending to Telegram: {error_msg}")
+        return f"Error exception: {error_msg}"
 
 def send_stock_movement_alert():
     """
@@ -67,12 +138,18 @@ def send_stock_movement_alert():
     postgres_password = os.environ.get('POSTGRES_PASSWORD', 'airflow')
     postgres_db = os.environ.get('POSTGRES_DB', 'airflow')
     
-    conn = psycopg2.connect(
-        host="postgres",
-        dbname=postgres_db,
-        user=postgres_user,
-        password=postgres_password
-    )
+    logger.info(f"Connecting to PostgreSQL: {postgres_db}@postgres as {postgres_user}")
+    
+    try:
+        conn = psycopg2.connect(
+            host="postgres",
+            dbname=postgres_db,
+            user=postgres_user,
+            password=postgres_password
+        )
+    except Exception as e:
+        logger.error(f"Failed to connect to PostgreSQL: {str(e)}")
+        return f"Database connection error: {str(e)}"
     
     # Find latest date in database
     cursor = conn.cursor()
@@ -81,12 +158,12 @@ def send_stock_movement_alert():
     
     # If no data at all, exit function
     if not latest_date:
-        print("No data in database")
+        logger.warning("No data in database")
         return "No data"
     
     # Format date for query
     date_filter = latest_date.strftime('%Y-%m-%d')
-    print(f"Using data for date: {date_filter}")
+    logger.info(f"Using data for date: {date_filter}")
     
     # Query for stock movements
     query = {
@@ -143,28 +220,21 @@ def send_stock_movement_alert():
                     body += f"• *{row['symbol']}* ({row['name']}): {row['volume']:,} lot\n"
             body += "\n"
     
+    conn.close()
+    
     # If no data to send
     if body == "":
-        print(f"No stock movement data for date {date_filter}")
+        logger.warning(f"No stock movement data for date {date_filter}")
         return f"No data for date {date_filter}"
     
     # Send to Telegram
     message = f"🔔 *Summary Saham ({date_filter})* 🔔\n\n{body}"
     
-    url = get_telegram_url()
-    payload = create_send_message_payload(message)
-    
-    try:
-        response = requests.post(url, json=payload)
-        print(f"Telegram Status (Movement): {response.status_code}, Response: {response.text}")
-        
-        if response.status_code == 200:
-            return f"Stock movement report sent: {len(last_df) if last_df is not None else 0} stocks"
-        else:
-            return f"Error sending to Telegram: {response.status_code}, {response.text}"
-    except Exception as e:
-        print(f"Error exception: {str(e)}")
-        return f"Error exception: {str(e)}"
+    result = send_telegram_message(message)
+    if "successfully" in result:
+        return f"Stock movement report sent: {len(last_df) if last_df is not None else 0} stocks"
+    else:
+        return result
 
 def send_news_sentiment_report():
     """
@@ -175,12 +245,16 @@ def send_news_sentiment_report():
     postgres_password = os.environ.get('POSTGRES_PASSWORD', 'airflow')
     postgres_db = os.environ.get('POSTGRES_DB', 'airflow')
     
-    conn = psycopg2.connect(
-        host="postgres",
-        dbname=postgres_db,
-        user=postgres_user,
-        password=postgres_password
-    )
+    try:
+        conn = psycopg2.connect(
+            host="postgres",
+            dbname=postgres_db,
+            user=postgres_user,
+            password=postgres_password
+        )
+    except Exception as e:
+        logger.error(f"Failed to connect to PostgreSQL: {str(e)}")
+        return f"Database connection error: {str(e)}"
     
     # Check latest available date in detik_ticker_sentiment table
     date_query = """
@@ -195,10 +269,10 @@ def send_news_sentiment_report():
     
     # If no data at all
     if not latest_date:
-        print("No date data in news sentiment table")
+        logger.warning("No date data in news sentiment table")
         return "No news sentiment data"
     
-    print(f"Using sentiment data for date: {latest_date}")
+    logger.info(f"Using sentiment data for date: {latest_date}")
     
     # Query for stocks with highest and lowest sentiment using latest date
     sql = f"""
@@ -225,7 +299,7 @@ def send_news_sentiment_report():
     df = pd.read_sql(sql, conn)
     
     if df.empty:
-        print(f"No news sentiment data for date {latest_date}")
+        logger.warning(f"No news sentiment data for date {latest_date}")
         return f"No news sentiment data for date {latest_date}"
     
     # Create Telegram message
@@ -269,9 +343,9 @@ def send_news_sentiment_report():
     latest_news_date = cursor.fetchone()[0]
     
     if not latest_news_date:
-        print("No news data in detik_news table")
+        logger.warning("No news data in detik_news table")
     else:
-        print(f"Using latest news from date: {latest_news_date}")
+        logger.info(f"Using latest news from date: {latest_news_date}")
         
         # Add some latest news
         news_sql = f"""
@@ -307,20 +381,11 @@ def send_news_sentiment_report():
     conn.close()
     
     # Send to Telegram
-    url = get_telegram_url()
-    payload = create_send_message_payload(message, disable_web_page_preview=True)
-    
-    try:
-        response = requests.post(url, json=payload)
-        print(f"Telegram Status (Sentiment): {response.status_code}, Response: {response.text}")
-        
-        if response.status_code == 200:
-            return f"News sentiment report sent: {len(df)} stocks"
-        else:
-            return f"Error sending to Telegram: {response.status_code}, {response.text}"
-    except Exception as e:
-        print(f"Error exception: {str(e)}")
-        return f"Error exception: {str(e)}"
+    result = send_telegram_message(message, disable_web_page_preview=True)
+    if "successfully" in result:
+        return f"News sentiment report sent: {len(df)} stocks"
+    else:
+        return result
 
 def send_technical_signal_report():
     """
@@ -331,12 +396,16 @@ def send_technical_signal_report():
     postgres_password = os.environ.get('POSTGRES_PASSWORD', 'airflow')
     postgres_db = os.environ.get('POSTGRES_DB', 'airflow')
     
-    conn = psycopg2.connect(
-        host="postgres",
-        dbname=postgres_db,
-        user=postgres_user,
-        password=postgres_password
-    )
+    try:
+        conn = psycopg2.connect(
+            host="postgres",
+            dbname=postgres_db,
+            user=postgres_user,
+            password=postgres_password
+        )
+    except Exception as e:
+        logger.error(f"Failed to connect to PostgreSQL: {str(e)}")
+        return f"Database connection error: {str(e)}"
     
     # Query for stocks with technical signals
     sql = """
@@ -375,7 +444,7 @@ def send_technical_signal_report():
     conn.close()
     
     if df.empty:
-        print("No significant technical signals")
+        logger.warning("No significant technical signals")
         return "No technical signals"
     
     # Create Telegram message
@@ -412,20 +481,11 @@ def send_technical_signal_report():
             message += f"{i}. *{row.symbol}*: {signal_info}\n"
     
     # Send to Telegram
-    url = get_telegram_url()
-    payload = create_send_message_payload(message)
-    
-    try:
-        response = requests.post(url, json=payload)
-        print(f"Telegram Status (Technical): {response.status_code}, Response: {response.text}")
-        
-        if response.status_code == 200:
-            return f"Technical signal report sent: {len(df)} stocks"
-        else:
-            return f"Error sending to Telegram: {response.status_code}, {response.text}"
-    except Exception as e:
-        print(f"Error exception: {str(e)}")
-        return f"Error exception: {str(e)}"
+    result = send_telegram_message(message)
+    if "successfully" in result:
+        return f"Technical signal report sent: {len(df)} stocks"
+    else:
+        return result
 
 def send_accumulation_distribution_report():
     """
@@ -436,12 +496,16 @@ def send_accumulation_distribution_report():
     postgres_password = os.environ.get('POSTGRES_PASSWORD', 'airflow')
     postgres_db = os.environ.get('POSTGRES_DB', 'airflow')
     
-    conn = psycopg2.connect(
-        host="postgres",
-        dbname=postgres_db,
-        user=postgres_user,
-        password=postgres_password
-    )
+    try:
+        conn = psycopg2.connect(
+            host="postgres",
+            dbname=postgres_db,
+            user=postgres_user,
+            password=postgres_password
+        )
+    except Exception as e:
+        logger.error(f"Failed to connect to PostgreSQL: {str(e)}")
+        return f"Database connection error: {str(e)}"
     
     # Query to get A/D Line data
     # We create a temporary table first to calculate money flow volume
@@ -527,7 +591,7 @@ def send_accumulation_distribution_report():
     
     # Check if there is data
     if accumulation_df.empty and distribution_df.empty:
-        print("No significant Accumulation/Distribution Line data")
+        logger.warning("No significant Accumulation/Distribution Line data")
         return "No A/D Line data"
     
     # Create Telegram message
@@ -570,20 +634,11 @@ def send_accumulation_distribution_report():
     message += "Data diambil dari 40 hari terakhir."
     
     # Send to Telegram
-    url = get_telegram_url()
-    payload = create_send_message_payload(message)
-    
-    try:
-        response = requests.post(url, json=payload)
-        print(f"Telegram Status (A/D Line): {response.status_code}, Response: {response.text}")
-        
-        if response.status_code == 200:
-            return f"A/D Line report sent: {len(accumulation_df) + len(distribution_df)} stocks"
-        else:
-            return f"Error sending to Telegram: {response.status_code}, {response.text}"
-    except Exception as e:
-        print(f"Error exception: {str(e)}")
-        return f"Error exception: {str(e)}"
+    result = send_telegram_message(message)
+    if "successfully" in result:
+        return f"A/D Line report sent: {len(accumulation_df) + len(distribution_df)} stocks"
+    else:
+        return result
 
 # DAG definition
 with DAG(
@@ -618,10 +673,9 @@ with DAG(
         failed_states=["failed", "skipped"]
     )
 
-    # wait_2 = DummyOperator(
-    #     task_id="wait_2"
-    # )
-
+    wait_2 = DummyOperator(
+        task_id="wait_2"
+    )
     
     # Send stock movement report
     send_movement_alert = PythonOperator(
@@ -653,4 +707,4 @@ with DAG(
     )
     
     # Task dependencies
-    wait_for_transformation >> [send_movement_alert, send_sentiment_report, send_technical_report, send_ad_line_report] >> end_task
+    [wait_for_transformation, wait_for_technical] >> wait_2 >> [send_movement_alert, send_sentiment_report, send_technical_report, send_ad_line_report] >> end_task

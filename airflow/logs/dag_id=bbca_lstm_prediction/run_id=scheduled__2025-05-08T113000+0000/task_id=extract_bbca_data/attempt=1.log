@@ -86,3 +86,25 @@
 [2025-05-12T06:16:21.013+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
 [2025-05-12T06:16:21.061+0700] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
 [2025-05-12T06:16:21.068+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T16:17:42.303+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T16:17:42.372+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.extract_bbca_data scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T16:17:42.390+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.extract_bbca_data scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T16:17:42.391+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T16:17:42.423+0700] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): extract_bbca_data> on 2025-05-08 11:30:00+00:00
+[2025-05-12T16:17:42.444+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=4514) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T16:17:42.447+0700] {standard_task_runner.py:63} INFO - Started process 4534 to run task
+[2025-05-12T16:17:42.444+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'extract_bbca_data', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '124', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmp8ojra8zu']
+[2025-05-12T16:17:42.450+0700] {standard_task_runner.py:91} INFO - Job 124: Subtask extract_bbca_data
+[2025-05-12T16:17:42.615+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.extract_bbca_data scheduled__2025-05-08T11:30:00+00:00 [running]> on host 8d034d8013d1
+[2025-05-12T16:17:42.896+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='extract_bbca_data' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T16:17:42.900+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T16:17:43.027+0700] {logging_mixin.py:188} WARNING - /opt/***/dags/stock_predictions_bbca.py:156 UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+[2025-05-12T16:17:43.110+0700] {logging_mixin.py:188} WARNING - /opt/***/dags/stock_predictions_bbca.py:163 FutureWarning: DataFrame.fillna with 'method' is deprecated and will raise in a future version. Use obj.ffill() or obj.bfill() instead.
+[2025-05-12T16:17:43.290+0700] {logging_mixin.py:188} WARNING - /opt/***/dags/stock_predictions_bbca.py:255 FutureWarning: DataFrame.fillna with 'method' is deprecated and will raise in a future version. Use obj.ffill() or obj.bfill() instead.
+[2025-05-12T16:17:43.414+0700] {logging_mixin.py:188} INFO - ✅ Data BBCA diambil: 390 baris
+[2025-05-12T16:17:43.415+0700] {python.py:237} INFO - Done. Returned value was: /opt/***/data/lstm/bbca_data.csv
+[2025-05-12T16:17:43.417+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T16:17:43.494+0700] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=bbca_lstm_prediction, task_id=extract_bbca_data, run_id=scheduled__2025-05-08T11:30:00+00:00, execution_date=20250508T113000, start_date=20250512T091742, end_date=20250512T091743
+[2025-05-12T16:17:43.551+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T16:17:43.630+0700] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T16:17:43.640+0700] {local_task_job_runner.py:222} INFO - ::endgroup::

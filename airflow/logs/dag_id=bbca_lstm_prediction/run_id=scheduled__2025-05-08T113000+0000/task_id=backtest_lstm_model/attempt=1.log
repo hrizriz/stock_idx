@@ -106,3 +106,30 @@
 [2025-05-12T06:21:21.600+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
 [2025-05-12T06:21:21.645+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
 [2025-05-12T06:21:21.651+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T16:22:07.634+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T16:22:07.742+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.backtest_lstm_model scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T16:22:07.776+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.backtest_lstm_model scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T16:22:07.778+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T16:22:07.833+0700] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): backtest_lstm_model> on 2025-05-08 11:30:00+00:00
+[2025-05-12T16:22:07.868+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'backtest_lstm_model', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '128', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpu5isee9w']
+[2025-05-12T16:22:07.875+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=4976) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T16:22:07.878+0700] {standard_task_runner.py:91} INFO - Job 128: Subtask backtest_lstm_model
+[2025-05-12T16:22:07.879+0700] {standard_task_runner.py:63} INFO - Started process 5025 to run task
+[2025-05-12T16:22:08.217+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.backtest_lstm_model scheduled__2025-05-08T11:30:00+00:00 [running]> on host 8d034d8013d1
+[2025-05-12T16:22:08.564+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='backtest_lstm_model' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T16:22:08.568+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T16:22:08.646+0700] {logging_mixin.py:188} WARNING - /opt/***/dags/stock_predictions_bbca.py:1052 UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+[2025-05-12T16:22:08.839+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/sklearn/utils/validation.py:2739 UserWarning: X does not have valid feature names, but MinMaxScaler was fitted with feature names
+[2025-05-12T16:22:13.224+0700] {logging_mixin.py:188} INFO - Epoch [10/50], Loss: 0.083383
+[2025-05-12T16:22:13.596+0700] {logging_mixin.py:188} INFO - Epoch [20/50], Loss: 0.039073
+[2025-05-12T16:22:13.921+0700] {logging_mixin.py:188} INFO - Epoch [30/50], Loss: 0.010966
+[2025-05-12T16:22:14.180+0700] {logging_mixin.py:188} INFO - Epoch [40/50], Loss: 0.009075
+[2025-05-12T16:22:14.426+0700] {logging_mixin.py:188} INFO - Epoch [50/50], Loss: 0.006612
+[2025-05-12T16:22:14.548+0700] {logging_mixin.py:188} INFO - ✅ Backtesting realistis selesai. RMSE: 174.27, MAE: 140.84, MAPE: 1.57%
+[2025-05-12T16:22:14.549+0700] {logging_mixin.py:188} INFO - Model terbaik untuk prediksi harga BBCA: LSTM dengan RMSE 174.27
+[2025-05-12T16:22:14.551+0700] {python.py:237} INFO - Done. Returned value was: 174.26730546229808
+[2025-05-12T16:22:14.553+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T16:22:14.621+0700] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=bbca_lstm_prediction, task_id=backtest_lstm_model, run_id=scheduled__2025-05-08T11:30:00+00:00, execution_date=20250508T113000, start_date=20250512T092207, end_date=20250512T092214
+[2025-05-12T16:22:14.715+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T16:22:14.764+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T16:22:14.770+0700] {local_task_job_runner.py:222} INFO - ::endgroup::

@@ -3632,3 +3632,1200 @@
 [2025-05-12T06:21:00.352+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
 [2025-05-12T06:21:00.391+0700] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
 [2025-05-12T06:21:00.395+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T16:18:02.284+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T16:18:02.352+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.hyperparameter_tuning scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T16:18:02.373+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.hyperparameter_tuning scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T16:18:02.374+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T16:18:02.408+0700] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): hyperparameter_tuning> on 2025-05-08 11:30:00+00:00
+[2025-05-12T16:18:02.437+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=4571) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T16:18:02.434+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'hyperparameter_tuning', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '126', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmp865uhqjp']
+[2025-05-12T16:18:02.441+0700] {standard_task_runner.py:63} INFO - Started process 4590 to run task
+[2025-05-12T16:18:02.442+0700] {standard_task_runner.py:91} INFO - Job 126: Subtask hyperparameter_tuning
+[2025-05-12T16:18:02.611+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.hyperparameter_tuning scheduled__2025-05-08T11:30:00+00:00 [running]> on host 8d034d8013d1
+[2025-05-12T16:18:03.009+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='hyperparameter_tuning' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T16:18:03.011+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T16:18:03.104+0700] {logging_mixin.py:188} INFO - Features yang digunakan untuk hyperparameter tuning: ['open_price', 'prev_close', 'high', 'low', 'percent_change', 'ma20', 'std20', 'bb_position', 'trend_5d', 'trend_10d', 'volatility_regime', 'percent_change_lag1', 'price_momentum', 'volatility', 'ema12', 'ema26', 'macd_line', 'signal_line', 'rsi', 'upper_band', 'lower_band', 'highest_high', 'lowest_low', '%K', '%D', 'atr', 'obv', 'tenkan_sen', 'kijun_sen', 'rsi_7', 'rsi_14', 'rsi_21', 'month']
+[2025-05-12T16:18:03.131+0700] {logging_mixin.py:188} INFO - Melakukan grid search dengan 324 kombinasi parameter
+[2025-05-12T16:18:03.132+0700] {logging_mixin.py:188} INFO - Testing combination 1/324: seq=5, hidden=32, layers=1, lr=0.005, dropout=0.0
+[2025-05-12T16:18:03.154+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:08.371+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.006577, Val Loss: 0.020449
+[2025-05-12T16:18:08.386+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 12
+[2025-05-12T16:18:08.392+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.80
+[2025-05-12T16:18:08.406+0700] {logging_mixin.py:188} INFO - Testing combination 2/324: seq=5, hidden=32, layers=1, lr=0.005, dropout=0.2
+[2025-05-12T16:18:08.420+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:08.503+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.023770, Val Loss: 0.000952
+[2025-05-12T16:18:08.541+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 15
+[2025-05-12T16:18:08.546+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.88
+[2025-05-12T16:18:08.548+0700] {logging_mixin.py:188} INFO - Testing combination 3/324: seq=5, hidden=32, layers=1, lr=0.005, dropout=0.3
+[2025-05-12T16:18:08.553+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:08.643+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.006589, Val Loss: 0.017353
+[2025-05-12T16:18:08.662+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 13
+[2025-05-12T16:18:08.665+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.96
+[2025-05-12T16:18:08.666+0700] {logging_mixin.py:188} INFO - Testing combination 4/324: seq=5, hidden=32, layers=1, lr=0.01, dropout=0.0
+[2025-05-12T16:18:08.672+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:08.763+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 10
+[2025-05-12T16:18:08.766+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.38
+[2025-05-12T16:18:08.767+0700] {logging_mixin.py:188} INFO - Testing combination 5/324: seq=5, hidden=32, layers=1, lr=0.01, dropout=0.2
+[2025-05-12T16:18:08.772+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:08.837+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:18:08.839+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.32
+[2025-05-12T16:18:08.840+0700] {logging_mixin.py:188} INFO - Testing combination 6/324: seq=5, hidden=32, layers=1, lr=0.01, dropout=0.3
+[2025-05-12T16:18:08.844+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:08.905+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:18:08.908+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.78
+[2025-05-12T16:18:08.915+0700] {logging_mixin.py:188} INFO - Testing combination 7/324: seq=5, hidden=32, layers=1, lr=0.02, dropout=0.0
+[2025-05-12T16:18:08.920+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:08.969+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:18:08.972+0700] {logging_mixin.py:188} INFO - Validation RMSE: 0.92
+[2025-05-12T16:18:08.979+0700] {logging_mixin.py:188} INFO - Testing combination 8/324: seq=5, hidden=32, layers=1, lr=0.02, dropout=0.2
+[2025-05-12T16:18:08.984+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:09.046+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:18:09.050+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.53
+[2025-05-12T16:18:09.051+0700] {logging_mixin.py:188} INFO - Testing combination 9/324: seq=5, hidden=32, layers=1, lr=0.02, dropout=0.3
+[2025-05-12T16:18:09.061+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:09.114+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:18:09.117+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.95
+[2025-05-12T16:18:09.118+0700] {logging_mixin.py:188} INFO - Testing combination 10/324: seq=5, hidden=32, layers=2, lr=0.005, dropout=0.0
+[2025-05-12T16:18:09.271+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:18:09.274+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.21
+[2025-05-12T16:18:09.275+0700] {logging_mixin.py:188} INFO - Testing combination 11/324: seq=5, hidden=32, layers=2, lr=0.005, dropout=0.2
+[2025-05-12T16:18:09.423+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.015233, Val Loss: 0.043434
+[2025-05-12T16:18:09.459+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 12
+[2025-05-12T16:18:09.463+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.13
+[2025-05-12T16:18:09.464+0700] {logging_mixin.py:188} INFO - Testing combination 12/324: seq=5, hidden=32, layers=2, lr=0.005, dropout=0.3
+[2025-05-12T16:18:09.590+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.005559, Val Loss: 0.023092
+[2025-05-12T16:18:09.628+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 13
+[2025-05-12T16:18:09.632+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.17
+[2025-05-12T16:18:09.633+0700] {logging_mixin.py:188} INFO - Testing combination 13/324: seq=5, hidden=32, layers=2, lr=0.01, dropout=0.0
+[2025-05-12T16:18:09.913+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:09.918+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.67
+[2025-05-12T16:18:09.919+0700] {logging_mixin.py:188} INFO - Testing combination 14/324: seq=5, hidden=32, layers=2, lr=0.01, dropout=0.2
+[2025-05-12T16:18:10.052+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:18:10.059+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.27
+[2025-05-12T16:18:10.060+0700] {logging_mixin.py:188} INFO - Testing combination 15/324: seq=5, hidden=32, layers=2, lr=0.01, dropout=0.3
+[2025-05-12T16:18:10.247+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 10
+[2025-05-12T16:18:10.250+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.84
+[2025-05-12T16:18:10.251+0700] {logging_mixin.py:188} INFO - Testing combination 16/324: seq=5, hidden=32, layers=2, lr=0.02, dropout=0.0
+[2025-05-12T16:18:10.390+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.006522, Val Loss: 0.019393
+[2025-05-12T16:18:10.407+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:18:10.413+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.59
+[2025-05-12T16:18:10.414+0700] {logging_mixin.py:188} INFO - Testing combination 17/324: seq=5, hidden=32, layers=2, lr=0.02, dropout=0.2
+[2025-05-12T16:18:10.548+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:10.551+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.53
+[2025-05-12T16:18:10.552+0700] {logging_mixin.py:188} INFO - Testing combination 18/324: seq=5, hidden=32, layers=2, lr=0.02, dropout=0.3
+[2025-05-12T16:18:10.662+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:18:10.665+0700] {logging_mixin.py:188} INFO - Validation RMSE: 0.77
+[2025-05-12T16:18:10.674+0700] {logging_mixin.py:188} INFO - Testing combination 19/324: seq=5, hidden=32, layers=3, lr=0.005, dropout=0.0
+[2025-05-12T16:18:10.873+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.009745, Val Loss: 0.030831
+[2025-05-12T16:18:10.895+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:18:10.899+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.89
+[2025-05-12T16:18:10.900+0700] {logging_mixin.py:188} INFO - Testing combination 20/324: seq=5, hidden=32, layers=3, lr=0.005, dropout=0.2
+[2025-05-12T16:18:11.083+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.011371, Val Loss: 0.010448
+[2025-05-12T16:18:11.160+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 14
+[2025-05-12T16:18:11.163+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.24
+[2025-05-12T16:18:11.164+0700] {logging_mixin.py:188} INFO - Testing combination 21/324: seq=5, hidden=32, layers=3, lr=0.005, dropout=0.3
+[2025-05-12T16:18:11.381+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 10
+[2025-05-12T16:18:11.397+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.42
+[2025-05-12T16:18:11.406+0700] {logging_mixin.py:188} INFO - Testing combination 22/324: seq=5, hidden=32, layers=3, lr=0.01, dropout=0.0
+[2025-05-12T16:18:11.614+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.026364, Val Loss: 0.050988
+[2025-05-12T16:18:11.634+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:18:11.638+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.06
+[2025-05-12T16:18:11.639+0700] {logging_mixin.py:188} INFO - Testing combination 23/324: seq=5, hidden=32, layers=3, lr=0.01, dropout=0.2
+[2025-05-12T16:18:11.876+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:18:11.879+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.49
+[2025-05-12T16:18:11.880+0700] {logging_mixin.py:188} INFO - Testing combination 24/324: seq=5, hidden=32, layers=3, lr=0.01, dropout=0.3
+[2025-05-12T16:18:12.243+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:18:12.246+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.23
+[2025-05-12T16:18:12.247+0700] {logging_mixin.py:188} INFO - Testing combination 25/324: seq=5, hidden=32, layers=3, lr=0.02, dropout=0.0
+[2025-05-12T16:18:12.448+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:12.455+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.97
+[2025-05-12T16:18:12.456+0700] {logging_mixin.py:188} INFO - Testing combination 26/324: seq=5, hidden=32, layers=3, lr=0.02, dropout=0.2
+[2025-05-12T16:18:12.709+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:12.713+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.17
+[2025-05-12T16:18:12.715+0700] {logging_mixin.py:188} INFO - Testing combination 27/324: seq=5, hidden=32, layers=3, lr=0.02, dropout=0.3
+[2025-05-12T16:18:12.879+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:12.884+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.12
+[2025-05-12T16:18:12.885+0700] {logging_mixin.py:188} INFO - Testing combination 28/324: seq=5, hidden=64, layers=1, lr=0.005, dropout=0.0
+[2025-05-12T16:18:12.889+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:12.992+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:18:12.995+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.05
+[2025-05-12T16:18:12.997+0700] {logging_mixin.py:188} INFO - Testing combination 29/324: seq=5, hidden=64, layers=1, lr=0.005, dropout=0.2
+[2025-05-12T16:18:13.002+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:13.083+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:18:13.086+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.16
+[2025-05-12T16:18:13.087+0700] {logging_mixin.py:188} INFO - Testing combination 30/324: seq=5, hidden=64, layers=1, lr=0.005, dropout=0.3
+[2025-05-12T16:18:13.092+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:13.201+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:18:13.204+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.01
+[2025-05-12T16:18:13.205+0700] {logging_mixin.py:188} INFO - Testing combination 31/324: seq=5, hidden=64, layers=1, lr=0.01, dropout=0.0
+[2025-05-12T16:18:13.209+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:13.279+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:18:13.283+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.37
+[2025-05-12T16:18:13.284+0700] {logging_mixin.py:188} INFO - Testing combination 32/324: seq=5, hidden=64, layers=1, lr=0.01, dropout=0.2
+[2025-05-12T16:18:13.288+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:13.356+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:18:13.359+0700] {logging_mixin.py:188} INFO - Validation RMSE: 0.96
+[2025-05-12T16:18:13.360+0700] {logging_mixin.py:188} INFO - Testing combination 33/324: seq=5, hidden=64, layers=1, lr=0.01, dropout=0.3
+[2025-05-12T16:18:13.365+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:13.451+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:18:13.454+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.33
+[2025-05-12T16:18:13.455+0700] {logging_mixin.py:188} INFO - Testing combination 34/324: seq=5, hidden=64, layers=1, lr=0.02, dropout=0.0
+[2025-05-12T16:18:13.459+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:13.567+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.006547, Val Loss: 0.002582
+[2025-05-12T16:18:13.649+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 16
+[2025-05-12T16:18:13.652+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.03
+[2025-05-12T16:18:13.653+0700] {logging_mixin.py:188} INFO - Testing combination 35/324: seq=5, hidden=64, layers=1, lr=0.02, dropout=0.2
+[2025-05-12T16:18:13.658+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:13.735+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:18:13.740+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.74
+[2025-05-12T16:18:13.741+0700] {logging_mixin.py:188} INFO - Testing combination 36/324: seq=5, hidden=64, layers=1, lr=0.02, dropout=0.3
+[2025-05-12T16:18:13.745+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:13.813+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:18:13.816+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.18
+[2025-05-12T16:18:13.817+0700] {logging_mixin.py:188} INFO - Testing combination 37/324: seq=5, hidden=64, layers=2, lr=0.005, dropout=0.0
+[2025-05-12T16:18:14.102+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 10
+[2025-05-12T16:18:14.105+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.98
+[2025-05-12T16:18:14.105+0700] {logging_mixin.py:188} INFO - Testing combination 38/324: seq=5, hidden=64, layers=2, lr=0.005, dropout=0.2
+[2025-05-12T16:18:14.349+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:18:14.352+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.05
+[2025-05-12T16:18:14.353+0700] {logging_mixin.py:188} INFO - Testing combination 39/324: seq=5, hidden=64, layers=2, lr=0.005, dropout=0.3
+[2025-05-12T16:18:14.561+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:18:14.566+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.20
+[2025-05-12T16:18:14.567+0700] {logging_mixin.py:188} INFO - Testing combination 40/324: seq=5, hidden=64, layers=2, lr=0.01, dropout=0.0
+[2025-05-12T16:18:14.837+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:14.842+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.47
+[2025-05-12T16:18:14.843+0700] {logging_mixin.py:188} INFO - Testing combination 41/324: seq=5, hidden=64, layers=2, lr=0.01, dropout=0.2
+[2025-05-12T16:18:15.126+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:15.131+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.87
+[2025-05-12T16:18:15.132+0700] {logging_mixin.py:188} INFO - Testing combination 42/324: seq=5, hidden=64, layers=2, lr=0.01, dropout=0.3
+[2025-05-12T16:18:15.349+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:15.353+0700] {logging_mixin.py:188} INFO - Validation RMSE: 4.16
+[2025-05-12T16:18:15.354+0700] {logging_mixin.py:188} INFO - Testing combination 43/324: seq=5, hidden=64, layers=2, lr=0.02, dropout=0.0
+[2025-05-12T16:18:15.619+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 10
+[2025-05-12T16:18:15.622+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.98
+[2025-05-12T16:18:15.623+0700] {logging_mixin.py:188} INFO - Testing combination 44/324: seq=5, hidden=64, layers=2, lr=0.02, dropout=0.2
+[2025-05-12T16:18:15.891+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.007206, Val Loss: 0.027213
+[2025-05-12T16:18:15.966+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 13
+[2025-05-12T16:18:15.970+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.04
+[2025-05-12T16:18:15.971+0700] {logging_mixin.py:188} INFO - Testing combination 45/324: seq=5, hidden=64, layers=2, lr=0.02, dropout=0.3
+[2025-05-12T16:18:16.210+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.006915, Val Loss: 0.030605
+[2025-05-12T16:18:16.277+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 13
+[2025-05-12T16:18:16.281+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.87
+[2025-05-12T16:18:16.282+0700] {logging_mixin.py:188} INFO - Testing combination 46/324: seq=5, hidden=64, layers=3, lr=0.005, dropout=0.0
+[2025-05-12T16:18:16.687+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:18:16.691+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.90
+[2025-05-12T16:18:16.692+0700] {logging_mixin.py:188} INFO - Testing combination 47/324: seq=5, hidden=64, layers=3, lr=0.005, dropout=0.2
+[2025-05-12T16:18:17.074+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:17.081+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.37
+[2025-05-12T16:18:17.082+0700] {logging_mixin.py:188} INFO - Testing combination 48/324: seq=5, hidden=64, layers=3, lr=0.005, dropout=0.3
+[2025-05-12T16:18:17.473+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:18:17.478+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.06
+[2025-05-12T16:18:17.479+0700] {logging_mixin.py:188} INFO - Testing combination 49/324: seq=5, hidden=64, layers=3, lr=0.01, dropout=0.0
+[2025-05-12T16:18:17.962+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:17.966+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.76
+[2025-05-12T16:18:17.967+0700] {logging_mixin.py:188} INFO - Testing combination 50/324: seq=5, hidden=64, layers=3, lr=0.01, dropout=0.2
+[2025-05-12T16:18:18.183+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:18:18.187+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.85
+[2025-05-12T16:18:18.189+0700] {logging_mixin.py:188} INFO - Testing combination 51/324: seq=5, hidden=64, layers=3, lr=0.01, dropout=0.3
+[2025-05-12T16:18:18.506+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:18.511+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.16
+[2025-05-12T16:18:18.512+0700] {logging_mixin.py:188} INFO - Testing combination 52/324: seq=5, hidden=64, layers=3, lr=0.02, dropout=0.0
+[2025-05-12T16:18:18.904+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.012637, Val Loss: 0.009735
+[2025-05-12T16:18:19.059+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 13
+[2025-05-12T16:18:19.065+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.63
+[2025-05-12T16:18:19.067+0700] {logging_mixin.py:188} INFO - Testing combination 53/324: seq=5, hidden=64, layers=3, lr=0.02, dropout=0.2
+[2025-05-12T16:18:19.534+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:19.538+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.49
+[2025-05-12T16:18:19.539+0700] {logging_mixin.py:188} INFO - Testing combination 54/324: seq=5, hidden=64, layers=3, lr=0.02, dropout=0.3
+[2025-05-12T16:18:19.747+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:18:19.751+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.53
+[2025-05-12T16:18:19.752+0700] {logging_mixin.py:188} INFO - Testing combination 55/324: seq=5, hidden=128, layers=1, lr=0.005, dropout=0.0
+[2025-05-12T16:18:19.758+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:19.922+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:18:19.928+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.68
+[2025-05-12T16:18:19.929+0700] {logging_mixin.py:188} INFO - Testing combination 56/324: seq=5, hidden=128, layers=1, lr=0.005, dropout=0.2
+[2025-05-12T16:18:19.936+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:20.139+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:18:20.143+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.16
+[2025-05-12T16:18:20.144+0700] {logging_mixin.py:188} INFO - Testing combination 57/324: seq=5, hidden=128, layers=1, lr=0.005, dropout=0.3
+[2025-05-12T16:18:20.149+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:20.282+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:20.286+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.73
+[2025-05-12T16:18:20.287+0700] {logging_mixin.py:188} INFO - Testing combination 58/324: seq=5, hidden=128, layers=1, lr=0.01, dropout=0.0
+[2025-05-12T16:18:20.292+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:20.412+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:18:20.416+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.40
+[2025-05-12T16:18:20.417+0700] {logging_mixin.py:188} INFO - Testing combination 59/324: seq=5, hidden=128, layers=1, lr=0.01, dropout=0.2
+[2025-05-12T16:18:20.421+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:20.538+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:18:20.541+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.56
+[2025-05-12T16:18:20.542+0700] {logging_mixin.py:188} INFO - Testing combination 60/324: seq=5, hidden=128, layers=1, lr=0.01, dropout=0.3
+[2025-05-12T16:18:20.546+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:20.664+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:18:20.668+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.79
+[2025-05-12T16:18:20.669+0700] {logging_mixin.py:188} INFO - Testing combination 61/324: seq=5, hidden=128, layers=1, lr=0.02, dropout=0.0
+[2025-05-12T16:18:20.674+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:20.898+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.017490, Val Loss: 0.057573
+[2025-05-12T16:18:20.941+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 12
+[2025-05-12T16:18:20.946+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.99
+[2025-05-12T16:18:20.947+0700] {logging_mixin.py:188} INFO - Testing combination 62/324: seq=5, hidden=128, layers=1, lr=0.02, dropout=0.2
+[2025-05-12T16:18:20.955+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:21.169+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.024897, Val Loss: 0.058457
+[2025-05-12T16:18:21.203+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 12
+[2025-05-12T16:18:21.207+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.70
+[2025-05-12T16:18:21.208+0700] {logging_mixin.py:188} INFO - Testing combination 63/324: seq=5, hidden=128, layers=1, lr=0.02, dropout=0.3
+[2025-05-12T16:18:21.212+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:21.387+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:18:21.390+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.70
+[2025-05-12T16:18:21.391+0700] {logging_mixin.py:188} INFO - Testing combination 64/324: seq=5, hidden=128, layers=2, lr=0.005, dropout=0.0
+[2025-05-12T16:18:21.773+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:21.781+0700] {logging_mixin.py:188} INFO - Validation RMSE: 4.42
+[2025-05-12T16:18:21.782+0700] {logging_mixin.py:188} INFO - Testing combination 65/324: seq=5, hidden=128, layers=2, lr=0.005, dropout=0.2
+[2025-05-12T16:18:22.357+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.010101, Val Loss: 0.021568
+[2025-05-12T16:18:22.407+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:18:22.414+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.15
+[2025-05-12T16:18:22.415+0700] {logging_mixin.py:188} INFO - Testing combination 66/324: seq=5, hidden=128, layers=2, lr=0.005, dropout=0.3
+[2025-05-12T16:18:22.813+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:22.819+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.75
+[2025-05-12T16:18:22.820+0700] {logging_mixin.py:188} INFO - Testing combination 67/324: seq=5, hidden=128, layers=2, lr=0.01, dropout=0.0
+[2025-05-12T16:18:24.210+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.015249, Val Loss: 0.057208
+[2025-05-12T16:18:24.270+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:18:24.276+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.47
+[2025-05-12T16:18:24.278+0700] {logging_mixin.py:188} INFO - Testing combination 68/324: seq=5, hidden=128, layers=2, lr=0.01, dropout=0.2
+[2025-05-12T16:18:24.753+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.015251, Val Loss: 0.057857
+[2025-05-12T16:18:24.808+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:18:24.814+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.46
+[2025-05-12T16:18:24.815+0700] {logging_mixin.py:188} INFO - Testing combination 69/324: seq=5, hidden=128, layers=2, lr=0.01, dropout=0.3
+[2025-05-12T16:18:25.319+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.014499, Val Loss: 0.047144
+[2025-05-12T16:18:25.401+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 12
+[2025-05-12T16:18:25.405+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.80
+[2025-05-12T16:18:25.406+0700] {logging_mixin.py:188} INFO - Testing combination 70/324: seq=5, hidden=128, layers=2, lr=0.02, dropout=0.0
+[2025-05-12T16:18:25.910+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.029287, Val Loss: 0.003794
+[2025-05-12T16:18:25.990+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 12
+[2025-05-12T16:18:25.996+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.88
+[2025-05-12T16:18:25.997+0700] {logging_mixin.py:188} INFO - Testing combination 71/324: seq=5, hidden=128, layers=2, lr=0.02, dropout=0.2
+[2025-05-12T16:18:26.472+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.007216, Val Loss: 0.033452
+[2025-05-12T16:18:26.551+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:18:26.562+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.29
+[2025-05-12T16:18:26.563+0700] {logging_mixin.py:188} INFO - Testing combination 72/324: seq=5, hidden=128, layers=2, lr=0.02, dropout=0.3
+[2025-05-12T16:18:27.094+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 10
+[2025-05-12T16:18:27.099+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.04
+[2025-05-12T16:18:27.100+0700] {logging_mixin.py:188} INFO - Testing combination 73/324: seq=5, hidden=128, layers=3, lr=0.005, dropout=0.0
+[2025-05-12T16:18:27.679+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:27.685+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.07
+[2025-05-12T16:18:27.686+0700] {logging_mixin.py:188} INFO - Testing combination 74/324: seq=5, hidden=128, layers=3, lr=0.005, dropout=0.2
+[2025-05-12T16:18:28.263+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:28.270+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.93
+[2025-05-12T16:18:28.271+0700] {logging_mixin.py:188} INFO - Testing combination 75/324: seq=5, hidden=128, layers=3, lr=0.005, dropout=0.3
+[2025-05-12T16:18:28.936+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.006001, Val Loss: 0.016447
+[2025-05-12T16:18:29.084+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 12
+[2025-05-12T16:18:29.091+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.64
+[2025-05-12T16:18:29.092+0700] {logging_mixin.py:188} INFO - Testing combination 76/324: seq=5, hidden=128, layers=3, lr=0.01, dropout=0.0
+[2025-05-12T16:18:29.713+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:29.720+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.59
+[2025-05-12T16:18:29.721+0700] {logging_mixin.py:188} INFO - Testing combination 77/324: seq=5, hidden=128, layers=3, lr=0.01, dropout=0.2
+[2025-05-12T16:18:30.174+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:18:30.181+0700] {logging_mixin.py:188} INFO - Validation RMSE: 4.79
+[2025-05-12T16:18:30.182+0700] {logging_mixin.py:188} INFO - Testing combination 78/324: seq=5, hidden=128, layers=3, lr=0.01, dropout=0.3
+[2025-05-12T16:18:30.607+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:18:30.613+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.52
+[2025-05-12T16:18:30.614+0700] {logging_mixin.py:188} INFO - Testing combination 79/324: seq=5, hidden=128, layers=3, lr=0.02, dropout=0.0
+[2025-05-12T16:18:31.376+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.016521, Val Loss: 0.007674
+[2025-05-12T16:18:31.676+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 14
+[2025-05-12T16:18:31.682+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.29
+[2025-05-12T16:18:31.683+0700] {logging_mixin.py:188} INFO - Testing combination 80/324: seq=5, hidden=128, layers=3, lr=0.02, dropout=0.2
+[2025-05-12T16:18:32.523+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 10
+[2025-05-12T16:18:32.530+0700] {logging_mixin.py:188} INFO - Validation RMSE: 4.63
+[2025-05-12T16:18:32.531+0700] {logging_mixin.py:188} INFO - Testing combination 81/324: seq=5, hidden=128, layers=3, lr=0.02, dropout=0.3
+[2025-05-12T16:18:33.540+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 10
+[2025-05-12T16:18:33.547+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.08
+[2025-05-12T16:18:33.548+0700] {logging_mixin.py:188} INFO - Testing combination 82/324: seq=10, hidden=32, layers=1, lr=0.005, dropout=0.0
+[2025-05-12T16:18:33.554+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:33.623+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:18:33.626+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.60
+[2025-05-12T16:18:33.627+0700] {logging_mixin.py:188} INFO - Testing combination 83/324: seq=10, hidden=32, layers=1, lr=0.005, dropout=0.2
+[2025-05-12T16:18:33.633+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:33.762+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.007874, Val Loss: 0.027998
+[2025-05-12T16:18:33.774+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:18:33.777+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.90
+[2025-05-12T16:18:33.779+0700] {logging_mixin.py:188} INFO - Testing combination 84/324: seq=10, hidden=32, layers=1, lr=0.005, dropout=0.3
+[2025-05-12T16:18:33.784+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:33.976+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.006630, Val Loss: 0.007540
+[2025-05-12T16:18:34.024+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 14
+[2025-05-12T16:18:34.028+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.99
+[2025-05-12T16:18:34.029+0700] {logging_mixin.py:188} INFO - Testing combination 85/324: seq=10, hidden=32, layers=1, lr=0.01, dropout=0.0
+[2025-05-12T16:18:34.036+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:34.143+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:34.147+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.41
+[2025-05-12T16:18:34.148+0700] {logging_mixin.py:188} INFO - Testing combination 86/324: seq=10, hidden=32, layers=1, lr=0.01, dropout=0.2
+[2025-05-12T16:18:34.152+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:34.228+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:34.232+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.06
+[2025-05-12T16:18:34.233+0700] {logging_mixin.py:188} INFO - Testing combination 87/324: seq=10, hidden=32, layers=1, lr=0.01, dropout=0.3
+[2025-05-12T16:18:34.238+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:34.346+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:18:34.350+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.90
+[2025-05-12T16:18:34.351+0700] {logging_mixin.py:188} INFO - Testing combination 88/324: seq=10, hidden=32, layers=1, lr=0.02, dropout=0.0
+[2025-05-12T16:18:34.356+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:34.454+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:18:34.458+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.49
+[2025-05-12T16:18:34.459+0700] {logging_mixin.py:188} INFO - Testing combination 89/324: seq=10, hidden=32, layers=1, lr=0.02, dropout=0.2
+[2025-05-12T16:18:34.465+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:34.566+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:18:34.576+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.22
+[2025-05-12T16:18:34.578+0700] {logging_mixin.py:188} INFO - Testing combination 90/324: seq=10, hidden=32, layers=1, lr=0.02, dropout=0.3
+[2025-05-12T16:18:34.583+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:34.671+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:18:34.674+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.00
+[2025-05-12T16:18:34.675+0700] {logging_mixin.py:188} INFO - Testing combination 91/324: seq=10, hidden=32, layers=2, lr=0.005, dropout=0.0
+[2025-05-12T16:18:34.875+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:18:34.880+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.82
+[2025-05-12T16:18:34.881+0700] {logging_mixin.py:188} INFO - Testing combination 92/324: seq=10, hidden=32, layers=2, lr=0.005, dropout=0.2
+[2025-05-12T16:18:35.117+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.008476, Val Loss: 0.015026
+[2025-05-12T16:18:35.175+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 13
+[2025-05-12T16:18:35.180+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.24
+[2025-05-12T16:18:35.181+0700] {logging_mixin.py:188} INFO - Testing combination 93/324: seq=10, hidden=32, layers=2, lr=0.005, dropout=0.3
+[2025-05-12T16:18:35.377+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.014262, Val Loss: 0.041330
+[2025-05-12T16:18:35.396+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:18:35.400+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.12
+[2025-05-12T16:18:35.401+0700] {logging_mixin.py:188} INFO - Testing combination 94/324: seq=10, hidden=32, layers=2, lr=0.01, dropout=0.0
+[2025-05-12T16:18:35.708+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:35.713+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.48
+[2025-05-12T16:18:35.715+0700] {logging_mixin.py:188} INFO - Testing combination 95/324: seq=10, hidden=32, layers=2, lr=0.01, dropout=0.2
+[2025-05-12T16:18:35.934+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:35.938+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.63
+[2025-05-12T16:18:35.939+0700] {logging_mixin.py:188} INFO - Testing combination 96/324: seq=10, hidden=32, layers=2, lr=0.01, dropout=0.3
+[2025-05-12T16:18:36.107+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:36.111+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.42
+[2025-05-12T16:18:36.112+0700] {logging_mixin.py:188} INFO - Testing combination 97/324: seq=10, hidden=32, layers=2, lr=0.02, dropout=0.0
+[2025-05-12T16:18:36.224+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:18:36.228+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.58
+[2025-05-12T16:18:36.229+0700] {logging_mixin.py:188} INFO - Testing combination 98/324: seq=10, hidden=32, layers=2, lr=0.02, dropout=0.2
+[2025-05-12T16:18:36.527+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.009359, Val Loss: 0.001926
+[2025-05-12T16:18:36.769+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 15
+[2025-05-12T16:18:36.773+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.23
+[2025-05-12T16:18:36.774+0700] {logging_mixin.py:188} INFO - Testing combination 99/324: seq=10, hidden=32, layers=2, lr=0.02, dropout=0.3
+[2025-05-12T16:18:36.988+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.013028, Val Loss: 0.004255
+[2025-05-12T16:18:37.070+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 13
+[2025-05-12T16:18:37.076+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.50
+[2025-05-12T16:18:37.077+0700] {logging_mixin.py:188} INFO - Testing combination 100/324: seq=10, hidden=32, layers=3, lr=0.005, dropout=0.0
+[2025-05-12T16:18:37.453+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.013150, Val Loss: 0.047736
+[2025-05-12T16:18:37.524+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 12
+[2025-05-12T16:18:37.532+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.33
+[2025-05-12T16:18:37.533+0700] {logging_mixin.py:188} INFO - Testing combination 101/324: seq=10, hidden=32, layers=3, lr=0.005, dropout=0.2
+[2025-05-12T16:18:37.957+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:37.965+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.68
+[2025-05-12T16:18:37.967+0700] {logging_mixin.py:188} INFO - Testing combination 102/324: seq=10, hidden=32, layers=3, lr=0.005, dropout=0.3
+[2025-05-12T16:18:38.382+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.013148, Val Loss: 0.034376
+[2025-05-12T16:18:38.406+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:18:38.410+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.85
+[2025-05-12T16:18:38.411+0700] {logging_mixin.py:188} INFO - Testing combination 103/324: seq=10, hidden=32, layers=3, lr=0.01, dropout=0.0
+[2025-05-12T16:18:38.613+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:38.618+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.14
+[2025-05-12T16:18:38.618+0700] {logging_mixin.py:188} INFO - Testing combination 104/324: seq=10, hidden=32, layers=3, lr=0.01, dropout=0.2
+[2025-05-12T16:18:38.907+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:18:38.911+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.42
+[2025-05-12T16:18:38.912+0700] {logging_mixin.py:188} INFO - Testing combination 105/324: seq=10, hidden=32, layers=3, lr=0.01, dropout=0.3
+[2025-05-12T16:18:39.119+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:39.123+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.41
+[2025-05-12T16:18:39.124+0700] {logging_mixin.py:188} INFO - Testing combination 106/324: seq=10, hidden=32, layers=3, lr=0.02, dropout=0.0
+[2025-05-12T16:18:39.502+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.007421, Val Loss: 0.026345
+[2025-05-12T16:18:39.530+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:18:39.534+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.82
+[2025-05-12T16:18:39.535+0700] {logging_mixin.py:188} INFO - Testing combination 107/324: seq=10, hidden=32, layers=3, lr=0.02, dropout=0.2
+[2025-05-12T16:18:39.747+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:39.751+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.13
+[2025-05-12T16:18:39.752+0700] {logging_mixin.py:188} INFO - Testing combination 108/324: seq=10, hidden=32, layers=3, lr=0.02, dropout=0.3
+[2025-05-12T16:18:39.921+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:18:39.926+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.26
+[2025-05-12T16:18:39.927+0700] {logging_mixin.py:188} INFO - Testing combination 109/324: seq=10, hidden=64, layers=1, lr=0.005, dropout=0.0
+[2025-05-12T16:18:39.933+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:40.072+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:18:40.075+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.85
+[2025-05-12T16:18:40.076+0700] {logging_mixin.py:188} INFO - Testing combination 110/324: seq=10, hidden=64, layers=1, lr=0.005, dropout=0.2
+[2025-05-12T16:18:40.081+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:40.206+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:18:40.209+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.95
+[2025-05-12T16:18:40.211+0700] {logging_mixin.py:188} INFO - Testing combination 111/324: seq=10, hidden=64, layers=1, lr=0.005, dropout=0.3
+[2025-05-12T16:18:40.215+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:40.295+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:18:40.298+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.18
+[2025-05-12T16:18:40.299+0700] {logging_mixin.py:188} INFO - Testing combination 112/324: seq=10, hidden=64, layers=1, lr=0.01, dropout=0.0
+[2025-05-12T16:18:40.303+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:40.404+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:40.407+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.02
+[2025-05-12T16:18:40.408+0700] {logging_mixin.py:188} INFO - Testing combination 113/324: seq=10, hidden=64, layers=1, lr=0.01, dropout=0.2
+[2025-05-12T16:18:40.413+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:40.501+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:18:40.504+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.14
+[2025-05-12T16:18:40.505+0700] {logging_mixin.py:188} INFO - Testing combination 114/324: seq=10, hidden=64, layers=1, lr=0.01, dropout=0.3
+[2025-05-12T16:18:40.509+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:40.601+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:18:40.604+0700] {logging_mixin.py:188} INFO - Validation RMSE: 0.87
+[2025-05-12T16:18:40.605+0700] {logging_mixin.py:188} INFO - Testing combination 115/324: seq=10, hidden=64, layers=1, lr=0.02, dropout=0.0
+[2025-05-12T16:18:40.609+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:40.700+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:18:40.703+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.45
+[2025-05-12T16:18:40.704+0700] {logging_mixin.py:188} INFO - Testing combination 116/324: seq=10, hidden=64, layers=1, lr=0.02, dropout=0.2
+[2025-05-12T16:18:40.708+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:40.798+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:18:40.801+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.33
+[2025-05-12T16:18:40.802+0700] {logging_mixin.py:188} INFO - Testing combination 117/324: seq=10, hidden=64, layers=1, lr=0.02, dropout=0.3
+[2025-05-12T16:18:40.806+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:40.901+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:18:40.905+0700] {logging_mixin.py:188} INFO - Validation RMSE: 4.08
+[2025-05-12T16:18:40.906+0700] {logging_mixin.py:188} INFO - Testing combination 118/324: seq=10, hidden=64, layers=2, lr=0.005, dropout=0.0
+[2025-05-12T16:18:41.190+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:18:41.194+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.27
+[2025-05-12T16:18:41.195+0700] {logging_mixin.py:188} INFO - Testing combination 119/324: seq=10, hidden=64, layers=2, lr=0.005, dropout=0.2
+[2025-05-12T16:18:41.424+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:41.428+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.36
+[2025-05-12T16:18:41.429+0700] {logging_mixin.py:188} INFO - Testing combination 120/324: seq=10, hidden=64, layers=2, lr=0.005, dropout=0.3
+[2025-05-12T16:18:41.702+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:41.706+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.99
+[2025-05-12T16:18:41.707+0700] {logging_mixin.py:188} INFO - Testing combination 121/324: seq=10, hidden=64, layers=2, lr=0.01, dropout=0.0
+[2025-05-12T16:18:41.897+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:18:41.901+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.11
+[2025-05-12T16:18:41.902+0700] {logging_mixin.py:188} INFO - Testing combination 122/324: seq=10, hidden=64, layers=2, lr=0.01, dropout=0.2
+[2025-05-12T16:18:42.165+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:42.169+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.72
+[2025-05-12T16:18:42.170+0700] {logging_mixin.py:188} INFO - Testing combination 123/324: seq=10, hidden=64, layers=2, lr=0.01, dropout=0.3
+[2025-05-12T16:18:42.548+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.006026, Val Loss: 0.021481
+[2025-05-12T16:18:42.661+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 12
+[2025-05-12T16:18:42.666+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.70
+[2025-05-12T16:18:42.667+0700] {logging_mixin.py:188} INFO - Testing combination 124/324: seq=10, hidden=64, layers=2, lr=0.02, dropout=0.0
+[2025-05-12T16:18:42.970+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.035885, Val Loss: 0.050514
+[2025-05-12T16:18:42.999+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:18:43.004+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.59
+[2025-05-12T16:18:43.005+0700] {logging_mixin.py:188} INFO - Testing combination 125/324: seq=10, hidden=64, layers=2, lr=0.02, dropout=0.2
+[2025-05-12T16:18:43.328+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 10
+[2025-05-12T16:18:43.333+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.16
+[2025-05-12T16:18:43.334+0700] {logging_mixin.py:188} INFO - Testing combination 126/324: seq=10, hidden=64, layers=2, lr=0.02, dropout=0.3
+[2025-05-12T16:18:43.625+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.018327, Val Loss: 0.037794
+[2025-05-12T16:18:43.653+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:18:43.657+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.68
+[2025-05-12T16:18:43.658+0700] {logging_mixin.py:188} INFO - Testing combination 127/324: seq=10, hidden=64, layers=3, lr=0.005, dropout=0.0
+[2025-05-12T16:18:44.112+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:44.117+0700] {logging_mixin.py:188} INFO - Validation RMSE: 0.83
+[2025-05-12T16:18:44.118+0700] {logging_mixin.py:188} INFO - Testing combination 128/324: seq=10, hidden=64, layers=3, lr=0.005, dropout=0.2
+[2025-05-12T16:18:44.772+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:18:44.778+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.39
+[2025-05-12T16:18:44.779+0700] {logging_mixin.py:188} INFO - Testing combination 129/324: seq=10, hidden=64, layers=3, lr=0.005, dropout=0.3
+[2025-05-12T16:18:45.435+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:45.441+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.12
+[2025-05-12T16:18:45.442+0700] {logging_mixin.py:188} INFO - Testing combination 130/324: seq=10, hidden=64, layers=3, lr=0.01, dropout=0.0
+[2025-05-12T16:18:46.002+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:46.007+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.73
+[2025-05-12T16:18:46.008+0700] {logging_mixin.py:188} INFO - Testing combination 131/324: seq=10, hidden=64, layers=3, lr=0.01, dropout=0.2
+[2025-05-12T16:18:46.781+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.031343, Val Loss: 0.001232
+[2025-05-12T16:18:47.062+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 15
+[2025-05-12T16:18:47.074+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.93
+[2025-05-12T16:18:47.075+0700] {logging_mixin.py:188} INFO - Testing combination 132/324: seq=10, hidden=64, layers=3, lr=0.01, dropout=0.3
+[2025-05-12T16:18:47.637+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:47.644+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.44
+[2025-05-12T16:18:47.647+0700] {logging_mixin.py:188} INFO - Testing combination 133/324: seq=10, hidden=64, layers=3, lr=0.02, dropout=0.0
+[2025-05-12T16:18:48.239+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.009196, Val Loss: 0.004261
+[2025-05-12T16:18:48.536+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 15
+[2025-05-12T16:18:48.543+0700] {logging_mixin.py:188} INFO - Validation RMSE: 0.84
+[2025-05-12T16:18:48.544+0700] {logging_mixin.py:188} INFO - Testing combination 134/324: seq=10, hidden=64, layers=3, lr=0.02, dropout=0.2
+[2025-05-12T16:18:49.021+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:49.026+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.45
+[2025-05-12T16:18:49.026+0700] {logging_mixin.py:188} INFO - Testing combination 135/324: seq=10, hidden=64, layers=3, lr=0.02, dropout=0.3
+[2025-05-12T16:18:49.720+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.013107, Val Loss: 0.012082
+[2025-05-12T16:18:49.903+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 13
+[2025-05-12T16:18:49.909+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.76
+[2025-05-12T16:18:49.910+0700] {logging_mixin.py:188} INFO - Testing combination 136/324: seq=10, hidden=128, layers=1, lr=0.005, dropout=0.0
+[2025-05-12T16:18:49.913+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:50.125+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:18:50.130+0700] {logging_mixin.py:188} INFO - Validation RMSE: 0.91
+[2025-05-12T16:18:50.131+0700] {logging_mixin.py:188} INFO - Testing combination 137/324: seq=10, hidden=128, layers=1, lr=0.005, dropout=0.2
+[2025-05-12T16:18:50.134+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:50.306+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:18:50.310+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.70
+[2025-05-12T16:18:50.311+0700] {logging_mixin.py:188} INFO - Testing combination 138/324: seq=10, hidden=128, layers=1, lr=0.005, dropout=0.3
+[2025-05-12T16:18:50.315+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:50.538+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:50.542+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.83
+[2025-05-12T16:18:50.543+0700] {logging_mixin.py:188} INFO - Testing combination 139/324: seq=10, hidden=128, layers=1, lr=0.01, dropout=0.0
+[2025-05-12T16:18:50.548+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:50.830+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.025095, Val Loss: 0.001671
+[2025-05-12T16:18:50.883+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 12
+[2025-05-12T16:18:50.887+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.55
+[2025-05-12T16:18:50.888+0700] {logging_mixin.py:188} INFO - Testing combination 140/324: seq=10, hidden=128, layers=1, lr=0.01, dropout=0.2
+[2025-05-12T16:18:50.893+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:51.181+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.030463, Val Loss: 0.000882
+[2025-05-12T16:18:51.322+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 15
+[2025-05-12T16:18:51.325+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.95
+[2025-05-12T16:18:51.326+0700] {logging_mixin.py:188} INFO - Testing combination 141/324: seq=10, hidden=128, layers=1, lr=0.01, dropout=0.3
+[2025-05-12T16:18:51.331+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:51.626+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.014504, Val Loss: 0.001342
+[2025-05-12T16:18:51.680+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 12
+[2025-05-12T16:18:51.684+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.17
+[2025-05-12T16:18:51.685+0700] {logging_mixin.py:188} INFO - Testing combination 142/324: seq=10, hidden=128, layers=1, lr=0.02, dropout=0.0
+[2025-05-12T16:18:51.690+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:51.998+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 10
+[2025-05-12T16:18:52.002+0700] {logging_mixin.py:188} INFO - Validation RMSE: 0.52
+[2025-05-12T16:18:52.013+0700] {logging_mixin.py:188} INFO - Testing combination 143/324: seq=10, hidden=128, layers=1, lr=0.02, dropout=0.2
+[2025-05-12T16:18:52.018+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:52.310+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.008103, Val Loss: 0.003747
+[2025-05-12T16:18:52.487+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 16
+[2025-05-12T16:18:52.492+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.80
+[2025-05-12T16:18:52.494+0700] {logging_mixin.py:188} INFO - Testing combination 144/324: seq=10, hidden=128, layers=1, lr=0.02, dropout=0.3
+[2025-05-12T16:18:52.500+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:18:52.778+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.008713, Val Loss: 0.035581
+[2025-05-12T16:18:52.804+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:18:52.808+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.17
+[2025-05-12T16:18:52.809+0700] {logging_mixin.py:188} INFO - Testing combination 145/324: seq=10, hidden=128, layers=2, lr=0.005, dropout=0.0
+[2025-05-12T16:18:53.330+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:53.338+0700] {logging_mixin.py:188} INFO - Validation RMSE: 4.58
+[2025-05-12T16:18:53.339+0700] {logging_mixin.py:188} INFO - Testing combination 146/324: seq=10, hidden=128, layers=2, lr=0.005, dropout=0.2
+[2025-05-12T16:18:53.865+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:53.873+0700] {logging_mixin.py:188} INFO - Validation RMSE: 4.05
+[2025-05-12T16:18:53.874+0700] {logging_mixin.py:188} INFO - Testing combination 147/324: seq=10, hidden=128, layers=2, lr=0.005, dropout=0.3
+[2025-05-12T16:18:54.637+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:54.643+0700] {logging_mixin.py:188} INFO - Validation RMSE: 4.81
+[2025-05-12T16:18:54.644+0700] {logging_mixin.py:188} INFO - Testing combination 148/324: seq=10, hidden=128, layers=2, lr=0.01, dropout=0.0
+[2025-05-12T16:18:55.395+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.022116, Val Loss: 0.054352
+[2025-05-12T16:18:55.687+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 12
+[2025-05-12T16:18:55.697+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.72
+[2025-05-12T16:18:55.699+0700] {logging_mixin.py:188} INFO - Testing combination 149/324: seq=10, hidden=128, layers=2, lr=0.01, dropout=0.2
+[2025-05-12T16:18:56.801+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.009462, Val Loss: 0.035759
+[2025-05-12T16:18:56.871+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:18:56.876+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.98
+[2025-05-12T16:18:56.878+0700] {logging_mixin.py:188} INFO - Testing combination 150/324: seq=10, hidden=128, layers=2, lr=0.01, dropout=0.3
+[2025-05-12T16:18:57.690+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.026176, Val Loss: 0.041216
+[2025-05-12T16:18:57.757+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:18:57.765+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.62
+[2025-05-12T16:18:57.766+0700] {logging_mixin.py:188} INFO - Testing combination 151/324: seq=10, hidden=128, layers=2, lr=0.02, dropout=0.0
+[2025-05-12T16:18:58.295+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:18:58.303+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.18
+[2025-05-12T16:18:58.304+0700] {logging_mixin.py:188} INFO - Testing combination 152/324: seq=10, hidden=128, layers=2, lr=0.02, dropout=0.2
+[2025-05-12T16:18:58.984+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.076664, Val Loss: 0.028895
+[2025-05-12T16:18:59.052+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:18:59.059+0700] {logging_mixin.py:188} INFO - Validation RMSE: 0.64
+[2025-05-12T16:18:59.061+0700] {logging_mixin.py:188} INFO - Testing combination 153/324: seq=10, hidden=128, layers=2, lr=0.02, dropout=0.3
+[2025-05-12T16:18:59.942+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.017658, Val Loss: 0.054854
+[2025-05-12T16:19:00.164+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 13
+[2025-05-12T16:19:00.171+0700] {logging_mixin.py:188} INFO - Validation RMSE: 0.58
+[2025-05-12T16:19:00.172+0700] {logging_mixin.py:188} INFO - Testing combination 154/324: seq=10, hidden=128, layers=3, lr=0.005, dropout=0.0
+[2025-05-12T16:19:01.320+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:19:01.330+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.77
+[2025-05-12T16:19:01.331+0700] {logging_mixin.py:188} INFO - Testing combination 155/324: seq=10, hidden=128, layers=3, lr=0.005, dropout=0.2
+[2025-05-12T16:19:02.305+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:19:02.316+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.51
+[2025-05-12T16:19:02.317+0700] {logging_mixin.py:188} INFO - Testing combination 156/324: seq=10, hidden=128, layers=3, lr=0.005, dropout=0.3
+[2025-05-12T16:19:03.384+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:19:03.393+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.45
+[2025-05-12T16:19:03.394+0700] {logging_mixin.py:188} INFO - Testing combination 157/324: seq=10, hidden=128, layers=3, lr=0.01, dropout=0.0
+[2025-05-12T16:19:04.414+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:19:04.424+0700] {logging_mixin.py:188} INFO - Validation RMSE: 4.01
+[2025-05-12T16:19:04.425+0700] {logging_mixin.py:188} INFO - Testing combination 158/324: seq=10, hidden=128, layers=3, lr=0.01, dropout=0.2
+[2025-05-12T16:19:05.342+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:19:05.352+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.51
+[2025-05-12T16:19:05.353+0700] {logging_mixin.py:188} INFO - Testing combination 159/324: seq=10, hidden=128, layers=3, lr=0.01, dropout=0.3
+[2025-05-12T16:19:06.892+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.057935, Val Loss: 0.002653
+[2025-05-12T16:19:07.583+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 15
+[2025-05-12T16:19:07.593+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.88
+[2025-05-12T16:19:07.594+0700] {logging_mixin.py:188} INFO - Testing combination 160/324: seq=10, hidden=128, layers=3, lr=0.02, dropout=0.0
+[2025-05-12T16:19:09.434+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.019290, Val Loss: 0.035049
+[2025-05-12T16:19:11.354+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 18
+[2025-05-12T16:19:11.363+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.33
+[2025-05-12T16:19:11.364+0700] {logging_mixin.py:188} INFO - Testing combination 161/324: seq=10, hidden=128, layers=3, lr=0.02, dropout=0.2
+[2025-05-12T16:19:12.884+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.021777, Val Loss: 0.048645
+[2025-05-12T16:19:13.025+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:19:13.046+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.68
+[2025-05-12T16:19:13.047+0700] {logging_mixin.py:188} INFO - Testing combination 162/324: seq=10, hidden=128, layers=3, lr=0.02, dropout=0.3
+[2025-05-12T16:19:14.534+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 10
+[2025-05-12T16:19:14.544+0700] {logging_mixin.py:188} INFO - Validation RMSE: 0.51
+[2025-05-12T16:19:14.575+0700] {logging_mixin.py:188} INFO - Testing combination 163/324: seq=15, hidden=32, layers=1, lr=0.005, dropout=0.0
+[2025-05-12T16:19:14.581+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:19:14.673+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:19:14.677+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.22
+[2025-05-12T16:19:14.678+0700] {logging_mixin.py:188} INFO - Testing combination 164/324: seq=15, hidden=32, layers=1, lr=0.005, dropout=0.2
+[2025-05-12T16:19:14.684+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:19:14.819+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.007692, Val Loss: 0.004844
+[2025-05-12T16:19:14.869+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 14
+[2025-05-12T16:19:14.872+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.10
+[2025-05-12T16:19:14.874+0700] {logging_mixin.py:188} INFO - Testing combination 165/324: seq=15, hidden=32, layers=1, lr=0.005, dropout=0.3
+[2025-05-12T16:19:14.878+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:19:15.058+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.006883, Val Loss: 0.026727
+[2025-05-12T16:19:15.090+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 12
+[2025-05-12T16:19:15.093+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.96
+[2025-05-12T16:19:15.094+0700] {logging_mixin.py:188} INFO - Testing combination 166/324: seq=15, hidden=32, layers=1, lr=0.01, dropout=0.0
+[2025-05-12T16:19:15.099+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:19:15.215+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:19:15.218+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.37
+[2025-05-12T16:19:15.219+0700] {logging_mixin.py:188} INFO - Testing combination 167/324: seq=15, hidden=32, layers=1, lr=0.01, dropout=0.2
+[2025-05-12T16:19:15.224+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:19:15.297+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:19:15.301+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.40
+[2025-05-12T16:19:15.302+0700] {logging_mixin.py:188} INFO - Testing combination 168/324: seq=15, hidden=32, layers=1, lr=0.01, dropout=0.3
+[2025-05-12T16:19:15.307+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:19:15.430+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:19:15.434+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.13
+[2025-05-12T16:19:15.436+0700] {logging_mixin.py:188} INFO - Testing combination 169/324: seq=15, hidden=32, layers=1, lr=0.02, dropout=0.0
+[2025-05-12T16:19:15.443+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:19:15.721+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:19:15.724+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.46
+[2025-05-12T16:19:15.725+0700] {logging_mixin.py:188} INFO - Testing combination 170/324: seq=15, hidden=32, layers=1, lr=0.02, dropout=0.2
+[2025-05-12T16:19:15.731+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:19:15.852+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:19:15.857+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.46
+[2025-05-12T16:19:15.867+0700] {logging_mixin.py:188} INFO - Testing combination 171/324: seq=15, hidden=32, layers=1, lr=0.02, dropout=0.3
+[2025-05-12T16:19:15.875+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:19:16.017+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:19:16.020+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.38
+[2025-05-12T16:19:16.021+0700] {logging_mixin.py:188} INFO - Testing combination 172/324: seq=15, hidden=32, layers=2, lr=0.005, dropout=0.0
+[2025-05-12T16:19:16.255+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:19:16.259+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.39
+[2025-05-12T16:19:16.267+0700] {logging_mixin.py:188} INFO - Testing combination 173/324: seq=15, hidden=32, layers=2, lr=0.005, dropout=0.2
+[2025-05-12T16:19:16.758+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.021097, Val Loss: 0.047961
+[2025-05-12T16:19:16.791+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:19:16.795+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.14
+[2025-05-12T16:19:16.797+0700] {logging_mixin.py:188} INFO - Testing combination 174/324: seq=15, hidden=32, layers=2, lr=0.005, dropout=0.3
+[2025-05-12T16:19:17.108+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:19:17.118+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.83
+[2025-05-12T16:19:17.120+0700] {logging_mixin.py:188} INFO - Testing combination 175/324: seq=15, hidden=32, layers=2, lr=0.01, dropout=0.0
+[2025-05-12T16:19:17.398+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:19:17.402+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.94
+[2025-05-12T16:19:17.403+0700] {logging_mixin.py:188} INFO - Testing combination 176/324: seq=15, hidden=32, layers=2, lr=0.01, dropout=0.2
+[2025-05-12T16:19:17.777+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:19:17.783+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.46
+[2025-05-12T16:19:17.785+0700] {logging_mixin.py:188} INFO - Testing combination 177/324: seq=15, hidden=32, layers=2, lr=0.01, dropout=0.3
+[2025-05-12T16:19:18.132+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:19:18.145+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.59
+[2025-05-12T16:19:18.147+0700] {logging_mixin.py:188} INFO - Testing combination 178/324: seq=15, hidden=32, layers=2, lr=0.02, dropout=0.0
+[2025-05-12T16:19:18.437+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.010817, Val Loss: 0.006843
+[2025-05-12T16:19:18.543+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 13
+[2025-05-12T16:19:18.550+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.65
+[2025-05-12T16:19:18.551+0700] {logging_mixin.py:188} INFO - Testing combination 179/324: seq=15, hidden=32, layers=2, lr=0.02, dropout=0.2
+[2025-05-12T16:19:18.786+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:19:18.790+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.61
+[2025-05-12T16:19:18.791+0700] {logging_mixin.py:188} INFO - Testing combination 180/324: seq=15, hidden=32, layers=2, lr=0.02, dropout=0.3
+[2025-05-12T16:19:19.011+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:19:19.016+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.94
+[2025-05-12T16:19:19.017+0700] {logging_mixin.py:188} INFO - Testing combination 181/324: seq=15, hidden=32, layers=3, lr=0.005, dropout=0.0
+[2025-05-12T16:19:19.423+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:19:19.432+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.81
+[2025-05-12T16:19:19.433+0700] {logging_mixin.py:188} INFO - Testing combination 182/324: seq=15, hidden=32, layers=3, lr=0.005, dropout=0.2
+[2025-05-12T16:19:19.925+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:19:19.931+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.75
+[2025-05-12T16:19:19.932+0700] {logging_mixin.py:188} INFO - Testing combination 183/324: seq=15, hidden=32, layers=3, lr=0.005, dropout=0.3
+[2025-05-12T16:19:20.313+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:19:20.317+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.15
+[2025-05-12T16:19:20.318+0700] {logging_mixin.py:188} INFO - Testing combination 184/324: seq=15, hidden=32, layers=3, lr=0.01, dropout=0.0
+[2025-05-12T16:19:20.573+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:19:20.577+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.18
+[2025-05-12T16:19:20.578+0700] {logging_mixin.py:188} INFO - Testing combination 185/324: seq=15, hidden=32, layers=3, lr=0.01, dropout=0.2
+[2025-05-12T16:19:20.830+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:19:20.835+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.42
+[2025-05-12T16:19:20.836+0700] {logging_mixin.py:188} INFO - Testing combination 186/324: seq=15, hidden=32, layers=3, lr=0.01, dropout=0.3
+[2025-05-12T16:19:21.089+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:19:21.094+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.61
+[2025-05-12T16:19:21.095+0700] {logging_mixin.py:188} INFO - Testing combination 187/324: seq=15, hidden=32, layers=3, lr=0.02, dropout=0.0
+[2025-05-12T16:19:21.312+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:19:21.317+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.64
+[2025-05-12T16:19:21.318+0700] {logging_mixin.py:188} INFO - Testing combination 188/324: seq=15, hidden=32, layers=3, lr=0.02, dropout=0.2
+[2025-05-12T16:19:21.713+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.010355, Val Loss: 0.030669
+[2025-05-12T16:19:21.744+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:19:21.749+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.70
+[2025-05-12T16:19:21.750+0700] {logging_mixin.py:188} INFO - Testing combination 189/324: seq=15, hidden=32, layers=3, lr=0.02, dropout=0.3
+[2025-05-12T16:19:21.972+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:19:21.977+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.39
+[2025-05-12T16:19:21.978+0700] {logging_mixin.py:188} INFO - Testing combination 190/324: seq=15, hidden=64, layers=1, lr=0.005, dropout=0.0
+[2025-05-12T16:19:21.982+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:19:22.129+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:19:22.132+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.33
+[2025-05-12T16:19:22.133+0700] {logging_mixin.py:188} INFO - Testing combination 191/324: seq=15, hidden=64, layers=1, lr=0.005, dropout=0.2
+[2025-05-12T16:19:22.138+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:19:22.302+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:19:22.305+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.96
+[2025-05-12T16:19:22.306+0700] {logging_mixin.py:188} INFO - Testing combination 192/324: seq=15, hidden=64, layers=1, lr=0.005, dropout=0.3
+[2025-05-12T16:19:22.310+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:19:22.518+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:19:22.522+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.83
+[2025-05-12T16:19:22.523+0700] {logging_mixin.py:188} INFO - Testing combination 193/324: seq=15, hidden=64, layers=1, lr=0.01, dropout=0.0
+[2025-05-12T16:19:22.528+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:19:22.665+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:19:22.670+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.39
+[2025-05-12T16:19:22.671+0700] {logging_mixin.py:188} INFO - Testing combination 194/324: seq=15, hidden=64, layers=1, lr=0.01, dropout=0.2
+[2025-05-12T16:19:22.675+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:19:22.791+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:19:22.795+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.42
+[2025-05-12T16:19:22.796+0700] {logging_mixin.py:188} INFO - Testing combination 195/324: seq=15, hidden=64, layers=1, lr=0.01, dropout=0.3
+[2025-05-12T16:19:22.800+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:19:22.923+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:19:22.926+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.21
+[2025-05-12T16:19:22.927+0700] {logging_mixin.py:188} INFO - Testing combination 196/324: seq=15, hidden=64, layers=1, lr=0.02, dropout=0.0
+[2025-05-12T16:19:22.930+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:19:23.051+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:19:23.055+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.84
+[2025-05-12T16:19:23.056+0700] {logging_mixin.py:188} INFO - Testing combination 197/324: seq=15, hidden=64, layers=1, lr=0.02, dropout=0.2
+[2025-05-12T16:19:23.061+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:19:23.199+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:19:23.203+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.70
+[2025-05-12T16:19:23.205+0700] {logging_mixin.py:188} INFO - Testing combination 198/324: seq=15, hidden=64, layers=1, lr=0.02, dropout=0.3
+[2025-05-12T16:19:23.210+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:19:23.357+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:19:23.362+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.48
+[2025-05-12T16:19:23.363+0700] {logging_mixin.py:188} INFO - Testing combination 199/324: seq=15, hidden=64, layers=2, lr=0.005, dropout=0.0
+[2025-05-12T16:19:23.740+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:19:23.746+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.56
+[2025-05-12T16:19:23.747+0700] {logging_mixin.py:188} INFO - Testing combination 200/324: seq=15, hidden=64, layers=2, lr=0.005, dropout=0.2
+[2025-05-12T16:19:24.051+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:19:24.058+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.94
+[2025-05-12T16:19:24.059+0700] {logging_mixin.py:188} INFO - Testing combination 201/324: seq=15, hidden=64, layers=2, lr=0.005, dropout=0.3
+[2025-05-12T16:19:24.404+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:19:24.410+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.10
+[2025-05-12T16:19:24.411+0700] {logging_mixin.py:188} INFO - Testing combination 202/324: seq=15, hidden=64, layers=2, lr=0.01, dropout=0.0
+[2025-05-12T16:19:24.662+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:19:24.666+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.99
+[2025-05-12T16:19:24.667+0700] {logging_mixin.py:188} INFO - Testing combination 203/324: seq=15, hidden=64, layers=2, lr=0.01, dropout=0.2
+[2025-05-12T16:19:24.978+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:19:24.984+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.86
+[2025-05-12T16:19:24.985+0700] {logging_mixin.py:188} INFO - Testing combination 204/324: seq=15, hidden=64, layers=2, lr=0.01, dropout=0.3
+[2025-05-12T16:19:25.346+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:19:25.350+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.73
+[2025-05-12T16:19:25.351+0700] {logging_mixin.py:188} INFO - Testing combination 205/324: seq=15, hidden=64, layers=2, lr=0.02, dropout=0.0
+[2025-05-12T16:19:25.734+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 10
+[2025-05-12T16:19:25.739+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.53
+[2025-05-12T16:19:25.740+0700] {logging_mixin.py:188} INFO - Testing combination 206/324: seq=15, hidden=64, layers=2, lr=0.02, dropout=0.2
+[2025-05-12T16:19:26.085+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:19:26.090+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.47
+[2025-05-12T16:19:26.091+0700] {logging_mixin.py:188} INFO - Testing combination 207/324: seq=15, hidden=64, layers=2, lr=0.02, dropout=0.3
+[2025-05-12T16:19:26.678+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 10
+[2025-05-12T16:19:26.717+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.41
+[2025-05-12T16:19:26.722+0700] {logging_mixin.py:188} INFO - Testing combination 208/324: seq=15, hidden=64, layers=3, lr=0.005, dropout=0.0
+[2025-05-12T16:19:27.522+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:19:27.531+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.48
+[2025-05-12T16:19:27.532+0700] {logging_mixin.py:188} INFO - Testing combination 209/324: seq=15, hidden=64, layers=3, lr=0.005, dropout=0.2
+[2025-05-12T16:19:28.374+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:19:28.380+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.09
+[2025-05-12T16:19:28.381+0700] {logging_mixin.py:188} INFO - Testing combination 210/324: seq=15, hidden=64, layers=3, lr=0.005, dropout=0.3
+[2025-05-12T16:19:29.111+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:19:29.116+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.71
+[2025-05-12T16:19:29.117+0700] {logging_mixin.py:188} INFO - Testing combination 211/324: seq=15, hidden=64, layers=3, lr=0.01, dropout=0.0
+[2025-05-12T16:19:29.873+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 10
+[2025-05-12T16:19:29.878+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.42
+[2025-05-12T16:19:29.879+0700] {logging_mixin.py:188} INFO - Testing combination 212/324: seq=15, hidden=64, layers=3, lr=0.01, dropout=0.2
+[2025-05-12T16:19:30.676+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.016522, Val Loss: 0.001912
+[2025-05-12T16:19:30.944+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 14
+[2025-05-12T16:19:30.950+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.85
+[2025-05-12T16:19:30.951+0700] {logging_mixin.py:188} INFO - Testing combination 213/324: seq=15, hidden=64, layers=3, lr=0.01, dropout=0.3
+[2025-05-12T16:19:31.488+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:19:31.495+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.26
+[2025-05-12T16:19:31.496+0700] {logging_mixin.py:188} INFO - Testing combination 214/324: seq=15, hidden=64, layers=3, lr=0.02, dropout=0.0
+[2025-05-12T16:19:32.071+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:19:32.076+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.35
+[2025-05-12T16:19:32.077+0700] {logging_mixin.py:188} INFO - Testing combination 215/324: seq=15, hidden=64, layers=3, lr=0.02, dropout=0.2
+[2025-05-12T16:19:32.906+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 10
+[2025-05-12T16:19:32.912+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.48
+[2025-05-12T16:19:32.913+0700] {logging_mixin.py:188} INFO - Testing combination 216/324: seq=15, hidden=64, layers=3, lr=0.02, dropout=0.3
+[2025-05-12T16:19:33.560+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:19:33.566+0700] {logging_mixin.py:188} INFO - Validation RMSE: 0.97
+[2025-05-12T16:19:33.567+0700] {logging_mixin.py:188} INFO - Testing combination 217/324: seq=15, hidden=128, layers=1, lr=0.005, dropout=0.0
+[2025-05-12T16:19:33.571+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:19:33.951+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:19:33.955+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.35
+[2025-05-12T16:19:33.956+0700] {logging_mixin.py:188} INFO - Testing combination 218/324: seq=15, hidden=128, layers=1, lr=0.005, dropout=0.2
+[2025-05-12T16:19:33.962+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:19:34.310+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:19:34.315+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.27
+[2025-05-12T16:19:34.316+0700] {logging_mixin.py:188} INFO - Testing combination 219/324: seq=15, hidden=128, layers=1, lr=0.005, dropout=0.3
+[2025-05-12T16:19:34.320+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:19:34.726+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:19:34.730+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.96
+[2025-05-12T16:19:34.731+0700] {logging_mixin.py:188} INFO - Testing combination 220/324: seq=15, hidden=128, layers=1, lr=0.01, dropout=0.0
+[2025-05-12T16:19:34.736+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:19:35.166+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.033836, Val Loss: 0.001194
+[2025-05-12T16:19:35.429+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 15
+[2025-05-12T16:19:35.435+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.18
+[2025-05-12T16:19:35.436+0700] {logging_mixin.py:188} INFO - Testing combination 221/324: seq=15, hidden=128, layers=1, lr=0.01, dropout=0.2
+[2025-05-12T16:19:35.443+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:19:35.862+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.012632, Val Loss: 0.008149
+[2025-05-12T16:19:36.031+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 14
+[2025-05-12T16:19:36.036+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.03
+[2025-05-12T16:19:36.037+0700] {logging_mixin.py:188} INFO - Testing combination 222/324: seq=15, hidden=128, layers=1, lr=0.01, dropout=0.3
+[2025-05-12T16:19:36.041+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:19:36.552+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.025936, Val Loss: 0.001387
+[2025-05-12T16:19:36.781+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 13
+[2025-05-12T16:19:36.786+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.57
+[2025-05-12T16:19:36.787+0700] {logging_mixin.py:188} INFO - Testing combination 223/324: seq=15, hidden=128, layers=1, lr=0.02, dropout=0.0
+[2025-05-12T16:19:36.791+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:19:37.091+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:19:37.096+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.64
+[2025-05-12T16:19:37.097+0700] {logging_mixin.py:188} INFO - Testing combination 224/324: seq=15, hidden=128, layers=1, lr=0.02, dropout=0.2
+[2025-05-12T16:19:37.102+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:19:37.504+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.023449, Val Loss: 0.038395
+[2025-05-12T16:19:37.552+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:19:37.556+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.42
+[2025-05-12T16:19:37.557+0700] {logging_mixin.py:188} INFO - Testing combination 225/324: seq=15, hidden=128, layers=1, lr=0.02, dropout=0.3
+[2025-05-12T16:19:37.562+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:19:37.982+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.017037, Val Loss: 0.020526
+[2025-05-12T16:19:38.316+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 18
+[2025-05-12T16:19:38.321+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.89
+[2025-05-12T16:19:38.322+0700] {logging_mixin.py:188} INFO - Testing combination 226/324: seq=15, hidden=128, layers=2, lr=0.005, dropout=0.0
+[2025-05-12T16:19:39.183+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:19:39.195+0700] {logging_mixin.py:188} INFO - Validation RMSE: 4.12
+[2025-05-12T16:19:39.198+0700] {logging_mixin.py:188} INFO - Testing combination 227/324: seq=15, hidden=128, layers=2, lr=0.005, dropout=0.2
+[2025-05-12T16:19:39.973+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:19:39.985+0700] {logging_mixin.py:188} INFO - Validation RMSE: 0.45
+[2025-05-12T16:19:40.007+0700] {logging_mixin.py:188} INFO - Testing combination 228/324: seq=15, hidden=128, layers=2, lr=0.005, dropout=0.3
+[2025-05-12T16:19:41.255+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:19:41.266+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.98
+[2025-05-12T16:19:41.268+0700] {logging_mixin.py:188} INFO - Testing combination 229/324: seq=15, hidden=128, layers=2, lr=0.01, dropout=0.0
+[2025-05-12T16:19:42.786+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.015826, Val Loss: 0.042877
+[2025-05-12T16:19:43.084+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 12
+[2025-05-12T16:19:43.096+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.70
+[2025-05-12T16:19:43.097+0700] {logging_mixin.py:188} INFO - Testing combination 230/324: seq=15, hidden=128, layers=2, lr=0.01, dropout=0.2
+[2025-05-12T16:19:44.477+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 10
+[2025-05-12T16:19:44.485+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.17
+[2025-05-12T16:19:44.486+0700] {logging_mixin.py:188} INFO - Testing combination 231/324: seq=15, hidden=128, layers=2, lr=0.01, dropout=0.3
+[2025-05-12T16:19:45.961+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 10
+[2025-05-12T16:19:45.971+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.70
+[2025-05-12T16:19:45.972+0700] {logging_mixin.py:188} INFO - Testing combination 232/324: seq=15, hidden=128, layers=2, lr=0.02, dropout=0.0
+[2025-05-12T16:19:47.155+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:19:47.163+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.23
+[2025-05-12T16:19:47.164+0700] {logging_mixin.py:188} INFO - Testing combination 233/324: seq=15, hidden=128, layers=2, lr=0.02, dropout=0.2
+[2025-05-12T16:19:48.395+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 10
+[2025-05-12T16:19:48.403+0700] {logging_mixin.py:188} INFO - Validation RMSE: 0.42
+[2025-05-12T16:19:48.422+0700] {logging_mixin.py:188} INFO - Testing combination 234/324: seq=15, hidden=128, layers=2, lr=0.02, dropout=0.3
+[2025-05-12T16:19:51.286+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.009638, Val Loss: 0.051132
+[2025-05-12T16:19:51.628+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 12
+[2025-05-12T16:19:51.641+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.97
+[2025-05-12T16:19:51.642+0700] {logging_mixin.py:188} INFO - Testing combination 235/324: seq=15, hidden=128, layers=3, lr=0.005, dropout=0.0
+[2025-05-12T16:19:53.271+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:19:53.283+0700] {logging_mixin.py:188} INFO - Validation RMSE: 4.07
+[2025-05-12T16:19:53.284+0700] {logging_mixin.py:188} INFO - Testing combination 236/324: seq=15, hidden=128, layers=3, lr=0.005, dropout=0.2
+[2025-05-12T16:19:55.127+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:19:55.140+0700] {logging_mixin.py:188} INFO - Validation RMSE: 4.02
+[2025-05-12T16:19:55.141+0700] {logging_mixin.py:188} INFO - Testing combination 237/324: seq=15, hidden=128, layers=3, lr=0.005, dropout=0.3
+[2025-05-12T16:19:57.813+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:19:57.829+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.85
+[2025-05-12T16:19:57.830+0700] {logging_mixin.py:188} INFO - Testing combination 238/324: seq=15, hidden=128, layers=3, lr=0.01, dropout=0.0
+[2025-05-12T16:20:01.283+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.030979, Val Loss: 0.007221
+[2025-05-12T16:20:01.943+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 13
+[2025-05-12T16:20:01.954+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.04
+[2025-05-12T16:20:01.955+0700] {logging_mixin.py:188} INFO - Testing combination 239/324: seq=15, hidden=128, layers=3, lr=0.01, dropout=0.2
+[2025-05-12T16:20:04.214+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.012376, Val Loss: 0.020916
+[2025-05-12T16:20:05.199+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 14
+[2025-05-12T16:20:05.213+0700] {logging_mixin.py:188} INFO - Validation RMSE: 0.85
+[2025-05-12T16:20:05.214+0700] {logging_mixin.py:188} INFO - Testing combination 240/324: seq=15, hidden=128, layers=3, lr=0.01, dropout=0.3
+[2025-05-12T16:20:07.596+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.017046, Val Loss: 0.008975
+[2025-05-12T16:20:08.417+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 14
+[2025-05-12T16:20:08.448+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.19
+[2025-05-12T16:20:08.449+0700] {logging_mixin.py:188} INFO - Testing combination 241/324: seq=15, hidden=128, layers=3, lr=0.02, dropout=0.0
+[2025-05-12T16:20:10.750+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.011986, Val Loss: 0.010492
+[2025-05-12T16:20:11.643+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 14
+[2025-05-12T16:20:11.655+0700] {logging_mixin.py:188} INFO - Validation RMSE: 0.89
+[2025-05-12T16:20:11.657+0700] {logging_mixin.py:188} INFO - Testing combination 242/324: seq=15, hidden=128, layers=3, lr=0.02, dropout=0.2
+[2025-05-12T16:20:14.495+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.013744, Val Loss: 0.014270
+[2025-05-12T16:20:15.430+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 14
+[2025-05-12T16:20:15.447+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.06
+[2025-05-12T16:20:15.448+0700] {logging_mixin.py:188} INFO - Testing combination 243/324: seq=15, hidden=128, layers=3, lr=0.02, dropout=0.3
+[2025-05-12T16:20:17.520+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.040187, Val Loss: 0.032160
+[2025-05-12T16:20:18.853+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 17
+[2025-05-12T16:20:18.863+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.53
+[2025-05-12T16:20:18.864+0700] {logging_mixin.py:188} INFO - Testing combination 244/324: seq=20, hidden=32, layers=1, lr=0.005, dropout=0.0
+[2025-05-12T16:20:18.870+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:20:19.015+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.010270, Val Loss: 0.033826
+[2025-05-12T16:20:19.029+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:20:19.032+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.98
+[2025-05-12T16:20:19.034+0700] {logging_mixin.py:188} INFO - Testing combination 245/324: seq=20, hidden=32, layers=1, lr=0.005, dropout=0.2
+[2025-05-12T16:20:19.038+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:20:19.132+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:20:19.134+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.05
+[2025-05-12T16:20:19.135+0700] {logging_mixin.py:188} INFO - Testing combination 246/324: seq=20, hidden=32, layers=1, lr=0.005, dropout=0.3
+[2025-05-12T16:20:19.139+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:20:19.268+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.004955, Val Loss: 0.020801
+[2025-05-12T16:20:19.305+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 12
+[2025-05-12T16:20:19.309+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.00
+[2025-05-12T16:20:19.311+0700] {logging_mixin.py:188} INFO - Testing combination 247/324: seq=20, hidden=32, layers=1, lr=0.01, dropout=0.0
+[2025-05-12T16:20:19.317+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:20:19.445+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:20:19.448+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.48
+[2025-05-12T16:20:19.449+0700] {logging_mixin.py:188} INFO - Testing combination 248/324: seq=20, hidden=32, layers=1, lr=0.01, dropout=0.2
+[2025-05-12T16:20:19.454+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:20:19.553+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:20:19.556+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.50
+[2025-05-12T16:20:19.557+0700] {logging_mixin.py:188} INFO - Testing combination 249/324: seq=20, hidden=32, layers=1, lr=0.01, dropout=0.3
+[2025-05-12T16:20:19.562+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:20:19.714+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:20:19.718+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.06
+[2025-05-12T16:20:19.720+0700] {logging_mixin.py:188} INFO - Testing combination 250/324: seq=20, hidden=32, layers=1, lr=0.02, dropout=0.0
+[2025-05-12T16:20:19.725+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:20:19.830+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:20:19.833+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.21
+[2025-05-12T16:20:19.835+0700] {logging_mixin.py:188} INFO - Testing combination 251/324: seq=20, hidden=32, layers=1, lr=0.02, dropout=0.2
+[2025-05-12T16:20:19.840+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:20:20.000+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:20:20.003+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.92
+[2025-05-12T16:20:20.004+0700] {logging_mixin.py:188} INFO - Testing combination 252/324: seq=20, hidden=32, layers=1, lr=0.02, dropout=0.3
+[2025-05-12T16:20:20.011+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:20:20.124+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:20:20.128+0700] {logging_mixin.py:188} INFO - Validation RMSE: 4.02
+[2025-05-12T16:20:20.129+0700] {logging_mixin.py:188} INFO - Testing combination 253/324: seq=20, hidden=32, layers=2, lr=0.005, dropout=0.0
+[2025-05-12T16:20:20.478+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.010080, Val Loss: 0.034404
+[2025-05-12T16:20:20.506+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:20:20.510+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.01
+[2025-05-12T16:20:20.511+0700] {logging_mixin.py:188} INFO - Testing combination 254/324: seq=20, hidden=32, layers=2, lr=0.005, dropout=0.2
+[2025-05-12T16:20:20.809+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.010412, Val Loss: 0.039274
+[2025-05-12T16:20:20.866+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 12
+[2025-05-12T16:20:20.870+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.21
+[2025-05-12T16:20:20.870+0700] {logging_mixin.py:188} INFO - Testing combination 255/324: seq=20, hidden=32, layers=2, lr=0.005, dropout=0.3
+[2025-05-12T16:20:21.149+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:20:21.153+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.85
+[2025-05-12T16:20:21.154+0700] {logging_mixin.py:188} INFO - Testing combination 256/324: seq=20, hidden=32, layers=2, lr=0.01, dropout=0.0
+[2025-05-12T16:20:21.440+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:20:21.444+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.16
+[2025-05-12T16:20:21.446+0700] {logging_mixin.py:188} INFO - Testing combination 257/324: seq=20, hidden=32, layers=2, lr=0.01, dropout=0.2
+[2025-05-12T16:20:21.662+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:20:21.666+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.01
+[2025-05-12T16:20:21.672+0700] {logging_mixin.py:188} INFO - Testing combination 258/324: seq=20, hidden=32, layers=2, lr=0.01, dropout=0.3
+[2025-05-12T16:20:21.976+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:20:21.980+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.42
+[2025-05-12T16:20:21.981+0700] {logging_mixin.py:188} INFO - Testing combination 259/324: seq=20, hidden=32, layers=2, lr=0.02, dropout=0.0
+[2025-05-12T16:20:22.310+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:20:22.314+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.81
+[2025-05-12T16:20:22.315+0700] {logging_mixin.py:188} INFO - Testing combination 260/324: seq=20, hidden=32, layers=2, lr=0.02, dropout=0.2
+[2025-05-12T16:20:22.526+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:20:22.530+0700] {logging_mixin.py:188} INFO - Validation RMSE: 4.50
+[2025-05-12T16:20:22.531+0700] {logging_mixin.py:188} INFO - Testing combination 261/324: seq=20, hidden=32, layers=2, lr=0.02, dropout=0.3
+[2025-05-12T16:20:22.841+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.008509, Val Loss: 0.010777
+[2025-05-12T16:20:22.897+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 12
+[2025-05-12T16:20:22.902+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.54
+[2025-05-12T16:20:22.903+0700] {logging_mixin.py:188} INFO - Testing combination 262/324: seq=20, hidden=32, layers=3, lr=0.005, dropout=0.0
+[2025-05-12T16:20:23.329+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 10
+[2025-05-12T16:20:23.334+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.00
+[2025-05-12T16:20:23.335+0700] {logging_mixin.py:188} INFO - Testing combination 263/324: seq=20, hidden=32, layers=3, lr=0.005, dropout=0.2
+[2025-05-12T16:20:23.755+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.016074, Val Loss: 0.042138
+[2025-05-12T16:20:23.807+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:20:23.811+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.06
+[2025-05-12T16:20:23.812+0700] {logging_mixin.py:188} INFO - Testing combination 264/324: seq=20, hidden=32, layers=3, lr=0.005, dropout=0.3
+[2025-05-12T16:20:24.230+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:20:24.235+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.89
+[2025-05-12T16:20:24.236+0700] {logging_mixin.py:188} INFO - Testing combination 265/324: seq=20, hidden=32, layers=3, lr=0.01, dropout=0.0
+[2025-05-12T16:20:24.636+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:20:24.641+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.63
+[2025-05-12T16:20:24.642+0700] {logging_mixin.py:188} INFO - Testing combination 266/324: seq=20, hidden=32, layers=3, lr=0.01, dropout=0.2
+[2025-05-12T16:20:24.957+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:20:24.964+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.70
+[2025-05-12T16:20:24.965+0700] {logging_mixin.py:188} INFO - Testing combination 267/324: seq=20, hidden=32, layers=3, lr=0.01, dropout=0.3
+[2025-05-12T16:20:25.329+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:20:25.337+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.71
+[2025-05-12T16:20:25.338+0700] {logging_mixin.py:188} INFO - Testing combination 268/324: seq=20, hidden=32, layers=3, lr=0.02, dropout=0.0
+[2025-05-12T16:20:25.588+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:20:25.593+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.34
+[2025-05-12T16:20:25.594+0700] {logging_mixin.py:188} INFO - Testing combination 269/324: seq=20, hidden=32, layers=3, lr=0.02, dropout=0.2
+[2025-05-12T16:20:25.950+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:20:25.955+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.11
+[2025-05-12T16:20:25.956+0700] {logging_mixin.py:188} INFO - Testing combination 270/324: seq=20, hidden=32, layers=3, lr=0.02, dropout=0.3
+[2025-05-12T16:20:26.316+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:20:26.323+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.98
+[2025-05-12T16:20:26.325+0700] {logging_mixin.py:188} INFO - Testing combination 271/324: seq=20, hidden=64, layers=1, lr=0.005, dropout=0.0
+[2025-05-12T16:20:26.330+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:20:26.632+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 10
+[2025-05-12T16:20:26.639+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.22
+[2025-05-12T16:20:26.641+0700] {logging_mixin.py:188} INFO - Testing combination 272/324: seq=20, hidden=64, layers=1, lr=0.005, dropout=0.2
+[2025-05-12T16:20:26.647+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:20:26.887+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:20:26.901+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.83
+[2025-05-12T16:20:26.902+0700] {logging_mixin.py:188} INFO - Testing combination 273/324: seq=20, hidden=64, layers=1, lr=0.005, dropout=0.3
+[2025-05-12T16:20:26.908+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:20:27.200+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:20:27.204+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.86
+[2025-05-12T16:20:27.205+0700] {logging_mixin.py:188} INFO - Testing combination 274/324: seq=20, hidden=64, layers=1, lr=0.01, dropout=0.0
+[2025-05-12T16:20:27.210+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:20:27.495+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.007595, Val Loss: 0.003181
+[2025-05-12T16:20:27.640+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 14
+[2025-05-12T16:20:27.645+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.47
+[2025-05-12T16:20:27.646+0700] {logging_mixin.py:188} INFO - Testing combination 275/324: seq=20, hidden=64, layers=1, lr=0.01, dropout=0.2
+[2025-05-12T16:20:27.651+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:20:27.839+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:20:27.844+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.34
+[2025-05-12T16:20:27.845+0700] {logging_mixin.py:188} INFO - Testing combination 276/324: seq=20, hidden=64, layers=1, lr=0.01, dropout=0.3
+[2025-05-12T16:20:27.850+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:20:28.015+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:20:28.019+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.49
+[2025-05-12T16:20:28.021+0700] {logging_mixin.py:188} INFO - Testing combination 277/324: seq=20, hidden=64, layers=1, lr=0.02, dropout=0.0
+[2025-05-12T16:20:28.027+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:20:28.204+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:20:28.208+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.69
+[2025-05-12T16:20:28.209+0700] {logging_mixin.py:188} INFO - Testing combination 278/324: seq=20, hidden=64, layers=1, lr=0.02, dropout=0.2
+[2025-05-12T16:20:28.214+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:20:28.477+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:20:28.483+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.66
+[2025-05-12T16:20:28.484+0700] {logging_mixin.py:188} INFO - Testing combination 279/324: seq=20, hidden=64, layers=1, lr=0.02, dropout=0.3
+[2025-05-12T16:20:28.490+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:20:28.665+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:20:28.670+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.38
+[2025-05-12T16:20:28.671+0700] {logging_mixin.py:188} INFO - Testing combination 280/324: seq=20, hidden=64, layers=2, lr=0.005, dropout=0.0
+[2025-05-12T16:20:29.148+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:20:29.154+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.89
+[2025-05-12T16:20:29.155+0700] {logging_mixin.py:188} INFO - Testing combination 281/324: seq=20, hidden=64, layers=2, lr=0.005, dropout=0.2
+[2025-05-12T16:20:29.713+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:20:29.718+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.74
+[2025-05-12T16:20:29.719+0700] {logging_mixin.py:188} INFO - Testing combination 282/324: seq=20, hidden=64, layers=2, lr=0.005, dropout=0.3
+[2025-05-12T16:20:30.215+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:20:30.221+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.28
+[2025-05-12T16:20:30.222+0700] {logging_mixin.py:188} INFO - Testing combination 283/324: seq=20, hidden=64, layers=2, lr=0.01, dropout=0.0
+[2025-05-12T16:20:30.649+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:20:30.654+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.72
+[2025-05-12T16:20:30.655+0700] {logging_mixin.py:188} INFO - Testing combination 284/324: seq=20, hidden=64, layers=2, lr=0.01, dropout=0.2
+[2025-05-12T16:20:31.071+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:20:31.079+0700] {logging_mixin.py:188} INFO - Validation RMSE: 4.12
+[2025-05-12T16:20:31.081+0700] {logging_mixin.py:188} INFO - Testing combination 285/324: seq=20, hidden=64, layers=2, lr=0.01, dropout=0.3
+[2025-05-12T16:20:31.724+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:20:31.730+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.79
+[2025-05-12T16:20:31.731+0700] {logging_mixin.py:188} INFO - Testing combination 286/324: seq=20, hidden=64, layers=2, lr=0.02, dropout=0.0
+[2025-05-12T16:20:32.476+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.025820, Val Loss: 0.040971
+[2025-05-12T16:20:32.540+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:20:32.547+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.46
+[2025-05-12T16:20:32.548+0700] {logging_mixin.py:188} INFO - Testing combination 287/324: seq=20, hidden=64, layers=2, lr=0.02, dropout=0.2
+[2025-05-12T16:20:33.197+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.030163, Val Loss: 0.050003
+[2025-05-12T16:20:33.253+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:20:33.258+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.68
+[2025-05-12T16:20:33.259+0700] {logging_mixin.py:188} INFO - Testing combination 288/324: seq=20, hidden=64, layers=2, lr=0.02, dropout=0.3
+[2025-05-12T16:20:33.985+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.025135, Val Loss: 0.026498
+[2025-05-12T16:20:34.038+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:20:34.043+0700] {logging_mixin.py:188} INFO - Validation RMSE: 0.85
+[2025-05-12T16:20:34.044+0700] {logging_mixin.py:188} INFO - Testing combination 289/324: seq=20, hidden=64, layers=3, lr=0.005, dropout=0.0
+[2025-05-12T16:20:35.066+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:20:35.078+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.43
+[2025-05-12T16:20:35.079+0700] {logging_mixin.py:188} INFO - Testing combination 290/324: seq=20, hidden=64, layers=3, lr=0.005, dropout=0.2
+[2025-05-12T16:20:36.000+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:20:36.010+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.37
+[2025-05-12T16:20:36.011+0700] {logging_mixin.py:188} INFO - Testing combination 291/324: seq=20, hidden=64, layers=3, lr=0.005, dropout=0.3
+[2025-05-12T16:20:37.337+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 9
+[2025-05-12T16:20:37.344+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.50
+[2025-05-12T16:20:37.345+0700] {logging_mixin.py:188} INFO - Testing combination 292/324: seq=20, hidden=64, layers=3, lr=0.01, dropout=0.0
+[2025-05-12T16:20:38.505+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.009397, Val Loss: 0.021417
+[2025-05-12T16:20:38.872+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 14
+[2025-05-12T16:20:38.879+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.83
+[2025-05-12T16:20:38.880+0700] {logging_mixin.py:188} INFO - Testing combination 293/324: seq=20, hidden=64, layers=3, lr=0.01, dropout=0.2
+[2025-05-12T16:20:39.834+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:20:39.840+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.88
+[2025-05-12T16:20:39.841+0700] {logging_mixin.py:188} INFO - Testing combination 294/324: seq=20, hidden=64, layers=3, lr=0.01, dropout=0.3
+[2025-05-12T16:20:40.586+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:20:40.593+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.43
+[2025-05-12T16:20:40.594+0700] {logging_mixin.py:188} INFO - Testing combination 295/324: seq=20, hidden=64, layers=3, lr=0.02, dropout=0.0
+[2025-05-12T16:20:41.605+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.015449, Val Loss: 0.045059
+[2025-05-12T16:20:41.819+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 12
+[2025-05-12T16:20:41.826+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.11
+[2025-05-12T16:20:41.827+0700] {logging_mixin.py:188} INFO - Testing combination 296/324: seq=20, hidden=64, layers=3, lr=0.02, dropout=0.2
+[2025-05-12T16:20:42.923+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.011874, Val Loss: 0.044354
+[2025-05-12T16:20:43.100+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 12
+[2025-05-12T16:20:43.107+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.77
+[2025-05-12T16:20:43.109+0700] {logging_mixin.py:188} INFO - Testing combination 297/324: seq=20, hidden=64, layers=3, lr=0.02, dropout=0.3
+[2025-05-12T16:20:43.905+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:20:43.912+0700] {logging_mixin.py:188} INFO - Validation RMSE: 0.93
+[2025-05-12T16:20:43.913+0700] {logging_mixin.py:188} INFO - Testing combination 298/324: seq=20, hidden=128, layers=1, lr=0.005, dropout=0.0
+[2025-05-12T16:20:43.917+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:20:44.278+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:20:44.284+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.89
+[2025-05-12T16:20:44.285+0700] {logging_mixin.py:188} INFO - Testing combination 299/324: seq=20, hidden=128, layers=1, lr=0.005, dropout=0.2
+[2025-05-12T16:20:44.291+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:20:44.681+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:20:44.687+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.62
+[2025-05-12T16:20:44.688+0700] {logging_mixin.py:188} INFO - Testing combination 300/324: seq=20, hidden=128, layers=1, lr=0.005, dropout=0.3
+[2025-05-12T16:20:44.693+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:20:45.249+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.006242, Val Loss: 0.002410
+[2025-05-12T16:20:45.410+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 13
+[2025-05-12T16:20:45.415+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.21
+[2025-05-12T16:20:45.416+0700] {logging_mixin.py:188} INFO - Testing combination 301/324: seq=20, hidden=128, layers=1, lr=0.01, dropout=0.0
+[2025-05-12T16:20:45.420+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:20:46.097+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.030479, Val Loss: 0.001249
+[2025-05-12T16:20:46.423+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 15
+[2025-05-12T16:20:46.430+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.18
+[2025-05-12T16:20:46.431+0700] {logging_mixin.py:188} INFO - Testing combination 302/324: seq=20, hidden=128, layers=1, lr=0.01, dropout=0.2
+[2025-05-12T16:20:46.437+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:20:47.351+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.007545, Val Loss: 0.014617
+[2025-05-12T16:20:47.409+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:20:47.415+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.77
+[2025-05-12T16:20:47.416+0700] {logging_mixin.py:188} INFO - Testing combination 303/324: seq=20, hidden=128, layers=1, lr=0.01, dropout=0.3
+[2025-05-12T16:20:47.423+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:20:48.038+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.013074, Val Loss: 0.009258
+[2025-05-12T16:20:48.262+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 14
+[2025-05-12T16:20:48.267+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.19
+[2025-05-12T16:20:48.268+0700] {logging_mixin.py:188} INFO - Testing combination 304/324: seq=20, hidden=128, layers=1, lr=0.02, dropout=0.0
+[2025-05-12T16:20:48.272+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:20:48.852+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.022887, Val Loss: 0.041266
+[2025-05-12T16:20:49.336+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 19
+[2025-05-12T16:20:49.341+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.75
+[2025-05-12T16:20:49.342+0700] {logging_mixin.py:188} INFO - Testing combination 305/324: seq=20, hidden=128, layers=1, lr=0.02, dropout=0.2
+[2025-05-12T16:20:49.346+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:20:49.831+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:20:49.838+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.06
+[2025-05-12T16:20:49.839+0700] {logging_mixin.py:188} INFO - Testing combination 306/324: seq=20, hidden=128, layers=1, lr=0.02, dropout=0.3
+[2025-05-12T16:20:49.844+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/torch/nn/modules/rnn.py:123 UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+[2025-05-12T16:20:50.356+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:20:50.361+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.07
+[2025-05-12T16:20:50.363+0700] {logging_mixin.py:188} INFO - Testing combination 307/324: seq=20, hidden=128, layers=2, lr=0.005, dropout=0.0
+[2025-05-12T16:20:51.581+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:20:51.590+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.83
+[2025-05-12T16:20:51.591+0700] {logging_mixin.py:188} INFO - Testing combination 308/324: seq=20, hidden=128, layers=2, lr=0.005, dropout=0.2
+[2025-05-12T16:20:52.823+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:20:52.830+0700] {logging_mixin.py:188} INFO - Validation RMSE: 4.70
+[2025-05-12T16:20:52.831+0700] {logging_mixin.py:188} INFO - Testing combination 309/324: seq=20, hidden=128, layers=2, lr=0.005, dropout=0.3
+[2025-05-12T16:20:54.308+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.008264, Val Loss: 0.028132
+[2025-05-12T16:20:54.611+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:20:54.619+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.68
+[2025-05-12T16:20:54.620+0700] {logging_mixin.py:188} INFO - Testing combination 310/324: seq=20, hidden=128, layers=2, lr=0.01, dropout=0.0
+[2025-05-12T16:20:56.129+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.017136, Val Loss: 0.033441
+[2025-05-12T16:20:56.262+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 11
+[2025-05-12T16:20:56.272+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.45
+[2025-05-12T16:20:56.273+0700] {logging_mixin.py:188} INFO - Testing combination 311/324: seq=20, hidden=128, layers=2, lr=0.01, dropout=0.2
+[2025-05-12T16:20:58.109+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.040667, Val Loss: 0.081246
+[2025-05-12T16:20:58.421+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 12
+[2025-05-12T16:20:58.430+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.11
+[2025-05-12T16:20:58.431+0700] {logging_mixin.py:188} INFO - Testing combination 312/324: seq=20, hidden=128, layers=2, lr=0.01, dropout=0.3
+[2025-05-12T16:21:00.757+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 10
+[2025-05-12T16:21:00.772+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.14
+[2025-05-12T16:21:00.773+0700] {logging_mixin.py:188} INFO - Testing combination 313/324: seq=20, hidden=128, layers=2, lr=0.02, dropout=0.0
+[2025-05-12T16:21:03.966+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 10
+[2025-05-12T16:21:03.982+0700] {logging_mixin.py:188} INFO - Validation RMSE: 0.73
+[2025-05-12T16:21:03.983+0700] {logging_mixin.py:188} INFO - Testing combination 314/324: seq=20, hidden=128, layers=2, lr=0.02, dropout=0.2
+[2025-05-12T16:21:07.049+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.088356, Val Loss: 0.002244
+[2025-05-12T16:21:08.274+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 15
+[2025-05-12T16:21:08.285+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.20
+[2025-05-12T16:21:08.286+0700] {logging_mixin.py:188} INFO - Testing combination 315/324: seq=20, hidden=128, layers=2, lr=0.02, dropout=0.3
+[2025-05-12T16:21:11.379+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.022319, Val Loss: 0.009004
+[2025-05-12T16:21:12.342+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 14
+[2025-05-12T16:21:12.352+0700] {logging_mixin.py:188} INFO - Validation RMSE: 0.94
+[2025-05-12T16:21:12.353+0700] {logging_mixin.py:188} INFO - Testing combination 316/324: seq=20, hidden=128, layers=3, lr=0.005, dropout=0.0
+[2025-05-12T16:21:14.088+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:21:14.101+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.43
+[2025-05-12T16:21:14.103+0700] {logging_mixin.py:188} INFO - Testing combination 317/324: seq=20, hidden=128, layers=3, lr=0.005, dropout=0.2
+[2025-05-12T16:21:16.228+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 6
+[2025-05-12T16:21:16.251+0700] {logging_mixin.py:188} INFO - Validation RMSE: 0.98
+[2025-05-12T16:21:16.254+0700] {logging_mixin.py:188} INFO - Testing combination 318/324: seq=20, hidden=128, layers=3, lr=0.005, dropout=0.3
+[2025-05-12T16:21:19.619+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:21:19.639+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.38
+[2025-05-12T16:21:19.641+0700] {logging_mixin.py:188} INFO - Testing combination 319/324: seq=20, hidden=128, layers=3, lr=0.01, dropout=0.0
+[2025-05-12T16:21:21.549+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 8
+[2025-05-12T16:21:21.560+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.91
+[2025-05-12T16:21:21.561+0700] {logging_mixin.py:188} INFO - Testing combination 320/324: seq=20, hidden=128, layers=3, lr=0.01, dropout=0.2
+[2025-05-12T16:21:23.854+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.051567, Val Loss: 0.007914
+[2025-05-12T16:21:24.500+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 13
+[2025-05-12T16:21:24.512+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.00
+[2025-05-12T16:21:24.513+0700] {logging_mixin.py:188} INFO - Testing combination 321/324: seq=20, hidden=128, layers=3, lr=0.01, dropout=0.3
+[2025-05-12T16:21:27.093+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.016470, Val Loss: 0.002863
+[2025-05-12T16:21:28.149+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 14
+[2025-05-12T16:21:28.164+0700] {logging_mixin.py:188} INFO - Validation RMSE: 2.11
+[2025-05-12T16:21:28.165+0700] {logging_mixin.py:188} INFO - Testing combination 322/324: seq=20, hidden=128, layers=3, lr=0.02, dropout=0.0
+[2025-05-12T16:21:30.596+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 10
+[2025-05-12T16:21:30.607+0700] {logging_mixin.py:188} INFO - Validation RMSE: 0.99
+[2025-05-12T16:21:30.608+0700] {logging_mixin.py:188} INFO - Testing combination 323/324: seq=20, hidden=128, layers=3, lr=0.02, dropout=0.2
+[2025-05-12T16:21:33.312+0700] {logging_mixin.py:188} INFO - Epoch 10, Train Loss: 0.018299, Val Loss: 0.007873
+[2025-05-12T16:21:34.205+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 14
+[2025-05-12T16:21:34.216+0700] {logging_mixin.py:188} INFO - Validation RMSE: 1.48
+[2025-05-12T16:21:34.217+0700] {logging_mixin.py:188} INFO - Testing combination 324/324: seq=20, hidden=128, layers=3, lr=0.02, dropout=0.3
+[2025-05-12T16:21:35.783+0700] {logging_mixin.py:188} INFO - Early stopping pada epoch 7
+[2025-05-12T16:21:35.794+0700] {logging_mixin.py:188} INFO - Validation RMSE: 3.29
+[2025-05-12T16:21:35.830+0700] {logging_mixin.py:188} INFO - ✅ Parameter terbaik untuk BBCA LSTM: {'seq_length': 15, 'hidden_dim': 128, 'num_layers': 2, 'learning_rate': 0.02, 'dropout': 0.2}, RMSE: 0.42
+[2025-05-12T16:21:35.832+0700] {python.py:237} INFO - Done. Returned value was: {'seq_length': 15, 'hidden_dim': 128, 'num_layers': 2, 'learning_rate': 0.02, 'dropout': 0.2}
+[2025-05-12T16:21:35.833+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T16:21:35.908+0700] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=bbca_lstm_prediction, task_id=hyperparameter_tuning, run_id=scheduled__2025-05-08T11:30:00+00:00, execution_date=20250508T113000, start_date=20250512T091802, end_date=20250512T092135
+[2025-05-12T16:21:36.024+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T16:21:36.090+0700] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T16:21:36.098+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
