@@ -17,3 +17,22 @@
 [2025-05-11T06:27:12.240+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
 [2025-05-11T06:27:12.300+0700] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
 [2025-05-11T06:27:12.307+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:51:33.809+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:51:33.878+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction_enhanced.extract_data scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:51:33.894+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction_enhanced.extract_data scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:51:33.895+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:51:33.919+0700] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): extract_data> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:51:33.934+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=3321) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:51:33.933+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction_enhanced', 'extract_data', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '150', '--raw', '--subdir', 'DAGS_FOLDER/bbca_dag.py', '--cfg-path', '/tmp/tmpmq7ttghr']
+[2025-05-11T16:51:33.937+0700] {standard_task_runner.py:63} INFO - Started process 3334 to run task
+[2025-05-11T16:51:33.937+0700] {standard_task_runner.py:91} INFO - Job 150: Subtask extract_data
+[2025-05-11T16:51:34.041+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction_enhanced.extract_data scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:51:34.215+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction_enhanced' AIRFLOW_CTX_TASK_ID='extract_data' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:51:34.217+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:51:34.262+0700] {logging_mixin.py:188} WARNING - /opt/***/dags/lstm_models.py:84 UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+[2025-05-11T16:51:34.315+0700] {python.py:237} INFO - Done. Returned value was: /opt/***/data/lstm/bbca_data.csv
+[2025-05-11T16:51:34.316+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:51:34.361+0700] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=bbca_lstm_prediction_enhanced, task_id=extract_data, run_id=scheduled__2025-05-08T11:30:00+00:00, execution_date=20250508T113000, start_date=20250511T095133, end_date=20250511T095134
+[2025-05-11T16:51:34.393+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:51:34.445+0700] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:51:34.449+0700] {local_task_job_runner.py:222} INFO - ::endgroup::

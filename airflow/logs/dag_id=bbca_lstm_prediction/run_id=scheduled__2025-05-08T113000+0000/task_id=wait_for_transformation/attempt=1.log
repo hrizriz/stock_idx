@@ -18,3 +18,1145 @@
 [2025-05-11T03:50:27.939+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
 [2025-05-11T03:50:27.984+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
 [2025-05-11T03:50:27.991+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:24:07.348+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:24:07.435+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:24:07.455+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:24:07.456+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:24:07.487+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:24:07.506+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '10', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmptm_t_cgq']
+[2025-05-11T16:24:07.512+0700] {standard_task_runner.py:91} INFO - Job 10: Subtask wait_for_transformation
+[2025-05-11T16:24:07.532+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=256) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:24:07.534+0700] {standard_task_runner.py:63} INFO - Started process 293 to run task
+[2025-05-11T16:24:07.673+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:24:08.083+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:24:08.086+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:24:08.141+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:24:08.201+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-11T16:24:08.261+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:24:08.328+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:24:08.421+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:24:08.485+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:24:08.583+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:24:08.591+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:25:14.834+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:25:14.881+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:25:14.891+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:25:14.892+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:25:14.914+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:25:14.927+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '19', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpcnfso1b1']
+[2025-05-11T16:25:14.931+0700] {standard_task_runner.py:91} INFO - Job 19: Subtask wait_for_transformation
+[2025-05-11T16:25:14.941+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=400) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:25:14.942+0700] {standard_task_runner.py:63} INFO - Started process 424 to run task
+[2025-05-11T16:25:15.023+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:25:15.166+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:25:15.168+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:25:15.185+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:25:15.202+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-11T16:25:15.210+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:25:15.230+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:25:15.263+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:25:15.278+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:25:15.323+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:25:15.329+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:26:22.917+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:26:22.973+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:26:22.987+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:26:22.988+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:26:23.014+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:26:23.031+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '24', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmprhc40rbc']
+[2025-05-11T16:26:23.035+0700] {standard_task_runner.py:91} INFO - Job 24: Subtask wait_for_transformation
+[2025-05-11T16:26:23.048+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=517) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:26:23.050+0700] {standard_task_runner.py:63} INFO - Started process 544 to run task
+[2025-05-11T16:26:23.145+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:26:23.298+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:26:23.300+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:26:23.318+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:26:23.338+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-11T16:26:23.349+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:26:23.372+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:26:23.409+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:26:23.466+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:26:23.518+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:26:23.523+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:27:28.816+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:27:28.874+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:27:28.887+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:27:28.888+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:27:28.910+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:27:28.926+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '29', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmprfu_k8d1']
+[2025-05-11T16:27:28.931+0700] {standard_task_runner.py:91} INFO - Job 29: Subtask wait_for_transformation
+[2025-05-11T16:27:28.946+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=637) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:27:28.947+0700] {standard_task_runner.py:63} INFO - Started process 653 to run task
+[2025-05-11T16:27:29.040+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:27:29.212+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:27:29.214+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:27:29.246+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:27:29.268+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-11T16:27:29.283+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:27:29.319+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:27:29.478+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:27:29.525+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:27:29.615+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:27:29.622+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:28:35.988+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:28:36.039+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:28:36.050+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:28:36.051+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:28:36.072+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:28:36.086+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=754) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:28:36.085+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '34', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmphtabz93w']
+[2025-05-11T16:28:36.089+0700] {standard_task_runner.py:63} INFO - Started process 771 to run task
+[2025-05-11T16:28:36.090+0700] {standard_task_runner.py:91} INFO - Job 34: Subtask wait_for_transformation
+[2025-05-11T16:28:36.178+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:28:36.314+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:28:36.316+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:28:36.334+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:28:36.351+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-11T16:28:36.355+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:28:36.378+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:28:36.413+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:28:36.466+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:28:36.516+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:28:36.519+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:29:44.899+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:29:44.970+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:29:44.985+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:29:44.986+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:29:45.012+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:29:45.030+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=872) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:29:45.033+0700] {standard_task_runner.py:63} INFO - Started process 897 to run task
+[2025-05-11T16:29:45.031+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '39', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmp4e6x__sg']
+[2025-05-11T16:29:45.036+0700] {standard_task_runner.py:91} INFO - Job 39: Subtask wait_for_transformation
+[2025-05-11T16:29:45.171+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:29:45.383+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:29:45.385+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:29:45.406+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:29:45.432+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-11T16:29:45.436+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:29:45.468+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:29:45.514+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:29:45.570+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:29:45.637+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:29:45.643+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:30:50.679+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:30:50.729+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:30:50.739+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:30:50.740+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:30:50.759+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:30:50.776+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1000) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:30:50.774+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '44', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpxz6ff6m4']
+[2025-05-11T16:30:50.779+0700] {standard_task_runner.py:63} INFO - Started process 1014 to run task
+[2025-05-11T16:30:50.779+0700] {standard_task_runner.py:91} INFO - Job 44: Subtask wait_for_transformation
+[2025-05-11T16:30:50.877+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:30:51.026+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:30:51.030+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:30:51.052+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:30:51.076+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-11T16:30:51.080+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:30:51.114+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:30:51.149+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:30:51.196+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:30:51.250+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:30:51.254+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:31:56.919+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:31:56.978+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:31:56.992+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:31:56.993+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:31:57.017+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:31:57.034+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1121) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:31:57.036+0700] {standard_task_runner.py:63} INFO - Started process 1130 to run task
+[2025-05-11T16:31:57.034+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '49', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpzmvjktw8']
+[2025-05-11T16:31:57.038+0700] {standard_task_runner.py:91} INFO - Job 49: Subtask wait_for_transformation
+[2025-05-11T16:31:57.138+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:31:57.308+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:31:57.310+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:31:57.340+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:31:57.363+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-11T16:31:57.367+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:31:57.399+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:31:57.480+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:31:57.533+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:31:57.589+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:31:57.593+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:33:02.583+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:33:02.636+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:33:02.647+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:33:02.648+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:33:02.669+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:33:02.685+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1235) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:33:02.684+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '54', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpz_k2hfa4']
+[2025-05-11T16:33:02.688+0700] {standard_task_runner.py:63} INFO - Started process 1246 to run task
+[2025-05-11T16:33:02.688+0700] {standard_task_runner.py:91} INFO - Job 54: Subtask wait_for_transformation
+[2025-05-11T16:33:02.777+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:33:02.915+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:33:02.916+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:33:02.933+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:33:02.950+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-11T16:33:02.953+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:33:02.976+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:33:03.011+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:33:03.064+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:33:03.115+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:33:03.121+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:34:08.860+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:34:08.925+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:34:08.940+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:34:08.941+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:34:08.969+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:34:08.987+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1340) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:34:08.985+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '59', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpd0kle8ia']
+[2025-05-11T16:34:08.989+0700] {standard_task_runner.py:91} INFO - Job 59: Subtask wait_for_transformation
+[2025-05-11T16:34:08.989+0700] {standard_task_runner.py:63} INFO - Started process 1360 to run task
+[2025-05-11T16:34:09.107+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:34:09.285+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:34:09.287+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:34:09.313+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:34:09.337+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-11T16:34:09.340+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:34:09.369+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:34:09.408+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:34:09.446+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:34:09.510+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:34:09.515+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:35:14.231+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:35:14.282+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:35:14.294+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:35:14.295+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:35:14.313+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:35:14.327+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '64', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpfpz24j7d']
+[2025-05-11T16:35:14.328+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1456) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:35:14.330+0700] {standard_task_runner.py:91} INFO - Job 64: Subtask wait_for_transformation
+[2025-05-11T16:35:14.331+0700] {standard_task_runner.py:63} INFO - Started process 1465 to run task
+[2025-05-11T16:35:14.451+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:35:14.670+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:35:14.672+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:35:14.698+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:35:14.728+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-11T16:35:14.732+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:35:14.770+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:35:14.810+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:35:14.868+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:35:14.946+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:35:14.949+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:36:19.728+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:36:19.788+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:36:19.803+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:36:19.804+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:36:19.825+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:36:19.842+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1572) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:36:19.845+0700] {standard_task_runner.py:63} INFO - Started process 1591 to run task
+[2025-05-11T16:36:19.842+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '69', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpcsuiuyz9']
+[2025-05-11T16:36:19.848+0700] {standard_task_runner.py:91} INFO - Job 69: Subtask wait_for_transformation
+[2025-05-11T16:36:19.961+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:36:20.126+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:36:20.128+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:36:20.150+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:36:20.170+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-11T16:36:20.175+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:36:20.203+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:36:20.266+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:36:20.303+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:36:20.354+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:36:20.357+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:37:25.432+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:37:25.480+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:37:25.491+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:37:25.491+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:37:25.510+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:37:25.524+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1695) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:37:25.523+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '77', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpsv3jbur7']
+[2025-05-11T16:37:25.526+0700] {standard_task_runner.py:63} INFO - Started process 1716 to run task
+[2025-05-11T16:37:25.526+0700] {standard_task_runner.py:91} INFO - Job 77: Subtask wait_for_transformation
+[2025-05-11T16:37:25.611+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:37:25.743+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:37:25.745+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:37:25.761+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:37:25.777+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-11T16:37:25.780+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:37:25.797+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:37:25.827+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:37:25.857+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:37:25.902+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:37:25.905+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:38:31.598+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:38:31.651+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:38:31.662+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:38:31.663+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:38:31.684+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:38:31.700+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1815) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:38:31.703+0700] {standard_task_runner.py:63} INFO - Started process 1835 to run task
+[2025-05-11T16:38:31.699+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '81', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpagijjv9t']
+[2025-05-11T16:38:31.704+0700] {standard_task_runner.py:91} INFO - Job 81: Subtask wait_for_transformation
+[2025-05-11T16:38:31.798+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:38:32.004+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:38:32.007+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:38:32.028+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:38:32.049+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-11T16:38:32.051+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:38:32.078+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:38:32.126+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:38:32.159+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:38:32.224+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:38:32.231+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:39:37.270+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:39:37.324+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:39:37.336+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:39:37.337+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:39:37.360+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:39:37.378+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '86', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpz1b6n9cs']
+[2025-05-11T16:39:37.380+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1934) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:39:37.382+0700] {standard_task_runner.py:91} INFO - Job 86: Subtask wait_for_transformation
+[2025-05-11T16:39:37.383+0700] {standard_task_runner.py:63} INFO - Started process 1950 to run task
+[2025-05-11T16:39:37.480+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:39:37.649+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:39:37.652+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:39:37.670+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:39:37.688+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-11T16:39:37.691+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:39:37.718+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:39:37.759+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:39:37.799+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:39:37.857+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:39:37.862+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:40:43.160+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:40:43.209+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:40:43.220+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:40:43.221+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:40:43.244+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:40:43.263+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=2051) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:40:43.262+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '90', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpxaz7oksf']
+[2025-05-11T16:40:43.265+0700] {standard_task_runner.py:63} INFO - Started process 2072 to run task
+[2025-05-11T16:40:43.266+0700] {standard_task_runner.py:91} INFO - Job 90: Subtask wait_for_transformation
+[2025-05-11T16:40:43.358+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:40:43.501+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:40:43.503+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:40:43.520+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:40:43.538+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-11T16:40:43.541+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:40:43.564+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:40:43.597+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:40:43.642+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:40:43.690+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:40:43.696+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:41:49.604+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:41:49.676+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:41:49.696+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:41:49.697+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:41:49.720+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:41:49.739+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '94', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmphn717srd']
+[2025-05-11T16:41:49.740+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=2167) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:41:49.743+0700] {standard_task_runner.py:91} INFO - Job 94: Subtask wait_for_transformation
+[2025-05-11T16:41:49.743+0700] {standard_task_runner.py:63} INFO - Started process 2186 to run task
+[2025-05-11T16:41:49.850+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:41:50.037+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:41:50.039+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:41:50.059+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:41:50.078+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-11T16:41:50.082+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:41:50.109+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:41:50.149+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:41:50.201+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:41:50.229+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:42:55.236+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:42:55.285+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:42:55.298+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:42:55.299+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:42:55.323+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:42:55.338+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=2281) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:42:55.340+0700] {standard_task_runner.py:63} INFO - Started process 2300 to run task
+[2025-05-11T16:42:55.338+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '98', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmp55cae90s']
+[2025-05-11T16:42:55.342+0700] {standard_task_runner.py:91} INFO - Job 98: Subtask wait_for_transformation
+[2025-05-11T16:42:55.431+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:42:55.564+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:42:55.565+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:42:55.581+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:42:55.598+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-11T16:42:55.601+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:42:55.624+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:42:55.657+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:42:55.676+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:42:55.724+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:42:55.729+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:44:00.835+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:44:00.884+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:44:00.895+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:44:00.896+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:44:00.913+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:44:00.928+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=2392) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:44:00.930+0700] {standard_task_runner.py:63} INFO - Started process 2404 to run task
+[2025-05-11T16:44:00.928+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '102', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmp6xet39t0']
+[2025-05-11T16:44:00.931+0700] {standard_task_runner.py:91} INFO - Job 102: Subtask wait_for_transformation
+[2025-05-11T16:44:01.025+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:44:01.181+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:44:01.183+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:44:01.201+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:44:01.223+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-11T16:44:01.226+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:44:01.251+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:44:01.286+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:44:01.306+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:44:01.364+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:44:01.367+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:45:04.720+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:45:04.756+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:45:04.764+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:45:04.765+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:45:04.778+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:45:04.791+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=2517) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:45:04.790+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '110', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmp965wqyfc']
+[2025-05-11T16:45:04.793+0700] {standard_task_runner.py:63} INFO - Started process 2526 to run task
+[2025-05-11T16:45:04.794+0700] {standard_task_runner.py:91} INFO - Job 110: Subtask wait_for_transformation
+[2025-05-11T16:45:04.859+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:45:04.964+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:45:04.965+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:45:04.978+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:45:04.991+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-11T16:45:04.993+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:45:05.011+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:45:05.036+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:45:05.088+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:45:05.133+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:45:05.136+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:46:08.438+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:46:08.479+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:46:08.488+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:46:08.489+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:46:08.505+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:46:08.520+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '116', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpsbddj4_z']
+[2025-05-11T16:46:08.521+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=2635) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:46:08.523+0700] {standard_task_runner.py:91} INFO - Job 116: Subtask wait_for_transformation
+[2025-05-11T16:46:08.523+0700] {standard_task_runner.py:63} INFO - Started process 2655 to run task
+[2025-05-11T16:46:08.597+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:46:08.708+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:46:08.709+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:46:08.722+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:46:08.735+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-11T16:46:08.737+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:46:08.756+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:46:08.784+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:46:08.819+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:46:08.857+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:46:08.860+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:47:13.602+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:47:13.650+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:47:13.663+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:47:13.663+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:47:13.685+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:47:13.702+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=2758) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:47:13.701+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '122', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmp909adsp4']
+[2025-05-11T16:47:13.703+0700] {standard_task_runner.py:63} INFO - Started process 2779 to run task
+[2025-05-11T16:47:13.704+0700] {standard_task_runner.py:91} INFO - Job 122: Subtask wait_for_transformation
+[2025-05-11T16:47:13.795+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:47:13.946+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:47:13.948+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:47:13.965+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:47:13.983+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-11T16:47:13.985+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:47:14.010+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:47:14.044+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:47:14.080+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:47:14.133+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:47:14.139+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:48:18.463+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:48:18.519+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:48:18.531+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:48:18.532+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:48:18.556+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:48:18.574+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=2882) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:48:18.573+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '127', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpb4j8v6j3']
+[2025-05-11T16:48:18.576+0700] {standard_task_runner.py:63} INFO - Started process 2895 to run task
+[2025-05-11T16:48:18.577+0700] {standard_task_runner.py:91} INFO - Job 127: Subtask wait_for_transformation
+[2025-05-11T16:48:18.681+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:48:18.815+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:48:18.816+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:48:18.831+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:48:18.847+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-11T16:48:18.849+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:48:18.871+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:48:18.903+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:48:18.953+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:48:18.997+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:48:19.003+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:49:28.937+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:49:29.015+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:49:29.032+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:49:29.033+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:49:29.066+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:49:29.101+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=3028) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:49:29.097+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '135', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpz22m0x79']
+[2025-05-11T16:49:29.106+0700] {standard_task_runner.py:63} INFO - Started process 3044 to run task
+[2025-05-11T16:49:29.108+0700] {standard_task_runner.py:91} INFO - Job 135: Subtask wait_for_transformation
+[2025-05-11T16:49:29.303+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:49:29.580+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:49:29.583+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:49:29.616+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:49:29.645+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-11T16:49:29.649+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:49:29.682+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:49:29.720+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:49:29.776+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:49:29.833+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:49:29.839+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:50:37.236+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:50:37.326+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:50:37.346+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:50:37.347+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:50:37.382+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:50:37.408+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=3166) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:50:37.411+0700] {standard_task_runner.py:63} INFO - Started process 3187 to run task
+[2025-05-11T16:50:37.409+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '138', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpp4_jii5m']
+[2025-05-11T16:50:37.415+0700] {standard_task_runner.py:91} INFO - Job 138: Subtask wait_for_transformation
+[2025-05-11T16:50:37.577+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:50:37.932+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:50:37.934+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:50:37.958+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:50:37.984+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-11T16:50:37.988+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:50:38.021+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:50:38.069+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:50:38.112+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:50:38.183+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:50:38.187+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:50:48.790+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:50:48.846+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:50:48.859+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:50:48.860+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:50:48.885+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:50:48.908+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=3204) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:50:48.911+0700] {standard_task_runner.py:63} INFO - Started process 3213 to run task
+[2025-05-11T16:50:48.908+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '140', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpzo98gyy6']
+[2025-05-11T16:50:48.912+0700] {standard_task_runner.py:91} INFO - Job 140: Subtask wait_for_transformation
+[2025-05-11T16:50:49.023+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:50:49.185+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:50:49.187+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:50:49.210+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:50:49.239+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-11T16:50:49.243+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:50:49.277+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:50:49.331+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:50:49.370+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:50:49.434+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:50:49.441+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T03:41:07.409+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T03:41:07.488+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T03:41:07.503+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T03:41:07.504+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T03:41:07.533+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T03:41:07.555+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '26', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmprac_b314']
+[2025-05-12T03:41:07.563+0700] {standard_task_runner.py:91} INFO - Job 26: Subtask wait_for_transformation
+[2025-05-12T03:41:07.581+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=3243) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T03:41:07.583+0700] {standard_task_runner.py:63} INFO - Started process 3266 to run task
+[2025-05-12T03:41:07.751+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host b08a3a418dc4
+[2025-05-12T03:41:07.986+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T03:41:07.988+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T03:41:08.014+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T03:41:08.042+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T03:41:08.064+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T03:41:08.106+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T03:41:08.190+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T03:41:08.245+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T03:41:08.345+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T03:41:08.352+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T03:42:24.690+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T03:42:24.755+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T03:42:24.774+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T03:42:24.775+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T03:42:24.803+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T03:42:24.819+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '28', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmp1pv6ev57']
+[2025-05-12T03:42:24.825+0700] {standard_task_runner.py:91} INFO - Job 28: Subtask wait_for_transformation
+[2025-05-12T03:42:24.838+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=3315) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T03:42:24.840+0700] {standard_task_runner.py:63} INFO - Started process 3337 to run task
+[2025-05-12T03:42:24.956+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host b08a3a418dc4
+[2025-05-12T03:42:25.156+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T03:42:25.159+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T03:42:25.186+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T03:42:25.215+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T03:42:25.229+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T03:42:25.266+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T03:42:25.322+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T03:42:25.379+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T03:42:25.465+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T03:42:25.474+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T03:43:41.065+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T03:43:41.123+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T03:43:41.136+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T03:43:41.137+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T03:43:41.162+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T03:43:41.179+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '29', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpmh2rotbv']
+[2025-05-12T03:43:41.184+0700] {standard_task_runner.py:91} INFO - Job 29: Subtask wait_for_transformation
+[2025-05-12T03:43:41.192+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=3377) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T03:43:41.193+0700] {standard_task_runner.py:63} INFO - Started process 3398 to run task
+[2025-05-12T03:43:41.306+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host b08a3a418dc4
+[2025-05-12T03:43:41.527+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T03:43:41.529+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T03:43:41.559+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T03:43:41.584+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T03:43:41.597+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T03:43:41.626+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T03:43:41.676+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T03:43:41.732+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T03:43:41.813+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T03:43:41.822+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T03:45:33.955+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T03:45:34.033+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T03:45:34.068+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T03:45:34.070+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T03:45:34.102+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T03:45:34.121+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '34', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpdujubpdk']
+[2025-05-12T03:45:34.126+0700] {standard_task_runner.py:91} INFO - Job 34: Subtask wait_for_transformation
+[2025-05-12T03:45:34.137+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=3506) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T03:45:34.139+0700] {standard_task_runner.py:63} INFO - Started process 3531 to run task
+[2025-05-12T03:45:34.278+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host b08a3a418dc4
+[2025-05-12T03:45:34.723+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T03:45:34.731+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T03:45:34.809+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T03:45:34.875+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T03:45:34.896+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T03:45:34.931+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T03:45:34.987+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T03:45:35.044+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T03:45:35.111+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T03:45:35.118+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T03:47:19.846+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T03:47:19.955+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T03:47:19.993+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T03:47:19.995+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T03:47:20.048+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T03:47:20.104+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '37', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpy5jgbzte']
+[2025-05-12T03:47:20.116+0700] {standard_task_runner.py:91} INFO - Job 37: Subtask wait_for_transformation
+[2025-05-12T03:47:20.127+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=3634) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T03:47:20.129+0700] {standard_task_runner.py:63} INFO - Started process 3657 to run task
+[2025-05-12T03:47:20.295+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host b08a3a418dc4
+[2025-05-12T03:47:20.566+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T03:47:20.571+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T03:47:20.624+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T03:47:20.660+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T03:47:20.679+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T03:47:20.717+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T03:47:20.772+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T03:47:20.831+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T03:47:20.916+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T03:47:20.925+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T03:48:38.255+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T03:48:38.327+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T03:48:38.344+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T03:48:38.345+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T03:48:38.377+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T03:48:38.406+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '39', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmprccott7t']
+[2025-05-12T03:48:38.414+0700] {standard_task_runner.py:91} INFO - Job 39: Subtask wait_for_transformation
+[2025-05-12T03:48:38.437+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=3718) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T03:48:38.440+0700] {standard_task_runner.py:63} INFO - Started process 3742 to run task
+[2025-05-12T03:48:38.587+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host b08a3a418dc4
+[2025-05-12T03:48:38.875+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T03:48:38.880+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T03:48:38.922+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T03:48:38.965+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T03:48:38.991+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T03:48:39.048+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T03:48:39.123+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T03:48:39.182+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T03:48:39.255+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T03:48:39.264+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T05:48:47.625+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T05:48:47.698+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T05:48:47.712+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T05:48:47.713+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T05:48:47.737+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T05:48:47.757+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '15', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpjfbe8z64']
+[2025-05-12T05:48:47.764+0700] {standard_task_runner.py:91} INFO - Job 15: Subtask wait_for_transformation
+[2025-05-12T05:48:47.773+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=442) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T05:48:47.775+0700] {standard_task_runner.py:63} INFO - Started process 480 to run task
+[2025-05-12T05:48:47.903+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 84b3813fe61b
+[2025-05-12T05:48:48.085+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T05:48:48.087+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T05:48:48.107+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T05:48:48.142+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T05:48:48.153+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T05:48:48.176+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T05:48:48.304+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T05:48:48.352+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T05:48:48.404+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T05:48:48.409+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T05:49:52.726+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T05:49:52.772+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T05:49:52.782+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T05:49:52.783+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T05:49:52.803+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T05:49:52.816+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '20', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpurdsauer']
+[2025-05-12T05:49:52.819+0700] {standard_task_runner.py:91} INFO - Job 20: Subtask wait_for_transformation
+[2025-05-12T05:49:52.828+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=581) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T05:49:52.829+0700] {standard_task_runner.py:63} INFO - Started process 598 to run task
+[2025-05-12T05:49:52.917+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 84b3813fe61b
+[2025-05-12T05:49:53.077+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T05:49:53.079+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T05:49:53.099+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T05:49:53.118+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T05:49:53.128+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T05:49:53.150+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T05:49:53.186+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T05:49:53.205+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T05:49:53.256+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T05:49:53.262+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T05:50:58.579+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T05:50:58.625+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T05:50:58.635+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T05:50:58.636+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T05:50:58.653+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T05:50:58.666+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '25', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpoqm1uh6e']
+[2025-05-12T05:50:58.669+0700] {standard_task_runner.py:91} INFO - Job 25: Subtask wait_for_transformation
+[2025-05-12T05:50:58.677+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=703) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T05:50:58.678+0700] {standard_task_runner.py:63} INFO - Started process 714 to run task
+[2025-05-12T05:50:58.755+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 84b3813fe61b
+[2025-05-12T05:50:58.888+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T05:50:58.890+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T05:50:58.907+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T05:50:58.925+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T05:50:58.933+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T05:50:58.952+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T05:50:58.982+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T05:50:59.013+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T05:50:59.054+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T05:50:59.057+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T05:52:05.319+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T05:52:05.410+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T05:52:05.425+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T05:52:05.426+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T05:52:05.459+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T05:52:05.482+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '30', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpp3lgscu_']
+[2025-05-12T05:52:05.487+0700] {standard_task_runner.py:91} INFO - Job 30: Subtask wait_for_transformation
+[2025-05-12T05:52:05.497+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=811) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T05:52:05.499+0700] {standard_task_runner.py:63} INFO - Started process 830 to run task
+[2025-05-12T05:52:05.591+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 84b3813fe61b
+[2025-05-12T05:52:05.756+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T05:52:05.758+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T05:52:05.778+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T05:52:05.801+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T05:52:05.815+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T05:52:05.838+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T05:52:05.876+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T05:52:05.916+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T05:52:05.969+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T05:52:05.976+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T05:53:11.490+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T05:53:11.548+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T05:53:11.561+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T05:53:11.562+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T05:53:11.582+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T05:53:11.600+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=924) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T05:53:11.603+0700] {standard_task_runner.py:63} INFO - Started process 936 to run task
+[2025-05-12T05:53:11.601+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '35', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmp_c8t5imp']
+[2025-05-12T05:53:11.605+0700] {standard_task_runner.py:91} INFO - Job 35: Subtask wait_for_transformation
+[2025-05-12T05:53:11.714+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 84b3813fe61b
+[2025-05-12T05:53:11.881+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T05:53:11.883+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T05:53:11.902+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T05:53:11.921+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T05:53:11.924+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T05:53:11.948+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T05:53:11.979+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T05:53:12.020+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T05:53:12.077+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T05:53:12.080+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T05:54:16.803+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T05:54:16.871+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T05:54:16.883+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T05:54:16.884+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T05:54:16.904+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T05:54:16.919+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1040) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T05:54:16.918+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '40', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpdm73csvl']
+[2025-05-12T05:54:16.922+0700] {standard_task_runner.py:63} INFO - Started process 1055 to run task
+[2025-05-12T05:54:16.922+0700] {standard_task_runner.py:91} INFO - Job 40: Subtask wait_for_transformation
+[2025-05-12T05:54:17.018+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 84b3813fe61b
+[2025-05-12T05:54:17.164+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T05:54:17.166+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T05:54:17.184+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T05:54:17.202+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T05:54:17.206+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T05:54:17.231+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T05:54:17.274+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T05:54:17.298+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T05:54:17.366+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T05:54:17.372+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T05:55:22.637+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T05:55:22.693+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T05:55:22.706+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T05:55:22.707+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T05:55:22.726+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T05:55:22.742+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '45', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpznocyer2']
+[2025-05-12T05:55:22.744+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1156) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T05:55:22.747+0700] {standard_task_runner.py:91} INFO - Job 45: Subtask wait_for_transformation
+[2025-05-12T05:55:22.747+0700] {standard_task_runner.py:63} INFO - Started process 1176 to run task
+[2025-05-12T05:55:22.854+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 84b3813fe61b
+[2025-05-12T05:55:23.004+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T05:55:23.006+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T05:55:23.023+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T05:55:23.041+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T05:55:23.044+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T05:55:23.073+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T05:55:23.108+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T05:55:23.124+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T05:55:23.178+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T05:55:23.181+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T05:56:28.212+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T05:56:28.260+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T05:56:28.271+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T05:56:28.272+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T05:56:28.300+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T05:56:28.314+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1283) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T05:56:28.313+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '50', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmp72eayo7g']
+[2025-05-12T05:56:28.317+0700] {standard_task_runner.py:91} INFO - Job 50: Subtask wait_for_transformation
+[2025-05-12T05:56:28.317+0700] {standard_task_runner.py:63} INFO - Started process 1292 to run task
+[2025-05-12T05:56:28.409+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 84b3813fe61b
+[2025-05-12T05:56:28.547+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T05:56:28.549+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T05:56:28.565+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T05:56:28.580+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T05:56:28.582+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T05:56:28.608+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T05:56:28.643+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T05:56:28.693+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T05:56:28.746+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T05:56:28.749+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T05:57:33.134+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T05:57:33.178+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T05:57:33.189+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T05:57:33.190+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T05:57:33.208+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T05:57:33.220+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '55', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmptt8vvxuo']
+[2025-05-12T05:57:33.222+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1399) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T05:57:33.224+0700] {standard_task_runner.py:91} INFO - Job 55: Subtask wait_for_transformation
+[2025-05-12T05:57:33.224+0700] {standard_task_runner.py:63} INFO - Started process 1408 to run task
+[2025-05-12T05:57:33.315+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 84b3813fe61b
+[2025-05-12T05:57:33.451+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T05:57:33.453+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T05:57:33.470+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T05:57:33.487+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T05:57:33.489+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T05:57:33.512+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T05:57:33.547+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T05:57:33.561+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T05:57:33.606+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T05:57:33.612+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T05:58:39.580+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T05:58:39.629+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T05:58:39.663+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T05:58:39.665+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T05:58:39.697+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T05:58:39.717+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '60', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpd2bndj3m']
+[2025-05-12T05:58:39.718+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1515) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T05:58:39.721+0700] {standard_task_runner.py:91} INFO - Job 60: Subtask wait_for_transformation
+[2025-05-12T05:58:39.721+0700] {standard_task_runner.py:63} INFO - Started process 1524 to run task
+[2025-05-12T05:58:39.856+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 84b3813fe61b
+[2025-05-12T05:58:40.015+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T05:58:40.016+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T05:58:40.037+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T05:58:40.063+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T05:58:40.067+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T05:58:40.105+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T05:58:40.144+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T05:58:40.179+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T05:58:40.242+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T05:58:40.246+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T05:59:48.061+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T05:59:48.125+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T05:59:48.139+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T05:59:48.140+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T05:59:48.165+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T05:59:48.180+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '65', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpkt7j3jfi']
+[2025-05-12T05:59:48.181+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1621) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T05:59:48.183+0700] {standard_task_runner.py:91} INFO - Job 65: Subtask wait_for_transformation
+[2025-05-12T05:59:48.184+0700] {standard_task_runner.py:63} INFO - Started process 1664 to run task
+[2025-05-12T05:59:48.282+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 84b3813fe61b
+[2025-05-12T05:59:48.434+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T05:59:48.438+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T05:59:48.457+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T05:59:48.474+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T05:59:48.477+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T05:59:48.501+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T05:59:48.541+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T05:59:48.561+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T05:59:48.615+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T05:59:48.619+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T06:00:54.180+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T06:00:54.247+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:00:54.262+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:00:54.263+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T06:00:54.290+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T06:00:54.308+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1759) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T06:00:54.311+0700] {standard_task_runner.py:63} INFO - Started process 1776 to run task
+[2025-05-12T06:00:54.309+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '71', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpzmh6b3gk']
+[2025-05-12T06:00:54.315+0700] {standard_task_runner.py:91} INFO - Job 71: Subtask wait_for_transformation
+[2025-05-12T06:00:54.441+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 84b3813fe61b
+[2025-05-12T06:00:54.621+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T06:00:54.624+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T06:00:54.651+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T06:00:54.676+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T06:00:54.681+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T06:00:54.712+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T06:00:54.755+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T06:00:54.808+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T06:00:54.896+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T06:00:54.903+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T06:01:59.891+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T06:01:59.939+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:01:59.950+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:01:59.950+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T06:01:59.968+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T06:01:59.982+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1891) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T06:01:59.984+0700] {standard_task_runner.py:63} INFO - Started process 1905 to run task
+[2025-05-12T06:01:59.982+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '76', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpjuer74uc']
+[2025-05-12T06:01:59.985+0700] {standard_task_runner.py:91} INFO - Job 76: Subtask wait_for_transformation
+[2025-05-12T06:02:00.072+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 84b3813fe61b
+[2025-05-12T06:02:00.196+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T06:02:00.198+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T06:02:00.213+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T06:02:00.229+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T06:02:00.231+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T06:02:00.252+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T06:02:00.281+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T06:02:00.320+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T06:02:00.367+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T06:02:00.370+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T06:03:07.255+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T06:03:07.355+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:03:07.372+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:03:07.374+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T06:03:07.407+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T06:03:07.432+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=2010) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T06:03:07.427+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '81', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpkllspfru']
+[2025-05-12T06:03:07.435+0700] {standard_task_runner.py:63} INFO - Started process 2021 to run task
+[2025-05-12T06:03:07.436+0700] {standard_task_runner.py:91} INFO - Job 81: Subtask wait_for_transformation
+[2025-05-12T06:03:07.579+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 84b3813fe61b
+[2025-05-12T06:03:07.819+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T06:03:07.821+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T06:03:07.844+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T06:03:07.864+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T06:03:07.867+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T06:03:07.898+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T06:03:07.936+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T06:03:07.975+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T06:03:08.056+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T06:03:08.060+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T06:04:14.990+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T06:04:15.090+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:04:15.111+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:04:15.112+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T06:04:15.160+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T06:04:15.185+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '86', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpvfd5qip8']
+[2025-05-12T06:04:15.187+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=2126) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T06:04:15.193+0700] {standard_task_runner.py:91} INFO - Job 86: Subtask wait_for_transformation
+[2025-05-12T06:04:15.194+0700] {standard_task_runner.py:63} INFO - Started process 2141 to run task
+[2025-05-12T06:04:15.357+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 84b3813fe61b
+[2025-05-12T06:04:15.585+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T06:04:15.588+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T06:04:15.615+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T06:04:15.640+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T06:04:15.644+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T06:04:15.681+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T06:04:15.730+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T06:04:15.775+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T06:04:15.849+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T06:04:15.852+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T06:05:21.175+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T06:05:21.223+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:05:21.234+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:05:21.235+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T06:05:21.255+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T06:05:21.271+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=2243) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T06:05:21.274+0700] {standard_task_runner.py:63} INFO - Started process 2264 to run task
+[2025-05-12T06:05:21.272+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '90', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpsy1ffr1_']
+[2025-05-12T06:05:21.275+0700] {standard_task_runner.py:91} INFO - Job 90: Subtask wait_for_transformation
+[2025-05-12T06:05:21.374+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 84b3813fe61b
+[2025-05-12T06:05:21.819+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T06:05:21.823+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T06:05:21.869+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T06:05:21.920+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T06:05:21.927+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T06:05:21.973+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T06:05:22.029+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T06:05:22.092+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T06:05:22.173+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T06:05:22.179+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T06:06:28.914+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T06:06:29.011+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:06:29.025+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:06:29.026+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T06:06:29.055+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T06:06:29.076+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=2366) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T06:06:29.075+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '96', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpjq3vmf9m']
+[2025-05-12T06:06:29.079+0700] {standard_task_runner.py:63} INFO - Started process 2384 to run task
+[2025-05-12T06:06:29.079+0700] {standard_task_runner.py:91} INFO - Job 96: Subtask wait_for_transformation
+[2025-05-12T06:06:29.203+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 84b3813fe61b
+[2025-05-12T06:06:29.537+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T06:06:29.542+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T06:06:29.586+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T06:06:29.611+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T06:06:29.614+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T06:06:29.646+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T06:06:29.689+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T06:06:29.738+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T06:06:29.804+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T06:06:29.808+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T06:07:36.375+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T06:07:36.426+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:07:36.437+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:07:36.438+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T06:07:36.460+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T06:07:36.474+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=2482) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T06:07:36.475+0700] {standard_task_runner.py:63} INFO - Started process 2524 to run task
+[2025-05-12T06:07:36.474+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '101', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmp5orxt14r']
+[2025-05-12T06:07:36.477+0700] {standard_task_runner.py:91} INFO - Job 101: Subtask wait_for_transformation
+[2025-05-12T06:07:36.568+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 84b3813fe61b
+[2025-05-12T06:07:36.737+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T06:07:36.739+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T06:07:36.757+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T06:07:36.786+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T06:07:36.789+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T06:07:36.814+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T06:07:36.848+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T06:07:36.891+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T06:07:36.942+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T06:07:36.947+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T06:08:40.518+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T06:08:40.554+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:08:40.563+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:08:40.563+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T06:08:40.581+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T06:08:40.593+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=2622) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T06:08:40.595+0700] {standard_task_runner.py:63} INFO - Started process 2634 to run task
+[2025-05-12T06:08:40.593+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '107', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpj991bnpy']
+[2025-05-12T06:08:40.596+0700] {standard_task_runner.py:91} INFO - Job 107: Subtask wait_for_transformation
+[2025-05-12T06:08:40.673+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 84b3813fe61b
+[2025-05-12T06:08:40.784+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T06:08:40.786+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T06:08:40.797+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T06:08:40.811+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T06:08:40.813+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T06:08:40.832+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T06:08:40.859+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T06:08:40.891+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T06:08:40.926+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T06:08:40.932+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T06:09:45.648+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T06:09:45.695+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:09:45.707+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:09:45.708+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T06:09:45.728+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T06:09:45.744+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '116', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmp8i496siz']
+[2025-05-12T06:09:45.746+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=2773) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T06:09:45.749+0700] {standard_task_runner.py:91} INFO - Job 116: Subtask wait_for_transformation
+[2025-05-12T06:09:45.750+0700] {standard_task_runner.py:63} INFO - Started process 2785 to run task
+[2025-05-12T06:09:45.850+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 84b3813fe61b
+[2025-05-12T06:09:45.991+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T06:09:45.993+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T06:09:46.016+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T06:09:46.034+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T06:09:46.036+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T06:09:46.062+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T06:09:46.094+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T06:09:46.127+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T06:09:46.173+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T06:09:46.177+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T06:10:49.691+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T06:10:49.726+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:10:49.735+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:10:49.735+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T06:10:49.753+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T06:10:49.766+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=2928) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T06:10:49.766+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '124', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmp0vtvn0yh']
+[2025-05-12T06:10:49.768+0700] {standard_task_runner.py:63} INFO - Started process 2937 to run task
+[2025-05-12T06:10:49.768+0700] {standard_task_runner.py:91} INFO - Job 124: Subtask wait_for_transformation
+[2025-05-12T06:10:49.839+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 84b3813fe61b
+[2025-05-12T06:10:49.944+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T06:10:49.945+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T06:10:49.957+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T06:10:49.970+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T06:10:49.972+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T06:10:49.989+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T06:10:50.014+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T06:10:50.063+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T06:10:50.101+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T06:10:50.105+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T06:11:54.024+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T06:11:54.060+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:11:54.071+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:11:54.072+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T06:11:54.090+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T06:11:54.103+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=3049) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T06:11:54.102+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '130', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmp74xj_g8u']
+[2025-05-12T06:11:54.105+0700] {standard_task_runner.py:63} INFO - Started process 3058 to run task
+[2025-05-12T06:11:54.105+0700] {standard_task_runner.py:91} INFO - Job 130: Subtask wait_for_transformation
+[2025-05-12T06:11:54.179+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 84b3813fe61b
+[2025-05-12T06:11:54.286+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T06:11:54.287+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T06:11:54.300+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T06:11:54.317+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T06:11:54.320+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T06:11:54.345+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T06:11:54.383+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T06:11:54.440+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T06:11:54.517+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T06:11:54.524+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T06:12:59.066+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T06:12:59.109+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:12:59.119+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:12:59.120+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T06:12:59.140+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T06:12:59.154+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '136', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpmbm9ymwp']
+[2025-05-12T06:12:59.155+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=3170) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T06:12:59.157+0700] {standard_task_runner.py:91} INFO - Job 136: Subtask wait_for_transformation
+[2025-05-12T06:12:59.157+0700] {standard_task_runner.py:63} INFO - Started process 3179 to run task
+[2025-05-12T06:12:59.244+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 84b3813fe61b
+[2025-05-12T06:12:59.432+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T06:12:59.434+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T06:12:59.456+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T06:12:59.478+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T06:12:59.481+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T06:12:59.510+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T06:12:59.551+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T06:12:59.574+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T06:12:59.624+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T06:12:59.632+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T06:14:03.683+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T06:14:03.719+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:14:03.728+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:14:03.728+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T06:14:03.746+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T06:14:03.759+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=3288) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T06:14:03.758+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '141', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpst1_op9n']
+[2025-05-12T06:14:03.761+0700] {standard_task_runner.py:63} INFO - Started process 3297 to run task
+[2025-05-12T06:14:03.761+0700] {standard_task_runner.py:91} INFO - Job 141: Subtask wait_for_transformation
+[2025-05-12T06:14:03.836+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 84b3813fe61b
+[2025-05-12T06:14:03.956+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T06:14:03.958+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T06:14:03.970+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T06:14:03.984+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T06:14:03.986+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T06:14:04.003+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T06:14:04.030+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T06:14:04.057+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T06:14:04.113+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T06:14:04.119+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T06:15:08.177+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T06:15:08.254+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:15:08.269+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:15:08.270+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T06:15:08.305+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-08 11:30:00+00:00
+[2025-05-12T06:15:08.342+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=3394) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T06:15:08.346+0700] {standard_task_runner.py:63} INFO - Started process 3403 to run task
+[2025-05-12T06:15:08.344+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'wait_for_transformation', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '142', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpdhfi174w']
+[2025-05-12T06:15:08.351+0700] {standard_task_runner.py:91} INFO - Job 142: Subtask wait_for_transformation
+[2025-05-12T06:15:08.521+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [running]> on host 84b3813fe61b
+[2025-05-12T06:15:08.728+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T06:15:08.732+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T06:15:08.757+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-12T06:15:08.776+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-08T11:30:00+00:00 ... 
+[2025-05-12T06:15:08.780+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-12T06:15:08.818+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T06:15:08.874+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-12T06:15:08.925+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T06:15:09.005+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T06:15:09.012+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T06:16:13.199+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T06:16:13.243+0700] {taskinstance.py:2066} INFO - Dependencies not met for <TaskInstance: bbca_lstm_prediction.wait_for_transformation scheduled__2025-05-08T11:30:00+00:00 [success]>, dependency 'Task Instance State' FAILED: Task is in the 'success' state.
+[2025-05-12T06:16:13.250+0700] {local_task_job_runner.py:163} INFO - Task is not able to be run

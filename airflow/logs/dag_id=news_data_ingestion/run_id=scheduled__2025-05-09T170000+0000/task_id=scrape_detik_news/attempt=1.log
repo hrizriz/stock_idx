@@ -422,3 +422,437 @@
 [2025-05-11T02:48:22.960+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
 [2025-05-11T02:48:22.999+0700] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
 [2025-05-11T02:48:23.006+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:24:05.030+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:24:05.132+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: news_data_ingestion.scrape_detik_news scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:24:05.153+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: news_data_ingestion.scrape_detik_news scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:24:05.154+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:24:05.199+0700] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): scrape_detik_news> on 2025-05-09 17:00:00+00:00
+[2025-05-11T16:24:05.216+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'news_data_ingestion', 'scrape_detik_news', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '8', '--raw', '--subdir', 'DAGS_FOLDER/news_data_ingestion.py', '--cfg-path', '/tmp/tmpm7l7dlu7']
+[2025-05-11T16:24:05.221+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=276) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:24:05.222+0700] {standard_task_runner.py:91} INFO - Job 8: Subtask scrape_detik_news
+[2025-05-11T16:24:05.223+0700] {standard_task_runner.py:63} INFO - Started process 282 to run task
+[2025-05-11T16:24:05.369+0700] {task_command.py:426} INFO - Running <TaskInstance: news_data_ingestion.scrape_detik_news scheduled__2025-05-09T17:00:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:24:05.594+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='news_data_ingestion' AIRFLOW_CTX_TASK_ID='scrape_detik_news' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T16:24:05.596+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:24:05.626+0700] {logging_mixin.py:188} INFO - Memproses 97 ticker untuk scraping berita
+[2025-05-11T16:24:05.627+0700] {logging_mixin.py:188} INFO - Hanya mengambil berita setelah: 2025-05-04
+[2025-05-11T16:24:05.628+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: AKRA
+[2025-05-11T16:24:06.701+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk AKRA
+[2025-05-11T16:24:14.167+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk AKRA
+[2025-05-11T16:24:14.168+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk AKRA
+[2025-05-11T16:24:18.697+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: AMMN
+[2025-05-11T16:24:19.611+0700] {logging_mixin.py:188} INFO - Ditemukan 11 artikel untuk AMMN
+[2025-05-11T16:24:21.140+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk AMMN
+[2025-05-11T16:24:21.141+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk AMMN
+[2025-05-11T16:24:26.784+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: AMRT
+[2025-05-11T16:24:27.560+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk AMRT
+[2025-05-11T16:24:29.029+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk AMRT
+[2025-05-11T16:24:29.029+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk AMRT
+[2025-05-11T16:24:35.519+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: ANTM
+[2025-05-11T16:24:36.419+0700] {logging_mixin.py:188} INFO - Ditemukan 11 artikel untuk ANTM
+[2025-05-11T16:24:37.862+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk ANTM
+[2025-05-11T16:24:37.862+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk ANTM
+[2025-05-11T16:24:41.728+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: ARTO
+[2025-05-11T16:24:42.518+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk ARTO
+[2025-05-11T16:24:43.728+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk ARTO
+[2025-05-11T16:24:43.729+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk ARTO
+[2025-05-11T16:24:47.690+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: ASII
+[2025-05-11T16:24:48.425+0700] {logging_mixin.py:188} INFO - Ditemukan 11 artikel untuk ASII
+[2025-05-11T16:24:49.714+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk ASII
+[2025-05-11T16:24:49.715+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk ASII
+[2025-05-11T16:24:53.448+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: AUTO
+[2025-05-11T16:24:54.597+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk AUTO
+[2025-05-11T16:24:56.759+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk AUTO
+[2025-05-11T16:24:56.760+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk AUTO
+[2025-05-11T16:25:01.710+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: AVIA
+[2025-05-11T16:25:02.544+0700] {logging_mixin.py:188} INFO - Ditemukan 11 artikel untuk AVIA
+[2025-05-11T16:25:03.841+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk AVIA
+[2025-05-11T16:25:03.842+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk AVIA
+[2025-05-11T16:25:07.921+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: BBCA
+[2025-05-11T16:25:08.699+0700] {logging_mixin.py:188} INFO - Ditemukan 11 artikel untuk BBCA
+[2025-05-11T16:25:08.702+0700] {logging_mixin.py:188} INFO - Error parsing tanggal 'Senin, 11 Nov 2024 12:45 WIB': time data '11 Nov 2024 12:45' does not match format '%d %B %Y %H:%M'
+[2025-05-11T16:25:09.977+0700] {logging_mixin.py:188} INFO - Error parsing tanggal 'Senin, 29 Jul 2024 08:17 WIB': time data '29 Jul 2024 08:17' does not match format '%d %B %Y %H:%M'
+[2025-05-11T16:25:11.831+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk BBCA
+[2025-05-11T16:25:11.832+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk BBCA
+[2025-05-11T16:25:18.677+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: BBNI
+[2025-05-11T16:25:19.407+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk BBNI
+[2025-05-11T16:25:19.681+0700] {logging_mixin.py:188} INFO - Error parsing tanggal 'Sabtu, 03 Agu 2024 14:30 WIB': time data '03 Agu 2024 14:30' does not match format '%d %B %Y %H:%M'
+[2025-05-11T16:25:21.243+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk BBNI
+[2025-05-11T16:25:21.244+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk BBNI
+[2025-05-11T16:25:26.430+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: BBRI
+[2025-05-11T16:25:27.387+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk BBRI
+[2025-05-11T16:25:27.666+0700] {logging_mixin.py:188} INFO - Error parsing tanggal 'Kamis, 24 Apr 2025 13:03 WIB': time data '24 Apr 2025 13:03' does not match format '%d %B %Y %H:%M'
+[2025-05-11T16:25:28.589+0700] {logging_mixin.py:188} INFO - Error parsing tanggal 'Senin, 21 Apr 2025 14:05 WIB': time data '21 Apr 2025 14:05' does not match format '%d %B %Y %H:%M'
+[2025-05-11T16:25:29.217+0700] {logging_mixin.py:188} INFO - Error parsing tanggal 'Rabu, 12 Jun 2024 17:35 WIB': time data '12 Jun 2024 17:35' does not match format '%d %B %Y %H:%M'
+[2025-05-11T16:25:30.226+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk BBRI
+[2025-05-11T16:25:30.227+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk BBRI
+[2025-05-11T16:25:35.554+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: BBTN
+[2025-05-11T16:25:36.618+0700] {logging_mixin.py:188} INFO - Ditemukan 11 artikel untuk BBTN
+[2025-05-11T16:25:36.912+0700] {logging_mixin.py:188} INFO - Error parsing tanggal 'Kamis, 24 Apr 2025 16:10 WIB': time data '24 Apr 2025 16:10' does not match format '%d %B %Y %H:%M'
+[2025-05-11T16:25:38.427+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk BBTN
+[2025-05-11T16:25:38.428+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk BBTN
+[2025-05-11T16:25:42.569+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: BBYB
+[2025-05-11T16:25:43.294+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk BBYB
+[2025-05-11T16:25:46.812+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk BBYB
+[2025-05-11T16:25:46.813+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk BBYB
+[2025-05-11T16:25:52.706+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: BDKR
+[2025-05-11T16:25:53.463+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk BDKR
+[2025-05-11T16:25:54.876+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk BDKR
+[2025-05-11T16:25:54.877+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk BDKR
+[2025-05-11T16:26:01.436+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: BFIN
+[2025-05-11T16:26:02.174+0700] {logging_mixin.py:188} INFO - Ditemukan 11 artikel untuk BFIN
+[2025-05-11T16:26:03.642+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk BFIN
+[2025-05-11T16:26:03.643+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk BFIN
+[2025-05-11T16:26:06.770+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: BMRI
+[2025-05-11T16:26:07.535+0700] {logging_mixin.py:188} INFO - Ditemukan 11 artikel untuk BMRI
+[2025-05-11T16:26:08.851+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk BMRI
+[2025-05-11T16:26:08.852+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk BMRI
+[2025-05-11T16:26:13.378+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: BMTR
+[2025-05-11T16:26:14.121+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk BMTR
+[2025-05-11T16:26:15.437+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk BMTR
+[2025-05-11T16:26:15.439+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk BMTR
+[2025-05-11T16:26:18.566+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: BNGA
+[2025-05-11T16:26:19.754+0700] {logging_mixin.py:188} INFO - Ditemukan 11 artikel untuk BNGA
+[2025-05-11T16:26:21.359+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk BNGA
+[2025-05-11T16:26:21.359+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk BNGA
+[2025-05-11T16:26:25.142+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: BRIS
+[2025-05-11T16:26:26.203+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk BRIS
+[2025-05-11T16:26:26.204+0700] {logging_mixin.py:188} INFO - Error parsing tanggal 'Sabtu, 22 Feb 2025 19:04 WIB': time data '22 Feb 2025 19:04' does not match format '%d %B %Y %H:%M'
+[2025-05-11T16:26:27.808+0700] {logging_mixin.py:188} INFO - Error parsing tanggal 'Selasa, 09 Jul 2024 11:30 WIB': time data '09 Jul 2024 11:30' does not match format '%d %B %Y %H:%M'
+[2025-05-11T16:26:28.332+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk BRIS
+[2025-05-11T16:26:28.332+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk BRIS
+[2025-05-11T16:26:31.620+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: BRMS
+[2025-05-11T16:26:32.358+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk BRMS
+[2025-05-11T16:26:33.491+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk BRMS
+[2025-05-11T16:26:33.492+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk BRMS
+[2025-05-11T16:26:37.378+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: BRPT
+[2025-05-11T16:26:38.093+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk BRPT
+[2025-05-11T16:26:39.718+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk BRPT
+[2025-05-11T16:26:39.719+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk BRPT
+[2025-05-11T16:26:46.500+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: BSDE
+[2025-05-11T16:26:47.189+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk BSDE
+[2025-05-11T16:26:48.348+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk BSDE
+[2025-05-11T16:26:48.349+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk BSDE
+[2025-05-11T16:26:54.969+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: BTPS
+[2025-05-11T16:26:55.723+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk BTPS
+[2025-05-11T16:26:57.335+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk BTPS
+[2025-05-11T16:26:57.336+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk BTPS
+[2025-05-11T16:27:01.125+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: CMRY
+[2025-05-11T16:27:01.828+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk CMRY
+[2025-05-11T16:27:03.125+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk CMRY
+[2025-05-11T16:27:03.126+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk CMRY
+[2025-05-11T16:27:06.211+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: CPIN
+[2025-05-11T16:27:07.154+0700] {logging_mixin.py:188} INFO - Ditemukan 11 artikel untuk CPIN
+[2025-05-11T16:27:08.605+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk CPIN
+[2025-05-11T16:27:08.606+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk CPIN
+[2025-05-11T16:27:12.565+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: CTRA
+[2025-05-11T16:27:13.219+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk CTRA
+[2025-05-11T16:27:14.418+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk CTRA
+[2025-05-11T16:27:14.418+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk CTRA
+[2025-05-11T16:27:20.342+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: DEWA
+[2025-05-11T16:27:21.264+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk DEWA
+[2025-05-11T16:27:24.989+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk DEWA
+[2025-05-11T16:27:24.990+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk DEWA
+[2025-05-11T16:27:28.630+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: DSNG
+[2025-05-11T16:27:29.405+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk DSNG
+[2025-05-11T16:27:34.284+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk DSNG
+[2025-05-11T16:27:34.285+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk DSNG
+[2025-05-11T16:27:37.964+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: ELSA
+[2025-05-11T16:27:38.757+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk ELSA
+[2025-05-11T16:27:40.236+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk ELSA
+[2025-05-11T16:27:40.237+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk ELSA
+[2025-05-11T16:27:43.665+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: EMTK
+[2025-05-11T16:27:44.423+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk EMTK
+[2025-05-11T16:27:45.990+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk EMTK
+[2025-05-11T16:27:45.991+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk EMTK
+[2025-05-11T16:27:51.399+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: ENRG
+[2025-05-11T16:27:52.062+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk ENRG
+[2025-05-11T16:27:53.682+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk ENRG
+[2025-05-11T16:27:53.683+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk ENRG
+[2025-05-11T16:27:58.485+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: ERAA
+[2025-05-11T16:27:59.197+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk ERAA
+[2025-05-11T16:28:00.886+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk ERAA
+[2025-05-11T16:28:00.887+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk ERAA
+[2025-05-11T16:28:07.502+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: ESSA
+[2025-05-11T16:28:08.206+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk ESSA
+[2025-05-11T16:28:10.535+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk ESSA
+[2025-05-11T16:28:10.536+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk ESSA
+[2025-05-11T16:28:17.037+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: EXCL
+[2025-05-11T16:28:17.730+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk EXCL
+[2025-05-11T16:28:18.630+0700] {logging_mixin.py:188} INFO - Error parsing tanggal 'Kamis, 12 Des 2024 16:38 WIB': time data '12 Des 2024 16:38' does not match format '%d %B %Y %H:%M'
+[2025-05-11T16:28:19.527+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk EXCL
+[2025-05-11T16:28:19.528+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk EXCL
+[2025-05-11T16:28:24.838+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: FILM
+[2025-05-11T16:28:25.526+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk FILM
+[2025-05-11T16:28:29.380+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk FILM
+[2025-05-11T16:28:29.381+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk FILM
+[2025-05-11T16:28:36.305+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: GGRM
+[2025-05-11T16:28:37.074+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk GGRM
+[2025-05-11T16:28:38.261+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk GGRM
+[2025-05-11T16:28:38.262+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk GGRM
+[2025-05-11T16:28:45.173+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: GJTL
+[2025-05-11T16:28:45.926+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk GJTL
+[2025-05-11T16:28:47.441+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk GJTL
+[2025-05-11T16:28:47.442+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk GJTL
+[2025-05-11T16:28:50.607+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: GOTO
+[2025-05-11T16:28:51.235+0700] {logging_mixin.py:188} INFO - Ditemukan 12 artikel untuk GOTO
+[2025-05-11T16:28:52.905+0700] {logging_mixin.py:188} INFO - Error parsing tanggal 'Minggu, 15 Okt 2023 16:30 WIB': time data '15 Okt 2023 16:30' does not match format '%d %B %Y %H:%M'
+[2025-05-11T16:28:53.678+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk GOTO
+[2025-05-11T16:28:53.678+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk GOTO
+[2025-05-11T16:29:00.296+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: HEAL
+[2025-05-11T16:29:01.054+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk HEAL
+[2025-05-11T16:29:03.105+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk HEAL
+[2025-05-11T16:29:03.106+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk HEAL
+[2025-05-11T16:29:09.414+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: HMSP
+[2025-05-11T16:29:10.193+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk HMSP
+[2025-05-11T16:29:11.935+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk HMSP
+[2025-05-11T16:29:11.936+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk HMSP
+[2025-05-11T16:29:18.147+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: HRUM
+[2025-05-11T16:29:18.881+0700] {logging_mixin.py:188} INFO - Ditemukan 11 artikel untuk HRUM
+[2025-05-11T16:29:20.179+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk HRUM
+[2025-05-11T16:29:20.180+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk HRUM
+[2025-05-11T16:29:23.779+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: ICBP
+[2025-05-11T16:29:24.586+0700] {logging_mixin.py:188} INFO - Ditemukan 11 artikel untuk ICBP
+[2025-05-11T16:29:25.643+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk ICBP
+[2025-05-11T16:29:25.643+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk ICBP
+[2025-05-11T16:29:32.592+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: INCO
+[2025-05-11T16:29:33.322+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk INCO
+[2025-05-11T16:29:34.893+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk INCO
+[2025-05-11T16:29:34.894+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk INCO
+[2025-05-11T16:29:39.813+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: INDF
+[2025-05-11T16:29:40.579+0700] {logging_mixin.py:188} INFO - Ditemukan 11 artikel untuk INDF
+[2025-05-11T16:29:43.146+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk INDF
+[2025-05-11T16:29:43.147+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk INDF
+[2025-05-11T16:29:48.822+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: INDY
+[2025-05-11T16:29:49.535+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk INDY
+[2025-05-11T16:29:50.905+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk INDY
+[2025-05-11T16:29:50.906+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk INDY
+[2025-05-11T16:29:57.798+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: INET
+[2025-05-11T16:29:58.606+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk INET
+[2025-05-11T16:30:00.120+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk INET
+[2025-05-11T16:30:00.121+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk INET
+[2025-05-11T16:30:05.708+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: INKP
+[2025-05-11T16:30:06.457+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk INKP
+[2025-05-11T16:30:07.994+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk INKP
+[2025-05-11T16:30:07.995+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk INKP
+[2025-05-11T16:30:11.086+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: INTP
+[2025-05-11T16:30:11.830+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk INTP
+[2025-05-11T16:30:13.568+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk INTP
+[2025-05-11T16:30:13.569+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk INTP
+[2025-05-11T16:30:17.312+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: ISAT
+[2025-05-11T16:30:18.324+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk ISAT
+[2025-05-11T16:30:19.623+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk ISAT
+[2025-05-11T16:30:19.624+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk ISAT
+[2025-05-11T16:30:25.487+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: ITMG
+[2025-05-11T16:30:26.127+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk ITMG
+[2025-05-11T16:30:27.167+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk ITMG
+[2025-05-11T16:30:27.168+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk ITMG
+[2025-05-11T16:30:30.573+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: JPFA
+[2025-05-11T16:30:31.273+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk JPFA
+[2025-05-11T16:30:32.976+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk JPFA
+[2025-05-11T16:30:32.978+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk JPFA
+[2025-05-11T16:30:39.357+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: JSMR
+[2025-05-11T16:30:40.100+0700] {logging_mixin.py:188} INFO - Ditemukan 11 artikel untuk JSMR
+[2025-05-11T16:30:43.163+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk JSMR
+[2025-05-11T16:30:43.163+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk JSMR
+[2025-05-11T16:30:48.064+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: KIJA
+[2025-05-11T16:30:48.747+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk KIJA
+[2025-05-11T16:30:50.300+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk KIJA
+[2025-05-11T16:30:50.301+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk KIJA
+[2025-05-11T16:30:57.036+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: KLBF
+[2025-05-11T16:30:57.656+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk KLBF
+[2025-05-11T16:30:58.780+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk KLBF
+[2025-05-11T16:30:58.781+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk KLBF
+[2025-05-11T16:31:02.698+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: KPIG
+[2025-05-11T16:31:03.406+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk KPIG
+[2025-05-11T16:31:05.021+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk KPIG
+[2025-05-11T16:31:05.022+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk KPIG
+[2025-05-11T16:31:09.494+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: LSIP
+[2025-05-11T16:31:10.174+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk LSIP
+[2025-05-11T16:31:11.310+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk LSIP
+[2025-05-11T16:31:11.311+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk LSIP
+[2025-05-11T16:31:18.114+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: MAPA
+[2025-05-11T16:31:18.812+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk MAPA
+[2025-05-11T16:31:20.053+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk MAPA
+[2025-05-11T16:31:20.055+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk MAPA
+[2025-05-11T16:31:24.064+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: MAPI
+[2025-05-11T16:31:24.847+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk MAPI
+[2025-05-11T16:31:26.250+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk MAPI
+[2025-05-11T16:31:26.251+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk MAPI
+[2025-05-11T16:31:32.641+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: MARK
+[2025-05-11T16:31:33.369+0700] {logging_mixin.py:188} INFO - Ditemukan 11 artikel untuk MARK
+[2025-05-11T16:31:35.631+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk MARK
+[2025-05-11T16:31:35.632+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk MARK
+[2025-05-11T16:31:42.003+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: MBMA
+[2025-05-11T16:31:42.786+0700] {logging_mixin.py:188} INFO - Ditemukan 11 artikel untuk MBMA
+[2025-05-11T16:31:44.965+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk MBMA
+[2025-05-11T16:31:44.966+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk MBMA
+[2025-05-11T16:31:49.562+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: MDKA
+[2025-05-11T16:31:50.278+0700] {logging_mixin.py:188} INFO - Ditemukan 11 artikel untuk MDKA
+[2025-05-11T16:31:51.342+0700] {logging_mixin.py:188} INFO - Error parsing tanggal 'Senin, 03 Feb 2025 12:38 WIB': time data '03 Feb 2025 12:38' does not match format '%d %B %Y %H:%M'
+[2025-05-11T16:31:52.531+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk MDKA
+[2025-05-11T16:31:52.532+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk MDKA
+[2025-05-11T16:31:58.005+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: MEDC
+[2025-05-11T16:31:58.710+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk MEDC
+[2025-05-11T16:32:00.266+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk MEDC
+[2025-05-11T16:32:00.267+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk MEDC
+[2025-05-11T16:32:06.181+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: MIDI
+[2025-05-11T16:32:06.821+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk MIDI
+[2025-05-11T16:32:08.156+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk MIDI
+[2025-05-11T16:32:08.157+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk MIDI
+[2025-05-11T16:32:11.864+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: MIKA
+[2025-05-11T16:32:12.882+0700] {logging_mixin.py:188} INFO - Ditemukan 11 artikel untuk MIKA
+[2025-05-11T16:32:16.540+0700] {logging_mixin.py:188} INFO - Artikel tidak relevan untuk MIKA: Nggak Mau Keluar Duit Rp 500 Ribu Kan? Pasang Pelat Nomor yang Bener!
+[2025-05-11T16:32:17.185+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk MIKA
+[2025-05-11T16:32:17.186+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk MIKA
+[2025-05-11T16:32:22.131+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: MNCN
+[2025-05-11T16:32:22.799+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk MNCN
+[2025-05-11T16:32:23.905+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk MNCN
+[2025-05-11T16:32:23.906+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk MNCN
+[2025-05-11T16:32:27.860+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: MTEL
+[2025-05-11T16:32:28.493+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk MTEL
+[2025-05-11T16:32:29.563+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk MTEL
+[2025-05-11T16:32:29.565+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk MTEL
+[2025-05-11T16:32:36.380+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: MYOR
+[2025-05-11T16:32:37.034+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk MYOR
+[2025-05-11T16:32:38.690+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk MYOR
+[2025-05-11T16:32:38.691+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk MYOR
+[2025-05-11T16:32:43.444+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: NCKL
+[2025-05-11T16:32:44.124+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk NCKL
+[2025-05-11T16:32:45.251+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk NCKL
+[2025-05-11T16:32:45.252+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk NCKL
+[2025-05-11T16:32:50.268+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: NISP
+[2025-05-11T16:32:50.999+0700] {logging_mixin.py:188} INFO - Ditemukan 11 artikel untuk NISP
+[2025-05-11T16:32:51.630+0700] {logging_mixin.py:188} INFO - Error parsing tanggal 'Kamis, 20 Mar 2025 13:50 WIB': time data '20 Mar 2025 13:50' does not match format '%d %B %Y %H:%M'
+[2025-05-11T16:32:53.421+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk NISP
+[2025-05-11T16:32:53.421+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk NISP
+[2025-05-11T16:32:56.674+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: PANI
+[2025-05-11T16:32:57.429+0700] {logging_mixin.py:188} INFO - Ditemukan 11 artikel untuk PANI
+[2025-05-11T16:32:58.891+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk PANI
+[2025-05-11T16:32:58.892+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk PANI
+[2025-05-11T16:33:04.912+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: PGAS
+[2025-05-11T16:33:05.643+0700] {logging_mixin.py:188} INFO - Ditemukan 11 artikel untuk PGAS
+[2025-05-11T16:33:06.120+0700] {logging_mixin.py:188} INFO - Error parsing tanggal 'Rabu, 23 Apr 2025 12:28 WIB': time data '23 Apr 2025 12:28' does not match format '%d %B %Y %H:%M'
+[2025-05-11T16:33:08.139+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk PGAS
+[2025-05-11T16:33:08.140+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk PGAS
+[2025-05-11T16:33:11.154+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: PGEO
+[2025-05-11T16:33:11.948+0700] {logging_mixin.py:188} INFO - Ditemukan 11 artikel untuk PGEO
+[2025-05-11T16:33:11.950+0700] {logging_mixin.py:188} INFO - Error parsing tanggal 'Jumat, 25 Apr 2025 09:20 WIB': time data '25 Apr 2025 09:20' does not match format '%d %B %Y %H:%M'
+[2025-05-11T16:33:14.883+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk PGEO
+[2025-05-11T16:33:14.883+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk PGEO
+[2025-05-11T16:33:19.258+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: PNLF
+[2025-05-11T16:33:19.957+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk PNLF
+[2025-05-11T16:33:21.454+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk PNLF
+[2025-05-11T16:33:21.455+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk PNLF
+[2025-05-11T16:33:27.026+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: PTBA
+[2025-05-11T16:33:27.750+0700] {logging_mixin.py:188} INFO - Ditemukan 11 artikel untuk PTBA
+[2025-05-11T16:33:29.794+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk PTBA
+[2025-05-11T16:33:29.795+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk PTBA
+[2025-05-11T16:33:33.043+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: PTPP
+[2025-05-11T16:33:33.686+0700] {logging_mixin.py:188} INFO - Ditemukan 11 artikel untuk PTPP
+[2025-05-11T16:33:33.688+0700] {logging_mixin.py:188} INFO - Error parsing tanggal 'Rabu, 30 Apr 2025 22:19 WIB': time data '30 Apr 2025 22:19' does not match format '%d %B %Y %H:%M'
+[2025-05-11T16:33:35.613+0700] {logging_mixin.py:188} INFO - Artikel tidak relevan untuk PTPP: Eks Tanah Tutupan Jepang di Parangkritis Kini Milik Warga
+[2025-05-11T16:33:35.846+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk PTPP
+[2025-05-11T16:33:35.847+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk PTPP
+[2025-05-11T16:33:42.063+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: PTRO
+[2025-05-11T16:33:42.875+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk PTRO
+[2025-05-11T16:33:44.578+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk PTRO
+[2025-05-11T16:33:44.579+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk PTRO
+[2025-05-11T16:33:47.753+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: PWON
+[2025-05-11T16:33:48.642+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk PWON
+[2025-05-11T16:33:50.202+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk PWON
+[2025-05-11T16:33:50.203+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk PWON
+[2025-05-11T16:33:54.876+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: RAJA
+[2025-05-11T16:33:55.658+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk RAJA
+[2025-05-11T16:33:58.368+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk RAJA
+[2025-05-11T16:33:58.370+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk RAJA
+[2025-05-11T16:34:03.277+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: SCMA
+[2025-05-11T16:34:03.913+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk SCMA
+[2025-05-11T16:34:05.310+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk SCMA
+[2025-05-11T16:34:05.311+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk SCMA
+[2025-05-11T16:34:10.812+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: SIDO
+[2025-05-11T16:34:11.494+0700] {logging_mixin.py:188} INFO - Ditemukan 11 artikel untuk SIDO
+[2025-05-11T16:34:12.727+0700] {logging_mixin.py:188} INFO - Artikel tidak relevan untuk SIDO: Selamat! Aci Resti Menikah dengan Musisi Shadu Rasjidi
+[2025-05-11T16:34:13.964+0700] {logging_mixin.py:188} INFO - Artikel tidak relevan untuk SIDO: Hore! Aci Resti Menikah dengan Musisi Shadu Rasjidi
+[2025-05-11T16:34:13.966+0700] {logging_mixin.py:188} INFO - Error parsing tanggal 'Rabu, 11 Des 2013 18:20 WIB': time data '11 Des 2013 18:20' does not match format '%d %B %Y %H:%M'
+[2025-05-11T16:34:14.520+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk SIDO
+[2025-05-11T16:34:14.520+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk SIDO
+[2025-05-11T16:34:18.471+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: SMGR
+[2025-05-11T16:34:19.254+0700] {logging_mixin.py:188} INFO - Ditemukan 11 artikel untuk SMGR
+[2025-05-11T16:34:20.540+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk SMGR
+[2025-05-11T16:34:20.541+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk SMGR
+[2025-05-11T16:34:23.716+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: SMIL
+[2025-05-11T16:34:24.479+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk SMIL
+[2025-05-11T16:34:26.463+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk SMIL
+[2025-05-11T16:34:26.463+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk SMIL
+[2025-05-11T16:34:31.331+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: SMRA
+[2025-05-11T16:34:32.068+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk SMRA
+[2025-05-11T16:34:33.111+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk SMRA
+[2025-05-11T16:34:33.112+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk SMRA
+[2025-05-11T16:34:37.011+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: SRTG
+[2025-05-11T16:34:37.855+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk SRTG
+[2025-05-11T16:34:40.165+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk SRTG
+[2025-05-11T16:34:40.165+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk SRTG
+[2025-05-11T16:34:47.023+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: SSIA
+[2025-05-11T16:34:47.656+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk SSIA
+[2025-05-11T16:34:48.896+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk SSIA
+[2025-05-11T16:34:48.897+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk SSIA
+[2025-05-11T16:34:52.211+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: SSMS
+[2025-05-11T16:34:52.893+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk SSMS
+[2025-05-11T16:34:54.281+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk SSMS
+[2025-05-11T16:34:54.282+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk SSMS
+[2025-05-11T16:35:00.316+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: SURI
+[2025-05-11T16:35:01.006+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk SURI
+[2025-05-11T16:35:03.209+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk SURI
+[2025-05-11T16:35:03.210+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk SURI
+[2025-05-11T16:35:06.773+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: TINS
+[2025-05-11T16:35:08.161+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk TINS
+[2025-05-11T16:35:09.138+0700] {logging_mixin.py:188} INFO - Error parsing tanggal 'Selasa, 11 Mar 2025 14:54 WIB': time data '11 Mar 2025 14:54' does not match format '%d %B %Y %H:%M'
+[2025-05-11T16:35:09.892+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk TINS
+[2025-05-11T16:35:09.893+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk TINS
+[2025-05-11T16:35:13.715+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: TKIM
+[2025-05-11T16:35:14.478+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk TKIM
+[2025-05-11T16:35:16.142+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk TKIM
+[2025-05-11T16:35:16.142+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk TKIM
+[2025-05-11T16:35:23.138+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: TLKM
+[2025-05-11T16:35:23.810+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk TLKM
+[2025-05-11T16:35:24.964+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk TLKM
+[2025-05-11T16:35:24.965+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk TLKM
+[2025-05-11T16:35:28.628+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: TOBA
+[2025-05-11T16:35:29.281+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk TOBA
+[2025-05-11T16:35:30.144+0700] {logging_mixin.py:188} INFO - Melewati artikel lama: 2025-05-03 13:25
+[2025-05-11T16:35:30.368+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk TOBA
+[2025-05-11T16:35:30.369+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk TOBA
+[2025-05-11T16:35:34.995+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: TOWR
+[2025-05-11T16:35:35.948+0700] {logging_mixin.py:188} INFO - Ditemukan 11 artikel untuk TOWR
+[2025-05-11T16:35:37.409+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk TOWR
+[2025-05-11T16:35:37.410+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk TOWR
+[2025-05-11T16:35:44.014+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: TPIA
+[2025-05-11T16:35:44.752+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk TPIA
+[2025-05-11T16:35:45.918+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk TPIA
+[2025-05-11T16:35:45.919+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk TPIA
+[2025-05-11T16:35:52.108+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: UNIQ
+[2025-05-11T16:35:52.834+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk UNIQ
+[2025-05-11T16:35:54.319+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk UNIQ
+[2025-05-11T16:35:54.320+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk UNIQ
+[2025-05-11T16:36:00.905+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: UNTR
+[2025-05-11T16:36:01.608+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk UNTR
+[2025-05-11T16:36:02.776+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk UNTR
+[2025-05-11T16:36:02.777+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk UNTR
+[2025-05-11T16:36:07.699+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: UNVR
+[2025-05-11T16:36:10.823+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk UNVR
+[2025-05-11T16:36:10.825+0700] {logging_mixin.py:188} INFO - Error parsing tanggal 'Jumat, 25 Apr 2025 12:56 WIB': time data '25 Apr 2025 12:56' does not match format '%d %B %Y %H:%M'
+[2025-05-11T16:36:11.793+0700] {logging_mixin.py:188} INFO - Error parsing tanggal 'Selasa, 14 Jan 2025 16:49 WIB': time data '14 Jan 2025 16:49' does not match format '%d %B %Y %H:%M'
+[2025-05-11T16:36:15.264+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk UNVR
+[2025-05-11T16:36:15.265+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk UNVR
+[2025-05-11T16:36:21.086+0700] {logging_mixin.py:188} INFO - Mencari berita untuk: WIFI
+[2025-05-11T16:36:21.840+0700] {logging_mixin.py:188} INFO - Ditemukan 10 artikel untuk WIFI
+[2025-05-11T16:36:23.893+0700] {logging_mixin.py:188} INFO - Sudah mencapai batas 5 artikel terbaru untuk WIFI
+[2025-05-11T16:36:23.894+0700] {logging_mixin.py:188} INFO - Menerima 5 artikel untuk WIFI
+[2025-05-11T16:36:28.405+0700] {logging_mixin.py:188} INFO - Berhasil kumpulkan 485 berita untuk 97 ticker
+[2025-05-11T16:36:28.412+0700] {python.py:237} INFO - Done. Returned value was: 485
+[2025-05-11T16:36:28.413+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:36:28.472+0700] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=news_data_ingestion, task_id=scrape_detik_news, run_id=scheduled__2025-05-09T17:00:00+00:00, execution_date=20250509T170000, start_date=20250511T092405, end_date=20250511T093628
+[2025-05-11T16:36:28.557+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:36:28.640+0700] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:36:28.647+0700] {local_task_job_runner.py:222} INFO - ::endgroup::

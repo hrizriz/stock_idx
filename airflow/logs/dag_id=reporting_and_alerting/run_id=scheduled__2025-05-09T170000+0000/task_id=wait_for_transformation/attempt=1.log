@@ -898,3 +898,528 @@
 [2025-05-11T03:48:53.613+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
 [2025-05-11T03:48:53.651+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
 [2025-05-11T03:48:53.654+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:24:01.677+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:24:01.811+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:24:01.835+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:24:01.836+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:24:01.903+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-09 17:00:00+00:00
+[2025-05-11T16:24:01.919+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'reporting_and_alerting', 'wait_for_transformation', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '6', '--raw', '--subdir', 'DAGS_FOLDER/reporting_and_alerting.py', '--cfg-path', '/tmp/tmpc3o9_pqu']
+[2025-05-11T16:24:01.925+0700] {standard_task_runner.py:91} INFO - Job 6: Subtask wait_for_transformation
+[2025-05-11T16:24:01.928+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=267) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:24:01.930+0700] {standard_task_runner.py:63} INFO - Started process 275 to run task
+[2025-05-11T16:24:02.081+0700] {task_command.py:426} INFO - Running <TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:24:02.740+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='reporting_and_alerting' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T16:24:02.743+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:24:02.778+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:24:02.807+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T16:24:02.821+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:24:02.876+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:24:02.990+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:24:03.052+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:24:03.083+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:25:04.316+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:25:04.370+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:25:04.383+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:25:04.384+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:25:04.403+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-09 17:00:00+00:00
+[2025-05-11T16:25:04.413+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'reporting_and_alerting', 'wait_for_transformation', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '17', '--raw', '--subdir', 'DAGS_FOLDER/reporting_and_alerting.py', '--cfg-path', '/tmp/tmp8_wamrp9']
+[2025-05-11T16:25:04.417+0700] {standard_task_runner.py:91} INFO - Job 17: Subtask wait_for_transformation
+[2025-05-11T16:25:04.418+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=391) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:25:04.420+0700] {standard_task_runner.py:63} INFO - Started process 393 to run task
+[2025-05-11T16:25:04.504+0700] {task_command.py:426} INFO - Running <TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:25:04.870+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='reporting_and_alerting' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T16:25:04.871+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:25:04.888+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:25:04.906+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T16:25:04.913+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:25:04.936+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:25:04.973+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:25:04.996+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:25:05.204+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:25:05.207+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:26:06.348+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:26:06.400+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:26:06.412+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:26:06.413+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:26:06.436+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-09 17:00:00+00:00
+[2025-05-11T16:26:06.446+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'reporting_and_alerting', 'wait_for_transformation', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '22', '--raw', '--subdir', 'DAGS_FOLDER/reporting_and_alerting.py', '--cfg-path', '/tmp/tmp0cbbsbcn']
+[2025-05-11T16:26:06.450+0700] {standard_task_runner.py:91} INFO - Job 22: Subtask wait_for_transformation
+[2025-05-11T16:26:06.451+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=501) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:26:06.453+0700] {standard_task_runner.py:63} INFO - Started process 503 to run task
+[2025-05-11T16:26:06.549+0700] {task_command.py:426} INFO - Running <TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:26:06.873+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='reporting_and_alerting' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T16:26:06.875+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:26:06.896+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:26:06.914+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T16:26:06.922+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:26:06.943+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:26:06.980+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:26:07.030+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:26:07.265+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:26:07.270+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:27:08.397+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:27:08.474+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:27:08.491+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:27:08.493+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:27:08.515+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-09 17:00:00+00:00
+[2025-05-11T16:27:08.526+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'reporting_and_alerting', 'wait_for_transformation', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '27', '--raw', '--subdir', 'DAGS_FOLDER/reporting_and_alerting.py', '--cfg-path', '/tmp/tmp_xv5_f4a']
+[2025-05-11T16:27:08.530+0700] {standard_task_runner.py:91} INFO - Job 27: Subtask wait_for_transformation
+[2025-05-11T16:27:08.533+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=617) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:27:08.535+0700] {standard_task_runner.py:63} INFO - Started process 619 to run task
+[2025-05-11T16:27:08.624+0700] {task_command.py:426} INFO - Running <TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:27:08.969+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='reporting_and_alerting' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T16:27:08.971+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:27:08.989+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:27:09.011+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T16:27:09.017+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:27:09.038+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:27:09.071+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:27:09.112+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:27:09.337+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:27:09.340+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:28:10.802+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:28:10.871+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:28:10.887+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:28:10.888+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:28:10.913+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-09 17:00:00+00:00
+[2025-05-11T16:28:10.926+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'reporting_and_alerting', 'wait_for_transformation', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '32', '--raw', '--subdir', 'DAGS_FOLDER/reporting_and_alerting.py', '--cfg-path', '/tmp/tmpihzpwqju']
+[2025-05-11T16:28:10.930+0700] {standard_task_runner.py:91} INFO - Job 32: Subtask wait_for_transformation
+[2025-05-11T16:28:10.931+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=731) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:28:10.932+0700] {standard_task_runner.py:63} INFO - Started process 733 to run task
+[2025-05-11T16:28:11.054+0700] {task_command.py:426} INFO - Running <TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:28:11.519+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='reporting_and_alerting' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T16:28:11.521+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:28:11.545+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:28:11.565+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T16:28:11.573+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:28:11.601+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:28:11.640+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:28:11.675+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:28:11.696+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:29:13.276+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:29:13.328+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:29:13.339+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:29:13.340+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:29:13.360+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-09 17:00:00+00:00
+[2025-05-11T16:29:13.371+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=836) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:29:13.373+0700] {standard_task_runner.py:63} INFO - Started process 838 to run task
+[2025-05-11T16:29:13.371+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'reporting_and_alerting', 'wait_for_transformation', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '37', '--raw', '--subdir', 'DAGS_FOLDER/reporting_and_alerting.py', '--cfg-path', '/tmp/tmpvslhw3vg']
+[2025-05-11T16:29:13.375+0700] {standard_task_runner.py:91} INFO - Job 37: Subtask wait_for_transformation
+[2025-05-11T16:29:13.474+0700] {task_command.py:426} INFO - Running <TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:29:13.800+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='reporting_and_alerting' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T16:29:13.802+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:29:13.821+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:29:13.837+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T16:29:13.840+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:29:13.862+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:29:13.894+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:29:13.951+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:29:14.185+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:29:14.188+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:30:15.236+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:30:15.290+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:30:15.302+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:30:15.303+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:30:15.327+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-09 17:00:00+00:00
+[2025-05-11T16:30:15.336+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=944) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:30:15.339+0700] {standard_task_runner.py:63} INFO - Started process 948 to run task
+[2025-05-11T16:30:15.336+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'reporting_and_alerting', 'wait_for_transformation', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '42', '--raw', '--subdir', 'DAGS_FOLDER/reporting_and_alerting.py', '--cfg-path', '/tmp/tmprb94g3x8']
+[2025-05-11T16:30:15.340+0700] {standard_task_runner.py:91} INFO - Job 42: Subtask wait_for_transformation
+[2025-05-11T16:30:15.431+0700] {task_command.py:426} INFO - Running <TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:30:15.757+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='reporting_and_alerting' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T16:30:15.759+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:30:15.778+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:30:15.796+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T16:30:15.799+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:30:15.820+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:30:15.864+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:30:15.916+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:30:16.167+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:30:16.175+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:31:16.985+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:31:17.040+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:31:17.052+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:31:17.053+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:31:17.073+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-09 17:00:00+00:00
+[2025-05-11T16:31:17.083+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1060) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:31:17.085+0700] {standard_task_runner.py:63} INFO - Started process 1064 to run task
+[2025-05-11T16:31:17.083+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'reporting_and_alerting', 'wait_for_transformation', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '47', '--raw', '--subdir', 'DAGS_FOLDER/reporting_and_alerting.py', '--cfg-path', '/tmp/tmptdjt8sty']
+[2025-05-11T16:31:17.086+0700] {standard_task_runner.py:91} INFO - Job 47: Subtask wait_for_transformation
+[2025-05-11T16:31:17.175+0700] {task_command.py:426} INFO - Running <TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:31:17.549+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='reporting_and_alerting' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T16:31:17.550+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:31:17.569+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:31:17.586+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T16:31:17.589+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:31:17.614+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:31:17.649+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:31:17.702+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:31:17.923+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:31:17.926+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:32:19.677+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:32:19.747+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:32:19.767+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:32:19.768+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:32:19.798+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-09 17:00:00+00:00
+[2025-05-11T16:32:19.811+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'reporting_and_alerting', 'wait_for_transformation', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '52', '--raw', '--subdir', 'DAGS_FOLDER/reporting_and_alerting.py', '--cfg-path', '/tmp/tmpap2ey_w7']
+[2025-05-11T16:32:19.813+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1160) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:32:19.816+0700] {standard_task_runner.py:91} INFO - Job 52: Subtask wait_for_transformation
+[2025-05-11T16:32:19.816+0700] {standard_task_runner.py:63} INFO - Started process 1169 to run task
+[2025-05-11T16:32:19.969+0700] {task_command.py:426} INFO - Running <TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:32:20.450+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='reporting_and_alerting' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T16:32:20.452+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:32:20.480+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:32:20.501+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T16:32:20.504+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:32:20.529+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:32:20.614+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:32:20.678+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:32:20.945+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:32:20.951+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:33:22.448+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:33:22.506+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:33:22.519+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:33:22.520+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:33:22.542+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-09 17:00:00+00:00
+[2025-05-11T16:33:22.554+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'reporting_and_alerting', 'wait_for_transformation', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '57', '--raw', '--subdir', 'DAGS_FOLDER/reporting_and_alerting.py', '--cfg-path', '/tmp/tmpn8eopnxe']
+[2025-05-11T16:33:22.555+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1273) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:33:22.557+0700] {standard_task_runner.py:91} INFO - Job 57: Subtask wait_for_transformation
+[2025-05-11T16:33:22.558+0700] {standard_task_runner.py:63} INFO - Started process 1286 to run task
+[2025-05-11T16:33:22.891+0700] {task_command.py:426} INFO - Running <TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:33:23.028+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='reporting_and_alerting' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T16:33:23.029+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:33:23.052+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:33:23.071+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T16:33:23.073+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:33:23.094+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:33:23.127+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:33:23.175+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:33:23.413+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:33:23.416+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:34:24.283+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:34:24.360+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:34:24.376+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:34:24.377+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:34:24.401+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-09 17:00:00+00:00
+[2025-05-11T16:34:24.415+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1388) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:34:24.418+0700] {standard_task_runner.py:63} INFO - Started process 1394 to run task
+[2025-05-11T16:34:24.415+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'reporting_and_alerting', 'wait_for_transformation', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '62', '--raw', '--subdir', 'DAGS_FOLDER/reporting_and_alerting.py', '--cfg-path', '/tmp/tmp5dc_73h1']
+[2025-05-11T16:34:24.420+0700] {standard_task_runner.py:91} INFO - Job 62: Subtask wait_for_transformation
+[2025-05-11T16:34:24.934+0700] {task_command.py:426} INFO - Running <TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:34:25.150+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='reporting_and_alerting' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T16:34:25.152+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:34:25.176+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:34:25.210+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T16:34:25.215+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:34:25.253+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:34:25.329+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:34:25.360+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:34:25.659+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:34:25.663+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:35:26.416+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:35:26.465+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:35:26.477+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:35:26.478+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:35:26.499+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-09 17:00:00+00:00
+[2025-05-11T16:35:26.509+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'reporting_and_alerting', 'wait_for_transformation', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '67', '--raw', '--subdir', 'DAGS_FOLDER/reporting_and_alerting.py', '--cfg-path', '/tmp/tmp1zpwh65v']
+[2025-05-11T16:35:26.510+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1500) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:35:26.512+0700] {standard_task_runner.py:91} INFO - Job 67: Subtask wait_for_transformation
+[2025-05-11T16:35:26.513+0700] {standard_task_runner.py:63} INFO - Started process 1502 to run task
+[2025-05-11T16:35:26.605+0700] {task_command.py:426} INFO - Running <TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:35:26.960+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='reporting_and_alerting' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T16:35:26.962+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:35:26.986+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:35:27.004+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T16:35:27.006+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:35:27.029+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:35:27.064+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:35:27.090+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:35:27.355+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:35:27.358+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:36:28.789+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:36:28.850+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:36:28.864+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:36:28.866+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:36:28.888+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-09 17:00:00+00:00
+[2025-05-11T16:36:28.901+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1607) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:36:28.902+0700] {standard_task_runner.py:63} INFO - Started process 1616 to run task
+[2025-05-11T16:36:28.900+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'reporting_and_alerting', 'wait_for_transformation', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '72', '--raw', '--subdir', 'DAGS_FOLDER/reporting_and_alerting.py', '--cfg-path', '/tmp/tmpdnmzlcy7']
+[2025-05-11T16:36:28.904+0700] {standard_task_runner.py:91} INFO - Job 72: Subtask wait_for_transformation
+[2025-05-11T16:36:29.009+0700] {task_command.py:426} INFO - Running <TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:36:29.492+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='reporting_and_alerting' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T16:36:29.494+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:36:29.520+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:36:29.541+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T16:36:29.544+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:36:29.576+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:36:29.632+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:36:29.680+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:36:29.976+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:36:29.980+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:37:30.820+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:37:30.867+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:37:30.879+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:37:30.880+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:37:30.901+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-09 17:00:00+00:00
+[2025-05-11T16:37:30.913+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1722) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:37:30.915+0700] {standard_task_runner.py:63} INFO - Started process 1724 to run task
+[2025-05-11T16:37:30.912+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'reporting_and_alerting', 'wait_for_transformation', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '78', '--raw', '--subdir', 'DAGS_FOLDER/reporting_and_alerting.py', '--cfg-path', '/tmp/tmpzflr5l91']
+[2025-05-11T16:37:30.916+0700] {standard_task_runner.py:91} INFO - Job 78: Subtask wait_for_transformation
+[2025-05-11T16:37:31.002+0700] {task_command.py:426} INFO - Running <TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:37:31.301+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='reporting_and_alerting' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T16:37:31.302+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:37:31.319+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:37:31.335+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T16:37:31.338+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:37:31.359+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:37:31.392+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:37:31.412+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:37:31.614+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:37:31.617+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:38:32.772+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:38:32.831+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:38:32.846+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:38:32.848+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:38:32.871+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-09 17:00:00+00:00
+[2025-05-11T16:38:32.883+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'reporting_and_alerting', 'wait_for_transformation', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '82', '--raw', '--subdir', 'DAGS_FOLDER/reporting_and_alerting.py', '--cfg-path', '/tmp/tmpwgf84588']
+[2025-05-11T16:38:32.885+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1836) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:38:32.886+0700] {standard_task_runner.py:91} INFO - Job 82: Subtask wait_for_transformation
+[2025-05-11T16:38:32.887+0700] {standard_task_runner.py:63} INFO - Started process 1838 to run task
+[2025-05-11T16:38:32.982+0700] {task_command.py:426} INFO - Running <TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:38:33.328+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='reporting_and_alerting' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T16:38:33.329+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:38:33.347+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:38:33.364+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T16:38:33.367+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:38:33.389+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:38:33.425+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:38:33.463+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:38:33.788+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:38:33.791+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:39:34.356+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:39:34.439+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:39:34.452+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:39:34.453+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:39:34.475+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-09 17:00:00+00:00
+[2025-05-11T16:39:34.491+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1935) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:39:34.494+0700] {standard_task_runner.py:63} INFO - Started process 1937 to run task
+[2025-05-11T16:39:34.495+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'reporting_and_alerting', 'wait_for_transformation', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '85', '--raw', '--subdir', 'DAGS_FOLDER/reporting_and_alerting.py', '--cfg-path', '/tmp/tmp3jzpad4e']
+[2025-05-11T16:39:34.500+0700] {standard_task_runner.py:91} INFO - Job 85: Subtask wait_for_transformation
+[2025-05-11T16:39:34.595+0700] {task_command.py:426} INFO - Running <TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:39:34.968+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='reporting_and_alerting' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T16:39:34.969+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:39:34.988+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:39:35.009+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T16:39:35.011+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:39:35.033+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:39:35.071+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:39:35.113+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:39:35.351+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:39:35.357+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:40:36.447+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:40:36.492+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:40:36.503+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:40:36.504+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:40:36.525+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-09 17:00:00+00:00
+[2025-05-11T16:40:36.534+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=2048) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:40:36.536+0700] {standard_task_runner.py:63} INFO - Started process 2050 to run task
+[2025-05-11T16:40:36.534+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'reporting_and_alerting', 'wait_for_transformation', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '89', '--raw', '--subdir', 'DAGS_FOLDER/reporting_and_alerting.py', '--cfg-path', '/tmp/tmp87daud1g']
+[2025-05-11T16:40:36.537+0700] {standard_task_runner.py:91} INFO - Job 89: Subtask wait_for_transformation
+[2025-05-11T16:40:36.791+0700] {task_command.py:426} INFO - Running <TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:40:36.912+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='reporting_and_alerting' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T16:40:36.914+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:40:36.931+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:40:36.947+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T16:40:36.949+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:40:36.969+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:40:37.017+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:40:37.073+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:40:37.318+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:40:37.324+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:41:38.106+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:41:38.154+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:41:38.165+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:41:38.166+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:41:38.187+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-09 17:00:00+00:00
+[2025-05-11T16:41:38.197+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=2149) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:41:38.196+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'reporting_and_alerting', 'wait_for_transformation', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '93', '--raw', '--subdir', 'DAGS_FOLDER/reporting_and_alerting.py', '--cfg-path', '/tmp/tmpqh4e81ah']
+[2025-05-11T16:41:38.199+0700] {standard_task_runner.py:63} INFO - Started process 2151 to run task
+[2025-05-11T16:41:38.199+0700] {standard_task_runner.py:91} INFO - Job 93: Subtask wait_for_transformation
+[2025-05-11T16:41:38.449+0700] {task_command.py:426} INFO - Running <TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:41:38.567+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='reporting_and_alerting' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T16:41:38.568+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:41:38.584+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:41:38.600+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T16:41:38.602+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:41:38.622+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:41:38.668+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:41:38.695+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:41:38.908+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:41:38.913+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:42:39.785+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:42:39.834+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:42:39.844+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:42:39.845+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:42:39.863+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-09 17:00:00+00:00
+[2025-05-11T16:42:39.872+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'reporting_and_alerting', 'wait_for_transformation', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '97', '--raw', '--subdir', 'DAGS_FOLDER/reporting_and_alerting.py', '--cfg-path', '/tmp/tmp0m_kvy__']
+[2025-05-11T16:42:39.874+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=2263) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:42:39.875+0700] {standard_task_runner.py:91} INFO - Job 97: Subtask wait_for_transformation
+[2025-05-11T16:42:39.876+0700] {standard_task_runner.py:63} INFO - Started process 2265 to run task
+[2025-05-11T16:42:39.963+0700] {task_command.py:426} INFO - Running <TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:42:40.287+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='reporting_and_alerting' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T16:42:40.289+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:42:40.305+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:42:40.321+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T16:42:40.324+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:42:40.344+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:42:40.375+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:42:40.414+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:42:40.628+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:42:40.631+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:43:41.741+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:43:41.802+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:43:41.816+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:43:41.818+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:43:41.842+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-09 17:00:00+00:00
+[2025-05-11T16:43:41.854+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=2374) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:43:41.856+0700] {standard_task_runner.py:63} INFO - Started process 2377 to run task
+[2025-05-11T16:43:41.854+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'reporting_and_alerting', 'wait_for_transformation', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '101', '--raw', '--subdir', 'DAGS_FOLDER/reporting_and_alerting.py', '--cfg-path', '/tmp/tmpjyp1c3dx']
+[2025-05-11T16:43:41.858+0700] {standard_task_runner.py:91} INFO - Job 101: Subtask wait_for_transformation
+[2025-05-11T16:43:41.975+0700] {task_command.py:426} INFO - Running <TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:43:42.386+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='reporting_and_alerting' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T16:43:42.388+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:43:42.407+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:43:42.430+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T16:43:42.433+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:43:42.461+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:43:42.501+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:43:42.554+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:43:42.868+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:43:42.876+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:44:44.286+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:44:44.365+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:44:44.377+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:44:44.377+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:44:44.399+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-09 17:00:00+00:00
+[2025-05-11T16:44:44.411+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=2495) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:44:44.413+0700] {standard_task_runner.py:63} INFO - Started process 2497 to run task
+[2025-05-11T16:44:44.410+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'reporting_and_alerting', 'wait_for_transformation', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '108', '--raw', '--subdir', 'DAGS_FOLDER/reporting_and_alerting.py', '--cfg-path', '/tmp/tmpy0bify8f']
+[2025-05-11T16:44:44.414+0700] {standard_task_runner.py:91} INFO - Job 108: Subtask wait_for_transformation
+[2025-05-11T16:44:44.508+0700] {task_command.py:426} INFO - Running <TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:44:44.880+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='reporting_and_alerting' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T16:44:44.882+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:44:44.906+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:44:44.931+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T16:44:44.934+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:44:44.962+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:44:45.005+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:44:45.030+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:44:45.262+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:44:45.269+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:45:45.890+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:45:45.929+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:45:45.939+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:45:45.939+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:45:45.957+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-09 17:00:00+00:00
+[2025-05-11T16:45:45.966+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=2601) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:45:45.965+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'reporting_and_alerting', 'wait_for_transformation', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '114', '--raw', '--subdir', 'DAGS_FOLDER/reporting_and_alerting.py', '--cfg-path', '/tmp/tmpknwufxoo']
+[2025-05-11T16:45:45.967+0700] {standard_task_runner.py:63} INFO - Started process 2611 to run task
+[2025-05-11T16:45:45.967+0700] {standard_task_runner.py:91} INFO - Job 114: Subtask wait_for_transformation
+[2025-05-11T16:45:46.038+0700] {task_command.py:426} INFO - Running <TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:45:46.307+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='reporting_and_alerting' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T16:45:46.308+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:45:46.322+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:45:46.336+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T16:45:46.338+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:45:46.356+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:45:46.386+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:45:46.423+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:45:46.443+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:46:47.733+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:46:47.791+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:46:47.804+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:46:47.804+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:46:47.830+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-09 17:00:00+00:00
+[2025-05-11T16:46:47.840+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=2716) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:46:47.842+0700] {standard_task_runner.py:63} INFO - Started process 2718 to run task
+[2025-05-11T16:46:47.840+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'reporting_and_alerting', 'wait_for_transformation', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '120', '--raw', '--subdir', 'DAGS_FOLDER/reporting_and_alerting.py', '--cfg-path', '/tmp/tmpe4gyr5lz']
+[2025-05-11T16:46:47.844+0700] {standard_task_runner.py:91} INFO - Job 120: Subtask wait_for_transformation
+[2025-05-11T16:46:48.141+0700] {task_command.py:426} INFO - Running <TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:46:48.292+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='reporting_and_alerting' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T16:46:48.295+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:46:48.312+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:46:48.330+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T16:46:48.332+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:46:48.353+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:46:48.394+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:46:48.420+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:46:48.735+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:46:48.743+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:47:49.485+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:47:49.531+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:47:49.541+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:47:49.542+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:47:49.566+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-09 17:00:00+00:00
+[2025-05-11T16:47:49.575+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=2830) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:47:49.578+0700] {standard_task_runner.py:63} INFO - Started process 2832 to run task
+[2025-05-11T16:47:49.575+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'reporting_and_alerting', 'wait_for_transformation', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '124', '--raw', '--subdir', 'DAGS_FOLDER/reporting_and_alerting.py', '--cfg-path', '/tmp/tmpuqax06hp']
+[2025-05-11T16:47:49.579+0700] {standard_task_runner.py:91} INFO - Job 124: Subtask wait_for_transformation
+[2025-05-11T16:47:49.866+0700] {task_command.py:426} INFO - Running <TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:47:49.988+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='reporting_and_alerting' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T16:47:49.989+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:47:50.011+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:47:50.034+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T16:47:50.036+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:47:50.065+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:47:50.102+0700] {taskinstance.py:2865} INFO - Rescheduling task, marking task as UP_FOR_RESCHEDULE
+[2025-05-11T16:47:50.154+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:47:50.395+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:47:50.402+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:48:51.260+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:48:51.314+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:48:51.327+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [queued]>
+[2025-05-11T16:48:51.328+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:48:51.351+0700] {taskinstance.py:2330} INFO - Executing <Task(ExternalTaskSensor): wait_for_transformation> on 2025-05-09 17:00:00+00:00
+[2025-05-11T16:48:51.362+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=2944) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:48:51.364+0700] {standard_task_runner.py:63} INFO - Started process 2946 to run task
+[2025-05-11T16:48:51.362+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'reporting_and_alerting', 'wait_for_transformation', 'scheduled__2025-05-09T17:00:00+00:00', '--job-id', '128', '--raw', '--subdir', 'DAGS_FOLDER/reporting_and_alerting.py', '--cfg-path', '/tmp/tmp6zxtzten']
+[2025-05-11T16:48:51.365+0700] {standard_task_runner.py:91} INFO - Job 128: Subtask wait_for_transformation
+[2025-05-11T16:48:51.460+0700] {task_command.py:426} INFO - Running <TaskInstance: reporting_and_alerting.wait_for_transformation scheduled__2025-05-09T17:00:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:48:51.799+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='reporting_and_alerting' AIRFLOW_CTX_TASK_ID='wait_for_transformation' AIRFLOW_CTX_EXECUTION_DATE='2025-05-09T17:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-09T17:00:00+00:00'
+[2025-05-11T16:48:51.800+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:48:51.822+0700] {baseoperator.py:400} WARNING - ExternalTaskSensor.execute cannot be called outside TaskInstance!
+[2025-05-11T16:48:51.846+0700] {external_task.py:258} INFO - Poking for tasks ['end_task'] in dag data_transformation on 2025-05-09T17:00:00+00:00 ... 
+[2025-05-11T16:48:51.850+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/utils/session.py:79 DeprecationWarning: This method is deprecated and will be removed in future.
+[2025-05-11T16:48:51.873+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:48:51.897+0700] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/sensors/external_task.py", line 348, in execute
+    super().execute(context)
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/sensors/base.py", line 264, in execute
+    raise e
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/sensors/base.py", line 246, in execute
+    poke_return = self.poke(context)
+                  ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/session.py", line 79, in wrapper
+    return func(*args, session=session, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/sensors/external_task.py", line 296, in poke
+    raise AirflowException(
+airflow.exceptions.AirflowException: Some of the external tasks ['end_task'] in DAG data_transformation failed.
+[2025-05-11T16:48:51.904+0700] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=reporting_and_alerting, task_id=wait_for_transformation, run_id=scheduled__2025-05-09T17:00:00+00:00, execution_date=20250509T170000, start_date=20250511T094851, end_date=20250511T094851
+[2025-05-11T16:48:51.928+0700] {standard_task_runner.py:110} ERROR - Failed to execute job 128 for task wait_for_transformation (Some of the external tasks ['end_task'] in DAG data_transformation failed.; 2946)
+[2025-05-11T16:48:51.981+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2025-05-11T16:48:52.309+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:48:52.317+0700] {local_task_job_runner.py:222} INFO - ::endgroup::

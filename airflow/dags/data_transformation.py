@@ -1,3 +1,4 @@
+
 from airflow import DAG
 from airflow.sensors.external_task import ExternalTaskSensor
 from airflow.operators.python import PythonOperator
@@ -150,16 +151,16 @@ def verify_source_tables():
     
     return len(missing_tables)
 
-def check_parameters(**context):
-    dag_run = context["dag_run"]
-    if dag_run and dag_run.conf and dag_run.conf.get("bulk_load_complete"):
-        print("Bulk load selesai, lanjutkan dengan transformasi")
-        return True
-    else:
-        print("Bulk load belum selesai, berhenti")
-        return False
+# def check_parameters(**context):
+#     dag_run = context["dag_run"]
+#     if dag_run and dag_run.conf and dag_run.conf.get("bulk_load_complete"):
+#         print("Bulk load selesai, lanjutkan dengan transformasi")
+#         return "verify_source_tables"  # Ubah ke "verify_tables" agar sesuai
+#     else:
+#         print("Bulk load belum selesai, berhenti")
+#         return "end_task"
 
-# DAG definition
+# DAG definition - Data Transformation
 with DAG(
     dag_id="data_transformation",
     start_date=pendulum.datetime(2024, 1, 1, tz=local_tz),
@@ -192,11 +193,11 @@ with DAG(
         failed_states=["failed", "skipped"]
     )
 
-    wait_for_bulk_load = BranchPythonOperator(
-    task_id="check_bulk_load",
-    python_callable=check_parameters,
-    provide_context=True
-    )
+    # check_bulk_load = BranchPythonOperator(  # Ganti wait_for_bulk_load menjadi check_bulk_load
+    # task_id="check_bulk_load",
+    # python_callable=check_parameters,
+    # provide_context=True
+    # )
     
     # Verify tabel
     verify_tables = PythonOperator(
@@ -205,8 +206,8 @@ with DAG(
     )
 
     run_dbt_staging = BashOperator(
-    task_id='run_dbt_staging',
-    bash_command='cd /opt/airflow/dbt && dbt run --profiles-dir /opt/airflow/dbt --select staging --exclude stg_stock_predictions',
+        task_id='run_dbt_staging',
+        bash_command='cd /opt/airflow/dbt && dbt run --profiles-dir /opt/airflow/dbt --select staging --exclude stg_stock_predictions',
     )
 
     # Jalankan model core tanpa LSTM
@@ -231,5 +232,5 @@ with DAG(
     end_task = DummyOperator(
         task_id="end_task"
     )
-    # Task dependencies
-    [wait_for_stock_data, wait_for_news_data, wait_for_bulk_load] >> verify_tables >> run_dbt_staging >> run_dbt_core >> run_dbt_analytics >> test_dbt >> end_task
+
+    [wait_for_stock_data, wait_for_news_data] >> verify_tables >> run_dbt_staging >> run_dbt_core >> run_dbt_analytics >> test_dbt >> end_task

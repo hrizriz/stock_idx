@@ -1,7 +1,7 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.operators.dummy import DummyOperator
-from airflow.operators.trigger_dagrun import TriggerDagRunOperator
+# from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 from datetime import datetime
 import pandas as pd
 import psycopg2
@@ -322,12 +322,12 @@ with DAG(
         task_id="end_task"
     )
 
-    trigger_transformation = TriggerDagRunOperator(
-    task_id="trigger_transformation",
-    trigger_dag_id="data_transformation",
-    conf={"bulk_load_complete": True},  # Parameter yang diteruskan
-    wait_for_completion=False
-    )
+    # trigger_transformation = TriggerDagRunOperator(
+    # task_id="trigger_transformation",
+    # trigger_dag_id="data_transformation",
+    # conf={"bulk_load_complete": True},  # Parameter yang diteruskan
+    # wait_for_completion=False
+    # )
     
     # Task dependencies
-    verify_folder >> create_tables >> run_bulk_import >> log_summary >> end_task >> trigger_transformation
+    verify_folder >> create_tables >> run_bulk_import >> log_summary >> end_task

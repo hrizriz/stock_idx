@@ -4,9 +4,12 @@ services:
   postgres:
     image: postgres:14
     environment:
-      POSTGRES_USER: airflow
-      POSTGRES_PASSWORD: airflow
-      POSTGRES_DB: airflow
+      - POSTGRES_USER=${POSTGRES_USER:-airflow}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-airflow}
+      - POSTGRES_DB=${POSTGRES_DB:-airflow}
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - MAX_CONNECTIONS=100
+      - SHARED_BUFFERS=256MB
     ports:
       - "5432:5432"
     volumes:
@@ -15,7 +18,7 @@ services:
     networks:
       - airflow_network
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "airflow"]
+      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER:-airflow}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -27,32 +30,35 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    env_file:
+      - ./.env
     environment:
-      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
       - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
-      - AIRFLOW__CORE__FERNET_KEY=46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=
-      - AIRFLOW__WEBSERVER__SECRET_KEY=46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://${POSTGRES_USER:-airflow}:${POSTGRES_PASSWORD:-airflow}@postgres:5432/${POSTGRES_DB:-airflow}
+      - AIRFLOW__CORE__FERNET_KEY=${AIRFLOW__CORE__FERNET_KEY}
+      - AIRFLOW__WEBSERVER__SECRET_KEY=${AIRFLOW__WEBSERVER__SECRET_KEY}
       - AIRFLOW__CORE__DEFAULT_TIMEZONE=Asia/Jakarta
       - AIRFLOW__WEBSERVER__DEFAULT_UI_TIMEZONE=Asia/Jakarta
       - AIRFLOW__WEBSERVER__SESSION_EXPIRATION_MINUTES=43200
       - AIRFLOW__WEBSERVER__EXPOSE_CONFIG=True
       - AIRFLOW__WEBSERVER__COOKIE_SECURE=False
       - AIRFLOW__WEBSERVER__COOKIE_SAMESITE=Lax
-      - AIRFLOW__WEBSERVER__SECRET_KEY=${AIRFLOW__WEBSERVER__SECRET_KEY:-46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=}
-      - AIRFLOW_CONN_TELEGRAM_CONN=${AIRFLOW_CONN_TELEGRAM_CONN:-http://https%3A%2F%2Fapi.telegram.org?base_url=https%3A%2F%2Fapi.telegram.org%2Fbot${TELEGRAM_BOT_TOKEN}%2F}
-      - AIRFLOW_VAR_TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID:-default_chat_id}
-      - AIRFLOW_VAR_TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN:-default_bot_token}
+      - AIRFLOW_CONN_TELEGRAM_CONN=${AIRFLOW_CONN_TELEGRAM_CONN}
+      - AIRFLOW_VAR_TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+      - AIRFLOW_VAR_TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
     entrypoint: >
       bash -c "
       echo '⏳ Waiting for PostgreSQL...';
-      until pg_isready -h postgres -p 5432 -U airflow; do
+      until pg_isready -h postgres -p 5432 -U ${POSTGRES_USER:-airflow}; do
         sleep 2;
       done;
       echo '✅ PostgreSQL is ready!';
       airflow db upgrade &&
-      airflow users create --username admin --firstname Admin --lastname User --role Admin --email admin@example.com --password admin &&
-      airflow variables set TELEGRAM_BOT_TOKEN pleasant-placeholder-token &&
-      airflow variables set TELEGRAM_CHAT_ID your-chat-id-here
+      airflow users create --username ${AIRFLOW_ADMIN_USER:-admin} --firstname Admin --lastname User --role Admin --email admin@example.com --password ${AIRFLOW_ADMIN_PASSWORD:-admin} &&
+      airflow variables set TELEGRAM_BOT_TOKEN ${TELEGRAM_BOT_TOKEN} &&
+      airflow variables set TELEGRAM_CHAT_ID ${TELEGRAM_CHAT_ID}
       "
     volumes:
       - ./airflow/dags:/opt/airflow/dags
@@ -62,7 +68,6 @@ services:
       - ./dbt:/opt/airflow/dbt
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-      - ./scrapers:/opt/airflow/scrapers
     networks:
       - airflow_network
 
@@ -75,21 +80,21 @@ services:
       - airflow-init
     ports:
       - "8080:8080"
+    env_file:
+      - ./.env
     environment:
-      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
       - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
-      - AIRFLOW__CORE__FERNET_KEY=46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=
-      - AIRFLOW__WEBSERVER__SECRET_KEY=46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://${POSTGRES_USER:-airflow}:${POSTGRES_PASSWORD:-airflow}@postgres:5432/${POSTGRES_DB:-airflow}
+      - AIRFLOW__CORE__FERNET_KEY=${AIRFLOW__CORE__FERNET_KEY}
+      - AIRFLOW__WEBSERVER__SECRET_KEY=${AIRFLOW__WEBSERVER__SECRET_KEY}
       - AIRFLOW__CORE__DEFAULT_TIMEZONE=Asia/Jakarta
       - AIRFLOW__WEBSERVER__DEFAULT_UI_TIMEZONE=Asia/Jakarta
       - AIRFLOW__WEBSERVER__SESSION_EXPIRATION_MINUTES=43200
       - AIRFLOW__WEBSERVER__EXPOSE_CONFIG=True
       - AIRFLOW__WEBSERVER__COOKIE_SECURE=False
       - AIRFLOW__WEBSERVER__COOKIE_SAMESITE=Lax
-      - AIRFLOW__WEBSERVER__SECRET_KEY=${AIRFLOW__WEBSERVER__SECRET_KEY:-46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=}
-      - AIRFLOW_CONN_TELEGRAM_CONN=${AIRFLOW_CONN_TELEGRAM_CONN:-http://https%3A%2F%2Fapi.telegram.org?base_url=https%3A%2F%2Fapi.telegram.org%2Fbot${TELEGRAM_BOT_TOKEN}%2F}
-      - AIRFLOW_VAR_TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID:-default_chat_id}
-      - AIRFLOW_VAR_TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN:-default_bot_token}
     command: webserver
     volumes:
       - ./airflow/dags:/opt/airflow/dags
@@ -115,22 +120,21 @@ services:
     restart: always
     depends_on:
       - airflow-webserver
+    env_file:
+      - ./.env
     environment:
-      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
       - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
-      - AIRFLOW__CORE__FERNET_KEY=46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=
-      - AIRFLOW__WEBSERVER__SECRET_KEY=46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://${POSTGRES_USER:-airflow}:${POSTGRES_PASSWORD:-airflow}@postgres:5432/${POSTGRES_DB:-airflow}
+      - AIRFLOW__CORE__FERNET_KEY=${AIRFLOW__CORE__FERNET_KEY}
+      - AIRFLOW__WEBSERVER__SECRET_KEY=${AIRFLOW__WEBSERVER__SECRET_KEY}
       - AIRFLOW__CORE__DEFAULT_TIMEZONE=Asia/Jakarta
       - AIRFLOW__WEBSERVER__DEFAULT_UI_TIMEZONE=Asia/Jakarta
       - AIRFLOW__WEBSERVER__SESSION_EXPIRATION_MINUTES=43200
       - AIRFLOW__WEBSERVER__EXPOSE_CONFIG=True
       - AIRFLOW__WEBSERVER__COOKIE_SECURE=False
       - AIRFLOW__WEBSERVER__COOKIE_SAMESITE=Lax
-      - AIRFLOW__CORE__FERNET_KEY=${AIRFLOW__CORE__FERNET_KEY:-46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=}
-      - AIRFLOW__WEBSERVER__SECRET_KEY=${AIRFLOW__WEBSERVER__SECRET_KEY:-46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=}
-      - AIRFLOW_CONN_TELEGRAM_CONN=${AIRFLOW_CONN_TELEGRAM_CONN:-http://https%3A%2F%2Fapi.telegram.org?base_url=https%3A%2F%2Fapi.telegram.org%2Fbot${TELEGRAM_BOT_TOKEN}%2F}
-      - AIRFLOW_VAR_TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID:-default_chat_id}
-      - AIRFLOW_VAR_TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN:-default_bot_token}
     command: scheduler
     volumes:
       - ./airflow/dags:/opt/airflow/dags
@@ -140,7 +144,6 @@ services:
       - ./dbt:/opt/airflow/dbt
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-      - ./scrapers:/opt/airflow/scrapers
     networks:
       - airflow_network
 

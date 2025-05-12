@@ -20,3 +20,74 @@
 [2025-05-11T03:51:47.625+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
 [2025-05-11T03:51:47.671+0700] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
 [2025-05-11T03:51:47.674+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:57:41.871+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:57:41.929+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.predict_bbca_prices scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:57:41.946+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.predict_bbca_prices scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-11T16:57:41.947+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:57:41.971+0700] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): predict_bbca_prices> on 2025-05-08 11:30:00+00:00
+[2025-05-11T16:57:41.985+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=3880) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:57:41.986+0700] {standard_task_runner.py:63} INFO - Started process 3922 to run task
+[2025-05-11T16:57:41.985+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'predict_bbca_prices', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '159', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmp_5tw04t8']
+[2025-05-11T16:57:41.990+0700] {standard_task_runner.py:91} INFO - Job 159: Subtask predict_bbca_prices
+[2025-05-11T16:57:42.105+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.predict_bbca_prices scheduled__2025-05-08T11:30:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:57:42.293+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='predict_bbca_prices' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-11T16:57:42.295+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:57:42.399+0700] {logging_mixin.py:188} INFO - Error loading PyTorch LSTM model: Error(s) in loading state_dict for LSTMModel:
+	Missing key(s) in state_dict: "lstm.weight_ih_l1", "lstm.weight_hh_l1", "lstm.bias_ih_l1", "lstm.bias_hh_l1". 
+[2025-05-11T16:57:42.407+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/sklearn/utils/validation.py:2739 UserWarning: X does not have valid feature names, but MinMaxScaler was fitted with feature names
+[2025-05-11T16:57:43.293+0700] {logging_mixin.py:188} INFO - ✅ Prediksi BBCA untuk 2023-03-27 00:00:00: Rp 8,824.85
+[2025-05-11T16:57:43.295+0700] {python.py:237} INFO - Done. Returned value was: 8824.84619140625
+[2025-05-11T16:57:43.296+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:57:43.341+0700] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=bbca_lstm_prediction, task_id=predict_bbca_prices, run_id=scheduled__2025-05-08T11:30:00+00:00, execution_date=20250508T113000, start_date=20250511T095741, end_date=20250511T095743
+[2025-05-11T16:57:43.407+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:57:43.453+0700] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:57:43.457+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T03:56:26.093+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T03:56:26.184+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.predict_bbca_prices scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T03:56:26.216+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.predict_bbca_prices scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T03:56:26.218+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T03:56:26.266+0700] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): predict_bbca_prices> on 2025-05-08 11:30:00+00:00
+[2025-05-12T03:56:26.293+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'predict_bbca_prices', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '45', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmp5yn9p0bp']
+[2025-05-12T03:56:26.300+0700] {standard_task_runner.py:91} INFO - Job 45: Subtask predict_bbca_prices
+[2025-05-12T03:56:26.318+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=4099) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T03:56:26.319+0700] {standard_task_runner.py:63} INFO - Started process 4120 to run task
+[2025-05-12T03:56:26.420+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.predict_bbca_prices scheduled__2025-05-08T11:30:00+00:00 [running]> on host b08a3a418dc4
+[2025-05-12T03:56:26.588+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='predict_bbca_prices' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T03:56:26.590+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T03:56:26.722+0700] {logging_mixin.py:188} INFO - Error loading PyTorch LSTM model: Error(s) in loading state_dict for LSTMModel:
+	Missing key(s) in state_dict: "lstm.weight_ih_l1", "lstm.weight_hh_l1", "lstm.bias_ih_l1", "lstm.bias_hh_l1". 
+	size mismatch for lstm.weight_ih_l0: copying a param with shape torch.Size([128, 5]) from checkpoint, the shape in current model is torch.Size([256, 5]).
+	size mismatch for lstm.weight_hh_l0: copying a param with shape torch.Size([128, 32]) from checkpoint, the shape in current model is torch.Size([256, 64]).
+	size mismatch for lstm.bias_ih_l0: copying a param with shape torch.Size([128]) from checkpoint, the shape in current model is torch.Size([256]).
+	size mismatch for lstm.bias_hh_l0: copying a param with shape torch.Size([128]) from checkpoint, the shape in current model is torch.Size([256]).
+	size mismatch for fc.weight: copying a param with shape torch.Size([1, 32]) from checkpoint, the shape in current model is torch.Size([1, 64]).
+[2025-05-12T03:56:26.735+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/sklearn/utils/validation.py:2739 UserWarning: X does not have valid feature names, but MinMaxScaler was fitted with feature names
+[2025-05-12T03:56:27.660+0700] {logging_mixin.py:188} INFO - ✅ Prediksi BBCA untuk 2025-05-12 00:00:00: Rp 9,001.70
+[2025-05-12T03:56:27.662+0700] {python.py:237} INFO - Done. Returned value was: 9001.7021484375
+[2025-05-12T03:56:27.663+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T03:56:27.714+0700] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=bbca_lstm_prediction, task_id=predict_bbca_prices, run_id=scheduled__2025-05-08T11:30:00+00:00, execution_date=20250508T113000, start_date=20250511T205626, end_date=20250511T205627
+[2025-05-12T03:56:27.782+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T03:56:27.833+0700] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T03:56:27.836+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T06:21:17.238+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T06:21:17.284+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: bbca_lstm_prediction.predict_bbca_prices scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:21:17.295+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: bbca_lstm_prediction.predict_bbca_prices scheduled__2025-05-08T11:30:00+00:00 [queued]>
+[2025-05-12T06:21:17.296+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T06:21:17.319+0700] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): predict_bbca_prices> on 2025-05-08 11:30:00+00:00
+[2025-05-12T06:21:17.333+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'bbca_lstm_prediction', 'predict_bbca_prices', 'scheduled__2025-05-08T11:30:00+00:00', '--job-id', '149', '--raw', '--subdir', 'DAGS_FOLDER/stock_predictions_bbca.py', '--cfg-path', '/tmp/tmpz9mf_gp1']
+[2025-05-12T06:21:17.335+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=4017) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T06:21:17.337+0700] {standard_task_runner.py:91} INFO - Job 149: Subtask predict_bbca_prices
+[2025-05-12T06:21:17.337+0700] {standard_task_runner.py:63} INFO - Started process 4038 to run task
+[2025-05-12T06:21:17.439+0700] {task_command.py:426} INFO - Running <TaskInstance: bbca_lstm_prediction.predict_bbca_prices scheduled__2025-05-08T11:30:00+00:00 [running]> on host 84b3813fe61b
+[2025-05-12T06:21:17.581+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='bbca_lstm_prediction' AIRFLOW_CTX_TASK_ID='predict_bbca_prices' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:30:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:30:00+00:00'
+[2025-05-12T06:21:17.583+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T06:21:17.690+0700] {logging_mixin.py:188} INFO - Error loading PyTorch LSTM model: Error(s) in loading state_dict for LSTMModel:
+	Missing key(s) in state_dict: "lstm.weight_ih_l1", "lstm.weight_hh_l1", "lstm.bias_ih_l1", "lstm.bias_hh_l1". 
+[2025-05-12T06:21:17.695+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/sklearn/utils/validation.py:2739 UserWarning: X does not have valid feature names, but MinMaxScaler was fitted with feature names
+[2025-05-12T06:21:18.305+0700] {logging_mixin.py:188} INFO - ✅ Prediksi BBCA untuk 2025-05-12 00:00:00: Rp 9,001.70
+[2025-05-12T06:21:18.307+0700] {python.py:237} INFO - Done. Returned value was: 9001.7021484375
+[2025-05-12T06:21:18.307+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T06:21:18.349+0700] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=bbca_lstm_prediction, task_id=predict_bbca_prices, run_id=scheduled__2025-05-08T11:30:00+00:00, execution_date=20250508T113000, start_date=20250511T232117, end_date=20250511T232118
+[2025-05-12T06:21:18.398+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T06:21:18.440+0700] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T06:21:18.448+0700] {local_task_job_runner.py:222} INFO - ::endgroup::

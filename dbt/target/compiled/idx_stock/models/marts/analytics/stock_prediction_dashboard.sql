@@ -14,7 +14,7 @@ technical_indicators AS (
         m.macd_line,
         m.signal_line,
         m.macd_signal,
-        m.macd_histogram
+        m.histogram
     FROM "airflow"."public_analytics"."technical_indicators_rsi" r
     JOIN "airflow"."public_analytics"."technical_indicators_macd" m 
         ON r.symbol = m.symbol AND r.date = m.date
@@ -43,7 +43,7 @@ combined_data AS (
         ti.rsi_signal,
         ti.macd_line,
         ti.macd_signal,
-        ti.macd_histogram,
+        ti.histogram,
 
         -- Sentiment
         ns.avg_sentiment,

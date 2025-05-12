@@ -18,3 +18,62 @@
 [2025-05-11T02:50:19.910+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
 [2025-05-11T02:50:19.946+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
 [2025-05-11T02:50:19.953+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-11T16:24:07.545+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-11T16:24:07.637+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stock_data_ingestion.import_excel_files scheduled__2025-05-08T11:00:00+00:00 [queued]>
+[2025-05-11T16:24:07.664+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stock_data_ingestion.import_excel_files scheduled__2025-05-08T11:00:00+00:00 [queued]>
+[2025-05-11T16:24:07.665+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-11T16:24:07.702+0700] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): import_excel_files> on 2025-05-08 11:00:00+00:00
+[2025-05-11T16:24:07.720+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'stock_data_ingestion', 'import_excel_files', 'scheduled__2025-05-08T11:00:00+00:00', '--job-id', '11', '--raw', '--subdir', 'DAGS_FOLDER/stock_data_ingestion.py', '--cfg-path', '/tmp/tmp4pbz3hst']
+[2025-05-11T16:24:07.728+0700] {standard_task_runner.py:91} INFO - Job 11: Subtask import_excel_files
+[2025-05-11T16:24:07.739+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=291) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-11T16:24:07.741+0700] {standard_task_runner.py:63} INFO - Started process 294 to run task
+[2025-05-11T16:24:07.953+0700] {task_command.py:426} INFO - Running <TaskInstance: stock_data_ingestion.import_excel_files scheduled__2025-05-08T11:00:00+00:00 [running]> on host 615e6c656dab
+[2025-05-11T16:24:08.709+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='stock_data_ingestion' AIRFLOW_CTX_TASK_ID='import_excel_files' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:00:00+00:00'
+[2025-05-11T16:24:08.711+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-11T16:24:08.734+0700] {logging_mixin.py:188} INFO - ⏰ Waktu sekarang 16:24:08.732393, menggunakan data untuk tanggal bisnis sebelumnya.
+[2025-05-11T16:24:08.767+0700] {logging_mixin.py:188} INFO - 🚫 Tidak ada file cocok untuk tanggal yang ditentukan, skip import.
+[2025-05-11T16:24:08.768+0700] {python.py:237} INFO - Done. Returned value was: None
+[2025-05-11T16:24:08.768+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-11T16:24:08.788+0700] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=stock_data_ingestion, task_id=import_excel_files, run_id=scheduled__2025-05-08T11:00:00+00:00, execution_date=20250508T110000, start_date=20250511T092407, end_date=20250511T092408
+[2025-05-11T16:24:08.821+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-11T16:24:08.854+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-11T16:24:08.860+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T03:26:22.578+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T03:26:22.755+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stock_data_ingestion.import_excel_files scheduled__2025-05-08T11:00:00+00:00 [queued]>
+[2025-05-12T03:26:22.795+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stock_data_ingestion.import_excel_files scheduled__2025-05-08T11:00:00+00:00 [queued]>
+[2025-05-12T03:26:22.797+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T03:26:22.864+0700] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): import_excel_files> on 2025-05-08 11:00:00+00:00
+[2025-05-12T03:26:22.898+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'stock_data_ingestion', 'import_excel_files', 'scheduled__2025-05-08T11:00:00+00:00', '--job-id', '13', '--raw', '--subdir', 'DAGS_FOLDER/stock_data_ingestion.py', '--cfg-path', '/tmp/tmpvg13i_p5']
+[2025-05-12T03:26:22.914+0700] {standard_task_runner.py:91} INFO - Job 13: Subtask import_excel_files
+[2025-05-12T03:26:22.942+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=2615) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T03:26:22.947+0700] {standard_task_runner.py:63} INFO - Started process 2636 to run task
+[2025-05-12T03:26:23.163+0700] {task_command.py:426} INFO - Running <TaskInstance: stock_data_ingestion.import_excel_files scheduled__2025-05-08T11:00:00+00:00 [running]> on host b08a3a418dc4
+[2025-05-12T03:26:23.453+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='stock_data_ingestion' AIRFLOW_CTX_TASK_ID='import_excel_files' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:00:00+00:00'
+[2025-05-12T03:26:23.460+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T03:26:23.525+0700] {logging_mixin.py:188} INFO - ⏰ Waktu sekarang 03:26:23.520343, menggunakan data untuk tanggal bisnis sebelumnya.
+[2025-05-12T03:26:23.629+0700] {logging_mixin.py:188} INFO - 🚫 Tidak ada file cocok untuk tanggal yang ditentukan, skip import.
+[2025-05-12T03:26:23.631+0700] {python.py:237} INFO - Done. Returned value was: None
+[2025-05-12T03:26:23.634+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T03:26:23.691+0700] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=stock_data_ingestion, task_id=import_excel_files, run_id=scheduled__2025-05-08T11:00:00+00:00, execution_date=20250508T110000, start_date=20250511T202622, end_date=20250511T202623
+[2025-05-12T03:26:23.775+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T03:26:23.870+0700] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-05-12T03:26:23.879+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2025-05-12T05:48:41.129+0700] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-05-12T05:48:41.340+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stock_data_ingestion.import_excel_files scheduled__2025-05-08T11:00:00+00:00 [queued]>
+[2025-05-12T05:48:41.382+0700] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stock_data_ingestion.import_excel_files scheduled__2025-05-08T11:00:00+00:00 [queued]>
+[2025-05-12T05:48:41.384+0700] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2025-05-12T05:48:41.700+0700] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): import_excel_files> on 2025-05-08 11:00:00+00:00
+[2025-05-12T05:48:41.722+0700] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'stock_data_ingestion', 'import_excel_files', 'scheduled__2025-05-08T11:00:00+00:00', '--job-id', '13', '--raw', '--subdir', 'DAGS_FOLDER/stock_data_ingestion.py', '--cfg-path', '/tmp/tmpbj_rqw_v']
+[2025-05-12T05:48:41.730+0700] {standard_task_runner.py:91} INFO - Job 13: Subtask import_excel_files
+[2025-05-12T05:48:41.739+0700] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=434) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2025-05-12T05:48:41.745+0700] {standard_task_runner.py:63} INFO - Started process 443 to run task
+[2025-05-12T05:48:41.931+0700] {task_command.py:426} INFO - Running <TaskInstance: stock_data_ingestion.import_excel_files scheduled__2025-05-08T11:00:00+00:00 [running]> on host 84b3813fe61b
+[2025-05-12T05:48:42.606+0700] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='stock_data_ingestion' AIRFLOW_CTX_TASK_ID='import_excel_files' AIRFLOW_CTX_EXECUTION_DATE='2025-05-08T11:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-05-08T11:00:00+00:00'
+[2025-05-12T05:48:42.613+0700] {taskinstance.py:430} INFO - ::endgroup::
+[2025-05-12T05:48:42.660+0700] {logging_mixin.py:188} INFO - ⏰ Waktu sekarang 05:48:42.654583, menggunakan data untuk tanggal bisnis sebelumnya.
+[2025-05-12T05:48:42.781+0700] {logging_mixin.py:188} INFO - 🚫 Tidak ada file cocok untuk tanggal yang ditentukan, skip import.
+[2025-05-12T05:48:42.783+0700] {python.py:237} INFO - Done. Returned value was: None
+[2025-05-12T05:48:42.785+0700] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2025-05-12T05:48:42.833+0700] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=stock_data_ingestion, task_id=import_excel_files, run_id=scheduled__2025-05-08T11:00:00+00:00, execution_date=20250508T110000, start_date=20250511T224841, end_date=20250511T224842
+[2025-05-12T05:48:42.945+0700] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2025-05-12T05:48:42.983+0700] {local_task_job_runner.py:222} INFO - ::endgroup::
