@@ -10,3 +10,4 @@ ignore/
 airflow/dags/telegram_config.py
 init-airflow.sh
 telegram.txt
+.env.bak
