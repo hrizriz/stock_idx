@@ -2,7 +2,6 @@ airflow/data
 airflow/logs
 airflow/dags/__pycache__
 airflow/dags/__pycache__
-airflow/temp_dags
 airflow/plugins/__pycache__
 venv/
 ignore/
