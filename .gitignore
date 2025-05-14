@@ -7,8 +7,9 @@ venv/
 ignore/
 init-airflow.sh/
 telegram.txt
-.env.bak/
+.env.bak
 *.env
 *.sh
+*.template
 setup-env.sh
-dbt/logs/
+dbt/logs
