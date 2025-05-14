@@ -5,9 +5,10 @@ airflow/dags/__pycache__/
 airflow/plugins/__pycache__/
 venv/
 ignore/
-.env/
 init-airflow.sh/
 telegram.txt
 .env.bak/
+*.env
+*.sh
 setup-env.sh
 dbt/logs/
