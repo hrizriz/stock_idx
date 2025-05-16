@@ -7,7 +7,6 @@ from datetime import datetime
 import pendulum
 import logging
 
-
 # Import utility modules
 from utils.database import get_database_connection, get_latest_stock_date
 from utils.telegram import send_telegram_message
@@ -25,7 +24,7 @@ from utils.trading_signals import (
     send_performance_report
 )
 
-# Konfigurasi timezone
+# Configure timezone
 local_tz = pendulum.timezone("Asia/Jakarta")
 
 # Default arguments for DAG
@@ -49,7 +48,7 @@ with DAG(
     tags=["trading", "technical", "signals", "monthly"]
 ) as dag:
     
-    # Tunggu hingga data transformation selesai
+    # Wait until data transformation is complete
     wait_for_transformation = ExternalTaskSensor(
         task_id="wait_for_transformation",
         external_dag_id="data_transformation",
@@ -65,14 +64,14 @@ with DAG(
     calc_rsi = PythonOperator(
         task_id="calculate_monthly_rsi",
         python_callable=calculate_all_rsi_indicators,
-        op_kwargs={'lookback_period': 365, 'rsi_period': 14, 'signal_type': 'MONTHLY'}  # TAMBAHKAN PARAMETER signal_type
+        op_kwargs={'lookback_period': 365, 'rsi_period': 14, 'signal_type': 'MONTHLY'}
     )
     
     # Step 2: Calculate MACD indicators (longer period for monthly)
     calc_macd = PythonOperator(
         task_id="calculate_monthly_macd",
         python_callable=calculate_all_macd_indicators,
-        op_kwargs={'lookback_period': 500, 'signal_type': 'MONTHLY'}  # TAMBAHKAN PARAMETER signal_type
+        op_kwargs={'lookback_period': 500, 'fast_period': 12, 'slow_period': 26, 'signal_period': 9, 'signal_type': 'MONTHLY'}
     )
     
     # Step 3: Setup Bollinger Bands table
@@ -85,21 +84,21 @@ with DAG(
     calc_bb = PythonOperator(
         task_id="calculate_monthly_bollinger",
         python_callable=calculate_all_bollinger_bands,
-        op_kwargs={'lookback_period': 300, 'band_period': 20, 'signal_type': 'MONTHLY'}  # TAMBAHKAN PARAMETER signal_type
+        op_kwargs={'lookback_period': 300, 'band_period': 20, 'std_dev': 2, 'signal_type': 'MONTHLY'}
     )
     
     # Step 5: Filter stocks by volatility and liquidity (for monthly timeframe)
     filter_stocks = PythonOperator(
         task_id="filter_stocks_by_volatility_liquidity",
         python_callable=filter_by_volatility_liquidity,
-        op_kwargs={'analysis_period': 180, 'signal_type': 'MONTHLY'}  # TAMBAHKAN PARAMETER signal_type
+        op_kwargs={'analysis_period': 180, 'signal_type': 'MONTHLY'}
     )
     
     # Step 6: Calculate advanced indicators (with monthly parameters)
     calc_advanced = PythonOperator(
         task_id="calculate_monthly_advanced_indicators",
         python_callable=calculate_advanced_indicators,
-        op_kwargs={'lookback_period': 730, 'signal_type': 'MONTHLY'},  # Parameter signal_type sudah ada
+        op_kwargs={'lookback_period': 730, 'signal_type': 'MONTHLY'},
         retries=2,
         retry_delay=pendulum.duration(minutes=5)
     )
@@ -108,7 +107,7 @@ with DAG(
     run_backtest = PythonOperator(
         task_id="run_monthly_backtest",
         python_callable=backtest_trading_signals,
-        op_kwargs={'test_period': 730, 'hold_period': 20, 'signal_type': 'MONTHLY'},  # TAMBAHKAN PARAMETER signal_type
+        op_kwargs={'test_period': 730, 'hold_period': 20, 'signal_type': 'MONTHLY'},
         trigger_rule='none_failed'
     )
     
@@ -116,14 +115,14 @@ with DAG(
     send_signals = PythonOperator(
         task_id="send_monthly_high_probability_signals",
         python_callable=send_high_probability_signals,
-        op_kwargs={'signal_type': 'MONTHLY', 'min_probability': 0.7}  # Parameter signal_type sudah ada
+        op_kwargs={'signal_type': 'MONTHLY', 'min_probability': 0.7}
     )
     
     # Step 9: Send monthly performance report
     send_report = PythonOperator(
         task_id="send_monthly_performance_report",
         python_callable=send_performance_report,
-        op_kwargs={'report_type': 'MONTHLY', 'lookback_days': 365}  # Parameter report_type sudah ada
+        op_kwargs={'report_type': 'MONTHLY', 'lookback_days': 365}
     )
     
     # End marker

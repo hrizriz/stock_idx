@@ -7,7 +7,6 @@ from datetime import datetime
 import pendulum
 import logging
 
-
 # Import utility modules
 from utils.database import get_database_connection, get_latest_stock_date
 from utils.telegram import send_telegram_message
@@ -25,7 +24,7 @@ from utils.trading_signals import (
     send_performance_report
 )
 
-# Konfigurasi timezone
+# Configure timezone
 local_tz = pendulum.timezone("Asia/Jakarta")
 
 # Default arguments for DAG
@@ -43,13 +42,13 @@ default_args = {
 with DAG(
     dag_id="weekly_trading_signals",
     start_date=pendulum.datetime(2024, 1, 1, tz=local_tz),
-    schedule_interval="0 17 * * 5",  # Setiap hari Jumat pukul 17:00 Jakarta time
+    schedule_interval="0 17 * * 5",  # Every Friday at 17:00 Jakarta time
     catchup=False,
     default_args=default_args,
     tags=["trading", "technical", "signals", "weekly"]
 ) as dag:
     
-    # Tunggu hingga data transformation selesai
+    # Wait until data transformation is complete
     wait_for_transformation = ExternalTaskSensor(
         task_id="wait_for_transformation",
         external_dag_id="data_transformation",
@@ -65,14 +64,14 @@ with DAG(
     calc_rsi = PythonOperator(
         task_id="calculate_weekly_rsi",
         python_callable=calculate_all_rsi_indicators,
-        op_kwargs={'lookback_period': 180, 'rsi_period': 14}  # Longer lookback for weekly analysis
+        op_kwargs={'lookback_period': 180, 'rsi_period': 14, 'signal_type': 'WEEKLY'}
     )
     
     # Step 2: Calculate MACD indicators (longer period)
     calc_macd = PythonOperator(
         task_id="calculate_weekly_macd",
         python_callable=calculate_all_macd_indicators,
-        op_kwargs={'lookback_period': 250}  # Longer lookback for weekly signals
+        op_kwargs={'lookback_period': 250, 'fast_period': 12, 'slow_period': 26, 'signal_period': 9, 'signal_type': 'WEEKLY'}
     )
     
     # Step 3: Setup Bollinger Bands table
@@ -85,21 +84,21 @@ with DAG(
     calc_bb = PythonOperator(
         task_id="calculate_weekly_bollinger",
         python_callable=calculate_all_bollinger_bands,
-        op_kwargs={'lookback_period': 150, 'band_period': 20}
+        op_kwargs={'lookback_period': 150, 'band_period': 20, 'std_dev': 2, 'signal_type': 'WEEKLY'}
     )
     
     # Step 5: Filter stocks by volatility and liquidity (for weekly timeframe)
     filter_stocks = PythonOperator(
         task_id="filter_stocks_by_volatility_liquidity",
         python_callable=filter_by_volatility_liquidity,
-        op_kwargs={'analysis_period': 60}  # Analyze 60 days for weekly signals
+        op_kwargs={'analysis_period': 60, 'signal_type': 'WEEKLY'}
     )
     
     # Step 6: Calculate advanced indicators (with weekly parameters)
     calc_advanced = PythonOperator(
         task_id="calculate_weekly_advanced_indicators",
         python_callable=calculate_advanced_indicators,
-        op_kwargs={'lookback_period': 365, 'signal_type': 'weekly'},  # 1 year lookback for weekly analysis
+        op_kwargs={'lookback_period': 365, 'signal_type': 'WEEKLY'},
         retries=2,
         retry_delay=pendulum.duration(minutes=5)
     )
@@ -108,7 +107,7 @@ with DAG(
     run_backtest = PythonOperator(
         task_id="run_weekly_backtest",
         python_callable=backtest_trading_signals,
-        op_kwargs={'test_period': 365, 'hold_period': 10},  # 10-day hold period for weekly signals
+        op_kwargs={'test_period': 365, 'hold_period': 10, 'signal_type': 'WEEKLY'},
         trigger_rule='none_failed'
     )
     
@@ -116,14 +115,14 @@ with DAG(
     send_signals = PythonOperator(
         task_id="send_weekly_high_probability_signals",
         python_callable=send_high_probability_signals,
-        op_kwargs={'signal_type': 'WEEKLY', 'min_probability': 0.75}  # Slightly lower threshold for weekly
+        op_kwargs={'signal_type': 'WEEKLY', 'min_probability': 0.75}
     )
     
     # Step 9: Send weekly performance report
     send_report = PythonOperator(
         task_id="send_weekly_performance_report",
         python_callable=send_performance_report,
-        op_kwargs={'report_type': 'WEEKLY', 'lookback_days': 90}  # Show last 90 days performance
+        op_kwargs={'report_type': 'WEEKLY', 'lookback_days': 90}
     )
     
     # End marker

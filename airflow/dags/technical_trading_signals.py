@@ -24,7 +24,7 @@ from utils.trading_signals import (
     send_performance_report
 )
 
-# Konfigurasi timezone
+# Configure timezone
 local_tz = pendulum.timezone("Asia/Jakarta")
 
 # Default arguments for DAG
@@ -38,7 +38,7 @@ default_args = {
     'retry_delay': pendulum.duration(minutes=5)
 }
 
-# DAG definition
+# DAG definition - Daily
 with DAG(
     dag_id="technical_trading_signals",
     start_date=pendulum.datetime(2024, 1, 1, tz=local_tz),
@@ -48,7 +48,7 @@ with DAG(
     tags=["trading", "technical", "signals"]
 ) as dag:
     
-    # Tunggu hingga data transformation selesai
+    # Wait until data transformation is complete
     wait_for_transformation = ExternalTaskSensor(
         task_id="wait_for_transformation",
         external_dag_id="data_transformation",
@@ -64,14 +64,14 @@ with DAG(
     calc_rsi = PythonOperator(
         task_id="calculate_rsi_indicators",
         python_callable=calculate_all_rsi_indicators,
-        op_kwargs={'signal_type': 'DAILY'}  # TAMBAHKAN PARAMETER INI
+        op_kwargs={'lookback_period': 100, 'rsi_period': 14, 'signal_type': 'DAILY'}
     )
     
     # Step 2: Calculate MACD indicators
     calc_macd = PythonOperator(
         task_id="calculate_macd_indicators",
         python_callable=calculate_all_macd_indicators,
-        op_kwargs={'signal_type': 'DAILY'}  # TAMBAHKAN PARAMETER INI
+        op_kwargs={'lookback_period': 150, 'fast_period': 12, 'slow_period': 26, 'signal_period': 9, 'signal_type': 'DAILY'}
     )
     
     # Step 3: Setup Bollinger Bands table
@@ -84,21 +84,21 @@ with DAG(
     calc_bb = PythonOperator(
         task_id="calculate_bollinger_bands",
         python_callable=calculate_all_bollinger_bands,
-        op_kwargs={'signal_type': 'DAILY'}  # TAMBAHKAN PARAMETER INI
+        op_kwargs={'lookback_period': 50, 'band_period': 20, 'std_dev': 2, 'signal_type': 'DAILY'}
     )
     
     # Step 5: Filter stocks by volatility and liquidity
     filter_stocks = PythonOperator(
         task_id="filter_stocks_by_volatility_liquidity",
         python_callable=filter_by_volatility_liquidity,
-        op_kwargs={'signal_type': 'DAILY'}  # TAMBAHKAN PARAMETER INI
+        op_kwargs={'analysis_period': 30, 'signal_type': 'DAILY'}
     )
     
     # Step 6: Calculate advanced indicators
     calc_advanced = PythonOperator(
         task_id="calculate_advanced_indicators",
         python_callable=calculate_advanced_indicators,
-        op_kwargs={'signal_type': 'DAILY'},  # TAMBAHKAN PARAMETER INI
+        op_kwargs={'lookback_period': 300, 'signal_type': 'DAILY'},
         retries=2,
         retry_delay=pendulum.duration(minutes=2)
     )
@@ -107,7 +107,7 @@ with DAG(
     run_backtest = PythonOperator(
         task_id="run_backtest",
         python_callable=backtest_trading_signals,
-        op_kwargs={'signal_type': 'DAILY'},  # TAMBAHKAN PARAMETER INI
+        op_kwargs={'test_period': 180, 'hold_period': 5, 'signal_type': 'DAILY'},
         trigger_rule='none_failed'
     )
     
@@ -115,14 +115,14 @@ with DAG(
     send_signals = PythonOperator(
         task_id="send_high_probability_signals",
         python_callable=send_high_probability_signals,
-        op_kwargs={'signal_type': 'DAILY'}  # TAMBAHKAN PARAMETER INI
+        op_kwargs={'signal_type': 'DAILY', 'min_probability': 0.8}
     )
     
     # Step 9: Send performance report
     send_report = PythonOperator(
         task_id="send_performance_report",
         python_callable=send_performance_report,
-        op_kwargs={'report_type': 'DAILY'}  # TAMBAHKAN PARAMETER INI
+        op_kwargs={'report_type': 'DAILY', 'lookback_days': 60}
     )
     
     # End marker

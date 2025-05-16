@@ -2,13 +2,13 @@ import psycopg2
 import logging
 import pandas as pd
 
-# Konfigurasi logging
+# Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 def get_database_connection():
     """
-    Membuat koneksi database dengan handling error yang lebih baik
+    Create database connection with better error handling
     """
     try:
         conn = psycopg2.connect(
@@ -24,7 +24,7 @@ def get_database_connection():
 
 def get_latest_stock_date():
     """
-    Mendapatkan tanggal terakhir yang tersedia di tabel daily_stock_summary
+    Get the latest date available in the daily_stock_summary table
     """
     try:
         conn = get_database_connection()
@@ -41,7 +41,7 @@ def get_latest_stock_date():
 
 def execute_query(query, params=None):
     """
-    Mengeksekusi query SQL dengan parameter opsional
+    Execute SQL query with optional parameters
     """
     try:
         conn = get_database_connection()
@@ -60,7 +60,7 @@ def execute_query(query, params=None):
 
 def fetch_data(query, params=None):
     """
-    Mengambil data dari database menggunakan query SQL
+    Fetch data from database using SQL query
     """
     try:
         conn = get_database_connection()
@@ -78,13 +78,13 @@ def fetch_data(query, params=None):
 
 def create_table_if_not_exists(table_name, schema):
     """
-    Membuat tabel jika belum ada
+    Create table if it doesn't exist
     """
     try:
         conn = get_database_connection()
         cursor = conn.cursor()
         
-        # Cek apakah tabel sudah ada
+        # Check if table already exists
         schema_name, table = table_name.split('.')
         cursor.execute(f"""
         SELECT EXISTS (

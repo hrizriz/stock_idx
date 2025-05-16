@@ -6,7 +6,6 @@ from airflow.models import Variable
 from datetime import datetime
 import pendulum
 import logging
-import json
 
 # Import utility modules
 from utils.database import get_database_connection, get_latest_stock_date
@@ -18,10 +17,10 @@ from utils.models import (
     update_actual_prices
 )
 
-# Konfigurasi timezone
+# Configure timezone
 local_tz = pendulum.timezone("Asia/Jakarta")
 
-# Logging setup
+# Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 

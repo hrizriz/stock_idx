@@ -1,84 +1,84 @@
-
 import pandas as pd
 import numpy as np
 import logging
+from datetime import datetime
 from .database import get_database_connection, get_latest_stock_date, execute_query, fetch_data, create_table_if_not_exists
 
-# Konfigurasi logging
+# Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 def calculate_rsi(data, period=14):
     """
-    Menghitung indikator RSI (Relative Strength Index)
+    Calculate RSI (Relative Strength Index) indicator
     """
-    # Hitung perubahan harga
+    # Calculate price changes
     delta = data.diff()
     
-    # Pisahkan kenaikan dan penurunan
+    # Split into gains and losses
     gain = delta.clip(lower=0)
     loss = -1 * delta.clip(upper=0)
     
-    # Hitung rata-rata kenaikan dan penurunan
+    # Calculate average gains and losses
     avg_gain = gain.rolling(window=period).mean()
     avg_loss = loss.rolling(window=period).mean()
     
-    # Hitung RS
+    # Calculate RS
     rs = avg_gain / avg_loss
     
-    # Hitung RSI
+    # Calculate RSI
     rsi = 100 - (100 / (1 + rs))
     
     return rsi
 
 def calculate_macd(data, fast_period=12, slow_period=26, signal_period=9):
     """
-    Menghitung indikator MACD (Moving Average Convergence Divergence)
+    Calculate MACD (Moving Average Convergence Divergence) indicator
     """
-    # Hitung EMA
+    # Calculate EMAs
     ema_fast = data.ewm(span=fast_period, adjust=False).mean()
     ema_slow = data.ewm(span=slow_period, adjust=False).mean()
     
-    # Hitung MACD line
+    # Calculate MACD line
     macd_line = ema_fast - ema_slow
     
-    # Hitung signal line
+    # Calculate signal line
     signal_line = macd_line.ewm(span=signal_period, adjust=False).mean()
     
-    # Hitung histogram - GANTI MENJADI macd_histogram
+    # Calculate histogram
     macd_histogram = macd_line - signal_line
     
     return macd_line, signal_line, macd_histogram
 
 def calculate_bollinger_bands(data, period=20, std_dev=2):
     """
-    Menghitung Bollinger Bands
+    Calculate Bollinger Bands
     """
-    # Hitung moving average
+    # Calculate moving average
     middle_band = data.rolling(window=period).mean()
     
-    # Hitung standard deviation
+    # Calculate standard deviation
     std = data.rolling(window=period).std()
     
-    # Hitung upper dan lower bands
+    # Calculate upper and lower bands
     upper_band = middle_band + (std * std_dev)
     lower_band = middle_band - (std * std_dev)
     
-    # Hitung %B (posisi harga relatif terhadap bands)
+    # Calculate %B (price position relative to bands)
     percent_b = (data - lower_band) / (upper_band - lower_band)
     
     return middle_band, upper_band, lower_band, percent_b
 
 def calculate_all_rsi_indicators(lookback_period=100, rsi_period=14, signal_type='DAILY'):
     """
-    Menghitung indikator RSI untuk semua saham dan menyimpan ke database
+    Calculate RSI indicators for all stocks and save to database
     
     Parameters:
-    lookback_period (int): Jumlah hari ke belakang untuk analisis (default: 100 untuk daily)
-    rsi_period (int): Periode untuk perhitungan RSI (default: 14)
-    signal_type (str): Tipe sinyal - DAILY, WEEKLY, atau MONTHLY
+    lookback_period (int): Number of days to look back for analysis (default: 100 for daily)
+    rsi_period (int): Period for RSI calculation (default: 14)
+    signal_type (str): Signal type - DAILY, WEEKLY, or MONTHLY
     """
-    # Ambil data harga saham dengan periode lookback yang sesuai
+    # Get stock price data with appropriate lookback period
     query = f"""
         SELECT 
             symbol, 
@@ -91,15 +91,15 @@ def calculate_all_rsi_indicators(lookback_period=100, rsi_period=14, signal_type
     
     df = fetch_data(query)
     
-    # Jika tidak ada data
+    # If no data
     if df.empty:
-        logger.warning(f"Tidak ada data harga saham untuk perhitungan RSI {signal_type}")
-        return f"Tidak ada data untuk {signal_type}"
+        logger.warning(f"No stock price data for RSI calculation {signal_type}")
+        return f"No data for {signal_type}"
     
-    # Nama tabel disesuaikan dengan signal_type
+    # Table name based on signal_type
     table_name = f"public_analytics.technical_indicators_rsi_{signal_type.lower()}" if signal_type != 'DAILY' else "public_analytics.technical_indicators_rsi"
     
-    # Buat tabel jika belum ada
+    # Create table if it doesn't exist
     create_table_if_not_exists(
         table_name,
         f"""
@@ -113,35 +113,35 @@ def calculate_all_rsi_indicators(lookback_period=100, rsi_period=14, signal_type
         """
     )
     
-    # Buat DataFrame untuk menyimpan hasil
+    # Create DataFrame to store results
     results = []
     
-    # Hitung RSI untuk setiap saham dengan periode yang diberikan
+    # Calculate RSI for each stock with given period
     for symbol, group in df.groupby('symbol'):
-        if len(group) < rsi_period + 1:  # Minimal data yang diperlukan
+        if len(group) < rsi_period + 1:  # Minimum required data
             continue
             
-        # Sort berdasarkan tanggal
+        # Sort by date
         group = group.sort_values('date')
         
-        # Hitung RSI dengan periode yang diberikan
+        # Calculate RSI with given period
         group['rsi'] = calculate_rsi(group['close'], period=rsi_period)
         
-        # Filter hanya data terbaru saja
-        latest_data = group.dropna().tail(10)  # Ambil 10 hari terbaru dengan RSI yang valid
+        # Filter only latest data
+        latest_data = group.dropna().tail(10)  # Get 10 latest days with valid RSI
         
-        # Sesuaikan threshold RSI berdasarkan timeframe
+        # Adjust RSI threshold based on timeframe
         if signal_type == 'WEEKLY':
-            oversold_threshold = 35  # Lebih longgar untuk weekly
+            oversold_threshold = 35  # More relaxed for weekly
             overbought_threshold = 65
         elif signal_type == 'MONTHLY':
-            oversold_threshold = 40  # Lebih longgar lagi untuk monthly
+            oversold_threshold = 40  # Even more relaxed for monthly
             overbought_threshold = 60
         else:
-            oversold_threshold = 30  # Standar untuk daily
+            oversold_threshold = 30  # Standard for daily
             overbought_threshold = 70
         
-        # Tentukan sinyal berdasarkan nilai RSI dan threshold
+        # Determine signal based on RSI value and threshold
         for _, row in latest_data.iterrows():
             rsi_signal = "Neutral"
             if row['rsi'] <= oversold_threshold:
@@ -156,23 +156,23 @@ def calculate_all_rsi_indicators(lookback_period=100, rsi_period=14, signal_type
                 'rsi_signal': rsi_signal
             })
     
-    # Konversi hasil ke DataFrame
+    # Convert results to DataFrame
     result_df = pd.DataFrame(results)
     
     if result_df.empty:
-        logger.warning("Tidak ada hasil RSI yang valid")
-        return "Tidak ada hasil RSI"
+        logger.warning("No valid RSI results")
+        return "No RSI results"
     
-    # Simpan hasil ke database
+    # Save results to database
     conn = get_database_connection()
     cursor = conn.cursor()
     
-    # Hapus data yang sudah ada untuk tanggal yang akan diupdate
+    # Delete existing data for dates to be updated
     dates_to_update = result_df['date'].unique()
     for date in dates_to_update:
         cursor.execute(f"DELETE FROM {table_name} WHERE date = '{date}'")
     
-    # Masukkan data baru
+    # Insert new data
     for _, row in result_df.iterrows():
         cursor.execute(f"""
         INSERT INTO {table_name} (symbol, date, rsi, rsi_signal)
@@ -183,20 +183,20 @@ def calculate_all_rsi_indicators(lookback_period=100, rsi_period=14, signal_type
     cursor.close()
     conn.close()
     
-    return f"Berhasil menghitung RSI {signal_type} untuk {result_df['symbol'].nunique()} saham pada {len(dates_to_update)} tanggal"
+    return f"Successfully calculated RSI {signal_type} for {result_df['symbol'].nunique()} stocks on {len(dates_to_update)} dates"
 
 def calculate_all_macd_indicators(lookback_period=150, fast_period=12, slow_period=26, signal_period=9, signal_type='DAILY'):
     """
-    Menghitung indikator MACD untuk semua saham dan menyimpan ke database
+    Calculate MACD indicators for all stocks and save to database
     
     Parameters:
-    lookback_period (int): Jumlah hari ke belakang untuk analisis
-    fast_period (int): Periode EMA cepat untuk MACD
-    slow_period (int): Periode EMA lambat untuk MACD
-    signal_period (int): Periode signal line
-    signal_type (str): Tipe sinyal - DAILY, WEEKLY, atau MONTHLY
+    lookback_period (int): Number of days to look back for analysis
+    fast_period (int): Fast EMA period for MACD
+    slow_period (int): Slow EMA period for MACD
+    signal_period (int): Signal line period
+    signal_type (str): Signal type - DAILY, WEEKLY, or MONTHLY
     """
-    # Ambil data dengan lookback period yang sesuai
+    # Get data with appropriate lookback period
     df = fetch_data(f"""
         SELECT 
             symbol, 
@@ -207,23 +207,23 @@ def calculate_all_macd_indicators(lookback_period=150, fast_period=12, slow_peri
         ORDER BY symbol, date
     """)
     
-    # Jika tidak ada data
+    # If no data
     if df.empty:
-        logger.warning(f"Tidak ada data harga saham untuk perhitungan MACD {signal_type}")
-        return f"Tidak ada data {signal_type}"
+        logger.warning(f"No stock price data for MACD calculation {signal_type}")
+        return f"No data {signal_type}"
     
-    # Untuk weekly/monthly, gunakan periode MACD yang lebih panjang
+    # For weekly/monthly, use longer MACD period
     if signal_type == 'WEEKLY':
-        min_days_required = 40  # Lebih banyak data untuk weekly
+        min_days_required = 40  # More data for weekly
     elif signal_type == 'MONTHLY':
-        min_days_required = 60  # Lebih banyak lagi untuk monthly
+        min_days_required = 60  # Even more for monthly
     else:
-        min_days_required = 30  # Default untuk daily
+        min_days_required = 30  # Default for daily
     
-    # Nama tabel disesuaikan dengan signal_type
+    # Table name based on signal_type
     table_name = f"public_analytics.technical_indicators_macd_{signal_type.lower()}" if signal_type != 'DAILY' else "public_analytics.technical_indicators_macd"
     
-    # Buat tabel jika belum ada
+    # Create table if it doesn't exist
     create_table_if_not_exists(
         table_name,
         f"""
@@ -239,18 +239,18 @@ def calculate_all_macd_indicators(lookback_period=150, fast_period=12, slow_peri
         """
     )
     
-    # Buat DataFrame untuk menyimpan hasil
+    # Create DataFrame to store results
     results = []
     
-    # Hitung MACD untuk setiap saham
+    # Calculate MACD for each stock
     for symbol, group in df.groupby('symbol'):
-        if len(group) < min_days_required:  # Minimal data yang diperlukan
+        if len(group) < min_days_required:  # Minimum required data
             continue
             
-        # Sort berdasarkan tanggal
+        # Sort by date
         group = group.sort_values('date')
         
-        # Hitung MACD dengan parameter yang diberikan
+        # Calculate MACD with given parameters
         macd_line, signal_line, macd_histogram = calculate_macd(
             group['close'], 
             fast_period=fast_period, 
@@ -258,39 +258,39 @@ def calculate_all_macd_indicators(lookback_period=150, fast_period=12, slow_peri
             signal_period=signal_period
         )
         
-        # Gabungkan hasil
+        # Combine results
         group['macd_line'] = macd_line
         group['signal_line'] = signal_line
         group['macd_histogram'] = macd_histogram
         
-        # Tentukan sinyal berdasarkan MACD
+        # Determine signal based on MACD
         group['prev_macd_histogram'] = group['macd_histogram'].shift(1)
         
-        # Filter hanya data terbaru saja
-        latest_data = group.dropna().tail(10)  # Ambil 10 hari terbaru dengan MACD yang valid
+        # Filter only latest data
+        latest_data = group.dropna().tail(10)  # Get 10 latest days with valid MACD
         
         for _, row in latest_data.iterrows():
-            # Tentukan sinyal MACD
+            # Determine MACD signal
             macd_signal = "Neutral"
             
-            # Sesuaikan sensitivitas crossover berdasarkan timeframe
+            # Adjust crossover sensitivity based on timeframe
             if signal_type == 'WEEKLY':
-                hist_threshold = 0.03  # Lebih tinggi untuk weekly (mengurangi false signals)
+                hist_threshold = 0.03  # Higher for weekly (reducing false signals)
             elif signal_type == 'MONTHLY':
-                hist_threshold = 0.05  # Lebih tinggi lagi untuk monthly
+                hist_threshold = 0.05  # Even higher for monthly
             else:
-                hist_threshold = 0.0   # Standar untuk daily
+                hist_threshold = 0.0   # Standard for daily
             
-            # Bullish crossover (histogram berubah dari negatif ke positif)
+            # Bullish crossover (histogram changes from negative to positive)
             if row['macd_histogram'] > hist_threshold and row['prev_macd_histogram'] <= hist_threshold:
                 macd_signal = "Bullish"  # Bullish crossover
-            # Bearish crossover (histogram berubah dari positif ke negatif)
+            # Bearish crossover (histogram changes from positive to negative)
             elif row['macd_histogram'] < -hist_threshold and row['prev_macd_histogram'] >= -hist_threshold:
                 macd_signal = "Bearish"  # Bearish crossover
-            # Bullish momentum (histogram positif dan meningkat)
+            # Bullish momentum (positive histogram and increasing)
             elif row['macd_histogram'] > 0 and row['macd_histogram'] > row['prev_macd_histogram']:
                 macd_signal = "Bullish"  # Bullish momentum
-            # Bearish momentum (histogram negatif dan menurun)
+            # Bearish momentum (negative histogram and decreasing)
             elif row['macd_histogram'] < 0 and row['macd_histogram'] < row['prev_macd_histogram']:
                 macd_signal = "Bearish"  # Bearish momentum
             
@@ -303,23 +303,23 @@ def calculate_all_macd_indicators(lookback_period=150, fast_period=12, slow_peri
                 'macd_signal': macd_signal
             })
     
-    # Konversi hasil ke DataFrame
+    # Convert results to DataFrame
     result_df = pd.DataFrame(results)
     
     if result_df.empty:
-        logger.warning(f"Tidak ada hasil MACD {signal_type} yang valid")
-        return f"Tidak ada hasil MACD {signal_type}"
+        logger.warning(f"No valid MACD {signal_type} results")
+        return f"No MACD {signal_type} results"
     
-    # Simpan hasil ke database
+    # Save results to database
     conn = get_database_connection()
     cursor = conn.cursor()
     
-    # Hapus data yang sudah ada untuk tanggal yang akan diupdate
+    # Delete existing data for dates to be updated
     dates_to_update = result_df['date'].unique()
     for date in dates_to_update:
         cursor.execute(f"DELETE FROM {table_name} WHERE date = '{date}'")
     
-    # Masukkan data baru
+    # Insert new data
     for _, row in result_df.iterrows():
         cursor.execute(f"""
         INSERT INTO {table_name} 
@@ -334,19 +334,19 @@ def calculate_all_macd_indicators(lookback_period=150, fast_period=12, slow_peri
     cursor.close()
     conn.close()
     
-    return f"Berhasil menghitung MACD {signal_type} untuk {result_df['symbol'].nunique()} saham pada {len(dates_to_update)} tanggal"
+    return f"Successfully calculated MACD {signal_type} for {result_df['symbol'].nunique()} stocks on {len(dates_to_update)} dates"
 
 def calculate_all_bollinger_bands(lookback_period=50, band_period=20, std_dev=2, signal_type='DAILY'):
     """
-    Menghitung Bollinger Bands untuk semua saham dan menyimpan ke database
+    Calculate Bollinger Bands for all stocks and save to database
     
     Parameters:
-    lookback_period (int): Jumlah hari ke belakang untuk analisis
-    band_period (int): Periode Moving Average untuk Bollinger Bands
-    std_dev (int): Jumlah standar deviasi untuk band
-    signal_type (str): Tipe sinyal - DAILY, WEEKLY, atau MONTHLY
+    lookback_period (int): Number of days to look back for analysis
+    band_period (int): Moving Average period for Bollinger Bands
+    std_dev (int): Number of standard deviations for band
+    signal_type (str): Signal type - DAILY, WEEKLY, or MONTHLY
     """
-    # Ambil data harga saham dengan lookback period yang disesuaikan
+    # Get stock price data with adjusted lookback period
     df = fetch_data(f"""
         SELECT 
             symbol, 
@@ -357,15 +357,15 @@ def calculate_all_bollinger_bands(lookback_period=50, band_period=20, std_dev=2,
         ORDER BY symbol, date
     """)
     
-    # Jika tidak ada data
+    # If no data
     if df.empty:
-        logger.warning(f"Tidak ada data harga saham untuk perhitungan Bollinger Bands {signal_type}")
-        return f"Tidak ada data {signal_type}"
+        logger.warning(f"No stock price data for Bollinger Bands calculation {signal_type}")
+        return f"No data {signal_type}"
     
-    # Nama tabel disesuaikan dengan signal_type
+    # Table name based on signal_type
     table_name = f"public_analytics.technical_indicators_bollinger_{signal_type.lower()}" if signal_type != 'DAILY' else "public_analytics.technical_indicators_bollinger"
     
-    # Buat tabel jika belum ada
+    # Create table if it doesn't exist
     create_table_if_not_exists(
         table_name,
         f"""
@@ -382,53 +382,53 @@ def calculate_all_bollinger_bands(lookback_period=50, band_period=20, std_dev=2,
         """
     )
     
-    # Sesuaikan minimum jumlah hari data berdasarkan timeframe
+    # Adjust minimum number of days data based on timeframe
     if signal_type == 'WEEKLY':
-        min_days_required = 30  # Lebih banyak data untuk weekly
+        min_days_required = 30  # More data for weekly
     elif signal_type == 'MONTHLY':
-        min_days_required = 40  # Lebih banyak lagi untuk monthly
+        min_days_required = 40  # Even more for monthly
     else:
-        min_days_required = 20  # Default untuk daily
+        min_days_required = 20  # Default for daily
     
-    # Buat DataFrame untuk menyimpan hasil
+    # Create DataFrame to store results
     results = []
     
-    # Hitung Bollinger Bands untuk setiap saham
+    # Calculate Bollinger Bands for each stock
     for symbol, group in df.groupby('symbol'):
-        if len(group) < min_days_required:  # Minimal data yang diperlukan
+        if len(group) < min_days_required:  # Minimum required data
             continue
             
-        # Sort berdasarkan tanggal
+        # Sort by date
         group = group.sort_values('date')
         
-        # Hitung Bollinger Bands dengan parameter yang diberikan
+        # Calculate Bollinger Bands with given parameters
         middle_band, upper_band, lower_band, percent_b = calculate_bollinger_bands(
             group['close'], 
             period=band_period, 
             std_dev=std_dev
         )
         
-        # Gabungkan hasil
+        # Combine results
         group['middle_band'] = middle_band
         group['upper_band'] = upper_band
         group['lower_band'] = lower_band
         group['percent_b'] = percent_b
         
-        # Filter hanya data terbaru saja
-        latest_data = group.dropna().tail(10)  # Ambil 10 hari terbaru
+        # Filter only latest data
+        latest_data = group.dropna().tail(10)  # Get 10 latest days
         
-        # Sesuaikan threshold berdasarkan timeframe
+        # Adjust threshold based on timeframe
         if signal_type == 'WEEKLY':
-            near_overbought = 0.75  # Lebih longgar untuk weekly
+            near_overbought = 0.75  # More relaxed for weekly
             near_oversold = 0.25
         elif signal_type == 'MONTHLY':
-            near_overbought = 0.7   # Lebih longgar lagi untuk monthly
+            near_overbought = 0.7   # Even more relaxed for monthly
             near_oversold = 0.3
         else:
-            near_overbought = 0.8   # Standar untuk daily
+            near_overbought = 0.8   # Standard for daily
             near_oversold = 0.2
         
-        # Tentukan sinyal berdasarkan Bollinger Bands
+        # Determine signal based on Bollinger Bands
         for _, row in latest_data.iterrows():
             bb_signal = "Neutral"
             
@@ -451,23 +451,23 @@ def calculate_all_bollinger_bands(lookback_period=50, band_period=20, std_dev=2,
                 'bb_signal': bb_signal
             })
     
-    # Konversi hasil ke DataFrame
+    # Convert results to DataFrame
     result_df = pd.DataFrame(results)
     
     if result_df.empty:
-        logger.warning(f"Tidak ada hasil Bollinger Bands {signal_type} yang valid")
-        return f"Tidak ada hasil Bollinger Bands {signal_type}"
+        logger.warning(f"No valid Bollinger Bands {signal_type} results")
+        return f"No Bollinger Bands {signal_type} results"
     
-    # Simpan hasil ke database
+    # Save results to database
     conn = get_database_connection()
     cursor = conn.cursor()
     
-    # Hapus data yang sudah ada untuk tanggal yang akan diupdate
+    # Delete existing data for dates to be updated
     dates_to_update = result_df['date'].unique()
     for date in dates_to_update:
         cursor.execute(f"DELETE FROM {table_name} WHERE date = '{date}'")
     
-    # Masukkan data baru
+    # Insert new data
     for _, row in result_df.iterrows():
         cursor.execute(f"""
         INSERT INTO {table_name} 
@@ -483,17 +483,17 @@ def calculate_all_bollinger_bands(lookback_period=50, band_period=20, std_dev=2,
     cursor.close()
     conn.close()
     
-    return f"Berhasil menghitung Bollinger Bands {signal_type} untuk {result_df['symbol'].nunique()} saham pada {len(dates_to_update)} tanggal"
+    return f"Successfully calculated Bollinger Bands {signal_type} for {result_df['symbol'].nunique()} stocks on {len(dates_to_update)} dates"
 
 def check_and_create_bollinger_bands_table():
     """
-    Memeriksa apakah tabel Bollinger Bands sudah ada, jika belum buat baru
+    Check if Bollinger Bands table exists, if not create new
     """
     try:
         conn = get_database_connection()
         cursor = conn.cursor()
         
-        # Periksa apakah tabel sudah ada
+        # Check if table already exists
         cursor.execute("""
         SELECT EXISTS (
             SELECT FROM information_schema.tables 
@@ -504,14 +504,14 @@ def check_and_create_bollinger_bands_table():
         
         table_exists = cursor.fetchone()[0]
         
-        # Jika tabel belum ada, buat baru
+        # If table doesn't exist, create new
         if not table_exists:
             logger.info("Creating technical_indicators_bollinger table as it doesn't exist")
             
-            # Pastikan schema public_analytics sudah ada
+            # Ensure public_analytics schema exists
             cursor.execute("CREATE SCHEMA IF NOT EXISTS public_analytics")
             
-            # Buat tabel Bollinger Bands
+            # Create Bollinger Bands table
             cursor.execute("""
             CREATE TABLE public_analytics.technical_indicators_bollinger (
                 symbol TEXT,
@@ -525,11 +525,11 @@ def check_and_create_bollinger_bands_table():
             )
             """)
             
-            # Dapatkan tanggal terakhir
+            # Get latest date
             latest_date = get_latest_stock_date()
             
-            # Kalkulasi Bollinger Bands dari data harga dan masukkan ke tabel secara terpisah
-            # Tahap 1: Hitung nilai untuk setiap saham
+            # Calculate Bollinger Bands from price data and insert into table separately
+            # Step 1: Calculate values for each stock
             cursor.execute(f"""
             WITH daily_prices AS (
                 SELECT
@@ -539,7 +539,7 @@ def check_and_create_bollinger_bands_table():
                 FROM public.daily_stock_summary
                 WHERE date >= '{latest_date}'::date - INTERVAL '50 days'
             ),
-            -- Hitung SMA 20 dan standard deviation
+            -- Calculate SMA 20 and standard deviation
             sma_std AS (
                 SELECT
                     symbol,
@@ -561,7 +561,7 @@ def check_and_create_bollinger_bands_table():
             WHERE middle_band IS NOT NULL AND std_dev IS NOT NULL;
             """)
             
-            # Tahap 2: Masukkan data dengan menghitung percent_b dan bb_signal
+            # Step 2: Insert data with percent_b and bb_signal calculation
             cursor.execute("""
             INSERT INTO public_analytics.technical_indicators_bollinger (
                 symbol, date, middle_band, upper_band, lower_band, percent_b, bb_signal
