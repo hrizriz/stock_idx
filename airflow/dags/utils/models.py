@@ -44,6 +44,386 @@ def normalize_features(df, features, scalers=None):
     
     return normalized_df, scalers
 
+def train_win_rate_predictor():
+    """
+    Train win rate prediction model based on technical indicators and historical data
+    
+    Returns:
+        str: Status message
+    """
+    try:
+        logger.info("Starting win rate predictor training...")
+        conn = get_database_connection()
+        
+        # Get historical signals and outcomes
+        query = """
+        WITH signal_results AS (
+            SELECT 
+                s.symbol,
+                s.date as signal_date,
+                s.buy_score,
+                b.is_win,
+                r.rsi,
+                m.macd_line,
+                m.signal_line,
+                m.macd_histogram,
+                bb.percent_b,
+                d.volume_ratio,
+                d.daily_change
+            FROM public_analytics.advanced_trading_signals s
+            LEFT JOIN public_analytics.backtest_results b
+                ON s.symbol = b.symbol AND s.date = b.signal_date
+            LEFT JOIN public_analytics.technical_indicators_rsi r
+                ON s.symbol = r.symbol AND s.date = r.date
+            LEFT JOIN public_analytics.technical_indicators_macd m
+                ON s.symbol = m.symbol AND s.date = m.date
+            LEFT JOIN public_analytics.technical_indicators_bollinger bb
+                ON s.symbol = bb.symbol AND s.date = bb.date
+            LEFT JOIN (
+                SELECT 
+                    symbol, 
+                    date, 
+                    volume / NULLIF(avg_volume_30d, 0) as volume_ratio,
+                    (close - prev_close) / NULLIF(prev_close, 0) * 100 as daily_change
+                FROM public.daily_stock_summary
+            ) d ON s.symbol = d.symbol AND s.date = d.date
+            WHERE b.is_win IS NOT NULL
+        )
+        SELECT * FROM signal_results
+        """
+        
+        try:
+            df = pd.read_sql(query, conn)
+        except Exception as e:
+            logger.error(f"Error querying signal data: {str(e)}")
+            return f"Error querying signal data: {str(e)}"
+        
+        # Check if enough data
+        if len(df) < 50:
+            logger.warning("Not enough data for win rate predictor training")
+            return "Not enough data for win rate predictor training"
+        
+        # Prepare features and target
+        features = ['buy_score', 'rsi', 'macd_line', 'macd_histogram', 'percent_b', 'volume_ratio', 'daily_change']
+        
+        # Handle missing values
+        df = df.dropna(subset=['is_win'])  # Must have outcome
+        df = df.fillna(0)  # Fill missing features with 0
+        
+        # Prepare data
+        X = df[features]
+        y = df['is_win']
+        
+        # Train-test split
+        from sklearn.model_selection import train_test_split
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        
+        # Train RandomForest classifier
+        from sklearn.ensemble import RandomForestClassifier
+        clf = RandomForestClassifier(n_estimators=100, max_depth=5, random_state=42)
+        clf.fit(X_train, y_train)
+        
+        # Evaluate
+        train_accuracy = clf.score(X_train, y_train)
+        test_accuracy = clf.score(X_test, y_test)
+        
+        logger.info(f"Win rate predictor trained. Train accuracy: {train_accuracy:.4f}, Test accuracy: {test_accuracy:.4f}")
+        
+        # Save model
+        import pickle
+        import os
+        
+        model_dir = os.path.join("/opt/airflow/data/models")
+        os.makedirs(model_dir, exist_ok=True)
+        
+        with open(os.path.join(model_dir, "win_rate_predictor.pkl"), 'wb') as f:
+            pickle.dump(clf, f)
+        
+        # Save feature importance
+        feature_importance = pd.DataFrame({
+            'feature': features,
+            'importance': clf.feature_importances_
+        }).sort_values('importance', ascending=False)
+        
+        # Log feature importance
+        logger.info("Feature importance:")
+        for _, row in feature_importance.iterrows():
+            logger.info(f"{row['feature']}: {row['importance']:.4f}")
+        
+        # Save feature importance to database
+        cursor = conn.cursor()
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS model_feature_importance (
+            model_name VARCHAR(50),
+            feature_name VARCHAR(50),
+            importance NUMERIC,
+            training_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (model_name, feature_name)
+        )
+        """)
+        
+        for _, row in feature_importance.iterrows():
+            cursor.execute("""
+            INSERT INTO model_feature_importance (model_name, feature_name, importance)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (model_name, feature_name) 
+            DO UPDATE SET 
+                importance = EXCLUDED.importance,
+                training_date = CURRENT_TIMESTAMP
+            """, ("win_rate_predictor", row['feature'], float(row['importance'])))
+        
+        conn.commit()
+        cursor.close()
+        conn.close()
+        
+        return f"Win rate predictor trained successfully. Accuracy: {test_accuracy:.4f}"
+    except Exception as e:
+        logger.error(f"Error training win rate predictor: {str(e)}")
+        if 'conn' in locals() and conn is not None:
+            conn.close()
+        return f"Error training win rate predictor: {str(e)}"
+
+def train_lstm_model(symbol):
+    """
+    Train LSTM model for a single stock symbol
+    
+    Parameters:
+    symbol (str): Stock symbol to train model for
+    
+    Returns:
+    str: Status message
+    """
+    try:
+        logger.info(f"Starting LSTM model training for {symbol}")
+        conn = get_database_connection()
+        
+        # Get historical price data
+        query = f"""
+        SELECT 
+            date, 
+            close, 
+            open_price as open,
+            high,
+            low,
+            volume,
+            prev_close,
+            CASE 
+                WHEN prev_close IS NOT NULL AND prev_close != 0 
+                THEN (close - prev_close) / prev_close * 100
+                ELSE NULL
+            END as percent_change
+        FROM 
+            daily_stock_summary
+        WHERE 
+            symbol = '{symbol}'
+        ORDER BY 
+            date
+        """
+        
+        df = pd.read_sql(query, conn)
+        
+        # Check if enough data
+        if len(df) < 200:
+            logger.warning(f"Not enough data for {symbol} LSTM training")
+            return f"Not enough data for {symbol}"
+        
+        # Fill missing values
+        df = df.fillna(method='ffill').fillna(method='bfill')
+        
+        # Add technical indicators as features
+        # EMA
+        df['ema12'] = df['close'].ewm(span=12, adjust=False).mean()
+        df['ema26'] = df['close'].ewm(span=26, adjust=False).mean()
+        df['macd_line'] = df['ema12'] - df['ema26']
+        
+        # RSI
+        delta = df['close'].diff()
+        gain = (delta.where(delta > 0, 0)).fillna(0)
+        loss = (-delta.where(delta < 0, 0)).fillna(0)
+        avg_gain = gain.rolling(window=14).mean()
+        avg_loss = loss.rolling(window=14).mean()
+        # Avoid division by zero
+        avg_loss = avg_loss.replace(0, 1e-10)
+        rs = avg_gain / avg_loss
+        df['rsi'] = 100 - (100 / (1 + rs))
+        
+        # Features for model
+        features = ['close', 'volume', 'percent_change', 'macd_line', 'rsi']
+        
+        # Remove NaN values
+        df = df.dropna(subset=features)
+        
+        # Create directory for model
+        import os
+        from pathlib import Path
+        
+        model_dir = Path(f"/opt/airflow/data/lstm/{symbol}")
+        model_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Prepare data for LSTM
+        from sklearn.preprocessing import MinMaxScaler
+        import numpy as np
+        import torch
+        import torch.nn as nn
+        
+        # Normalize features
+        scaler = MinMaxScaler()
+        close_scaler = MinMaxScaler()  # Separate scaler for close price
+        
+        # Fit close price scaler
+        close_values = df['close'].values.reshape(-1, 1)
+        close_scaler.fit(close_values)
+        
+        # Scale all features
+        scaled_data = scaler.fit_transform(df[features].values)
+        
+        # Save scalers
+        import pickle
+        with open(model_dir / f"{symbol}_scaler.pkl", 'wb') as f:
+            pickle.dump(scaler, f)
+            
+        with open(model_dir / f"{symbol}_close_scaler.pkl", 'wb') as f:
+            pickle.dump(close_scaler, f)
+        
+        # Create sequences
+        seq_length = 10
+        X, y = [], []
+        
+        for i in range(len(scaled_data) - seq_length):
+            X.append(scaled_data[i:i+seq_length])
+            y.append(scaled_data[i+seq_length, 0])  # Predict close price
+            
+        X = np.array(X)
+        y = np.array(y).reshape(-1, 1)
+        
+        # Train-test split
+        train_size = int(len(X) * 0.8)
+        X_train, X_test = X[:train_size], X[train_size:]
+        y_train, y_test = y[:train_size], y[train_size:]
+        
+        # Convert to PyTorch tensors
+        X_train = torch.FloatTensor(X_train)
+        y_train = torch.FloatTensor(y_train)
+        X_test = torch.FloatTensor(X_test)
+        y_test = torch.FloatTensor(y_test)
+        
+        # Define LSTM model
+        class LSTMModel(nn.Module):
+            def __init__(self, input_dim, hidden_dim, output_dim=1, num_layers=2):
+                super(LSTMModel, self).__init__()
+                self.hidden_dim = hidden_dim
+                self.num_layers = num_layers
+                
+                # LSTM layer
+                self.lstm = nn.LSTM(input_dim, hidden_dim, num_layers, batch_first=True)
+                self.fc = nn.Linear(hidden_dim, output_dim)
+                
+            def forward(self, x):
+                h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_dim).to(x.device)
+                c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_dim).to(x.device)
+                
+                out, _ = self.lstm(x, (h0, c0))
+                out = self.fc(out[:, -1, :])
+                return out
+        
+        # Hyperparameters
+        input_dim = len(features)
+        hidden_dim = 32
+        num_layers = 2
+        output_dim = 1
+        
+        # Initialize model
+        model = LSTMModel(input_dim, hidden_dim, output_dim, num_layers)
+        
+        # Loss function and optimizer
+        criterion = nn.MSELoss()
+        optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+        
+        # Training parameters
+        num_epochs = 100
+        batch_size = 16
+        
+        # Training loop
+        for epoch in range(num_epochs):
+            # Mini-batch training
+            for i in range(0, len(X_train), batch_size):
+                batch_X = X_train[i:i+batch_size]
+                batch_y = y_train[i:i+batch_size]
+                
+                # Forward pass
+                outputs = model(batch_X)
+                loss = criterion(outputs, batch_y)
+                
+                # Backward and optimize
+                optimizer.zero_grad()
+                loss.backward()
+                optimizer.step()
+            
+            # Log progress
+            if (epoch+1) % 20 == 0:
+                logger.info(f'Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item():.6f}')
+        
+        # Evaluate model
+        model.eval()
+        with torch.no_grad():
+            test_pred = model(X_test)
+            test_loss = criterion(test_pred, y_test).item()
+            
+            # Denormalize predictions for RMSE calculation
+            y_test_denorm = close_scaler.inverse_transform(y_test.numpy())
+            test_pred_denorm = close_scaler.inverse_transform(test_pred.numpy())
+            
+            # Calculate RMSE, MAE, MAPE
+            from sklearn.metrics import mean_squared_error, mean_absolute_error
+            rmse = np.sqrt(mean_squared_error(y_test_denorm, test_pred_denorm))
+            mae = mean_absolute_error(y_test_denorm, test_pred_denorm)
+            # Avoid division by zero in MAPE calculation
+            mape = np.mean(np.abs((y_test_denorm - test_pred_denorm) / np.maximum(y_test_denorm, 1e-10))) * 100
+            
+            logger.info(f"{symbol} LSTM Evaluation: RMSE={rmse:.2f}, MAE={mae:.2f}, MAPE={mape:.2f}%")
+        
+        # Save model with versioning
+        version = save_model_with_version(model, model_dir, symbol)
+        
+        # Save performance metrics to database
+        cursor = conn.cursor()
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS model_performance_metrics (
+            symbol VARCHAR(10),
+            model_type VARCHAR(50),
+            rmse NUMERIC,
+            mae NUMERIC,
+            mape NUMERIC,
+            prediction_count INTEGER DEFAULT 0,
+            last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (symbol, model_type)
+        )
+        """)
+        
+        cursor.execute("""
+        INSERT INTO model_performance_metrics
+            (symbol, model_type, rmse, mae, mape, last_updated)
+        VALUES
+            (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP)
+        ON CONFLICT (symbol, model_type)
+        DO UPDATE SET
+            rmse = EXCLUDED.rmse,
+            mae = EXCLUDED.mae,
+            mape = EXCLUDED.mape,
+            last_updated = CURRENT_TIMESTAMP
+        """, (symbol, "LSTM", rmse, mae, mape))
+        
+        conn.commit()
+        cursor.close()
+        conn.close()
+        
+        return f"{symbol} LSTM model v{version} trained successfully. RMSE={rmse:.2f}, MAPE={mape:.2f}%"
+    except Exception as e:
+        logger.error(f"Error training LSTM model for {symbol}: {str(e)}")
+        if 'conn' in locals() and conn is not None:
+            conn.close()
+        return f"Error training LSTM model for {symbol}: {str(e)}"
+
 def predict_stock_price(symbol):
     """
     Make predictions using trained LSTM model
@@ -314,6 +694,3 @@ def save_model_with_version(model, model_dir, symbol, version=None):
     torch.save(model.state_dict(), latest_path)
     
     return version
-
-
-

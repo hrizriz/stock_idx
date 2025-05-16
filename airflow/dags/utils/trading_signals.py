@@ -788,124 +788,115 @@ def backtest_trading_signals(test_period=180, hold_period=5, signal_type='DAILY'
 
 def send_high_probability_signals(signal_type='DAILY', min_probability=0.8):
     """
-    Send high probability trading signals via Telegram
+    Mengirim sinyal trading dengan probabilitas tinggi ke Telegram
     
     Parameters:
-    signal_type (str): Signal type - DAILY, WEEKLY, or MONTHLY
-    min_probability (float): Minimum winning probability threshold
+    signal_type (str): Tipe sinyal - DAILY, WEEKLY, atau MONTHLY
+    min_probability (float): Threshold minimum probabilitas
     """
     try:
         conn = get_database_connection()
     except Exception as e:
         return f"Database connection error: {str(e)}"
     
-    # Table names based on signal_type
-    signals_table = f"public_analytics.advanced_trading_signals_{signal_type.lower()}" if signal_type != 'DAILY' else "public_analytics.advanced_trading_signals"
-    
-    # Get latest date
+    # Ambil tanggal terakhir dari database
     latest_date = get_latest_stock_date()
     
-    # Query for high probability signals
+    # Ambil sinyal dengan probabilitas tinggi
     try:
-        query = f"""
-        SELECT 
-            s.symbol,
-            s.date,
-            s.buy_score,
-            s.winning_probability,
-            s.signal_strength,
-            s.indicators_triggered,
-            d.close,
-            d.name,
-            d.prev_close,
-            CASE 
-                WHEN d.prev_close > 0 THEN (d.close - d.prev_close) / d.prev_close * 100
-                ELSE NULL
-            END as daily_change
-        FROM {signals_table} s
-        JOIN public.daily_stock_summary d ON s.symbol = d.symbol AND s.date = d.date
-        WHERE s.date = '{latest_date}'
-        AND s.winning_probability >= {min_probability}
-        AND s.buy_score >= 5
-        ORDER BY s.buy_score DESC, s.winning_probability DESC
+        # PERBAIKAN: Menghapus kolom indicators_triggered dari query
+        sql = f"""
+        WITH stock_info AS (
+            SELECT 
+                s.symbol,
+                s.date,
+                s.buy_score,
+                s.signal_strength,
+                s.winning_probability,
+                m.name,
+                m.close,
+                m.volume,
+                r.rsi,
+                mc.macd_signal
+            FROM public_analytics.advanced_trading_signals s
+            JOIN public.daily_stock_summary m
+                ON s.symbol = m.symbol AND s.date = m.date
+            LEFT JOIN public_analytics.technical_indicators_rsi r
+                ON s.symbol = r.symbol AND s.date = r.date
+            LEFT JOIN public_analytics.technical_indicators_macd mc
+                ON s.symbol = mc.symbol AND s.date = mc.date
+            WHERE s.date = '{latest_date}'
+            AND s.winning_probability >= {min_probability}
+            AND s.buy_score >= 5
+        )
+        SELECT * FROM stock_info
+        ORDER BY buy_score DESC, winning_probability DESC
         LIMIT 10
         """
         
-        signals_df = pd.read_sql(query, conn)
-        
-        if signals_df.empty:
-            logger.info(f"No high probability {signal_type} signals found for {latest_date}")
-            conn.close()
-            return f"No high probability {signal_type} signals"
-        
-        # Create Telegram message
-        if signal_type == 'DAILY':
-            message = "🚨 *SINYAL TRADING HARIAN* 🚨\n\n"
-        elif signal_type == 'WEEKLY':
-            message = "📈 *SINYAL TRADING MINGGUAN* 📈\n\n"
-        else:
-            message = "📊 *SINYAL TRADING BULANAN* 📊\n\n"
-        
-        message += f"Tanggal: {latest_date}\n\n"
-        
-        # Add each signal to message
-        for _, row in signals_df.iterrows():
-            # Format indicators list
-            if isinstance(row['indicators_triggered'], list):
-                indicators = ", ".join(row['indicators_triggered'])
-            else:
-                indicators = str(row['indicators_triggered']).replace("{", "").replace("}", "").replace("\"", "")
-            
-            # Emoji based on signal strength
-            if row['signal_strength'] == 'Strong':
-                strength_emoji = "💪"
-            elif row['signal_strength'] == 'Moderate':
-                strength_emoji = "👍"
-            else:
-                strength_emoji = "👌"
-            
-            # Format daily change
-            if pd.notna(row['daily_change']):
-                if row['daily_change'] > 0:
-                    change_str = f"+{row['daily_change']:.2f}%"
-                else:
-                    change_str = f"{row['daily_change']:.2f}%"
-            else:
-                change_str = "N/A"
-            
-            # Add signal to message
-            message += f"*{row['symbol']}* ({row['name']}) {strength_emoji}\n"
-            message += f"Harga: Rp{row['close']:,.0f} ({change_str})\n"
-            message += f"Skor: {row['buy_score']}/10 | Win Prob: {row['winning_probability']*100:.0f}%\n"
-            message += f"Indikator: {indicators}\n\n"
-        
-        # Add disclaimer based on signal_type
-        if signal_type == 'DAILY':
-            hold_period = "3-5 hari"
-            take_profit = "5-10%"
-        elif signal_type == 'WEEKLY':
-            hold_period = "1-3 minggu"
-            take_profit = "7-15%"
-        else:
-            hold_period = "1-3 bulan"
-            take_profit = "10-20%"
-            
-        message += "🔍 *DISCLAIMER*:\n"
-        message += "Sinyal trading ini dihasilkan oleh algoritma yang menganalisis pola teknikal. "
-        message += f"Sinyal ini cocok untuk holding period {hold_period} dengan target keuntungan {take_profit}. "
-        message += "Selalu lakukan analisis tambahan dan money management yang baik.\n\n"
-        message += "⚠️ *RESIKO INVESTASI*:\n"
-        message += "Perlu diingat bahwa semua investasi saham memiliki risiko. "
-        message += "Sinyal ini bukan rekomendasi atau nasihat investasi."
-        
-        # Send to Telegram
-        result = send_telegram_message(message)
-        
+        df = pd.read_sql(sql, conn)
         conn.close()
-        
-        return result
     except Exception as e:
-        logger.error(f"Error sending high probability signals: {str(e)}")
+        logger.error(f"Error querying high probability signals: {str(e)}")
         if 'conn' in locals() and conn is not None:
             conn.close()
-        return f"Error sending high probability signals: {str(e)}"
+        return f"Error querying signals: {str(e)}"
+    
+    if df.empty:
+        logger.warning("No high probability trading signals found")
+        return "No high probability trading signals found"
+    
+    # Create date string for report
+    report_date = df['date'].iloc[0]
+    if isinstance(report_date, pd.Timestamp):
+        report_date = report_date.strftime('%Y-%m-%d')
+    
+    # Create Telegram message
+    message = f"🔮 *SINYAL TRADING PROBABILITAS TINGGI ({report_date})* 🔮\n\n"
+    message += "Saham-saham berikut memiliki probabilitas profit >80% berdasarkan analisis multi-faktor:\n\n"
+    
+    for i, row in enumerate(df.itertuples(), 1):
+        message += f"*{i}. {row.symbol}* ({row.name})\n"
+        message += f"   Harga: Rp{row.close:,.0f} | Skor: {row.buy_score}/10\n"
+        message += f"   Probabilitas: {row.winning_probability*100:.0f}% | Signal: {row.signal_strength}\n"
+        
+        # Faktor-faktor pendukung - PERBAIKAN: Tanpa menggunakan indicators_triggered
+        factors = []
+        
+        # Tambahkan indikator-indikator secara manual berdasarkan kolom yang ada
+        if hasattr(row, 'rsi') and row.rsi is not None and row.rsi < 30:
+            factors.append(f"RSI: {row.rsi:.1f}")
+        if hasattr(row, 'macd_signal') and row.macd_signal == "Bullish":
+            factors.append("MACD Bullish")
+            
+        # Jika tidak ada faktor, berikan info default
+        if not factors:
+            factors.append("Technical Indicators")
+            
+        message += f"   Faktor: {', '.join(factors)}\n"
+        
+        # Target harga dan stop loss
+        target_price_1 = row.close * 1.05  # Target 5%
+        target_price_2 = row.close * 1.10  # Target 10%
+        stop_loss = row.close * 0.95      # Stop loss 5%
+        
+        message += f"   🎯 Target 1: Rp{target_price_1:,.0f} (+5%) | Target 2: Rp{target_price_2:,.0f} (+10%)\n"
+        message += f"   🛑 Stop Loss: Rp{stop_loss:,.0f} (-5%)\n\n"
+    
+    # Strategy section
+    message += "*Strategi Entry:*\n"
+    message += "• Beli pada harga pasar atau tunggu pullback kecil\n"
+    message += "• Entry bertahap: 50% posisi di awal, 50% setelah konfirmasi\n"
+    message += "• Hold periode: 5-10 hari trading\n\n"
+    
+    # Tambahkan disclaimer
+    message += "*Disclaimer:*\n"
+    message += "Analisis ini menggunakan algoritma data science dan tidak menjamin profit. "
+    message += "Lakukan analisis tambahan dan gunakan manajemen risiko."
+    
+    # Send to Telegram
+    result = send_telegram_message(message)
+    if "successfully" in result:
+        return f"High probability signals sent: {len(df)} stocks"
+    else:
+        return result
