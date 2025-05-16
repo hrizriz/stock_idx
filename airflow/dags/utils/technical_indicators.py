@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 def calculate_rsi(data, period=14):
     """
-    Calculate RSI (Relative Strength Index) indicator
+    Calculate RSI (Relative Strength Index) indicator with improved handling
     """
     # Calculate price changes
     delta = data.diff()
@@ -23,13 +23,38 @@ def calculate_rsi(data, period=14):
     avg_gain = gain.rolling(window=period).mean()
     avg_loss = loss.rolling(window=period).mean()
     
+    # Handle division by zero
+    avg_loss = avg_loss.replace(0, 1e-10)  # Avoid divide by zero
+    
     # Calculate RS
     rs = avg_gain / avg_loss
     
     # Calculate RSI
     rsi = 100 - (100 / (1 + rs))
     
+    # Clip to valid range
+    rsi = rsi.clip(0, 100)
+    
     return rsi
+
+def calculate_vwap(data_df, period=20):
+    """Calculate VWAP indicator for given data"""
+    df = data_df.copy()
+    
+    # Calculate typical price
+    df['typical_price'] = (df['high'] + df['low'] + df['close']) / 3
+    
+    # Calculate price * volume
+    df['pv'] = df['typical_price'] * df['volume']
+    
+    # Calculate cumulative values for the period
+    df['cumulative_pv'] = df['pv'].rolling(window=period).sum()
+    df['cumulative_volume'] = df['volume'].rolling(window=period).sum()
+    
+    # Calculate VWAP
+    df['vwap'] = df['cumulative_pv'] / df['cumulative_volume']
+    
+    return df['vwap']
 
 def calculate_macd(data, fast_period=12, slow_period=26, signal_period=9):
     """

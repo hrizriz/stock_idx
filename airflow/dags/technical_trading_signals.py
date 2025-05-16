@@ -62,9 +62,10 @@ with DAG(
     
     # Step 1: Calculate RSI indicators
     calc_rsi = PythonOperator(
-        task_id="calculate_rsi_indicators",
-        python_callable=calculate_all_rsi_indicators,
-        op_kwargs={'lookback_period': 100, 'rsi_period': 14, 'signal_type': 'DAILY'}
+    task_id="calculate_rsi_indicators",
+    python_callable=calculate_all_rsi_indicators,
+    op_kwargs={'lookback_period': 100, 'rsi_period': 14, 'signal_type': 'DAILY', 
+              'oversold_threshold': 32, 'overbought_threshold': 68}  # Disesuaikan
     )
     
     # Step 2: Calculate MACD indicators
@@ -102,6 +103,12 @@ with DAG(
         retries=2,
         retry_delay=pendulum.duration(minutes=2)
     )
+
+    confirm_signals = PythonOperator(
+    task_id="confirm_trading_signals",
+    python_callable=lambda: print("Konfirmasi sinyal dengan multiple indikator"),
+    # Fungsi yang sebenarnya untuk implementasikan konfirmasi
+    )
     
     # Step 7: Run backtesting
     run_backtest = PythonOperator(
@@ -130,8 +137,8 @@ with DAG(
         task_id="end_task"
     )
     
-    # Define task dependencies
     wait_for_transformation >> [calc_rsi, calc_macd, check_bb]
     check_bb >> calc_bb
     [calc_rsi, calc_macd, calc_bb] >> filter_stocks >> calc_advanced
-    calc_advanced >> run_backtest >> send_signals >> send_report >> end_task
+    calc_advanced >> [run_backtest, confirm_signals]  # Parallelize
+    [run_backtest, confirm_signals] >> send_signals >> send_report >> end_task

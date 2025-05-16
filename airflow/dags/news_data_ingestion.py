@@ -13,6 +13,14 @@ import re
 from pathlib import Path
 import time
 import random
+import logging
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 local_tz = pendulum.timezone("Asia/Jakarta")
 
@@ -22,7 +30,7 @@ default_args = {
     'start_date': pendulum.datetime(2024, 1, 1, tz=local_tz),
     'email_on_failure': False,
     'email_on_retry': False,
-    'retries': 1,
+    'retries': 2,  # Increased retries
     'retry_delay': pendulum.duration(minutes=5)
 }
 
@@ -43,52 +51,65 @@ active_tickers = [
 
 def create_news_tables_if_not_exist():
     """Membuat tabel-tabel berita jika belum ada"""
-    conn = psycopg2.connect(
-        host="postgres",
-        dbname="airflow",
-        user="airflow",
-        password="airflow"
-    )
-    cur = conn.cursor()
-    
-    # Buat tabel detik_news jika belum ada
-    cur.execute("""
-    CREATE TABLE IF NOT EXISTS detik_news (
-        id SERIAL PRIMARY KEY,
-        ticker TEXT,
-        title TEXT,
-        snippet TEXT,
-        url TEXT,
-        published_at TIMESTAMP,
-        sentiment TEXT,
-        sentiment_score NUMERIC,
-        positive_count INTEGER,
-        negative_count INTEGER,
-        scrape_date DATE,
-        UNIQUE(url)
-    )
-    """)
-    
-    # Buat tabel detik_ticker_sentiment jika belum ada
-    cur.execute("""
-    CREATE TABLE IF NOT EXISTS detik_ticker_sentiment (
-        id SERIAL PRIMARY KEY,
-        ticker TEXT,
-        date DATE,
-        news_count INTEGER,
-        avg_sentiment NUMERIC,
-        positive_count INTEGER,
-        negative_count INTEGER,
-        neutral_count INTEGER,
-        UNIQUE (ticker, date)
-    )
-    """)
-    
-    conn.commit()
-    cur.close()
-    conn.close()
-    
-    print("✅ Tabel news telah dibuat atau sudah ada sebelumnya")
+    try:
+        conn = psycopg2.connect(
+            host="postgres",
+            dbname="airflow",
+            user="airflow",
+            password="airflow",
+            connect_timeout=10
+        )
+        cur = conn.cursor()
+        
+        # Buat tabel detik_news jika belum ada
+        cur.execute("""
+        CREATE TABLE IF NOT EXISTS detik_news (
+            id SERIAL PRIMARY KEY,
+            ticker TEXT,
+            title TEXT,
+            snippet TEXT,
+            url TEXT,
+            published_at TIMESTAMP,
+            sentiment TEXT,
+            sentiment_score NUMERIC,
+            positive_count INTEGER,
+            negative_count INTEGER,
+            scrape_date DATE,
+            UNIQUE(url)
+        )
+        """)
+        
+        # Buat tabel detik_ticker_sentiment jika belum ada
+        cur.execute("""
+        CREATE TABLE IF NOT EXISTS detik_ticker_sentiment (
+            id SERIAL PRIMARY KEY,
+            ticker TEXT,
+            date DATE,
+            news_count INTEGER,
+            avg_sentiment NUMERIC,
+            positive_count INTEGER,
+            negative_count INTEGER,
+            neutral_count INTEGER,
+            UNIQUE (ticker, date)
+        )
+        """)
+        
+        # Add index for better performance on queries
+        cur.execute("CREATE INDEX IF NOT EXISTS idx_detik_news_ticker ON detik_news(ticker)")
+        cur.execute("CREATE INDEX IF NOT EXISTS idx_detik_news_date ON detik_news(published_at)")
+        cur.execute("CREATE INDEX IF NOT EXISTS idx_ticker_sentiment_date ON detik_ticker_sentiment(date)")
+        
+        conn.commit()
+        cur.close()
+        conn.close()
+        
+        logger.info("✅ Tabel news telah dibuat atau sudah ada sebelumnya")
+        return "Tables created successfully"
+    except Exception as e:
+        logger.error(f"Error creating news tables: {str(e)}")
+        if 'conn' in locals() and conn is not None:
+            conn.close()
+        return f"Error: {str(e)}"
 
 def sentiment_analysis(text):
     """
@@ -136,13 +157,40 @@ def sentiment_analysis(text):
     
     return sentiment, sentiment_score, positive_count, negative_count
 
+def get_with_backoff(url, headers, max_retries=5):
+    """
+    Melakukan HTTP request dengan exponential backoff
+    untuk menghindari throttling
+    """
+    for attempt in range(max_retries):
+        try:
+            response = requests.get(url, headers=headers, timeout=15)
+            if response.status_code == 200:
+                return response
+            elif response.status_code == 429:  # Too Many Requests
+                wait_time = (2 ** attempt) + random.uniform(0, 1)
+                logger.info(f"Rate limited, waiting {wait_time:.2f} seconds...")
+                time.sleep(wait_time)
+            else:
+                logger.warning(f"HTTP error {response.status_code}")
+                return None
+        except Exception as e:
+            logger.warning(f"Request failed: {str(e)}")
+            if attempt < max_retries - 1:
+                wait_time = (2 ** attempt) + random.uniform(0, 1)
+                logger.info(f"Retrying in {wait_time:.2f} seconds...")
+                time.sleep(wait_time)
+            else:
+                return None
+    return None
+
 def scrape_detik_news():
     """
     Scrape berita dari Detik Finance untuk saham aktif
     dengan batasan 7 hari terakhir
     """
     tickers = active_tickers
-    print(f"Memproses {len(tickers)} ticker untuk scraping berita")
+    logger.info(f"Memproses {len(tickers)} ticker untuk scraping berita")
     
     all_news = []
     failed_tickers = []
@@ -158,7 +206,7 @@ def scrape_detik_news():
     
     # Definisikan cutoff date (7 hari yang lalu, bukan 2)
     cutoff_date = datetime.now() - timedelta(days=7)
-    print(f"Hanya mengambil berita setelah: {cutoff_date.strftime('%Y-%m-%d')}")
+    logger.info(f"Hanya mengambil berita setelah: {cutoff_date.strftime('%Y-%m-%d')}")
     
     # Inject sample data jika scraping gagal
     inject_sample_data = True
@@ -183,186 +231,193 @@ def scrape_detik_news():
             # URL format dengan filter tanggal 
             url = f"https://www.detik.com/search/searchall?query={search_query}&siteid=2&sortby=time"
             
-            print(f"Mencari berita untuk: {ticker}")
+            logger.info(f"Mencari berita untuk: {ticker}")
             
-            # Request ke Detik
-            response = requests.get(url, headers=headers, timeout=15)
-            
-            # Print HTML response untuk debugging jika diperlukan
-            # with open(f"/opt/airflow/data/{ticker}_response.html", 'w', encoding='utf-8') as f:
-            #     f.write(response.text)
+            # Request ke Detik dengan backoff
+            response = get_with_backoff(url, headers)
+            if not response:
+                logger.warning(f"Failed to fetch data for {ticker} after multiple attempts")
+                failed_tickers.append(ticker)
+                continue
             
             # Jika response sukses
-            if response.status_code == 200:
-                soup = BeautifulSoup(response.text, 'html.parser')
-                
-                # Coba selectors berbeda untuk kompatibilitas
-                article_list = soup.select('article') or soup.select('.list-content') or soup.select('.l_content')
-                
-                print(f"Ditemukan {len(article_list)} artikel untuk {ticker}")
-                
-                # Jika tidak ada artikel ditemukan, coba selector lain
-                if not article_list:
-                    article_list = soup.select('.media') or soup.select('.list-berita')
-                    print(f"Mencoba selector alternatif, ditemukan {len(article_list)} artikel")
-                
-                # Jumlah artikel yang diterima setelah filter tanggal
-                accepted_articles = 0
-                
-                for article in article_list:
-                    try:
-                        # Coba berbagai selector untuk judul dan link
-                        title_element = (
-                            article.select_one('h2.title a') or 
-                            article.select_one('.media__title a') or 
-                            article.select_one('h2 a') or 
-                            article.select_one('a')
-                        )
-                        
-                        if not title_element:
-                            continue
-                            
-                        title = title_element.text.strip()
-                        link = title_element['href']
-                        
-                        # Coba berbagai selector untuk tanggal
-                        date_element = (
-                            article.select_one('span.date') or 
-                            article.select_one('.media__date') or 
-                            article.select_one('.date') or 
-                            article.select_one('span.text-uppercase')
-                        )
-                        
-                        if not date_element:
-                            # Jika tidak menemukan elemen tanggal, gunakan tanggal hari ini
-                            published_at = datetime.now()
-                        else:
-                            date_text = date_element.text.strip()
-                            published_at = datetime.now()  # Default value
-                            
-                            # Parse tanggal dengan berbagai format
-                            try:
-                                id_to_en = {
-                                    'Januari': 'January', 'Februari': 'February', 'Maret': 'March',
-                                    'April': 'April', 'Mei': 'May', 'Juni': 'June',
-                                    'Juli': 'July', 'Agustus': 'August', 'September': 'September',
-                                    'Oktober': 'October', 'November': 'November', 'Desember': 'December'
-                                }
-                                
-                                for id_month, en_month in id_to_en.items():
-                                    date_text = date_text.replace(id_month, en_month)
-                                
-                                # Coba beberapa format tanggal
-                                if ', ' in date_text:
-                                    date_parts = date_text.split(', ')[1].replace(' WIB', '')
-                                    published_at = datetime.strptime(date_parts, '%d %B %Y %H:%M')
-                                elif ' WIB' in date_text:
-                                    date_parts = date_text.replace(' WIB', '')
-                                    published_at = datetime.strptime(date_parts, '%d %B %Y %H:%M')
-                                else:
-                                    # Coba beberapa format tanggal
-                                    formats = ['%d %B %Y', '%d %B %Y %H:%M', '%d %B %Y %H:%M:%S']
-                                    for fmt in formats:
-                                        try:
-                                            published_at = datetime.strptime(date_text, fmt)
-                                            break
-                                        except:
-                                            continue
-                                
-                                if published_at < cutoff_date:
-                                    print(f"Melewati artikel lama: {published_at.strftime('%Y-%m-%d %H:%M')}")
-                                    continue
-                                      
-                            except Exception as e:
-                                print(f"Error parsing tanggal '{date_text}': {e}")
-                                # Gunakan tanggal hari ini jika tidak bisa parsing
-                                published_at = datetime.now()
-                        
-                        # Coba berbagai selector untuk snippet
-                        snippet_element = (
-                            article.select_one('p.title') or 
-                            article.select_one('.media__summary') or 
-                            article.select_one('p') or
-                            article.select_one('.text')
-                        )
-                        snippet = snippet_element.text.strip() if snippet_element else ""
-                        
-                        if not snippet:
-                            try:
-                                article_response = requests.get(link, headers=headers, timeout=10)
-                                if article_response.status_code == 200:
-                                    article_soup = BeautifulSoup(article_response.text, 'html.parser')
-                                    
-                                    # Coba berbagai selector untuk konten
-                                    content_element = (
-                                        article_soup.select_one('div.detail__body-text') or
-                                        article_soup.select_one('.itp_bodycontent') or
-                                        article_soup.select_one('.article-content') or
-                                        article_soup.select_one('article')
-                                    )
-                                    
-                                    if content_element:
-                                        paragraphs = content_element.select('p')
-                                        content = ' '.join([p.text.strip() for p in paragraphs[:3]])
-                                        snippet = content[:300] + "..." if len(content) > 300 else content
-                            except Exception as e:
-                                print(f"Error mengambil konten artikel: {e}")
-                        
-                        # Cek relevansi artikel - harus mengandung ticker atau nama lengkap saham
-                        article_text = f"{title} {snippet}".lower()
-                        if ticker.lower() not in article_text and "saham" not in article_text:
-                            print(f"Artikel tidak relevan untuk {ticker}: {title}")
-                            continue
-                        
-                        # Analisis sentimen
-                        sentiment, sentiment_score, positive_count, negative_count = sentiment_analysis(f"{title} {snippet}")
-                        
-                        # Tambahkan ke daftar berita
-                        all_news.append({
-                            'ticker': ticker,
-                            'title': title,
-                            'snippet': snippet,
-                            'url': link,
-                            'published_at': published_at.strftime('%Y-%m-%d %H:%M:%S'),
-                            'sentiment': sentiment,
-                            'sentiment_score': sentiment_score,
-                            'positive_count': positive_count,
-                            'negative_count': negative_count,
-                            'scrape_date': datetime.now().strftime('%Y-%m-%d')
-                        })
-                        
-                        accepted_articles += 1
-                        
-                        # Batas artikel per ticker
-                        if accepted_articles >= 5:
-                            print(f"Sudah mencapai batas 5 artikel terbaru untuk {ticker}")
-                            break
-                        
-                    except Exception as e:
-                        print(f"Error parsing artikel untuk {ticker}: {e}")
-                        continue
-                
-                print(f"Menerima {accepted_articles} artikel untuk {ticker}")
-                
-                # Jika tidak ada artikel yang diterima, tambahkan ke daftar gagal
-                if accepted_articles == 0:
-                    failed_tickers.append(ticker)
+            soup = BeautifulSoup(response.text, 'html.parser')
             
-            # Jeda untuk menghindari throttling
-            time.sleep(random.uniform(3, 7))
+            # Coba selectors berbeda untuk kompatibilitas
+            article_list = soup.select('article') or soup.select('.list-content') or soup.select('.l_content')
+            
+            logger.info(f"Ditemukan {len(article_list)} artikel untuk {ticker}")
+            
+            # Jika tidak ada artikel ditemukan, coba selector lain
+            if not article_list:
+                article_list = soup.select('.media') or soup.select('.list-berita')
+                logger.info(f"Mencoba selector alternatif, ditemukan {len(article_list)} artikel")
+            
+            # Jumlah artikel yang diterima setelah filter tanggal
+            accepted_articles = 0
+            
+            for article in article_list:
+                try:
+                    # Coba berbagai selector untuk judul dan link
+                    title_element = (
+                        article.select_one('h2.title a') or 
+                        article.select_one('.media__title a') or 
+                        article.select_one('h2 a') or 
+                        article.select_one('a')
+                    )
+                    
+                    if not title_element:
+                        continue
+                        
+                    title = title_element.text.strip()
+                    link = title_element['href']
+                    
+                    # Coba berbagai selector untuk tanggal
+                    date_element = (
+                        article.select_one('span.date') or 
+                        article.select_one('.media__date') or 
+                        article.select_one('.date') or 
+                        article.select_one('span.text-uppercase')
+                    )
+                    
+                    if not date_element:
+                        # Jika tidak menemukan elemen tanggal, gunakan tanggal hari ini
+                        published_at = datetime.now()
+                    else:
+                        date_text = date_element.text.strip()
+                        published_at = datetime.now()  # Default value
+                        
+                        # Parse tanggal dengan berbagai format
+                        try:
+                            id_to_en = {
+                                'Januari': 'January', 'Februari': 'February', 'Maret': 'March',
+                                'April': 'April', 'Mei': 'May', 'Juni': 'June',
+                                'Juli': 'July', 'Agustus': 'August', 'September': 'September',
+                                'Oktober': 'October', 'November': 'November', 'Desember': 'December'
+                            }
+                            
+                            for id_month, en_month in id_to_en.items():
+                                date_text = date_text.replace(id_month, en_month)
+                            
+                            # Coba beberapa format tanggal
+                            if ', ' in date_text:
+                                date_parts = date_text.split(', ')[1].replace(' WIB', '')
+                                published_at = datetime.strptime(date_parts, '%d %B %Y %H:%M')
+                            elif ' WIB' in date_text:
+                                date_parts = date_text.replace(' WIB', '')
+                                published_at = datetime.strptime(date_parts, '%d %B %Y %H:%M')
+                            else:
+                                # Coba beberapa format tanggal
+                                formats = ['%d %B %Y', '%d %B %Y %H:%M', '%d %B %Y %H:%M:%S']
+                                for fmt in formats:
+                                    try:
+                                        published_at = datetime.strptime(date_text, fmt)
+                                        break
+                                    except:
+                                        continue
+                            
+                            if published_at < cutoff_date:
+                                logger.info(f"Melewati artikel lama: {published_at.strftime('%Y-%m-%d %H:%M')}")
+                                continue
+                                  
+                        except Exception as e:
+                            logger.warning(f"Error parsing tanggal '{date_text}': {e}")
+                            # Gunakan tanggal hari ini jika tidak bisa parsing
+                            published_at = datetime.now()
+                    
+                    # Coba berbagai selector untuk snippet
+                    snippet_element = (
+                        article.select_one('p.title') or 
+                        article.select_one('.media__summary') or 
+                        article.select_one('p') or
+                        article.select_one('.text')
+                    )
+                    snippet = snippet_element.text.strip() if snippet_element else ""
+                    
+                    if not snippet:
+                        try:
+                            # Get article content with backoff
+                            article_response = get_with_backoff(link, headers, max_retries=3)
+                            if article_response:
+                                article_soup = BeautifulSoup(article_response.text, 'html.parser')
+                                
+                                # Coba berbagai selector untuk konten
+                                content_element = (
+                                    article_soup.select_one('div.detail__body-text') or
+                                    article_soup.select_one('.itp_bodycontent') or
+                                    article_soup.select_one('.article-content') or
+                                    article_soup.select_one('article')
+                                )
+                                
+                                if content_element:
+                                    paragraphs = content_element.select('p')
+                                    content = ' '.join([p.text.strip() for p in paragraphs[:3]])
+                                    snippet = content[:300] + "..." if len(content) > 300 else content
+                        except Exception as e:
+                            logger.warning(f"Error mengambil konten artikel: {e}")
+                    
+                    # Cek relevansi artikel - harus mengandung ticker atau nama lengkap saham
+                    article_text = f"{title} {snippet}".lower()
+                    if ticker.lower() not in article_text and "saham" not in article_text:
+                        logger.info(f"Artikel tidak relevan untuk {ticker}: {title}")
+                        continue
+                    
+                    # Analisis sentimen
+                    sentiment, sentiment_score, positive_count, negative_count = sentiment_analysis(f"{title} {snippet}")
+                    
+                    # Tambahkan ke daftar berita
+                    all_news.append({
+                        'ticker': ticker,
+                        'title': title,
+                        'snippet': snippet,
+                        'url': link,
+                        'published_at': published_at.strftime('%Y-%m-%d %H:%M:%S'),
+                        'sentiment': sentiment,
+                        'sentiment_score': sentiment_score,
+                        'positive_count': positive_count,
+                        'negative_count': negative_count,
+                        'scrape_date': datetime.now().strftime('%Y-%m-%d')
+                    })
+                    
+                    accepted_articles += 1
+                    
+                    # Batas artikel per ticker
+                    if accepted_articles >= 5:
+                        logger.info(f"Sudah mencapai batas 5 artikel terbaru untuk {ticker}")
+                        break
+                    
+                except Exception as e:
+                    logger.warning(f"Error parsing artikel untuk {ticker}: {e}")
+                    continue
+            
+            logger.info(f"Menerima {accepted_articles} artikel untuk {ticker}")
+            
+            # Jika tidak ada artikel yang diterima, tambahkan ke daftar gagal
+            if accepted_articles == 0:
+                failed_tickers.append(ticker)
+        
+            # Jeda dinamis berdasarkan jumlah artikel yang didapat
+            # Untuk mengurangi jeda jika artikel ditemukan, atau menambah jika tidak
+            if accepted_articles > 0:
+                sleep_time = random.uniform(1, 3)  # Jeda lebih singkat jika artikel ditemukan
+            else:
+                sleep_time = random.uniform(3, 7)  # Jeda lebih lama jika artikel tidak ditemukan
+                
+            logger.info(f"Jeda {sleep_time:.2f} detik sebelum ticker berikutnya...")
+            time.sleep(sleep_time)
             
         except Exception as e:
-            print(f"Error scraping untuk ticker {ticker}: {e}")
+            logger.error(f"Error scraping untuk ticker {ticker}: {e}")
             failed_tickers.append(ticker)
             continue
     
     # Jika tidak ada berita yang ditemukan atau banyak ticker gagal, inject sample data
     if len(all_news) == 0 or len(failed_tickers) > len(tickers) * 0.7:
-        print("WARNING: Tidak banyak berita yang ditemukan atau banyak ticker gagal")
-        print(f"Failed tickers: {failed_tickers}")
+        logger.warning("WARNING: Tidak banyak berita yang ditemukan atau banyak ticker gagal")
+        logger.warning(f"Failed tickers: {failed_tickers}")
         
         if inject_sample_data:
-            print("Injecting sample data for testing...")
+            logger.info("Injecting sample data for testing...")
             sample_news = generate_sample_news(active_tickers)
             all_news.extend(sample_news)
     
@@ -372,7 +427,17 @@ def scrape_detik_news():
     with open(data_folder / "detik_news.json", 'w', encoding='utf-8') as f:
         json.dump(all_news, f, ensure_ascii=False, indent=4)
     
-    print(f"Berhasil kumpulkan {len(all_news)} berita untuk {len(tickers)} ticker")
+    logger.info(f"Berhasil kumpulkan {len(all_news)} berita untuk {len(tickers)} ticker")
+    
+    # Save failure log for further analysis
+    if failed_tickers:
+        with open(data_folder / "failed_tickers.json", 'w', encoding='utf-8') as f:
+            json.dump({
+                'date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                'failed_count': len(failed_tickers),
+                'total_count': len(tickers),
+                'failed_tickers': failed_tickers
+            }, f, ensure_ascii=False, indent=4)
     
     return len(all_news)
 
@@ -411,9 +476,13 @@ def generate_sample_news(tickers):
     
     now = datetime.now()
     
+    # Pilih subset dari tickers untuk sample data (maksimal 30)
+    selected_tickers = random.sample(tickers, min(30, len(tickers)))
+    logger.info(f"Generating sample news for {len(selected_tickers)} tickers")
+    
     # Generate berita untuk setiap ticker
-    for ticker in tickers:
-        # 2-3 berita per ticker
+    for ticker in selected_tickers:
+        # 2-5 berita per ticker
         num_news = random.randint(2, 5)
         
         for i in range(num_news):
@@ -447,11 +516,11 @@ def generate_sample_news(tickers):
             
             # Generate snippet
             if sentiment == "Positive":
-                snippet = f"Saham {ticker} mencatatkan kenaikan yang signifikan. Analis menilai prospek perusahaan sangat menjanjikan dengan pertumbuhan yang berkelanjutan."
+                snippet = f"Saham {ticker} mencatatkan kenaikan yang signifikan. Analis menilai prospek perusahaan sangat menjanjikan dengan pertumbuhan yang berkelanjutan. Sejumlah faktor pendukung termasuk inovasi produk dan ekspansi pasar baru."
             elif sentiment == "Negative":
-                snippet = f"Saham {ticker} mengalami tekanan jual yang cukup besar. Investor khawatir dengan kinerja perusahaan yang tidak sesuai ekspektasi pasar."
+                snippet = f"Saham {ticker} mengalami tekanan jual yang cukup besar. Investor khawatir dengan kinerja perusahaan yang tidak sesuai ekspektasi pasar. Beberapa tantangan yang dihadapi termasuk penurunan permintaan dan kenaikan biaya operasional."
             else:
-                snippet = f"Manajemen {ticker} memaparkan strategi perusahaan untuk tahun 2025. Mereka fokus pada optimalisasi operasional dan diversifikasi pendapatan."
+                snippet = f"Manajemen {ticker} memaparkan strategi perusahaan untuk tahun 2025. Mereka fokus pada optimalisasi operasional dan diversifikasi pendapatan. Beberapa inisiatif baru juga diperkenalkan untuk meningkatkan efisiensi."
             
             # Acak tanggal dan waktu dalam 7 hari terakhir
             days_ago = random.randint(0, 6)
@@ -459,8 +528,9 @@ def generate_sample_news(tickers):
             minutes_ago = random.randint(0, 59)
             published_at = now - timedelta(days=days_ago, hours=hours_ago, minutes=minutes_ago)
             
-            # URL dummy
-            url = f"https://finance.detik.com/berita/{ticker.lower()}-{published_at.strftime('%Y%m%d')}-{i}"
+            # URL dummy yang lebih mirip URL detik asli
+            random_id = ''.join(random.choices('0123456789', k=7))
+            url = f"https://finance.detik.com/berita-ekonomi-bisnis/{random_id}/saham-{ticker.lower()}-{published_at.strftime('%Y%m%d')}"
             
             # Tambahkan ke daftar berita
             sample_news.append({
@@ -482,155 +552,222 @@ def process_detik_news():
     """
     Proses hasil scraping dari Detik dan simpan ke database
     """
-    # Baca file JSON
-    json_file = '/opt/airflow/data/detik_news.json'
-    if not os.path.exists(json_file):
-        print("File JSON tidak ditemukan!")
-        return
+    try:
+        # Baca file JSON
+        json_file = '/opt/airflow/data/detik_news.json'
+        if not os.path.exists(json_file):
+            logger.error("File JSON tidak ditemukan!")
+            return "Error: JSON file not found"
+            
+        with open(json_file, 'r', encoding='utf-8') as f:
+            news_items = json.load(f)
         
-    with open(json_file, 'r', encoding='utf-8') as f:
-        news_items = json.load(f)
-    
-    print(f"Memproses {len(news_items)} berita dari Detik...")
-    
-    # Hitung jumlah berita dan aggregate sentimen per ticker
-    ticker_sentiments = {}
-    
-    for item in news_items:
-        ticker = item['ticker']
+        logger.info(f"Memproses {len(news_items)} berita dari Detik...")
         
-        if ticker not in ticker_sentiments:
-            ticker_sentiments[ticker] = {
-                'news_count': 0,
-                'total_sentiment': 0,
-                'positive_count': 0,
-                'negative_count': 0,
-                'neutral_count': 0
+        # Validasi data sebelum diproses
+        valid_news = []
+        for item in news_items:
+            if not all(k in item for k in ['ticker', 'title', 'url', 'published_at']):
+                logger.warning(f"Skipping invalid news item: {item}")
+                continue
+            valid_news.append(item)
+        
+        logger.info(f"{len(valid_news)} item berita valid setelah validasi")
+        
+        # Hitung jumlah berita dan aggregate sentimen per ticker
+        ticker_sentiments = {}
+        
+        for item in valid_news:
+            ticker = item['ticker']
+            
+            if ticker not in ticker_sentiments:
+                ticker_sentiments[ticker] = {
+                    'news_count': 0,
+                    'total_sentiment': 0,
+                    'positive_count': 0,
+                    'negative_count': 0,
+                    'neutral_count': 0
+                }
+            
+            ticker_sentiments[ticker]['news_count'] += 1
+            ticker_sentiments[ticker]['total_sentiment'] += item['sentiment_score']
+            
+            if item['sentiment'] == 'Positive':
+                ticker_sentiments[ticker]['positive_count'] += 1
+            elif item['sentiment'] == 'Negative':
+                ticker_sentiments[ticker]['negative_count'] += 1
+            else:
+                ticker_sentiments[ticker]['neutral_count'] += 1
+        
+        # Hitung sentimen rata-rata
+        for ticker, data in ticker_sentiments.items():
+            if data['news_count'] > 0:
+                data['avg_sentiment'] = data['total_sentiment'] / data['news_count']
+            else:
+                data['avg_sentiment'] = 0
+        
+        # Simpan ke dalam database dengan batch processing untuk efisiensi
+        conn = psycopg2.connect(
+            host="postgres",
+            dbname="airflow",
+            user="airflow",
+            password="airflow",
+            connect_timeout=15
+        )
+        
+        # Set autocommit ke False untuk transaction control
+        conn.autocommit = False
+        
+        try:
+            cur = conn.cursor()
+            
+            # Batch size untuk insert
+            batch_size = 50
+            news_inserted = 0
+            
+            # Simpan berita dalam batch
+            for i in range(0, len(valid_news), batch_size):
+                batch = valid_news[i:i+batch_size]
+                
+                for item in batch:
+                    try:
+                        cur.execute("""
+                        INSERT INTO detik_news (
+                            ticker, title, snippet, url,
+                            published_at, sentiment, sentiment_score,
+                            positive_count, negative_count, scrape_date
+                        ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                        ON CONFLICT (url) DO UPDATE SET
+                            sentiment = EXCLUDED.sentiment,
+                            sentiment_score = EXCLUDED.sentiment_score,
+                            positive_count = EXCLUDED.positive_count,
+                            negative_count = EXCLUDED.negative_count,
+                            scrape_date = EXCLUDED.scrape_date
+                        """, (
+                            item['ticker'],
+                            item['title'],
+                            item.get('snippet', ''),  # Use get() with default for safety
+                            item['url'],
+                            item['published_at'],
+                            item['sentiment'],
+                            item['sentiment_score'],
+                            item['positive_count'],
+                            item['negative_count'],
+                            item.get('scrape_date', datetime.now().strftime('%Y-%m-%d'))
+                        ))
+                        news_inserted += 1
+                    except Exception as e:
+                        logger.error(f"Error menyimpan berita: {e}")
+                
+                # Commit per batch
+                conn.commit()
+                logger.info(f"Batch {i//batch_size + 1} committed: {len(batch)} items")
+            
+            # Simpan sentimen per ticker
+            today = datetime.now().strftime('%Y-%m-%d')
+            sentiments_inserted = 0
+            
+            for ticker, data in ticker_sentiments.items():
+                try:
+                    cur.execute("""
+                    INSERT INTO detik_ticker_sentiment (
+                        ticker, date, news_count, avg_sentiment,
+                        positive_count, negative_count, neutral_count
+                    ) VALUES (%s, %s, %s, %s, %s, %s, %s)
+                    ON CONFLICT (ticker, date) DO UPDATE SET
+                        news_count = EXCLUDED.news_count,
+                        avg_sentiment = EXCLUDED.avg_sentiment,
+                        positive_count = EXCLUDED.positive_count,
+                        negative_count = EXCLUDED.negative_count,
+                        neutral_count = EXCLUDED.neutral_count
+                    """, (
+                        ticker,
+                        today,
+                        data['news_count'],
+                        data['avg_sentiment'],
+                        data['positive_count'],
+                        data['negative_count'],
+                        data['neutral_count']
+                    ))
+                    sentiments_inserted += 1
+                except Exception as e:
+                    logger.error(f"Error menyimpan sentimen ticker {ticker}: {e}")
+            
+            # Final commit for sentiment data
+            conn.commit()
+            
+            # Cetak jumlah data yang disimpan
+            cur.execute("SELECT COUNT(*) FROM detik_news")
+            news_count = cur.fetchone()[0]
+            
+            cur.execute("SELECT COUNT(*) FROM detik_ticker_sentiment")
+            sentiment_count = cur.fetchone()[0]
+            
+            cur.close()
+            
+            logger.info(f"Data berita Detik berhasil disimpan: {news_count} berita, {sentiment_count} ticker sentiment")
+            
+            # Save success metrics
+            success_metrics = {
+                'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                'total_processed': len(valid_news),
+                'news_inserted': news_inserted,
+                'sentiments_inserted': sentiments_inserted,
+                'total_news_in_db': news_count,
+                'total_sentiments_in_db': sentiment_count
             }
-        
-        ticker_sentiments[ticker]['news_count'] += 1
-        ticker_sentiments[ticker]['total_sentiment'] += item['sentiment_score']
-        
-        if item['sentiment'] == 'Positive':
-            ticker_sentiments[ticker]['positive_count'] += 1
-        elif item['sentiment'] == 'Negative':
-            ticker_sentiments[ticker]['negative_count'] += 1
-        else:
-            ticker_sentiments[ticker]['neutral_count'] += 1
-    
-    # Hitung sentimen rata-rata
-    for ticker, data in ticker_sentiments.items():
-        if data['news_count'] > 0:
-            data['avg_sentiment'] = data['total_sentiment'] / data['news_count']
-        else:
-            data['avg_sentiment'] = 0
-    
-    # Simpan ke dalam database
-    conn = psycopg2.connect(
-        host="postgres",
-        dbname="airflow",
-        user="airflow",
-        password="airflow"
-    )
-    cur = conn.cursor()
-    
-    # Simpan berita
-    for item in news_items:
-        try:
-            cur.execute("""
-            INSERT INTO detik_news (
-                ticker, title, snippet, url,
-                published_at, sentiment, sentiment_score,
-                positive_count, negative_count, scrape_date
-            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-            ON CONFLICT (url) DO UPDATE SET
-                sentiment = EXCLUDED.sentiment,
-                sentiment_score = EXCLUDED.sentiment_score,
-                positive_count = EXCLUDED.positive_count,
-                negative_count = EXCLUDED.negative_count,
-                scrape_date = EXCLUDED.scrape_date
-            """, (
-                item['ticker'],
-                item['title'],
-                item['snippet'],
-                item['url'],
-                item['published_at'],
-                item['sentiment'],
-                item['sentiment_score'],
-                item['positive_count'],
-                item['negative_count'],
-                item['scrape_date']
-            ))
+            
+            data_folder = Path("/opt/airflow/data")
+            with open(data_folder / "news_processing_metrics.json", 'w', encoding='utf-8') as f:
+                json.dump(success_metrics, f, ensure_ascii=False, indent=4)
+                
+            return f"Successfully processed {len(valid_news)} news items. Inserted: {news_inserted} news, {sentiments_inserted} sentiment records."
+            
         except Exception as e:
-            print(f"Error menyimpan berita: {e}")
-    
-    # Simpan sentimen per ticker
-    today = datetime.now().strftime('%Y-%m-%d')
-    for ticker, data in ticker_sentiments.items():
-        try:
-            cur.execute("""
-            INSERT INTO detik_ticker_sentiment (
-                ticker, date, news_count, avg_sentiment,
-                positive_count, negative_count, neutral_count
-            ) VALUES (%s, %s, %s, %s, %s, %s, %s)
-            ON CONFLICT (ticker, date) DO UPDATE SET
-                news_count = EXCLUDED.news_count,
-                avg_sentiment = EXCLUDED.avg_sentiment,
-                positive_count = EXCLUDED.positive_count,
-                negative_count = EXCLUDED.negative_count,
-                neutral_count = EXCLUDED.neutral_count
-            """, (
-                ticker,
-                today,
-                data['news_count'],
-                data['avg_sentiment'],
-                data['positive_count'],
-                data['negative_count'],
-                data['neutral_count']
-            ))
-        except Exception as e:
-            print(f"Error menyimpan sentimen ticker: {e}")
-    
-    # Cetak jumlah data yang disimpan
-    cur.execute("SELECT COUNT(*) FROM detik_news")
-    news_count = cur.fetchone()[0]
-    
-    cur.execute("SELECT COUNT(*) FROM detik_ticker_sentiment")
-    sentiment_count = cur.fetchone()[0]
-    
-    conn.commit()
-    cur.close()
-    conn.close()
-    
-    print(f"Data berita Detik berhasil disimpan: {news_count} berita, {sentiment_count} ticker sentiment")
-    return len(news_items)
+            conn.rollback()
+            logger.error(f"Transaction error: {str(e)}")
+            raise
+        finally:
+            conn.close()
+            
+    except Exception as e:
+        logger.error(f"Error in process_detik_news: {str(e)}")
+        return f"Error: {str(e)}"
 
-# Define the DAG
+    # Define the DAG
 with DAG(
     dag_id="news_data_ingestion",
     start_date=pendulum.datetime(2024, 1, 1, tz=local_tz),
     schedule_interval="@daily",
     catchup=False,
     default_args=default_args,
-    tags=["news", "sentiment", "detik", "ingestion"]
-) as dag:
+    tags=["news", "sentiment", "detik", "ingestion"],
+    description="Ingests news data from Detik and performs sentiment analysis"
+    ) as dag:
 
     # Task untuk membuat tabel
     create_tables = PythonOperator(
         task_id="create_news_tables",
-        python_callable=create_news_tables_if_not_exist
+        python_callable=create_news_tables_if_not_exist,
+        retries=3,  # More retries for database operations
+        retry_delay=pendulum.duration(minutes=2)
     )
 
     # Task untuk scraping berita Detik
     scrape_detik = PythonOperator(
         task_id="scrape_detik_news",
-        python_callable=scrape_detik_news
+        python_callable=scrape_detik_news,
+        retries=2,
+        retry_delay=pendulum.duration(minutes=5),
+        execution_timeout=pendulum.duration(hours=2)  # Set timeout to 2 hours
     )
 
     # Task untuk memproses hasil scraping
     process_news = PythonOperator(
         task_id="process_detik_news",
-        python_callable=process_detik_news
+        python_callable=process_detik_news,
+        retries=3,
+        retry_delay=pendulum.duration(minutes=3)
     )
 
     # Marker task

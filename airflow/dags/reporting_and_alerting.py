@@ -50,13 +50,17 @@ def send_stock_movement_alert():
         date_filter = latest_date.strftime('%Y-%m-%d')
         logger.info(f"Using data for date: {date_filter}")
         
-        # Query for stock movements
+        # Tambahkan threshold untuk alerts
+        min_change_percent = 5.0  # Hanya tampilkan saham dengan perubahan > 5%
+        
+        # Query for stock movements with threshold
         query = {
             "🔼 *Top 10 Gainers:*": f"""
                 SELECT symbol, name, percent_change
                 FROM public_analytics.daily_stock_metrics
                 WHERE date = '{date_filter}'
                   AND percent_change IS NOT NULL
+                  AND percent_change > {min_change_percent}
                 ORDER BY percent_change DESC
                 LIMIT 10;
             """,
@@ -65,6 +69,7 @@ def send_stock_movement_alert():
                 FROM public_analytics.daily_stock_metrics
                 WHERE date = '{date_filter}'
                   AND percent_change IS NOT NULL
+                  AND percent_change < -{min_change_percent}
                 ORDER BY percent_change ASC
                 LIMIT 10;
             """,
@@ -115,11 +120,22 @@ def send_stock_movement_alert():
         # Send to Telegram
         message = f"🔔 *Summary Saham ({date_filter})* 🔔\n\n{body}"
         
-        result = send_telegram_message(message)
-        if "successfully" in result:
-            return f"Stock movement report sent: {len(last_df) if last_df is not None else 0} stocks"
-        else:
-            return result
+        # Tambahkan failsafe untuk Telegram
+        try:
+            result = send_telegram_message(message)
+            if "successfully" in result:
+                return f"Stock movement report sent: {len(last_df) if last_df is not None else 0} stocks"
+            else:
+                # Coba menyimpan ke log file jika Telegram gagal
+                with open("/opt/airflow/logs/alerts.log", "a") as f:
+                    f.write(f"=== ALERT {datetime.now()} ===\n{message}\n\n")
+                return f"Telegram failed, message saved to log: {result}"
+        except Exception as e:
+            logger.error(f"Error sending Telegram: {str(e)}")
+            # Simpan ke log file sebagai fallback
+            with open("/opt/airflow/logs/alerts.log", "a") as f:
+                f.write(f"=== ALERT {datetime.now()} ===\n{message}\n\n")
+            return f"Telegram error, saved to log: {str(e)}"
     except Exception as e:
         logger.error(f"Error in send_stock_movement_alert: {str(e)}")
         return f"Error: {str(e)}"

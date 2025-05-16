@@ -42,7 +42,7 @@ default_args = {
 with DAG(
     dag_id="weekly_trading_signals",
     start_date=pendulum.datetime(2024, 1, 1, tz=local_tz),
-    schedule_interval="0 17 * * 5",  # Every Friday at 17:00 Jakarta time
+    schedule_interval="30 16 * * 5",  # Jalankan 30 menit setelah penutupan pasar
     catchup=False,
     default_args=default_args,
     tags=["trading", "technical", "signals", "weekly"]
@@ -89,9 +89,15 @@ with DAG(
     
     # Step 5: Filter stocks by volatility and liquidity (for weekly timeframe)
     filter_stocks = PythonOperator(
-        task_id="filter_stocks_by_volatility_liquidity",
-        python_callable=filter_by_volatility_liquidity,
-        op_kwargs={'analysis_period': 60, 'signal_type': 'WEEKLY'}
+    task_id="filter_stocks_by_volatility_liquidity",
+    python_callable=filter_by_volatility_liquidity,
+    op_kwargs={
+        'analysis_period': 90,
+        'signal_type': 'WEEKLY',
+        'volatility_min': 1.5,  # Higher min volatility for weekly signals
+        'volatility_max': 5.0,  # Higher max volatility for weekly
+        'volume_min': 5000000    # Higher volume requirement
+    }
     )
     
     # Step 6: Calculate advanced indicators (with weekly parameters)
@@ -105,10 +111,15 @@ with DAG(
     
     # Step 7: Run backtesting (with longer evaluation period)
     run_backtest = PythonOperator(
-        task_id="run_weekly_backtest",
-        python_callable=backtest_trading_signals,
-        op_kwargs={'test_period': 365, 'hold_period': 10, 'signal_type': 'WEEKLY'},
-        trigger_rule='none_failed'
+    task_id="run_weekly_backtest",
+    python_callable=backtest_trading_signals,
+    op_kwargs={
+        'test_period': 365,  # 1 tahun back-test
+        'hold_period': 15,   # Perbaiki hold period menjadi 3 minggu (15 hari trading)
+        'signal_type': 'WEEKLY',
+        'min_win_rate': 0.65  # Parameter tambahan
+    },
+    trigger_rule='none_failed'
     )
     
     # Step 8: Send high probability weekly signals

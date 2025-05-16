@@ -30,9 +30,19 @@ def sensing_data():
     files = list(folder.glob("Ringkasan Saham-*.xlsx"))
     
     if not files:
+        print("📊 Tidak ada file ditemukan, akan coba lagi nanti")
         return False
     
-    print(f"📊 Ditemukan {len(files)} file data saham")
+    # Pastikan file bisa dibaca
+    for file in files:
+        try:
+            # Quick peek pada file untuk memastikan valid
+            pd.read_excel(file, nrows=5)
+        except Exception as e:
+            print(f"⚠️ File {file.name} tidak bisa dibaca: {str(e)}")
+            return False
+    
+    print(f"📊 Ditemukan {len(files)} file data saham yang valid")
     return True
 
 def create_stock_tables_if_not_exists():
@@ -268,6 +278,7 @@ with DAG(
     schedule_interval='0 18 * * 1-5',
     catchup=False,
     default_args=default_args,
+    sla_miss_callback=lambda: print("SLA missed for stock_data_ingestion"),
     tags=["idx", "stock", "excel", "ingestion"]
 ) as dag:
 

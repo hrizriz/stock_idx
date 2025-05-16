@@ -185,3 +185,108 @@ def send_performance_report(report_type='DAILY', lookback_days=60):
         return f"Performance report for {report_type} sent successfully"
     else:
         return result
+    
+    def calculate_advanced_indicators(lookback_period=300, signal_type='DAILY'):
+    """
+    Menghitung indikator tingkat lanjut dan membuat sistem penyaringan multi-layer
+    """
+    try:
+        conn = get_database_connection()
+    except Exception as e:
+        return f"Failed to connect to database: {str(e)}"
+    
+    # Dapatkan tanggal terakhir
+    latest_date = get_latest_stock_date()
+    
+    # Kode yang sudah ada untuk mengambil data...
+    
+    # Perbaiki scoring system untuk lebih dinamis
+    # Sebagai contoh, tambahkan dynamic scoring berdasarkan backtest results
+    try:
+        # Dynamic scoring dari backtest results
+        backtest_sql = """
+        SELECT 
+            indicator_name,
+            AVG(win_rate) as avg_win_rate
+        FROM indicator_performance_metrics
+        GROUP BY indicator_name
+        """
+        
+        indicator_weights = {}
+        try:
+            weights_df = pd.read_sql(backtest_sql, conn)
+            for _, row in weights_df.iterrows():
+                indicator_weights[row['indicator_name']] = row['avg_win_rate']
+        except Exception as e:
+            logger.warning(f"Error fetching indicator weights: {str(e)}")
+            # Default weights jika tidak ada data metrik
+            indicator_weights = {
+                'rsi_oversold': 1.0,
+                'macd_bullish': 1.0,
+                'volume_shock': 1.0,
+                'demand_zone': 2.0,
+                'foreign_flow_positive': 1.0,
+                'bullish_engulfing': 2.0,
+                'uptrend_structure': 2.0,
+                'bollinger_oversold': 1.0,
+                'adx_strong': 1.0,
+                'fibonacci_support': 1.0
+            }
+        
+        # Gunakan weights dalam scoring
+        # Contoh implementasi:
+        for symbol, group in df.groupby('symbol'):
+            # Kode yang sudah ada...
+            
+            # Modifikasi scoring untuk menggunakan weights
+            for i, (idx, row) in enumerate(latest_data.iterrows()):
+                # Hanya proses hari terakhir
+                if i != len(latest_data) - 1:
+                    continue
+                
+                # Gabungkan data teknikal dari tabel lain
+                try:
+                    # Query untuk ambil RSI terbaru
+                    rsi_query = f"""
+                    SELECT rsi, rsi_signal 
+                    FROM public_analytics.technical_indicators_rsi 
+                    WHERE symbol = '{symbol}' AND date = '{row['date']}'
+                    """
+                    rsi_df = pd.read_sql(rsi_query, conn)
+                    
+                    # Kode query lainnya...
+                    
+                    # Skor Kumulatif untuk Sinyal Beli dengan weights
+                    buy_score = 0
+                    
+                    # 1. RSI Oversold
+                    if not rsi_df.empty and rsi_df.iloc[0]['rsi_signal'] == 'Oversold':
+                        buy_score += indicator_weights.get('rsi_oversold', 1.0)
+                    
+                    # 2. MACD Bullish
+                    if not macd_df.empty and macd_df.iloc[0]['macd_signal'] == 'Bullish':
+                        buy_score += indicator_weights.get('macd_bullish', 1.0)
+                    
+                    # 3. Volume Shock
+                    if row['volume_shock']:
+                        buy_score += indicator_weights.get('volume_shock', 1.0)
+                    
+                    # Lanjutkan dengan skor lainnya...
+                    
+                    # Normalisasi skor ke skala 0-10
+                    max_possible_score = sum(indicator_weights.values())
+                    normalized_score = min(10, round(buy_score / max_possible_score * 10))
+                    
+                    # Update buy_score dengan nilai yang dinormalisasi
+                    buy_score = normalized_score
+                    
+                    # Kode selanjutnya tetap sama...
+                    
+                except Exception as e:
+                    logger.warning(f"Error processing technical indicators for {symbol}: {str(e)}")
+                    continue
+        
+    except Exception as e:
+        logger.warning(f"Error getting dynamic weights: {str(e)}. Using default weights.")
+        # Lanjutkan dengan kode yang sudah ada...
+

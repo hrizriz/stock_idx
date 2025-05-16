@@ -19,6 +19,31 @@ from .database import get_database_connection, get_latest_stock_date
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+def normalize_features(df, features, scalers=None):
+    """
+    Normalize features using MinMaxScaler
+    Returns normalized dataframe and scalers
+    """
+    from sklearn.preprocessing import MinMaxScaler
+    
+    if scalers is None:
+        scalers = {}
+        
+    normalized_df = df.copy()
+    
+    for feature in features:
+        if feature not in scalers:
+            scalers[feature] = MinMaxScaler()
+            normalized_df[feature] = scalers[feature].fit_transform(
+                df[feature].values.reshape(-1, 1)
+            ).flatten()
+        else:
+            normalized_df[feature] = scalers[feature].transform(
+                df[feature].values.reshape(-1, 1)
+            ).flatten()
+    
+    return normalized_df, scalers
+
 def predict_stock_price(symbol):
     """
     Make predictions using trained LSTM model
@@ -31,6 +56,7 @@ def predict_stock_price(symbol):
         model_dir = Path(f"/opt/airflow/data/lstm/{symbol}")
         model_path = model_dir / f"{symbol}_lstm_model.pth"
         
+        # Tambahkan validasi model
         if not model_path.exists():
             logger.error(f"LSTM model for {symbol} not found")
             return f"LSTM model for {symbol} not found"
@@ -62,6 +88,12 @@ def predict_stock_price(symbol):
         
         df = pd.read_sql(query, conn)
         df = df.sort_values('date')  # Ensure data is in chronological order
+        
+        # Tambahkan validasi data minimal sebelum prediksi
+        seq_length = 10  # Sesuaikan dengan model
+        if len(df) < seq_length + 5:  # Pastikan ada cukup data plus margin
+            logger.error(f"Not enough data for {symbol} prediction (need at least {seq_length+5} days)")
+            return f"Not enough data for prediction"
         
         # Load scalers
         with open(model_dir / f"{symbol}_scaler.pkl", 'rb') as f:
@@ -264,3 +296,24 @@ def update_actual_prices():
         if 'conn' in locals() and conn is not None:
             conn.close()
         return f"Error updating actual prices: {str(e)}"
+    
+def save_model_with_version(model, model_dir, symbol, version=None):
+    """Save model with versioning"""
+    if version is None:
+        # Auto-incrementing version
+        version = 1
+        while (model_dir / f"{symbol}_lstm_model_v{version}.pth").exists():
+            version += 1
+    
+    # Save model with version
+    model_path = model_dir / f"{symbol}_lstm_model_v{version}.pth"
+    torch.save(model.state_dict(), model_path)
+    
+    # Save latest symlink
+    latest_path = model_dir / f"{symbol}_lstm_model.pth"
+    torch.save(model.state_dict(), latest_path)
+    
+    return version
+
+
+

@@ -62,16 +62,18 @@ with DAG(
     
     # Step 1: Calculate RSI indicators (much longer period for monthly analysis)
     calc_rsi = PythonOperator(
-        task_id="calculate_monthly_rsi",
-        python_callable=calculate_all_rsi_indicators,
-        op_kwargs={'lookback_period': 365, 'rsi_period': 14, 'signal_type': 'MONTHLY'}
+    task_id="calculate_monthly_rsi",
+    python_callable=calculate_all_rsi_indicators,
+    # Perbaiki lookback_period untuk timeframe bulanan
+    op_kwargs={'lookback_period': 730, 'rsi_period': 14, 'signal_type': 'MONTHLY'}
     )
     
     # Step 2: Calculate MACD indicators (longer period for monthly)
     calc_macd = PythonOperator(
-        task_id="calculate_monthly_macd",
-        python_callable=calculate_all_macd_indicators,
-        op_kwargs={'lookback_period': 500, 'fast_period': 12, 'slow_period': 26, 'signal_period': 9, 'signal_type': 'MONTHLY'}
+    task_id="calculate_monthly_macd",
+    python_callable=calculate_all_macd_indicators,
+    # MACD untuk monthly perlu periode lebih panjang
+    op_kwargs={'lookback_period': 730, 'fast_period': 26, 'slow_period': 52, 'signal_period': 18, 'signal_type': 'MONTHLY'}
     )
     
     # Step 3: Setup Bollinger Bands table

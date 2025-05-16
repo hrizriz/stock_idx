@@ -6,16 +6,51 @@ import pandas as pd
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-def get_database_connection():
-    """
-    Create database connection with better error handling
-    """
+connection_pool = None
+
+def init_connection_pool(min_connections=1, max_connections=10):
+    """Initialize connection pool"""
+    global connection_pool
+    try:
+        connection_pool = pool.ThreadedConnectionPool(
+            min_connections,
+            max_connections,
+            host="postgres",
+            dbname="airflow",
+            user="airflow",
+            password="airflow"
+        )
+        return True
+    except Exception as e:
+        logger.error(f"Error initializing connection pool: {str(e)}")
+        return False
+
+def get_database_connection(timeout=30):
+    """Get a connection from the pool with timeout and retry"""
+    global connection_pool
+    
+    # Initialize pool if not exists
+    if connection_pool is None:
+        init_connection_pool()
+    
+    # Try to get connection with timeout
+    start_time = time.time()
+    while time.time() - start_time < timeout:
+        try:
+            conn = connection_pool.getconn()
+            return conn
+        except Exception as e:
+            logger.warning(f"Connection pool error: {str(e)}")
+            time.sleep(1)
+    
+    # Fallback to direct connection if pool fails
     try:
         conn = psycopg2.connect(
             host="postgres",
             dbname="airflow",
             user="airflow",
-            password="airflow"
+            password="airflow",
+            connect_timeout=10
         )
         return conn
     except Exception as e:
@@ -112,3 +147,9 @@ def create_table_if_not_exists(table_name, schema):
         if 'conn' in locals() and conn is not None:
             conn.close()
         raise
+
+def return_connection(conn):
+    """Return connection to the pool"""
+    global connection_pool
+    if connection_pool is not None:
+        connection_pool.putconn(conn)

@@ -172,14 +172,14 @@ with DAG(
 
     # Tunggu hingga DAG ingestion selesai
     wait_for_stock_data = ExternalTaskSensor(
-        task_id="wait_for_stock_data",
-        external_dag_id="stock_data_ingestion",
-        external_task_id="end_task",
-        mode="reschedule",
-        timeout=3600,
-        poke_interval=60,
-        allowed_states=["success"],
-        failed_states=["failed", "skipped"]
+    task_id="wait_for_stock_data",
+    external_dag_id="stock_data_ingestion",
+    external_task_id="end_task",
+    mode="reschedule",
+    timeout=7200,  # Waktu timeout lebih realistis (2 jam)
+    poke_interval=300,  # 5 menit interval
+    allowed_states=["success"],
+    failed_states=["failed", "skipped", "upstream_failed"]
     )
     
     wait_for_news_data = ExternalTaskSensor(

@@ -6,6 +6,7 @@ from airflow.models import Variable
 from datetime import datetime
 import pendulum
 import logging
+import pandas as pd
 
 # Import utility modules
 from utils.database import get_database_connection, get_latest_stock_date
