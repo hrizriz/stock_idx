@@ -5,8 +5,14 @@ from airflow.operators.dummy import DummyOperator
 from datetime import datetime
 import pandas as pd
 import psycopg2
+from psycopg2.extras import execute_batch
 from pathlib import Path
 import pendulum
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 local_tz = pendulum.timezone("Asia/Jakarta")
 
@@ -22,64 +28,81 @@ def create_tables_if_not_exist():
     Membuat tabel-tabel yang diperlukan jika belum ada
     Ini penting untuk memastikan tabel ada sebelum bulk import
     """
-    conn = psycopg2.connect(
-        host="postgres",
-        dbname="airflow",
-        user="airflow",
-        password="airflow"
-    )
-    cur = conn.cursor()
-    
-    # Buat tabel daily_stock_summary jika belum ada
-    cur.execute("""
-    CREATE TABLE IF NOT EXISTS daily_stock_summary (
-        symbol TEXT,
-        name TEXT,
-        date DATE,
-        prev_close NUMERIC,
-        open_price NUMERIC,
-        high NUMERIC,
-        low NUMERIC,
-        close NUMERIC,
-        change NUMERIC,
-        volume BIGINT,
-        value NUMERIC,
-        frequency INTEGER,
-        index_individual NUMERIC,
-        weight_for_index NUMERIC,
-        foreign_buy BIGINT,
-        foreign_sell BIGINT,
-        offer NUMERIC,
-        offer_volume BIGINT,
-        bid NUMERIC,
-        bid_volume BIGINT,
-        listed_shares BIGINT,
-        tradable_shares BIGINT,
-        non_regular_volume BIGINT,
-        non_regular_value NUMERIC,
-        non_regular_frequency INTEGER,
-        upload_file TEXT,
-        PRIMARY KEY (symbol, date)
-    );
-    """)
-    
-    # Buat tabel dim_companies untuk menyimpan informasi perusahaan
-    cur.execute("""
-    CREATE TABLE IF NOT EXISTS dim_companies (
-        symbol TEXT PRIMARY KEY,
-        name TEXT,
-        sector TEXT,
-        industry TEXT,
-        listing_date DATE,
-        last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
-    """)
-    
-    conn.commit()
-    cur.close()
-    conn.close()
-    
-    print("✅ Tabel untuk data saham telah dibuat atau sudah ada sebelumnya")
+    try:
+        conn = psycopg2.connect(
+            host="postgres",
+            dbname="airflow",
+            user="airflow",
+            password="airflow"
+        )
+        cur = conn.cursor()
+        
+        # Buat tabel daily_stock_summary jika belum ada
+        cur.execute("""
+        CREATE TABLE IF NOT EXISTS daily_stock_summary (
+            symbol TEXT,
+            name TEXT,
+            date DATE,
+            prev_close NUMERIC,
+            open_price NUMERIC,
+            high NUMERIC,
+            low NUMERIC,
+            close NUMERIC,
+            change NUMERIC,
+            volume BIGINT,
+            value NUMERIC,
+            frequency INTEGER,
+            index_individual NUMERIC,
+            weight_for_index NUMERIC,
+            foreign_buy BIGINT,
+            foreign_sell BIGINT,
+            offer NUMERIC,
+            offer_volume BIGINT,
+            bid NUMERIC,
+            bid_volume BIGINT,
+            listed_shares BIGINT,
+            tradable_shares BIGINT,
+            non_regular_volume BIGINT,
+            non_regular_value NUMERIC,
+            non_regular_frequency INTEGER,
+            upload_file TEXT,
+            PRIMARY KEY (symbol, date)
+        );
+        """)
+        
+        # Buat tabel dim_companies untuk menyimpan informasi perusahaan
+        cur.execute("""
+        CREATE TABLE IF NOT EXISTS dim_companies (
+            symbol TEXT PRIMARY KEY,
+            name TEXT,
+            sector TEXT,
+            industry TEXT,
+            listing_date DATE,
+            last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+        """)
+        
+        # Create processing_log table for tracking import results
+        cur.execute("""
+        CREATE TABLE IF NOT EXISTS processing_log (
+            id SERIAL PRIMARY KEY,
+            process_name TEXT,
+            file_name TEXT,
+            process_date TIMESTAMP,
+            records_processed INTEGER,
+            status TEXT,
+            error_message TEXT
+        );
+        """)
+        
+        conn.commit()
+        cur.close()
+        conn.close()
+        
+        logger.info("✅ Tabel untuk data saham telah dibuat atau sudah ada sebelumnya")
+    except Exception as e:
+        logger.error(f"❌ Error creating tables: {str(e)}")
+        raise
 
 def verify_data_folder():
     """
@@ -88,32 +111,122 @@ def verify_data_folder():
     folder = Path("/opt/airflow/data")
     if not folder.exists():
         folder.mkdir(parents=True, exist_ok=True)
-        print("📁 Folder data dibuat.")
+        logger.info("📁 Folder data dibuat.")
     
     excel_files = list(folder.glob("Ringkasan Saham-*.xlsx"))
-    print(f"📊 Ditemukan {len(excel_files)} file Excel di folder data.")
+    logger.info(f"📊 Ditemukan {len(excel_files)} file Excel di folder data.")
     
     return len(excel_files)
 
 def bulk_import_excel_files():
     """
-    Mengimpor semua data Excel historis ke database
+    Mengimpor semua data Excel historis ke database dengan metode batch processing
     """
+    start_time = datetime.now()
     folder = Path("/opt/airflow/data")
     all_files = list(folder.glob("Ringkasan Saham-*.xlsx"))
     
     if not all_files:
-        print("🚫 Tidak ada file Excel ditemukan di folder data.")
-        return
+        logger.warning("🚫 Tidak ada file Excel ditemukan di folder data.")
+        return {"total_files": 0, "imported_files": 0, "total_records": 0}
     
     total_files = len(all_files)
     imported_files = 0
     total_records = 0
     
-    print(f"🔍 Menemukan {total_files} file Excel untuk diimpor.")
+    logger.info(f"🔍 Menemukan {total_files} file Excel untuk diimpor.")
+    
+    # Batch size for processing
+    BATCH_SIZE = 500
+    
+    # Column mapping for consistency
+    column_map = {
+        "kode_saham": "symbol",
+        "nama_perusahaan": "name",
+        "sebelumnya": "prev_close",
+        "open_price": "open_price",
+        "tertinggi": "high",
+        "terendah": "low",
+        "penutupan": "close",
+        "selisih": "change",
+        "volume": "volume",
+        "nilai": "value",
+        "frekuensi": "frequency",
+        "index_individual": "index_individual",
+        "weight_for_index": "weight_for_index",
+        "foreign_buy": "foreign_buy",
+        "foreign_sell": "foreign_sell",
+        "offer": "offer",
+        "offer_volume": "offer_volume",
+        "bid": "bid",
+        "bid_volume": "bid_volume",
+        "listed_shares": "listed_shares",
+        "tradeble_shares": "tradable_shares",
+        "non_regular_volume": "non_regular_volume",
+        "non_regular_value": "non_regular_value",
+        "non_regular_frequency": "non_regular_frequency"
+    }
+    
+    # Prepare SQL statements once for repeated execution
+    stock_sql = """
+        INSERT INTO daily_stock_summary (
+            symbol, name, date,
+            prev_close, open_price, high, low, close, change,
+            volume, value, frequency,
+            index_individual, weight_for_index,
+            foreign_buy, foreign_sell,
+            offer, offer_volume, bid, bid_volume,
+            listed_shares, tradable_shares,
+            non_regular_volume, non_regular_value, non_regular_frequency,
+            upload_file
+        ) VALUES (
+            %(symbol)s, %(name)s, %(date)s,
+            %(prev_close)s, %(open_price)s, %(high)s, %(low)s, %(close)s, %(change)s,
+            %(volume)s, %(value)s, %(frequency)s,
+            %(index_individual)s, %(weight_for_index)s,
+            %(foreign_buy)s, %(foreign_sell)s,
+            %(offer)s, %(offer_volume)s, %(bid)s, %(bid_volume)s,
+            %(listed_shares)s, %(tradable_shares)s,
+            %(non_regular_volume)s, %(non_regular_value)s, %(non_regular_frequency)s,
+            %(upload_file)s
+        )
+        ON CONFLICT (symbol, date) DO UPDATE SET
+            name = EXCLUDED.name,
+            prev_close = EXCLUDED.prev_close,
+            open_price = EXCLUDED.open_price,
+            high = EXCLUDED.high,
+            low = EXCLUDED.low,
+            close = EXCLUDED.close,
+            change = EXCLUDED.change,
+            volume = EXCLUDED.volume,
+            value = EXCLUDED.value,
+            frequency = EXCLUDED.frequency,
+            index_individual = EXCLUDED.index_individual,
+            weight_for_index = EXCLUDED.weight_for_index,
+            foreign_buy = EXCLUDED.foreign_buy,
+            foreign_sell = EXCLUDED.foreign_sell,
+            offer = EXCLUDED.offer,
+            offer_volume = EXCLUDED.offer_volume,
+            bid = EXCLUDED.bid,
+            bid_volume = EXCLUDED.bid_volume,
+            listed_shares = EXCLUDED.listed_shares,
+            tradable_shares = EXCLUDED.tradable_shares,
+            non_regular_volume = EXCLUDED.non_regular_volume,
+            non_regular_value = EXCLUDED.non_regular_value,
+            non_regular_frequency = EXCLUDED.non_regular_frequency,
+            upload_file = EXCLUDED.upload_file;
+    """
+    
+    company_sql = """
+        INSERT INTO dim_companies (symbol, name)
+        VALUES (%(symbol)s, %(name)s)
+        ON CONFLICT (symbol) DO UPDATE SET
+            name = EXCLUDED.name,
+            last_updated = CURRENT_TIMESTAMP;
+    """
     
     for file in all_files:
-        print(f"📥 Import file: {file.name}")
+        logger.info(f"📥 Import file: {file.name}")
         try:
             # Ekstrak tanggal dari nama file
             tanggal_str = file.stem.split("-")[-1]
@@ -123,138 +236,104 @@ def bulk_import_excel_files():
             df = pd.read_excel(file)
             df.columns = df.columns.str.strip().str.lower().str.replace(" ", "_")
             
-            # Pemetaan kolom dari bahasa Indonesia ke bahasa Inggris
-            column_map = {
-                "kode_saham": "symbol",
-                "nama_perusahaan": "name",
-                "sebelumnya": "prev_close",
-                "open_price": "open_price",
-                "tertinggi": "high",
-                "terendah": "low",
-                "penutupan": "close",
-                "selisih": "change",
-                "volume": "volume",
-                "nilai": "value",
-                "frekuensi": "frequency",
-                "index_individual": "index_individual",
-                "weight_for_index": "weight_for_index",
-                "foreign_buy": "foreign_buy",
-                "foreign_sell": "foreign_sell",
-                "offer": "offer",
-                "offer_volume": "offer_volume",
-                "bid": "bid",
-                "bid_volume": "bid_volume",
-                "listed_shares": "listed_shares",
-                "tradeble_shares": "tradable_shares",
-                "non_regular_volume": "non_regular_volume",
-                "non_regular_value": "non_regular_value",
-                "non_regular_frequency": "non_regular_frequency"
-            }
-            
-            # Rename kolom dan pilih yang sesuai
+            # Apply column mapping
             df = df.rename(columns=column_map)
+            
+            # Keep only mapped columns
             df = df[list(column_map.values())]
             
-            # Tambah kolom tanggal dan nama file
+            # Add date and filename columns
             df["date"] = file_date
             df["upload_file"] = file.name
             
-            # Koneksi ke database
+            # Establish database connection
             conn = psycopg2.connect(
                 host="postgres",
                 dbname="airflow",
                 user="airflow",
                 password="airflow"
             )
+            conn.autocommit = False  # Explicitly manage transactions
             cur = conn.cursor()
             
-            # Import data ke database
-            rows_imported = 0
-            for _, row in df.iterrows():
-                cur.execute("""
-                    INSERT INTO daily_stock_summary (
-                        symbol, name, date,
-                        prev_close, open_price, high, low, close, change,
-                        volume, value, frequency,
-                        index_individual, weight_for_index,
-                        foreign_buy, foreign_sell,
-                        offer, offer_volume, bid, bid_volume,
-                        listed_shares, tradable_shares,
-                        non_regular_volume, non_regular_value, non_regular_frequency,
-                        upload_file
-                    ) VALUES (
-                        %(symbol)s, %(name)s, %(date)s,
-                        %(prev_close)s, %(open_price)s, %(high)s, %(low)s, %(close)s, %(change)s,
-                        %(volume)s, %(value)s, %(frequency)s,
-                        %(index_individual)s, %(weight_for_index)s,
-                        %(foreign_buy)s, %(foreign_sell)s,
-                        %(offer)s, %(offer_volume)s, %(bid)s, %(bid_volume)s,
-                        %(listed_shares)s, %(tradable_shares)s,
-                        %(non_regular_volume)s, %(non_regular_value)s, %(non_regular_frequency)s,
-                        %(upload_file)s
-                    )
-                    ON CONFLICT (symbol, date) DO UPDATE SET
-                        name = EXCLUDED.name,
-                        prev_close = EXCLUDED.prev_close,
-                        open_price = EXCLUDED.open_price,
-                        high = EXCLUDED.high,
-                        low = EXCLUDED.low,
-                        close = EXCLUDED.close,
-                        change = EXCLUDED.change,
-                        volume = EXCLUDED.volume,
-                        value = EXCLUDED.value,
-                        frequency = EXCLUDED.frequency,
-                        index_individual = EXCLUDED.index_individual,
-                        weight_for_index = EXCLUDED.weight_for_index,
-                        foreign_buy = EXCLUDED.foreign_buy,
-                        foreign_sell = EXCLUDED.foreign_sell,
-                        offer = EXCLUDED.offer,
-                        offer_volume = EXCLUDED.offer_volume,
-                        bid = EXCLUDED.bid,
-                        bid_volume = EXCLUDED.bid_volume,
-                        listed_shares = EXCLUDED.listed_shares,
-                        tradable_shares = EXCLUDED.tradable_shares,
-                        non_regular_volume = EXCLUDED.non_regular_volume,
-                        non_regular_value = EXCLUDED.non_regular_value,
-                        non_regular_frequency = EXCLUDED.non_regular_frequency,
-                        upload_file = EXCLUDED.upload_file;
-                """, row.to_dict())
+            try:
+                # Prepare all rows as dictionaries for batch processing
+                stock_rows = df.to_dict('records')
                 
-                # Update juga tabel dim_companies
-                cur.execute("""
-                    INSERT INTO dim_companies (symbol, name)
-                    VALUES (%(symbol)s, %(name)s)
-                    ON CONFLICT (symbol) DO UPDATE SET
-                        name = EXCLUDED.name,
-                        last_updated = CURRENT_TIMESTAMP;
-                """, {"symbol": row["symbol"], "name": row["name"]})
+                # Prepare company data (unique symbols only)
+                company_rows = []
+                for symbol, name in df[['symbol', 'name']].drop_duplicates().itertuples(index=False):
+                    company_rows.append({'symbol': symbol, 'name': name})
                 
-                rows_imported += 1
-            
-            # Commit perubahan
-            conn.commit()
-            cur.close()
-            conn.close()
-            
-            # Update counter
-            imported_files += 1
-            total_records += rows_imported
-            
-            print(f"✅ File {file.name}: {rows_imported} baris berhasil diimpor")
+                # Process stock data in batches
+                rows_imported = 0
+                for i in range(0, len(stock_rows), BATCH_SIZE):
+                    batch = stock_rows[i:i + BATCH_SIZE]
+                    execute_batch(cur, stock_sql, batch)
+                    rows_imported += len(batch)
+                    
+                    # Log progress for large files
+                    if len(stock_rows) > 1000 and (i + BATCH_SIZE) % 1000 == 0:
+                        logger.info(f"   Progress: {i + BATCH_SIZE}/{len(stock_rows)} rows")
+                
+                # Process company data in a single batch (usually small)
+                execute_batch(cur, company_sql, company_rows)
+                
+                # Commit all changes at once
+                conn.commit()
+                
+                imported_files += 1
+                total_records += rows_imported
+                
+                # Log success
+                logger.info(f"✅ File {file.name}: {rows_imported} baris berhasil diimpor")
+                
+                # Record success in processing_log
+                cur.execute("""
+                    INSERT INTO processing_log 
+                    (process_name, file_name, process_date, records_processed, status)
+                    VALUES (%s, %s, %s, %s, %s)
+                """, ("bulk_stock_loader", file.name, datetime.now(), rows_imported, "SUCCESS"))
+                conn.commit()
+                
+            except Exception as e:
+                # Rollback on error
+                conn.rollback()
+                logger.error(f"❌ Database error processing {file.name}: {str(e)}")
+                
+                # Record error in processing_log
+                try:
+                    cur.execute("""
+                        INSERT INTO processing_log 
+                        (process_name, file_name, process_date, status, error_message)
+                        VALUES (%s, %s, %s, %s, %s)
+                    """, ("bulk_stock_loader", file.name, datetime.now(), "ERROR", str(e)))
+                    conn.commit()
+                except:
+                    pass  # Ignore errors in error logging
+            finally:
+                cur.close()
+                conn.close()
             
         except Exception as e:
-            print(f"❌ Gagal import file {file.name}: {e}")
+            logger.error(f"❌ Gagal import file {file.name}: {str(e)}")
             continue
     
-    print(f"📊 Ringkasan Bulk Import:")
-    print(f"   - Total file: {total_files}")
-    print(f"   - Berhasil diimpor: {imported_files}")
-    print(f"   - Total record: {total_records}")
+    end_time = datetime.now()
+    duration = (end_time - start_time).total_seconds()
+    
+    logger.info(f"📊 Ringkasan Bulk Import:")
+    logger.info(f"   - Total file: {total_files}")
+    logger.info(f"   - Berhasil diimpor: {imported_files}")
+    logger.info(f"   - Total record: {total_records}")
+    logger.info(f"   - Waktu proses: {duration:.2f} detik")
+    logger.info(f"   - Kecepatan: {total_records/duration:.2f} baris/detik" if duration > 0 else "")
     
     return {
         "total_files": total_files,
         "imported_files": imported_files,
-        "total_records": total_records
+        "total_records": total_records,
+        "duration_seconds": duration
     }
 
 def log_import_summary(**context):
@@ -265,20 +344,53 @@ def log_import_summary(**context):
     result = ti.xcom_pull(task_ids='run_bulk_import')
     
     if not result:
-        print("❌ Tidak ada data hasil import yang tersedia.")
+        logger.error("❌ Tidak ada data hasil import yang tersedia.")
         return
     
     total_files = result.get('total_files', 0)
     imported_files = result.get('imported_files', 0)
     total_records = result.get('total_records', 0)
+    duration = result.get('duration_seconds', 0)
     
     success_rate = (imported_files / total_files * 100) if total_files > 0 else 0
+    records_per_second = (total_records / duration) if duration > 0 else 0
     
-    print(f"📋 RINGKASAN BULK IMPORT SELESAI:")
-    print(f"   - Total file diproses: {total_files}")
-    print(f"   - File berhasil diimpor: {imported_files} ({success_rate:.1f}%)")
-    print(f"   - Total record diimpor: {total_records}")
-    print(f"   - Waktu selesai: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    logger.info(f"📋 RINGKASAN BULK IMPORT SELESAI:")
+    logger.info(f"   - Total file diproses: {total_files}")
+    logger.info(f"   - File berhasil diimpor: {imported_files} ({success_rate:.1f}%)")
+    logger.info(f"   - Total record diimpor: {total_records}")
+    logger.info(f"   - Waktu proses: {duration:.2f} detik")
+    logger.info(f"   - Kecepatan: {records_per_second:.2f} baris/detik" if duration > 0 else "")
+    logger.info(f"   - Waktu selesai: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    
+    # Record summary in database
+    try:
+        conn = psycopg2.connect(
+            host="postgres",
+            dbname="airflow",
+            user="airflow",
+            password="airflow"
+        )
+        cur = conn.cursor()
+        
+        cur.execute("""
+            INSERT INTO processing_log 
+            (process_name, file_name, process_date, records_processed, status, error_message)
+            VALUES (%s, %s, %s, %s, %s, %s)
+        """, (
+            "bulk_stock_loader_summary", 
+            f"batch_summary_{datetime.now().strftime('%Y%m%d_%H%M%S')}", 
+            datetime.now(), 
+            total_records, 
+            "COMPLETE", 
+            f"Files: {imported_files}/{total_files}, Speed: {records_per_second:.2f} rec/sec"
+        ))
+        
+        conn.commit()
+        cur.close()
+        conn.close()
+    except Exception as e:
+        logger.error(f"Could not record summary: {str(e)}")
     
     return f"Bulk import selesai: {imported_files}/{total_files} file, {total_records} record"
 
@@ -321,13 +433,6 @@ with DAG(
     end_task = DummyOperator(
         task_id="end_task"
     )
-
-    # trigger_transformation = TriggerDagRunOperator(
-    # task_id="trigger_transformation",
-    # trigger_dag_id="data_transformation",
-    # conf={"bulk_load_complete": True},  # Parameter yang diteruskan
-    # wait_for_completion=False
-    # )
     
     # Task dependencies
     verify_folder >> create_tables >> run_bulk_import >> log_summary >> end_task
