@@ -1349,10 +1349,18 @@ with DAG(
         timeout=3600,
         poke_interval=60,
         allowed_states=["success"],
-        failed_states=["failed", "skipped"],
-        # Tambahkan soft_fail agar DAG bisa tetap berjalan jika newsapi_data_ingestion 
-        # belum ada atau belum berjalan
-        soft_fail=True
+        failed_states=["failed", "skipped"]
+    )
+
+    wait_for_detik = ExternalTaskSensor(
+        task_id="wait_for_detik",
+        external_dag_id="news_data_ingestion",
+        external_task_id="end_task",
+        mode="reschedule",
+        timeout=3600,
+        poke_interval=60,
+        allowed_states=["success"],
+        failed_states=["failed", "skipped"]
     )
 
     wait = DummyOperator(
@@ -1413,6 +1421,6 @@ with DAG(
     )
     
     # Define task dependencies
-    [wait_for_transformation, wait_for_newsapi] >> wait >> [send_movement, send_sentiment, send_newsapi_sentiment, send_technical, send_ad_report, send_bandar, send_signals]
+    [wait_for_transformation, wait_for_detik, wait_for_newsapi] >> wait >> [send_movement, send_sentiment, send_newsapi_sentiment, send_technical, send_ad_report, send_bandar, send_signals]
     [send_sentiment, send_newsapi_sentiment] >> send_combined_sentiment
     [send_movement, send_technical, send_ad_report, send_bandar, send_combined_sentiment, send_signals] >> end_task
