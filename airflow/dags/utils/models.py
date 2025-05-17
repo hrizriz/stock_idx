@@ -63,27 +63,28 @@ def train_win_rate_predictor():
                 s.date as signal_date,
                 s.buy_score,
                 b.is_win,
-                r.rsi,
-                m.macd_line,
-                m.signal_line,
-                m.macd_histogram,
-                bb.percent_b,
-                d.volume_ratio,
-                d.daily_change
+                -- Use actual columns from advanced_trading_signals
+                s.volume_shock,
+                s.demand_zone,
+                s.foreign_flow,
+                s.adx,
+                -- Include relevant backtest columns
+                b.percent_change_5d,
+                -- Calculate volume ratio from daily stock data
+                COALESCE(d.volume / NULLIF(AVG(d.volume) OVER (
+                    PARTITION BY d.symbol 
+                    ORDER BY d.date 
+                    ROWS BETWEEN 30 PRECEDING AND 1 PRECEDING
+                ), 0), 1.0) as volume_ratio,
+                COALESCE(d.daily_change, 0.0) as daily_change
             FROM public_analytics.advanced_trading_signals s
             LEFT JOIN public_analytics.backtest_results b
-                ON s.symbol = b.symbol AND s.date = b.signal_date
-            LEFT JOIN public_analytics.technical_indicators_rsi r
-                ON s.symbol = r.symbol AND s.date = r.date
-            LEFT JOIN public_analytics.technical_indicators_macd m
-                ON s.symbol = m.symbol AND s.date = m.date
-            LEFT JOIN public_analytics.technical_indicators_bollinger bb
-                ON s.symbol = bb.symbol AND s.date = bb.date
+                ON s.symbol = b.symbol AND s.date = b.signal_date  -- Correct join condition
             LEFT JOIN (
                 SELECT 
                     symbol, 
                     date, 
-                    volume / NULLIF(avg_volume_30d, 0) as volume_ratio,
+                    volume,
                     (close - prev_close) / NULLIF(prev_close, 0) * 100 as daily_change
                 FROM public.daily_stock_summary
             ) d ON s.symbol = d.symbol AND s.date = d.date

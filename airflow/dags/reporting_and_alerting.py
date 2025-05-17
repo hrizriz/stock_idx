@@ -505,6 +505,191 @@ def send_accumulation_distribution_report():
         logger.error(f"Error in send_accumulation_distribution_report: {str(e)}")
         return f"Error: {str(e)}"
 
+def send_bandarmology_report():
+    """
+    Send Bandarmology analysis report to Telegram
+    """
+    try:
+        conn = get_database_connection()
+        
+        # Get latest date from database
+        latest_date = get_latest_stock_date()
+        if not latest_date:
+            logger.warning("No date data available")
+            return "No date data available"
+        
+        date_filter = latest_date.strftime('%Y-%m-%d')
+        logger.info(f"Running Bandarmology analysis for date: {date_filter}")
+        
+        # Execute Bandarmology query
+        bandar_sql = """
+        WITH volume_analysis AS (
+            -- Analisis volume selama 20 hari terakhir
+            SELECT 
+                symbol,
+                date,
+                volume,
+                ROUND(AVG(volume) OVER (PARTITION BY symbol ORDER BY date ROWS BETWEEN 20 PRECEDING AND 1 PRECEDING), 0) AS avg_volume_20d,
+                close,
+                prev_close,
+                ((close - prev_close) / NULLIF(prev_close, 0) * 100) AS percent_change,
+                foreign_buy,
+                foreign_sell,
+                (foreign_buy - foreign_sell) AS foreign_net,
+                bid,
+                offer,
+                bid_volume,
+                offer_volume
+            FROM public.daily_stock_summary
+            WHERE date >= CURRENT_DATE - INTERVAL '30 days'
+        ),
+        accumulation_signals AS (
+            -- Identifikasi pola akumulasi
+            SELECT 
+                v.symbol,
+                v.date,
+                v.close,
+                v.volume,
+                v.avg_volume_20d,
+                v.percent_change,
+                v.foreign_net,
+                -- Indikator volume spike (>2x rata-rata)
+                CASE WHEN v.volume > 2 * v.avg_volume_20d THEN 1 ELSE 0 END AS volume_spike,
+                -- Indikator akumulasi asing
+                CASE WHEN v.foreign_net > 0 THEN 1 ELSE 0 END AS foreign_buying,
+                -- Indikator kekuatan bid (demand lebih besar dari supply)
+                CASE WHEN v.bid_volume > 1.5 * v.offer_volume THEN 1 ELSE 0 END AS strong_bid,
+                -- Indikator hidden buying (volume tinggi dengan pergerakan harga terbatas)
+                CASE WHEN v.volume > 1.5 * v.avg_volume_20d AND ABS(v.percent_change) < 1.0 THEN 1 ELSE 0 END AS hidden_buying,
+                -- Cek apakah ada closing price positif
+                CASE WHEN v.close > v.prev_close THEN 1 ELSE 0 END AS positive_close
+            FROM volume_analysis v
+        ),
+        final_scores AS (
+            -- Kalkulasi skor final dan tambahkan data historis untuk analisis
+            SELECT 
+                a.symbol,
+                a.date,
+                a.close,
+                a.percent_change,
+                a.volume,
+                a.avg_volume_20d,
+                a.volume/NULLIF(a.avg_volume_20d, 0) AS volume_ratio,
+                a.foreign_net,
+                -- Kalkulasi skor bandarmology (semakin tinggi semakin kuat)
+                (a.volume_spike + a.foreign_buying + a.strong_bid + a.hidden_buying + a.positive_close) AS bandar_score,
+                -- Cek performa harga 1 hari setelah tanggal
+                LEAD(a.percent_change, 1) OVER (PARTITION BY a.symbol ORDER BY a.date) AS next_day_change,
+                -- Tambahkan data untuk analisis tren jangka pendek
+                SUM(a.positive_close) OVER (PARTITION BY a.symbol ORDER BY a.date ROWS BETWEEN 5 PRECEDING AND CURRENT ROW) AS positive_days_last5
+            FROM accumulation_signals a
+        ),
+        bandar_ranking AS (
+            -- Final selection dari saham teratas dengan potensi kenaikan
+            SELECT 
+                symbol,
+                date,
+                close,
+                ROUND(volume_ratio, 2) AS volume_ratio,
+                bandar_score,
+                positive_days_last5,
+                foreign_net,
+                CASE
+                    WHEN bandar_score >= 4 THEN 'Sangat Kuat'
+                    WHEN bandar_score = 3 THEN 'Kuat'
+                    WHEN bandar_score = 2 THEN 'Sedang'
+                    ELSE 'Lemah'
+                END AS signal_strength
+            FROM final_scores
+            WHERE date = (SELECT MAX(date) FROM public.daily_stock_summary) -- Hanya ambil data hari terakhir
+            AND bandar_score >= 2 -- Filter hanya sinyal sedang ke atas
+            AND volume_ratio > 1.5 -- Harus ada kenaikan volume signifikan
+        )
+        -- Join dengan tabel nama untuk hasil lengkap
+        SELECT 
+            b.symbol,
+            d.name,
+            b.close,
+            b.volume_ratio,
+            b.bandar_score,
+            b.signal_strength,
+            b.positive_days_last5,
+            b.foreign_net
+        FROM bandar_ranking b
+        LEFT JOIN public.daily_stock_summary d 
+            ON b.symbol = d.symbol 
+            AND d.date = (SELECT MAX(date) FROM public.daily_stock_summary)
+        ORDER BY b.bandar_score DESC, b.volume_ratio DESC
+        LIMIT 15;
+        """
+        
+        # Execute query
+        bandar_df = fetch_data(bandar_sql)
+        
+        if bandar_df.empty:
+            logger.warning("No significant bandarmology patterns found")
+            return "No bandarmology patterns found"
+        
+        # Create Telegram message
+        message = "🔍 *ANALISIS BANDARMOLOGY HARI INI* 🔍\n\n"
+        message += f"Saham-saham berikut menunjukkan pola akumulasi \"bandar\" ({date_filter}):\n\n"
+        
+        # Group by signal strength
+        strong_signals = bandar_df[bandar_df['signal_strength'] == 'Sangat Kuat']
+        medium_signals = bandar_df[bandar_df['signal_strength'] == 'Kuat']
+        weak_signals = bandar_df[bandar_df['signal_strength'] == 'Sedang']
+        
+        # Add strong signals
+        if not strong_signals.empty:
+            message += "💪 *Sinyal Akumulasi Sangat Kuat:*\n\n"
+            for i, row in enumerate(strong_signals.itertuples(), 1):
+                message += f"{i}. *{row.symbol}* ({row.name})\n"
+                message += f"   Harga: Rp{row.close:,.0f} | Rasio Volume: {row.volume_ratio:.2f}x\n"
+                message += f"   Skor Bandar: {row.bandar_score}/5 | Hari Positif: {row.positive_days_last5}/5\n"
+                
+                # Add foreign flow if available
+                if row.foreign_net and row.foreign_net != 0:
+                    foreign_net_formatted = f"{row.foreign_net:,.0f}" if abs(row.foreign_net) >= 1000 else f"{row.foreign_net:.2f}"
+                    message += f"   Net Asing: {foreign_net_formatted}\n"
+                
+                message += "\n"
+        
+        # Add medium signals
+        if not medium_signals.empty:
+            message += "⚡ *Sinyal Akumulasi Kuat:*\n\n"
+            for i, row in enumerate(medium_signals.itertuples(), 1):
+                message += f"{i}. *{row.symbol}* ({row.name})\n"
+                message += f"   Harga: Rp{row.close:,.0f} | Rasio Volume: {row.volume_ratio:.2f}x\n"
+                message += f"   Skor Bandar: {row.bandar_score}/5\n\n"
+        
+        # Add weak signals (limited to save space)
+        if not weak_signals.empty:
+            message += "🔎 *Sinyal Akumulasi Sedang:*\n"
+            for i, row in enumerate(weak_signals.head(5).itertuples(), 1):
+                message += f"{i}. *{row.symbol}* ({row.name}) - Skor: {row.bandar_score}/5\n"
+            
+            message += "\n"
+        
+        # Add explanation about Bandarmology
+        message += "*Tentang Analisis Bandarmology:*\n"
+        message += "Analisis ini mengidentifikasi pola akumulasi \"bandar\" berdasarkan 5 indikator:\n"
+        message += "• Volume Spike: Lonjakan volume signifikan (>2x rata-rata)\n"
+        message += "• Foreign Buying: Pembelian bersih oleh investor asing\n"
+        message += "• Bid Strength: Tekanan beli lebih kuat dari jual\n"
+        message += "• Hidden Buying: Volume tinggi dengan pergerakan harga terbatas\n"
+        message += "• Positive Close: Penutupan dengan harga positif\n\n"
+        message += "*Disclaimer:* Analisis ini bersifat teknikal dan tidak menjamin kenaikan. Lakukan analisis tambahan sebelum mengambil keputusan investasi."
+        
+        # Send to Telegram
+        result = send_telegram_message(message)
+        if "successfully" in result:
+            return f"Bandarmology report sent: {len(bandar_df)} stocks"
+        else:
+            return result
+    except Exception as e:
+        logger.error(f"Error in send_bandarmology_report: {str(e)}")
+        return f"Error: {str(e)}"
+
 # DAG definition
 with DAG(
     dag_id="reporting_and_alerting",
@@ -515,10 +700,9 @@ with DAG(
     tags=["reporting", "alerting", "telegram"]
 ) as dag:
     
-    # Wait for ML trading signals DAG to complete
-    wait_for_ml = ExternalTaskSensor(
-        task_id="wait_for_ml_signals",
-        external_dag_id="ml_trading_signals",
+    wait_for_transformation = ExternalTaskSensor(
+        task_id="wait_for_transformation",
+        external_dag_id="data_transformation",
         external_task_id="end_task",
         mode="reschedule",
         timeout=3600,
@@ -551,10 +735,15 @@ with DAG(
         python_callable=send_accumulation_distribution_report
     )
     
+    send_bandar = PythonOperator(
+        task_id="send_bandarmology_report",
+        python_callable=send_bandarmology_report
+    )
+
     # End marker
     end_task = DummyOperator(
         task_id="end_task"
     )
     
     # Define task dependencies
-    wait_for_ml >> [send_movement, send_sentiment, send_technical, send_ad_report] >> end_task
+    wait_for_transformation >> [send_movement, send_sentiment, send_technical, send_ad_report, send_bandar] >> end_task

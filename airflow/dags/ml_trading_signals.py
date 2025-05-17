@@ -156,7 +156,7 @@ with DAG(
             task_id=f'train_lstm_{symbol}',
             python_callable=train_model_for_symbol,
             op_kwargs={'symbol': symbol},
-            execution_timeout=pendulum.duration(minutes=15)
+            execution_timeout=pendulum.duration(minutes=45)
         )
     
     # Dynamic tasks for each symbol - Prediction
