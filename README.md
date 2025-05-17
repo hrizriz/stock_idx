@@ -72,37 +72,39 @@ Sistem analisis teknikal dan trading otomatis yang menggunakan pendekatan multi-
 
 2. **Setup Environment**:
    ```bash
+   cp .env.template .env
+   chmod +x setup-env.sh
    ./setup-env.sh
    ```
 
-3. **Konfigurasi Environment Variables**:
-   ```bash
-   cp .env.example .env
-   # Edit file .env dengan konfigurasi yang sesuai
-   ```
+3. **Saat menjalankan setup-env.sh, Anda akan diminta memasukkan**:
+   - Telegram Bot Token
+   - Telegram Chat ID
+   - NewsAPI Key
+   - Kredensial Admin Airflow (opsional)
 
-4. **Inisialisasi Airflow**:
-   ```bash
-   ./init-airflow.sh
-   ```
-
-5. **Jalankan Services**:
+4. **Jalankan Services**:
    ```bash
    docker-compose up -d
    ```
 
 ## ⚙️ Konfigurasi
 
-### Konfigurasi Telegram
-1. Jalankan script setup environment:
-   ```bash
-   chmod +x setup-env.sh
-   ./setup-env.sh
-   ```
-2. Masukkan Telegram Bot Token dan Chat ID saat diminta
-3. Script akan otomatis menyimpan konfigurasi sebagai Airflow Variables
+### Airflow Variables
+Beberapa konfigurasi disimpan sebagai Airflow Variables:
+- `TELEGRAM_BOT_TOKEN`: Token untuk bot Telegram
+- `TELEGRAM_CHAT_ID`: ID chat Telegram untuk notifikasi
+- `NEWS_API_KEY`: API key untuk NewsAPI
 
-> **Catatan**: Bot Token dan Chat ID akan disimpan secara aman sebagai Airflow Variables dan dapat diakses melalui Airflow UI jika perlu diubah kemudian.
+### File Konfigurasi
+- `.env`: File konfigurasi utama (jangan commit ke git)
+- `.env.template`: Template untuk konfigurasi
+- `setup-env.sh`: Script untuk setup environment
+
+### Keamanan
+- Semua file sensitif (`.env`, API keys) sudah dimasukkan dalam `.gitignore`
+- Kredensial disimpan menggunakan Airflow's secure storage
+- Fernet key di-generate secara otomatis saat setup
 
 ### Parameter Trading
 Parameter trading dapat dikonfigurasi di `airflow/dags/unified_trading_signals.py`:
@@ -149,12 +151,16 @@ timeframe_params = {
    ```
    http://localhost:8080
    ```
-   - Username: admin
+   - Username: admin (default)
    - Password: admin (default)
 
 2. **Log Files**:
    - Location: `airflow/logs/`
    - Format: Terstruktur dengan timestamp
+
+3. **Database**:
+   - PostgreSQL di port 5432
+   - Monitoring melalui pgAdmin atau tools lain
 
 ## 🤝 Kontribusi
 
@@ -164,6 +170,35 @@ timeframe_params = {
 4. Push ke branch (`git push origin fitur-baru`)
 5. Buat Pull Request
 
+### Panduan Kontribusi
+- Ikuti struktur proyek yang ada
+- Dokumentasikan kode dengan baik
+- Tambahkan unit test untuk fitur baru
+- Update README jika diperlukan
+
 ## ⚠️ Disclaimer
 
 Sistem ini menghasilkan sinyal berdasarkan analisis teknikal dan sentimen berita secara otomatis. Sinyal yang dihasilkan BUKAN merupakan rekomendasi investasi dan TIDAK MENJAMIN keuntungan. Selalu lakukan analisis tambahan dan gunakan manajemen risiko yang baik dalam trading.
+
+## 🔧 Troubleshooting
+
+### Masalah Umum
+1. **Koneksi Database**:
+   - Periksa kredensial di `.env`
+   - Pastikan PostgreSQL running
+   - Cek port 5432 tidak digunakan
+
+2. **API Issues**:
+   - Validasi API keys di Airflow Variables
+   - Periksa rate limits
+   - Monitor error logs
+
+3. **Docker Issues**:
+   - Restart Docker daemon
+   - Clear Docker cache
+   - Periksa resource limits
+
+### Log dan Debugging
+- Airflow logs: `airflow/logs/`
+- Docker logs: `docker-compose logs`
+- Application logs di PostgreSQL

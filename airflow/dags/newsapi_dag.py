@@ -47,8 +47,18 @@ active_tickers = [
     "TOBA", "TOWR", "TPIA", "UNIQ", "UNTR", "UNVR", "WIFI"
 ]
 
-# API Key untuk NewsAPI - direkomendasikan disimpan di Airflow Variable
-NEWS_API_KEY = Variable.get("NEWS_API_KEY", default_var="7c4254932356470dad689d4f7aa26728")
+def get_newsapi_key():
+    """
+    Mengambil NewsAPI key dari Airflow Variables dengan error handling
+    """
+    try:
+        api_key = Variable.get("NEWS_API_KEY")
+        if not api_key:
+            raise ValueError("NEWS_API_KEY tidak ditemukan di Airflow Variables")
+        return api_key
+    except Exception as e:
+        logger.error(f"Error mengambil NEWS_API_KEY: {str(e)}")
+        return None
 
 def create_news_tables_if_not_exist():
     """Membuat tabel-tabel berita jika belum ada"""
@@ -186,12 +196,12 @@ def fetch_newsapi_articles():
     """
     Mengambil berita dari NewsAPI untuk daftar ticker saham
     """
-    if not NEWS_API_KEY or NEWS_API_KEY == "YOUR_API_KEY_HERE":
-        logger.error("NEWS_API_KEY tidak ditemukan atau tidak valid!")
-        # Generate sampel data jika API key tidak tersedia
+    NEWS_API_KEY = get_newsapi_key()
+    
+    if not NEWS_API_KEY:
+        logger.error("NEWS_API_KEY tidak tersedia, menggunakan sample data")
         sample_news = generate_sample_news(active_tickers)
         
-        # Simpan sampel data ke file
         data_folder = Path("/opt/airflow/data")
         data_folder.mkdir(exist_ok=True)
         with open(data_folder / "newsapi_articles.json", 'w', encoding='utf-8') as f:
