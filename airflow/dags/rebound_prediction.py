@@ -1,6 +1,7 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.operators.dummy import DummyOperator
+from airflow.sensors.external_task import ExternalTaskSensor
 import pendulum
 import pandas as pd
 import numpy as np
@@ -41,12 +42,12 @@ def identify_potential_rebounds():
                 bid_volume,
                 offer_volume,
                 -- Calculate price decline
-                100 * (close / LAG(close, 10) OVER (PARTITION BY symbol ORDER BY date) - 1) AS price_change_10d,
+                100 * (close / NULLIF(LAG(close, 10) OVER (PARTITION BY symbol ORDER BY date), 0) - 1) AS price_change_10d,
                 -- Avg price for the last 3 days compared to previous 3 days
                 AVG(close) OVER (PARTITION BY symbol ORDER BY date ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS avg_price_3d,
                 AVG(close) OVER (PARTITION BY symbol ORDER BY date ROWS BETWEEN 5 PRECEDING AND 3 PRECEDING) AS avg_price_prev_3d,
                 -- Volume trend
-                volume / AVG(volume) OVER (PARTITION BY symbol ORDER BY date ROWS BETWEEN 10 PRECEDING AND 1 PRECEDING) AS volume_ratio,
+                volume / NULLIF(AVG(volume) OVER (PARTITION BY symbol ORDER BY date ROWS BETWEEN 10 PRECEDING AND 1 PRECEDING), 0) AS volume_ratio,
                 -- Bid-Ask balance
                 CASE 
                     WHEN offer_volume > 0 THEN bid_volume::float / offer_volume
@@ -306,6 +307,17 @@ with DAG(
     tags=["trading", "rebound", "prediction"]
 ) as dag:
     
+    wait_for_transformation = ExternalTaskSensor(
+        task_id="wait_for_transformation",
+        external_dag_id="data_transformation",
+        external_task_id="end_task",
+        mode="reschedule",
+        timeout=3600,
+        poke_interval=60,
+        allowed_states=["success"],
+        failed_states=["failed", "skipped"]
+    )
+    
     # Identify potential rebounds
     identify_rebounds = PythonOperator(
         task_id="identify_potential_rebounds",
@@ -324,4 +336,4 @@ with DAG(
     )
     
     # Define task dependencies
-    identify_rebounds >> send_signals >> end_task
+    wait_for_transformation >> identify_rebounds >> send_signals >> end_task

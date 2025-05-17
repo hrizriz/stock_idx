@@ -128,10 +128,10 @@ with DAG(
 ) as dag:
     
     # Wait for technical trading signals DAG to complete
-    wait_for_technical = ExternalTaskSensor(
-        task_id="wait_for_technical_signals",
-        external_dag_id="technical_trading_signals",
-        external_task_id="end_task",
+    wait_for_signals = ExternalTaskSensor(
+        task_id="wait_for_signals",
+        external_dag_id="unified_trading_signals",
+        external_task_id="send_daily_signals",
         mode="reschedule",
         timeout=3600,
         poke_interval=60,
@@ -186,7 +186,7 @@ with DAG(
     )
     
     # Define task dependencies
-    wait_for_technical >> train_win_rate
+    wait_for_signals >> train_win_rate
     
     # Setup training and prediction flows
     for symbol in symbols:
