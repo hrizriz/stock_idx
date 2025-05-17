@@ -119,7 +119,7 @@ timeframe_params = {
 
 ## 📊 Pipeline Data
 
-### 1. Ingesti Data
+### 1. Ingest Data
 - Import data saham harian
 - Scraping berita otomatis
 - Validasi dan cleaning data
