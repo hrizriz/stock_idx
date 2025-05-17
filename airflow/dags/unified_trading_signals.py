@@ -125,6 +125,33 @@ def should_run_monthly():
     logger.info(f"Today is day {now.day} of month, run monthly: {is_month_start}")
     return is_month_start
 
+def check_signals_table_exists(signal_type='DAILY'):
+    """Check if the signals table exists for the given signal type"""
+    try:
+        conn = get_database_connection()
+        cursor = conn.cursor()
+        
+        table_name = 'advanced_trading_signals' if signal_type == 'DAILY' else f"advanced_trading_signals_{signal_type.lower()}"
+        
+        cursor.execute(f"""
+        SELECT EXISTS (
+            SELECT FROM information_schema.tables 
+            WHERE table_schema = 'public_analytics' 
+            AND table_name = '{table_name}'
+        );
+        """)
+        
+        exists = cursor.fetchone()[0]
+        
+        cursor.close()
+        conn.close()
+        
+        logger.info(f"Signals table for {signal_type} exists: {exists}")
+        return exists
+    except Exception as e:
+        logger.error(f"Error checking if signals table exists: {str(e)}")
+        return False
+
 def send_unified_trading_report(**context):
     """
     Send a unified report combining signals from all timeframes
@@ -147,34 +174,59 @@ def send_unified_trading_report(**context):
     
     # Function to get signals for a specific timeframe
     def get_signals_for_timeframe(timeframe):
-        conn = get_database_connection()
-        table_name = f"public_analytics.advanced_trading_signals_{timeframe.lower()}" if timeframe != 'DAILY' else "public_analytics.advanced_trading_signals"
-        
-        query = f"""
-        SELECT 
-            s.symbol,
-            s.date,
-            s.buy_score,
-            s.winning_probability,
-            s.signal_strength,
-            m.name,
-            m.close
-        FROM {table_name} s
-        JOIN public.daily_stock_summary m ON s.symbol = m.symbol AND s.date = m.date
-        WHERE s.date = '{latest_date}'
-        AND s.winning_probability >= 0.7
-        AND s.buy_score >= 6
-        ORDER BY s.buy_score DESC, s.winning_probability DESC
-        LIMIT 5
-        """
-        
         try:
-            signals_df = pd.read_sql(query, conn)
-            conn.close()
-            return signals_df
+            conn = get_database_connection()
+            cursor = conn.cursor()
+            
+            # Check if table exists
+            table_name = f"public_analytics.advanced_trading_signals_{timeframe.lower()}" if timeframe != 'DAILY' else "public_analytics.advanced_trading_signals"
+            
+            cursor.execute(f"""
+            SELECT EXISTS (
+                SELECT FROM information_schema.tables 
+                WHERE table_schema = 'public_analytics' 
+                AND table_name = '{'advanced_trading_signals' if timeframe == 'DAILY' else f"advanced_trading_signals_{timeframe.lower()}"}'
+            );
+            """)
+            
+            table_exists = cursor.fetchone()[0]
+            
+            if not table_exists:
+                cursor.close()
+                conn.close()
+                logger.warning(f"Table {table_name} does not exist")
+                return None
+            
+            query = f"""
+            SELECT 
+                s.symbol,
+                s.date,
+                s.buy_score,
+                s.winning_probability,
+                s.signal_strength,
+                m.name,
+                m.close
+            FROM {table_name} s
+            JOIN public.daily_stock_summary m ON s.symbol = m.symbol AND s.date = m.date
+            WHERE s.date = '{latest_date}'
+            AND s.winning_probability >= 0.7
+            AND s.buy_score >= 6
+            ORDER BY s.buy_score DESC, s.winning_probability DESC
+            LIMIT 5
+            """
+            
+            try:
+                signals_df = pd.read_sql(query, conn)
+                cursor.close()
+                conn.close()
+                return signals_df
+            except Exception as e:
+                logger.error(f"Error getting {timeframe} signals: {str(e)}")
+                cursor.close()
+                conn.close()
+                return None
         except Exception as e:
-            logger.error(f"Error getting {timeframe} signals: {str(e)}")
-            conn.close()
+            logger.error(f"Database connection error: {str(e)}")
             return None
     
     # Add DAILY signals (always included)
@@ -403,6 +455,13 @@ with DAG(
         }
     )
     
+    # Check if signals table exists before running backtest
+    check_daily_signals_table = ShortCircuitOperator(
+        task_id="check_daily_signals_table",
+        python_callable=check_signals_table_exists,
+        op_kwargs={'signal_type': 'DAILY'}
+    )
+    
     # Run backtesting
     run_daily_backtest = PythonOperator(
         task_id="run_daily_backtest",
@@ -486,6 +545,13 @@ with DAG(
             'lookback_period': timeframe_params['WEEKLY']['lookback_periods']['advanced'], 
             'signal_type': 'WEEKLY'
         }
+    )
+    
+    # Check if signals table exists before running backtest
+    check_weekly_signals_table = ShortCircuitOperator(
+        task_id="check_weekly_signals_table",
+        python_callable=check_signals_table_exists,
+        op_kwargs={'signal_type': 'WEEKLY'}
     )
     
     # Run Weekly backtesting
@@ -573,6 +639,13 @@ with DAG(
         }
     )
     
+    # Check if signals table exists before running backtest
+    check_monthly_signals_table = ShortCircuitOperator(
+        task_id="check_monthly_signals_table",
+        python_callable=check_signals_table_exists,
+        op_kwargs={'signal_type': 'MONTHLY'}
+    )
+    
     # Run Monthly backtesting
     run_monthly_backtest = PythonOperator(
         task_id="run_monthly_backtest",
@@ -620,20 +693,17 @@ with DAG(
     
     # Daily task dependencies
     check_bb >> [calc_daily_rsi, calc_daily_macd, calc_daily_bb]
-    [calc_daily_rsi, calc_daily_macd, calc_daily_bb] >> filter_daily_stocks >> calc_daily_advanced
-    calc_daily_advanced >> run_daily_backtest >> send_daily_signals
+    [calc_daily_rsi, calc_daily_macd, calc_daily_bb] >> filter_daily_stocks >> calc_daily_advanced >> check_daily_signals_table >> run_daily_backtest >> send_daily_signals
     
     # Weekly task dependencies
     check_bb >> check_weekly
     check_weekly >> [calc_weekly_rsi, calc_weekly_macd, calc_weekly_bb]
-    [calc_weekly_rsi, calc_weekly_macd, calc_weekly_bb] >> filter_weekly_stocks >> calc_weekly_advanced
-    calc_weekly_advanced >> run_weekly_backtest >> send_weekly_signals
+    [calc_weekly_rsi, calc_weekly_macd, calc_weekly_bb] >> filter_weekly_stocks >> calc_weekly_advanced >> check_weekly_signals_table >> run_weekly_backtest >> send_weekly_signals
     
     # Monthly task dependencies
     check_bb >> check_monthly
     check_monthly >> [calc_monthly_rsi, calc_monthly_macd, calc_monthly_bb]
-    [calc_monthly_rsi, calc_monthly_macd, calc_monthly_bb] >> filter_monthly_stocks >> calc_monthly_advanced
-    calc_monthly_advanced >> run_monthly_backtest >> send_monthly_signals
+    [calc_monthly_rsi, calc_monthly_macd, calc_monthly_bb] >> filter_monthly_stocks >> calc_monthly_advanced >> check_monthly_signals_table >> run_monthly_backtest >> send_monthly_signals
     
     # Join all timeframes and final tasks
     [send_daily_signals, send_weekly_signals, send_monthly_signals] >> join_timeframes

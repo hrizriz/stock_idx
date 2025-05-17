@@ -33,6 +33,31 @@ def send_performance_report(report_type='DAILY', lookback_days=60):
         backtest_table = f"public_analytics.backtest_results_{report_type.lower()}" if report_type != 'DAILY' else "public_analytics.backtest_results"
         signals_table = f"public_analytics.advanced_trading_signals_{report_type.lower()}" if report_type != 'DAILY' else "public_analytics.advanced_trading_signals"
         
+        # Check if tables exist
+        cursor = conn.cursor()
+        cursor.execute(f"""
+        SELECT EXISTS (
+            SELECT FROM information_schema.tables 
+            WHERE table_schema = 'public_analytics' 
+            AND table_name = '{'backtest_results' if report_type == 'DAILY' else f"backtest_results_{report_type.lower()}"}'
+        );
+        """)
+        backtest_table_exists = cursor.fetchone()[0]
+        
+        cursor.execute(f"""
+        SELECT EXISTS (
+            SELECT FROM information_schema.tables 
+            WHERE table_schema = 'public_analytics' 
+            AND table_name = '{'advanced_trading_signals' if report_type == 'DAILY' else f"advanced_trading_signals_{report_type.lower()}"}'
+        );
+        """)
+        signals_table_exists = cursor.fetchone()[0]
+        
+        if not backtest_table_exists or not signals_table_exists:
+            cursor.close()
+            conn.close()
+            return f"Required tables don't exist yet. Skipping {report_type} performance report."
+        
         sql = f"""
         WITH backtest_results AS (
             SELECT 
@@ -269,22 +294,48 @@ def calculate_advanced_indicators(lookback_period=300, signal_type='DAILY'):
     
     # Get dynamic scoring from backtest results
     try:
-        # Dynamic scoring from backtest results
-        backtest_sql = """
-        SELECT 
-            indicator_name,
-            AVG(win_rate) as avg_win_rate
-        FROM indicator_performance_metrics
-        GROUP BY indicator_name
-        """
+        # Check if indicator_performance_metrics table exists
+        cursor.execute("""
+        SELECT EXISTS (
+            SELECT FROM information_schema.tables 
+            WHERE table_schema = 'public_analytics' 
+            AND table_name = 'indicator_performance_metrics'
+        );
+        """)
+        metrics_table_exists = cursor.fetchone()[0]
         
         indicator_weights = {}
-        try:
-            weights_df = pd.read_sql(backtest_sql, conn)
-            for _, row in weights_df.iterrows():
-                indicator_weights[row['indicator_name']] = row['avg_win_rate']
-        except Exception as e:
-            logger.warning(f"Error fetching indicator weights: {str(e)}")
+        
+        if metrics_table_exists:
+            # Dynamic scoring from backtest results
+            backtest_sql = """
+            SELECT 
+                indicator_name,
+                AVG(win_rate) as avg_win_rate
+            FROM indicator_performance_metrics
+            GROUP BY indicator_name
+            """
+            
+            try:
+                weights_df = pd.read_sql(backtest_sql, conn)
+                for _, row in weights_df.iterrows():
+                    indicator_weights[row['indicator_name']] = row['avg_win_rate']
+            except Exception as e:
+                logger.warning(f"Error fetching indicator weights: {str(e)}")
+                # Fall back to default weights
+                indicator_weights = {
+                    'rsi_oversold': 1.0,
+                    'macd_bullish': 1.0,
+                    'volume_shock': 1.0,
+                    'demand_zone': 2.0,
+                    'foreign_flow_positive': 1.0,
+                    'bullish_engulfing': 2.0,
+                    'uptrend_structure': 2.0,
+                    'bollinger_oversold': 1.0,
+                    'adx_strong': 1.0,
+                    'fibonacci_support': 1.0
+                }
+        else:
             # Default weights if no metrics data
             indicator_weights = {
                 'rsi_oversold': 1.0,
@@ -353,44 +404,83 @@ def calculate_advanced_indicators(lookback_period=300, signal_type='DAILY'):
                     
                     # Get technical data from other tables
                     try:
-                        # RSI query
+                        # Check if the technical indicator tables exist
+                        # RSI table
                         rsi_table = f"public_analytics.technical_indicators_rsi_{signal_type.lower()}" if signal_type != 'DAILY' else "public_analytics.technical_indicators_rsi"
-                        rsi_query = f"""
-                        SELECT rsi, rsi_signal 
-                        FROM {rsi_table}
-                        WHERE symbol = '{symbol}' AND date = '{row['date']}'
-                        """
-                        rsi_df = pd.read_sql(rsi_query, conn)
+                        cursor.execute(f"""
+                        SELECT EXISTS (
+                            SELECT FROM information_schema.tables 
+                            WHERE table_schema = 'public_analytics' 
+                            AND table_name = '{'technical_indicators_rsi' if signal_type == 'DAILY' else f"technical_indicators_rsi_{signal_type.lower()}"}'
+                        );
+                        """)
+                        rsi_table_exists = cursor.fetchone()[0]
                         
-                        # MACD query
+                        # MACD table
                         macd_table = f"public_analytics.technical_indicators_macd_{signal_type.lower()}" if signal_type != 'DAILY' else "public_analytics.technical_indicators_macd"
-                        macd_query = f"""
-                        SELECT macd_line, signal_line, macd_histogram, macd_signal
-                        FROM {macd_table}
-                        WHERE symbol = '{symbol}' AND date = '{row['date']}'
-                        """
-                        macd_df = pd.read_sql(macd_query, conn)
+                        cursor.execute(f"""
+                        SELECT EXISTS (
+                            SELECT FROM information_schema.tables 
+                            WHERE table_schema = 'public_analytics' 
+                            AND table_name = '{'technical_indicators_macd' if signal_type == 'DAILY' else f"technical_indicators_macd_{signal_type.lower()}"}'
+                        );
+                        """)
+                        macd_table_exists = cursor.fetchone()[0]
                         
-                        # Bollinger Bands query
+                        # Bollinger Bands table
                         bb_table = f"public_analytics.technical_indicators_bollinger_{signal_type.lower()}" if signal_type != 'DAILY' else "public_analytics.technical_indicators_bollinger"
-                        bb_query = f"""
-                        SELECT middle_band, upper_band, lower_band, percent_b, bb_signal
-                        FROM {bb_table}
-                        WHERE symbol = '{symbol}' AND date = '{row['date']}'
-                        """
-                        bb_df = pd.read_sql(bb_query, conn)
+                        cursor.execute(f"""
+                        SELECT EXISTS (
+                            SELECT FROM information_schema.tables 
+                            WHERE table_schema = 'public_analytics' 
+                            AND table_name = '{'technical_indicators_bollinger' if signal_type == 'DAILY' else f"technical_indicators_bollinger_{signal_type.lower()}"}'
+                        );
+                        """)
+                        bb_table_exists = cursor.fetchone()[0]
+                        
+                        # Initialize RSI, MACD, and BB data frames
+                        rsi_df = pd.DataFrame()
+                        macd_df = pd.DataFrame()
+                        bb_df = pd.DataFrame()
+                        
+                        # Query RSI if table exists
+                        if rsi_table_exists:
+                            rsi_query = f"""
+                            SELECT rsi, rsi_signal 
+                            FROM {rsi_table}
+                            WHERE symbol = '{symbol}' AND date = '{row['date']}'
+                            """
+                            rsi_df = pd.read_sql(rsi_query, conn)
+                        
+                        # Query MACD if table exists
+                        if macd_table_exists:
+                            macd_query = f"""
+                            SELECT macd_line, signal_line, macd_histogram, macd_signal
+                            FROM {macd_table}
+                            WHERE symbol = '{symbol}' AND date = '{row['date']}'
+                            """
+                            macd_df = pd.read_sql(macd_query, conn)
+                        
+                        # Query Bollinger Bands if table exists
+                        if bb_table_exists:
+                            bb_query = f"""
+                            SELECT middle_band, upper_band, lower_band, percent_b, bb_signal
+                            FROM {bb_table}
+                            WHERE symbol = '{symbol}' AND date = '{row['date']}'
+                            """
+                            bb_df = pd.read_sql(bb_query, conn)
                         
                         # Initialize buy score and triggered indicators
                         buy_score = 0
                         indicators_triggered = []
                         
                         # 1. RSI Oversold
-                        if not rsi_df.empty and rsi_df.iloc[0]['rsi_signal'] == 'Oversold':
+                        if not rsi_df.empty and 'rsi_signal' in rsi_df.columns and rsi_df.iloc[0]['rsi_signal'] == 'Oversold':
                             buy_score += indicator_weights.get('rsi_oversold', 1.0)
                             indicators_triggered.append('RSI Oversold')
                         
                         # 2. MACD Bullish
-                        if not macd_df.empty and macd_df.iloc[0]['macd_signal'] == 'Bullish':
+                        if not macd_df.empty and 'macd_signal' in macd_df.columns and macd_df.iloc[0]['macd_signal'] == 'Bullish':
                             buy_score += indicator_weights.get('macd_bullish', 1.0)
                             indicators_triggered.append('MACD Bullish')
                         
@@ -410,7 +500,7 @@ def calculate_advanced_indicators(lookback_period=300, signal_type='DAILY'):
                             indicators_triggered.append('Bullish Engulfing')
                         
                         # 6. Bollinger Band Oversold
-                        if not bb_df.empty and (bb_df.iloc[0]['bb_signal'] == 'Oversold' or bb_df.iloc[0]['bb_signal'] == 'Near Oversold'):
+                        if not bb_df.empty and 'bb_signal' in bb_df.columns and (bb_df.iloc[0]['bb_signal'] == 'Oversold' or bb_df.iloc[0]['bb_signal'] == 'Near Oversold'):
                             buy_score += indicator_weights.get('bollinger_oversold', 1.0)
                             indicators_triggered.append('Bollinger Oversold')
                         
@@ -437,24 +527,39 @@ def calculate_advanced_indicators(lookback_period=300, signal_type='DAILY'):
                             signal_strength = 'No Signal'
                         
                         # Calculate winning probability based on historical backtest
-                        try:
-                            win_prob_query = f"""
-                            SELECT
-                                AVG(CASE WHEN is_win THEN 1.0 ELSE 0.0 END) as win_rate
-                            FROM
-                                public_analytics.backtest_results
-                            WHERE
-                                buy_score = {normalized_score}
-                            """
-                            win_prob_df = pd.read_sql(win_prob_query, conn)
-                            if not win_prob_df.empty and not pd.isna(win_prob_df.iloc[0]['win_rate']):
-                                winning_probability = win_prob_df.iloc[0]['win_rate']
-                            else:
-                                # Default probability based on score
+                        # Check if backtest table exists
+                        backtest_table = f"public_analytics.backtest_results_{signal_type.lower()}" if signal_type != 'DAILY' else "public_analytics.backtest_results"
+                        cursor.execute(f"""
+                        SELECT EXISTS (
+                            SELECT FROM information_schema.tables 
+                            WHERE table_schema = 'public_analytics' 
+                            AND table_name = '{'backtest_results' if signal_type == 'DAILY' else f"backtest_results_{signal_type.lower()}"}'
+                        );
+                        """)
+                        backtest_table_exists = cursor.fetchone()[0]
+                        
+                        if backtest_table_exists:
+                            try:
+                                win_prob_query = f"""
+                                SELECT
+                                    AVG(CASE WHEN is_win THEN 1.0 ELSE 0.0 END) as win_rate
+                                FROM
+                                    {backtest_table}
+                                WHERE
+                                    buy_score = {normalized_score}
+                                """
+                                win_prob_df = pd.read_sql(win_prob_query, conn)
+                                if not win_prob_df.empty and not pd.isna(win_prob_df.iloc[0]['win_rate']):
+                                    winning_probability = win_prob_df.iloc[0]['win_rate']
+                                else:
+                                    # Default probability based on score
+                                    winning_probability = min(0.95, 0.5 + normalized_score * 0.05)
+                            except Exception as e:
+                                logger.warning(f"Error calculating win probability for {symbol}: {str(e)}")
+                                # Fallback calculation
                                 winning_probability = min(0.95, 0.5 + normalized_score * 0.05)
-                        except Exception as e:
-                            logger.warning(f"Error calculating win probability for {symbol}: {str(e)}")
-                            # Fallback calculation
+                        else:
+                            # Fallback calculation if backtest table doesn't exist
                             winning_probability = min(0.95, 0.5 + normalized_score * 0.05)
                         
                         # Only save signals with enough strength
@@ -632,9 +737,48 @@ def backtest_trading_signals(test_period=180, hold_period=5, signal_type='DAILY'
     signals_table = f"public_analytics.advanced_trading_signals_{signal_type.lower()}" if signal_type != 'DAILY' else "public_analytics.advanced_trading_signals"
     backtest_table = f"public_analytics.backtest_results_{signal_type.lower()}" if signal_type != 'DAILY' else "public_analytics.backtest_results"
     
-    # Create backtest table if not exists
+    # Check if signals table exists
     try:
         cursor = conn.cursor()
+        cursor.execute(f"""
+        SELECT EXISTS (
+            SELECT FROM information_schema.tables 
+            WHERE table_schema = 'public_analytics' 
+            AND table_name = '{'advanced_trading_signals' if signal_type == 'DAILY' else f"advanced_trading_signals_{signal_type.lower()}"}'
+        );
+        """)
+        signals_table_exists = cursor.fetchone()[0]
+        
+        if not signals_table_exists:
+            # Create signals table if it doesn't exist
+            cursor.execute(f"""
+            CREATE TABLE IF NOT EXISTS {signals_table} (
+                symbol TEXT,
+                date DATE,
+                buy_score INTEGER,
+                selling_score INTEGER,
+                winning_probability NUMERIC,
+                signal_strength TEXT,
+                indicators_triggered TEXT[],
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                PRIMARY KEY (symbol, date)
+            )
+            """)
+            conn.commit()
+            
+            cursor.close()
+            conn.close()
+            return f"Created {signals_table} table, but no data available for backtest yet"
+    except Exception as e:
+        logger.error(f"Error checking signals table: {str(e)}")
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals() and conn is not None:
+            conn.close()
+        return f"Error checking signals table: {str(e)}"
+    
+    # Create backtest table if not exists
+    try:
         cursor.execute(f"""
         CREATE TABLE IF NOT EXISTS {backtest_table} (
             id SERIAL PRIMARY KEY,
@@ -692,7 +836,14 @@ def backtest_trading_signals(test_period=180, hold_period=5, signal_type='DAILY'
         ORDER BY h.symbol, h.signal_date DESC
         """
         
-        backtest_df = pd.read_sql(query, conn)
+        try:
+            backtest_df = pd.read_sql(query, conn)
+        except Exception as e:
+            # If the query fails, it might be due to no data in signals table
+            logger.warning(f"Error querying historical signals: {str(e)}")
+            cursor.close()
+            conn.close()
+            return f"No historical signals found for {signal_type} backtest"
         
         # If no data
         if backtest_df.empty:
@@ -786,37 +937,74 @@ def backtest_trading_signals(test_period=180, hold_period=5, signal_type='DAILY'
             conn.close()
         return f"Error in backtest: {str(e)}"
 
-def send_high_probability_signals():
+def send_high_probability_signals(signal_type='DAILY', min_probability=0.8):
     """
     Send high probability trading signals report to Telegram
+    
+    Parameters:
+    signal_type (str): Signal type - DAILY, WEEKLY, or MONTHLY
+    min_probability (float): Minimum probability threshold
     """
     try:
         conn = get_database_connection()
         
-        # Verificar si la tabla existe antes de ejecutar la consulta
-        check_table_sql = """
+        # Table name based on signal_type
+        signals_table = f"public_analytics.advanced_trading_signals_{signal_type.lower()}" if signal_type != 'DAILY' else "public_analytics.advanced_trading_signals"
+        rsi_table = f"public_analytics.technical_indicators_rsi_{signal_type.lower()}" if signal_type != 'DAILY' else "public_analytics.technical_indicators_rsi"
+        macd_table = f"public_analytics.technical_indicators_macd_{signal_type.lower()}" if signal_type != 'DAILY' else "public_analytics.technical_indicators_macd"
+        
+        # Check if signals table exists
+        cursor = conn.cursor()
+        cursor.execute(f"""
         SELECT EXISTS (
             SELECT FROM information_schema.tables 
             WHERE table_schema = 'public_analytics' 
-            AND table_name = 'advanced_trading_signals'
+            AND table_name = '{'advanced_trading_signals' if signal_type == 'DAILY' else f"advanced_trading_signals_{signal_type.lower()}"}'
         );
-        """
-        
-        cursor = conn.cursor()
-        cursor.execute(check_table_sql)
+        """)
         table_exists = cursor.fetchone()[0]
         
         if not table_exists:
-            logger.warning("Table public_analytics.advanced_trading_signals does not exist")
-            return "Table advanced_trading_signals does not exist yet. Skipping report."
+            logger.warning(f"Table {signals_table} does not exist")
+            cursor.close()
+            conn.close()
+            return f"Table {signals_table} does not exist yet. Skipping report."
             
         # Get latest available date
         latest_date = get_latest_stock_date()
         if not latest_date:
             logger.warning("No date data available")
+            cursor.close()
+            conn.close()
             return "No date data available"
             
         date_filter = latest_date.strftime('%Y-%m-%d')
+        
+        # Check if RSI and MACD tables exist
+        cursor.execute(f"""
+        SELECT EXISTS (
+            SELECT FROM information_schema.tables 
+            WHERE table_schema = 'public_analytics' 
+            AND table_name = '{'technical_indicators_rsi' if signal_type == 'DAILY' else f"technical_indicators_rsi_{signal_type.lower()}"}'
+        );
+        """)
+        rsi_table_exists = cursor.fetchone()[0]
+        
+        cursor.execute(f"""
+        SELECT EXISTS (
+            SELECT FROM information_schema.tables 
+            WHERE table_schema = 'public_analytics' 
+            AND table_name = '{'technical_indicators_macd' if signal_type == 'DAILY' else f"technical_indicators_macd_{signal_type.lower()}"}'
+        );
+        """)
+        macd_table_exists = cursor.fetchone()[0]
+        
+        # Build the query based on table existence
+        left_join_rsi = f"LEFT JOIN {rsi_table} r ON s.symbol = r.symbol AND s.date = r.date" if rsi_table_exists else ""
+        left_join_macd = f"LEFT JOIN {macd_table} mc ON s.symbol = mc.symbol AND s.date = mc.date" if macd_table_exists else ""
+        
+        select_rsi = "r.rsi," if rsi_table_exists else ""
+        select_macd = "mc.macd_signal" if macd_table_exists else ""
         
         # Query for high probability signals
         signals_sql = f"""
@@ -829,18 +1017,16 @@ def send_high_probability_signals():
                 s.winning_probability,
                 m.name,
                 m.close,
-                m.volume,
-                r.rsi,
-                mc.macd_signal
-            FROM public_analytics.advanced_trading_signals s
+                m.volume
+                {', ' + select_rsi if select_rsi else ''}
+                {', ' + select_macd if select_macd else ''}
+            FROM {signals_table} s
             JOIN public.daily_stock_summary m 
                 ON s.symbol = m.symbol AND s.date = m.date
-            LEFT JOIN public_analytics.technical_indicators_rsi r 
-                ON s.symbol = r.symbol AND s.date = r.date
-            LEFT JOIN public_analytics.technical_indicators_macd mc 
-                ON s.symbol = mc.symbol AND s.date = mc.date
+            {left_join_rsi}
+            {left_join_macd}
             WHERE s.date = '{date_filter}'
-              AND s.winning_probability >= 0.8
+              AND s.winning_probability >= {min_probability}
               AND s.buy_score >= 5
         )
         SELECT * FROM stock_info
@@ -852,38 +1038,91 @@ def send_high_probability_signals():
             signals_df = pd.read_sql(signals_sql, conn)
         except Exception as e:
             logger.error(f"Error querying high probability signals: {str(e)}")
+            cursor.close()
+            conn.close()
             return f"Error querying signals: {str(e)}"
         
         if signals_df.empty:
             logger.warning(f"No high probability signals for date {date_filter}")
+            cursor.close()
+            conn.close()
             return f"No high probability signals found for date {date_filter}"
         
         # Create Telegram message
-        message = f"🎯 *SINYAL TRADING PROBABILITAS TINGGI ({date_filter})* 🎯\n\n"
+        timeframe_label = {
+            'DAILY': 'HARIAN (1-5 HARI)',
+            'WEEKLY': 'MINGGUAN (1-3 MINGGU)',
+            'MONTHLY': 'BULANAN (1-3 BULAN)'
+        }.get(signal_type, signal_type)
+        
+        message = f"🎯 *SINYAL TRADING {timeframe_label} ({date_filter})* 🎯\n\n"
         message += "Saham-saham berikut menunjukkan pola dengan probabilitas kemenangan tinggi:\n\n"
         
         for i, row in enumerate(signals_df.itertuples(), 1):
             message += f"{i}. *{row.symbol}* ({row.name})\n"
             message += f"   Harga: Rp{row.close:,.0f} | Buy Score: {row.buy_score}/10\n"
-            message += f"   Probabilitas: {row.winning_probability:.2%} | RSI: {row.rsi:.1f}\n"
+            message += f"   Probabilitas: {row.winning_probability:.2%}"
             
+            if hasattr(row, 'rsi') and not pd.isna(row.rsi):
+                message += f" | RSI: {row.rsi:.1f}"
+            
+            message += "\n"
+                
             if hasattr(row, 'signal_strength') and row.signal_strength:
                 message += f"   Kekuatan Sinyal: {row.signal_strength}\n"
                 
             if hasattr(row, 'macd_signal') and row.macd_signal:
                 message += f"   MACD: {row.macd_signal}\n"
-                
-            message += "\n"
+            
+            # Calculate target prices based on timeframe
+            if signal_type == 'WEEKLY':
+                tp1 = row.close * 1.08  # 8% target
+                tp2 = row.close * 1.15  # 15% target
+                sl = row.close * 0.95   # 5% stop loss
+            elif signal_type == 'MONTHLY':
+                tp1 = row.close * 1.12  # 12% target
+                tp2 = row.close * 1.20  # 20% target
+                sl = row.close * 0.92   # 8% stop loss
+            else:
+                tp1 = row.close * 1.05  # 5% target
+                tp2 = row.close * 1.10  # 10% target
+                sl = row.close * 0.97   # 3% stop loss
+            
+            message += f"   🎯 TP1: Rp{tp1:,.0f} | TP2: Rp{tp2:,.0f}\n"
+            message += f"   🛑 SL: Rp{sl:,.0f}\n\n"
+        
+        # Add tips based on timeframe
+        message += "*Tips Trading:*\n"
+        
+        if signal_type == 'WEEKLY':
+            message += "• Gunakan timeframe H4 atau D1 untuk entry\n"
+            message += "• Perhatikan support/resistance level mingguan\n"
+            message += "• Target profit 8-15% dalam 1-3 minggu\n"
+        elif signal_type == 'MONTHLY':
+            message += "• Gunakan timeframe D1 atau W1 untuk entry\n"
+            message += "• Perhatikan tren jangka menengah sektor saham\n"
+            message += "• Target profit 12-20% dalam 1-3 bulan\n"
+        else:
+            message += "• Gunakan timeframe H1 atau H4 untuk entry\n"
+            message += "• Perhatikan level support/resistance terdekat\n"
+            message += "• Target profit 5-10% dalam 1-5 hari\n"
         
         # Add disclaimer
-        message += "*Disclaimer:* Sinyal ini dihasilkan dari algoritma dan tidak menjamin keberhasilan. Selalu lakukan analisis tambahan sebelum mengambil keputusan investasi."
+        message += "\n*Disclaimer:* Sinyal ini dihasilkan dari algoritma dan tidak menjamin keberhasilan. Selalu lakukan analisis tambahan sebelum mengambil keputusan investasi."
         
         # Send to Telegram
         result = send_telegram_message(message)
+        cursor.close()
+        conn.close()
+        
         if "successfully" in result:
-            return f"High probability signals report sent: {len(signals_df)} stocks"
+            return f"High probability {signal_type} signals report sent: {len(signals_df)} stocks"
         else:
             return result
     except Exception as e:
         logger.error(f"Error in send_high_probability_signals: {str(e)}")
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals() and conn is not None:
+            conn.close()
         return f"Error: {str(e)}"
