@@ -2,6 +2,49 @@
 
 Sistem analisis teknikal dan trading otomatis yang menggunakan pendekatan multi-timeframe untuk menghasilkan sinyal trading saham dengan probabilitas tinggi. Sistem ini dibangun dengan Apache Airflow untuk orkestrasi, analisis teknikal komprehensif, dan notifikasi real-time melalui Telegram.
 
+## 📊 Sumber Data
+
+### IDX (Indonesia Stock Exchange)
+Data diambil dari situs resmi Bursa Efek Indonesia (IDX): [Ringkasan Perdagangan Saham](https://www.idx.co.id/id/data-pasar/ringkasan-perdagangan/ringkasan-saham/)
+
+### Periode Data
+- **Mulai**: 3 Januari 2020
+- **Sampai**: 16 Mei 2025
+- **Frekuensi**: Data harian (hari kerja bursa)
+
+### Struktur Data
+Data yang diambil memiliki struktur sebagai berikut:
+
+| Kolom | Deskripsi | Tipe Data |
+|-------|-----------|-----------|
+| Kode Saham | Kode emiten di bursa | VARCHAR |
+| Nama Perusahaan | Nama lengkap perusahaan | VARCHAR |
+| Remarks | Catatan khusus terkait saham | VARCHAR |
+| Sebelumnya | Harga penutupan hari sebelumnya | NUMERIC |
+| Open Price | Harga pembukaan | NUMERIC |
+| Tanggal Perdagangan Terakhir | Tanggal terakhir saham diperdagangkan | DATE |
+| First Trade | Waktu perdagangan pertama | TIMESTAMP |
+| Tertinggi | Harga tertinggi hari ini | NUMERIC |
+| Terendah | Harga terendah hari ini | NUMERIC |
+| Penutupan | Harga penutupan | NUMERIC |
+| Selisih | Perubahan harga dari sebelumnya | NUMERIC |
+| Volume | Volume perdagangan | BIGINT |
+| Nilai | Nilai perdagangan (Rp) | BIGINT |
+| Frekuensi | Jumlah transaksi | INTEGER |
+| Index Individual | Indeks individual saham | NUMERIC |
+| Offer | Harga penawaran jual terbaik | NUMERIC |
+| Offer Volume | Volume penawaran jual | BIGINT |
+| Bid | Harga penawaran beli terbaik | NUMERIC |
+| Bid Volume | Volume penawaran beli | BIGINT |
+| Listed Shares | Jumlah saham tercatat | BIGINT |
+| Tradeable Shares | Jumlah saham yang dapat diperdagangkan | BIGINT |
+| Weight For Index | Bobot dalam perhitungan indeks | NUMERIC |
+| Foreign Sell | Volume penjualan asing | BIGINT |
+| Foreign Buy | Volume pembelian asing | BIGINT |
+| Non Regular Volume | Volume transaksi non-reguler | BIGINT |
+| Non Regular Value | Nilai transaksi non-reguler | BIGINT |
+| Non Regular Frequency | Frekuensi transaksi non-reguler | INTEGER |
+
 ## 🌟 Fitur Utama
 
 ### 1. Analisis Multi-Timeframe
