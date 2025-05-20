@@ -8,18 +8,14 @@ import pendulum
 import pandas as pd
 import logging
 
-# Import utility modules
 from utils.database import get_database_connection, get_latest_stock_date, fetch_data
 from utils.telegram import send_telegram_message
 
-# Konfigurasi timezone
 local_tz = pendulum.timezone("Asia/Jakarta")
 
-# Logging setup
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Default arguments for DAG
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
@@ -35,25 +31,20 @@ def send_stock_movement_alert():
     Send stock movement report to Telegram
     """
     try:
-        # Find latest date in database
         conn = get_database_connection()
         cursor = conn.cursor()
         cursor.execute("SELECT MAX(date) FROM public_analytics.daily_stock_metrics")
         latest_date = cursor.fetchone()[0]
         
-        # If no data at all, exit function
         if not latest_date:
             logger.warning("No data in database")
             return "No data"
         
-        # Format date for query
         date_filter = latest_date.strftime('%Y-%m-%d')
         logger.info(f"Using data for date: {date_filter}")
         
-        # Tambahkan threshold untuk alerts
         min_change_percent = 5.0  # Hanya tampilkan saham dengan perubahan > 5%
         
-        # Query for stock movements with threshold
         query = {
             "🔼 *Top 10 Gainers:*": f"""
                 SELECT symbol, name, percent_change
@@ -91,7 +82,6 @@ def send_stock_movement_alert():
             """
         }
         
-        # Execute queries and process results
         body = ""
         last_df = None  # Variable to store last DataFrame
         
@@ -112,27 +102,22 @@ def send_stock_movement_alert():
         
         conn.close()
         
-        # If no data to send
         if body == "":
             logger.warning(f"No stock movement data for date {date_filter}")
             return f"No data for date {date_filter}"
         
-        # Send to Telegram
         message = f"🔔 *Summary Saham ({date_filter})* 🔔\n\n{body}"
         
-        # Tambahkan failsafe untuk Telegram
         try:
             result = send_telegram_message(message)
             if "successfully" in result:
                 return f"Stock movement report sent: {len(last_df) if last_df is not None else 0} stocks"
             else:
-                # Coba menyimpan ke log file jika Telegram gagal
                 with open("/opt/airflow/logs/alerts.log", "a") as f:
                     f.write(f"=== ALERT {datetime.now()} ===\n{message}\n\n")
                 return f"Telegram failed, message saved to log: {result}"
         except Exception as e:
             logger.error(f"Error sending Telegram: {str(e)}")
-            # Simpan ke log file sebagai fallback
             with open("/opt/airflow/logs/alerts.log", "a") as f:
                 f.write(f"=== ALERT {datetime.now()} ===\n{message}\n\n")
             return f"Telegram error, saved to log: {str(e)}"
@@ -147,7 +132,6 @@ def send_news_sentiment_report():
     try:
         conn = get_database_connection()
         
-        # Check if detik_ticker_sentiment table exists
         check_table_sql = """
         SELECT EXISTS (
             SELECT FROM information_schema.tables 
@@ -164,7 +148,6 @@ def send_news_sentiment_report():
             logger.warning("Table detik_ticker_sentiment does not exist")
             return "Table detik_ticker_sentiment does not exist. Skipping report."
         
-        # Check latest available date in detik_ticker_sentiment table
         date_query = """
         SELECT MAX(date) 
         FROM detik_ticker_sentiment
@@ -179,14 +162,12 @@ def send_news_sentiment_report():
         except:
             logger.warning("Could not query detik_ticker_sentiment table")
             
-        # If no data at all
         if not latest_date:
             logger.warning("No date data in news sentiment table")
             return "No news sentiment data"
         
         logger.info(f"Using sentiment data for date: {latest_date}")
         
-        # Query for stocks with highest and lowest sentiment
         sql = f"""
         SELECT 
             ticker as symbol,
@@ -214,10 +195,8 @@ def send_news_sentiment_report():
             logger.warning(f"No news sentiment data for date {latest_date}")
             return f"No news sentiment data for date {latest_date}"
         
-        # Create Telegram message
         message = f"📰 *LAPORAN SENTIMEN BERITA (Detik) ({latest_date})* 📰\n\n"
         
-        # Add top 5 stocks with positive sentiment
         message += "*Top 5 Saham dengan Sentimen Positif:*\n"
         positive_df = df[df['avg_sentiment'] > 0].head(5)
         
@@ -231,7 +210,6 @@ def send_news_sentiment_report():
         
         message += "\n"
         
-        # Add top 5 stocks with negative sentiment
         message += "*Top 5 Saham dengan Sentimen Negatif:*\n"
         negative_df = df[df['avg_sentiment'] < 0].sort_values('avg_sentiment').head(5)
         
@@ -245,7 +223,6 @@ def send_news_sentiment_report():
         
         message += "\n"
         
-        # Check if detik_news table exists
         check_news_table_sql = """
         SELECT EXISTS (
             SELECT FROM information_schema.tables 
@@ -258,7 +235,6 @@ def send_news_sentiment_report():
         news_table_exists = cursor.fetchone()[0]
         
         if news_table_exists:
-            # Check latest date for news
             news_date_query = """
             SELECT MAX(date(published_at)) 
             FROM detik_news
@@ -277,7 +253,6 @@ def send_news_sentiment_report():
             else:
                 logger.info(f"Using latest news from date: {latest_news_date}")
                 
-                # Add some latest news
                 news_sql = f"""
                 SELECT ticker, title, url 
                 FROM detik_news
@@ -295,7 +270,6 @@ def send_news_sentiment_report():
         
         conn.close()
         
-        # Send to Telegram
         result = send_telegram_message(message, disable_web_page_preview=True)
         if "successfully" in result:
             return f"News sentiment report sent: {len(df)} stocks"
@@ -312,7 +286,6 @@ def send_newsapi_sentiment_report():
     try:
         conn = get_database_connection()
         
-        # Check if newsapi_ticker_sentiment table exists
         check_table_sql = """
         SELECT EXISTS (
             SELECT FROM information_schema.tables 
@@ -329,7 +302,6 @@ def send_newsapi_sentiment_report():
             logger.warning("Table newsapi_ticker_sentiment does not exist")
             return "Table newsapi_ticker_sentiment does not exist. Skipping report."
         
-        # Check latest available date in newsapi_ticker_sentiment table
         date_query = """
         SELECT MAX(date) 
         FROM newsapi_ticker_sentiment
@@ -344,14 +316,12 @@ def send_newsapi_sentiment_report():
         except:
             logger.warning("Could not query newsapi_ticker_sentiment table")
             
-        # If no data at all
         if not latest_date:
             logger.warning("No date data in NewsAPI sentiment table")
             return "No NewsAPI sentiment data"
         
         logger.info(f"Using NewsAPI sentiment data for date: {latest_date}")
         
-        # Query for stocks with highest and lowest sentiment
         sql = f"""
         SELECT 
             ticker as symbol,
@@ -379,10 +349,8 @@ def send_newsapi_sentiment_report():
             logger.warning(f"No NewsAPI sentiment data for date {latest_date}")
             return f"No NewsAPI sentiment data for date {latest_date}"
         
-        # Create Telegram message
         message = f"📰 *LAPORAN SENTIMEN BERITA (NewsAPI) ({latest_date})* 📰\n\n"
         
-        # Add top 5 stocks with positive sentiment
         message += "*Top 5 Saham dengan Sentimen Positif:*\n"
         positive_df = df[df['avg_sentiment'] > 0].head(5)
         
@@ -396,7 +364,6 @@ def send_newsapi_sentiment_report():
         
         message += "\n"
         
-        # Add top 5 stocks with negative sentiment
         message += "*Top 5 Saham dengan Sentimen Negatif:*\n"
         negative_df = df[df['avg_sentiment'] < 0].sort_values('avg_sentiment').head(5)
         
@@ -410,7 +377,6 @@ def send_newsapi_sentiment_report():
         
         message += "\n"
         
-        # Check if newsapi_news table exists
         check_news_table_sql = """
         SELECT EXISTS (
             SELECT FROM information_schema.tables 
@@ -423,7 +389,6 @@ def send_newsapi_sentiment_report():
         news_table_exists = cursor.fetchone()[0]
         
         if news_table_exists:
-            # Check latest date for news
             news_date_query = """
             SELECT MAX(date(published_at)) 
             FROM newsapi_news
@@ -442,7 +407,6 @@ def send_newsapi_sentiment_report():
             else:
                 logger.info(f"Using latest NewsAPI news from date: {latest_news_date}")
                 
-                # Add some latest news
                 news_sql = f"""
                 SELECT ticker, title, url, source_name
                 FROM newsapi_news
@@ -461,7 +425,6 @@ def send_newsapi_sentiment_report():
         
         conn.close()
         
-        # Send to Telegram
         result = send_telegram_message(message, disable_web_page_preview=True)
         if "successfully" in result:
             return f"NewsAPI sentiment report sent: {len(df)} stocks"
@@ -478,7 +441,6 @@ def send_combined_news_sentiment_report():
     try:
         conn = get_database_connection()
         
-        # Check if required tables exist
         check_detik_table_sql = """
         SELECT EXISTS (
             SELECT FROM information_schema.tables 
@@ -506,7 +468,6 @@ def send_combined_news_sentiment_report():
             logger.warning("Neither detik_ticker_sentiment nor newsapi_ticker_sentiment tables exist")
             return "Required sentiment tables do not exist. Skipping combined report."
         
-        # Dapatkan tanggal terbaru dari kedua sumber
         latest_detik_date = None
         latest_newsapi_date = None
         
@@ -528,14 +489,11 @@ def send_combined_news_sentiment_report():
             logger.warning("No data available in both sentiment tables")
             return "No sentiment data available"
         
-        # Buat pesan untuk Telegram
         message = f"📰 *LAPORAN SENTIMEN BERITA GABUNGAN ({datetime.now().strftime('%Y-%m-%d')})* 📰\n\n"
         
-        # Tambahkan bagian untuk Detik jika data tersedia
         if latest_detik_date:
             logger.info(f"Using Detik sentiment data for date: {latest_detik_date}")
             
-            # Query untuk sentimen Detik
             detik_sql = f"""
             SELECT 
                 ticker as symbol,
@@ -564,11 +522,9 @@ def send_combined_news_sentiment_report():
                 
                 message += "\n"
         
-        # Tambahkan bagian untuk NewsAPI jika data tersedia
         if latest_newsapi_date:
             logger.info(f"Using NewsAPI sentiment data for date: {latest_newsapi_date}")
             
-            # Query untuk sentimen NewsAPI
             newsapi_sql = f"""
             SELECT 
                 ticker as symbol,
@@ -597,11 +553,8 @@ def send_combined_news_sentiment_report():
                 
                 message += "\n"
         
-        # Gabungkan data jika kedua sumber tersedia
         if latest_detik_date and latest_newsapi_date and detik_table_exists and newsapi_table_exists:
-            # Mencoba menggabungkan data dengan error handling
             try:
-                # Query untuk gabungan
                 combined_sql = f"""
                 WITH detik_data AS (
                     SELECT 
@@ -645,7 +598,6 @@ def send_combined_news_sentiment_report():
                     
                     message += "\n"
                     
-                    # Tambahkan saham dengan sentimen kontradiktif
                     message += "*⚡ Saham dengan Sentimen Kontradiktif:*\n"
                     
                     contradictory_df = combined_df[
@@ -662,9 +614,7 @@ def send_combined_news_sentiment_report():
                 logger.warning(f"Error creating combined sentiment: {str(e)}")
                 message += "*Catatan: Tidak dapat menggabungkan data sentimen dari kedua sumber.*\n\n"
         
-        # Tambahkan berita terbaru
         try:
-            # Buat SQL dinamis berdasarkan tabel yang ada
             latest_news_sql = ""
             parts = []
             
@@ -726,7 +676,6 @@ def send_combined_news_sentiment_report():
         
         conn.close()
         
-        # Kirim ke Telegram
         result = send_telegram_message(message, disable_web_page_preview=True)
         if "successfully" in result:
             return "Combined news sentiment report sent successfully"
@@ -741,11 +690,9 @@ def send_technical_signal_report():
     Send technical signal report to Telegram
     """
     try:
-        # Check if required tables exist
         conn = get_database_connection()
         cursor = conn.cursor()
         
-        # Check rsi table
         check_rsi_table_sql = """
         SELECT EXISTS (
             SELECT FROM information_schema.tables 
@@ -754,7 +701,6 @@ def send_technical_signal_report():
         );
         """
         
-        # Check macd table
         check_macd_table_sql = """
         SELECT EXISTS (
             SELECT FROM information_schema.tables 
@@ -773,7 +719,6 @@ def send_technical_signal_report():
             logger.warning("Required technical tables do not exist")
             return "Required technical tables do not exist. Skipping report."
         
-        # Query for stocks with technical signals
         sql = """
         WITH avg_volume AS (
         SELECT 
@@ -812,10 +757,8 @@ def send_technical_signal_report():
             logger.warning("No significant technical signals")
             return "No technical signals"
         
-        # Create Telegram message
         message = "📊 *SINYAL TEKNIKAL HARI INI* 📊\n\n"
         
-        # Stocks with buy signals (Oversold + Bullish)
         buy_signals = df[(df['rsi_signal'] == 'Oversold') & (df['macd_signal'] == 'Bullish')]
         
         if not buy_signals.empty:
@@ -824,7 +767,6 @@ def send_technical_signal_report():
                 message += f"{i}. *{row.symbol}*: RSI={row.rsi:.2f} (Oversold), MACD=Bullish\n"
             message += "\n"
         
-        # Stocks with sell signals (Overbought + Bearish)
         sell_signals = df[(df['rsi_signal'] == 'Overbought') & (df['macd_signal'] == 'Bearish')]
         
         if not sell_signals.empty:
@@ -833,7 +775,6 @@ def send_technical_signal_report():
                 message += f"{i}. *{row.symbol}*: RSI={row.rsi:.2f} (Overbought), MACD=Bearish\n"
             message += "\n"
         
-        # Stocks with weak buy signals (only one indicator)
         weak_buy = df[(df['rsi_signal'] == 'Oversold') & (df['macd_signal'] != 'Bullish')] 
         weak_buy = pd.concat([weak_buy, df[(df['rsi_signal'] != 'Oversold') & (df['macd_signal'] == 'Bullish')]])
         
@@ -845,7 +786,6 @@ def send_technical_signal_report():
                 signal_info = ", ".join([info for info in [rsi_info, macd_info] if info])
                 message += f"{i}. *{row.symbol}*: {signal_info}\n"
         
-        # Send to Telegram
         result = send_telegram_message(message)
         if "successfully" in result:
             return f"Technical signal report sent: {len(df)} stocks"
@@ -862,7 +802,6 @@ def send_accumulation_distribution_report():
     try:
         conn = get_database_connection()
         
-        # Check if required table exists
         cursor = conn.cursor()
         check_metrics_table_sql = """
         SELECT EXISTS (
@@ -879,14 +818,10 @@ def send_accumulation_distribution_report():
             logger.warning("Table public_analytics.daily_stock_metrics does not exist")
             return "Required metrics table does not exist. Skipping A/D Line report."
         
-        # Query to get A/D Line data
-        # We create a temporary table first to calculate money flow volume
         
-        # Step 1: Delete temporary table if it already exists
         cur = conn.cursor()
         cur.execute("DROP TABLE IF EXISTS temp_mfv;")
         
-        # Step 2: Create temporary table to calculate Money Flow Volume
         cur.execute("""
         CREATE TEMPORARY TABLE temp_mfv AS
         SELECT
@@ -900,8 +835,6 @@ def send_accumulation_distribution_report():
         WHERE date >= CURRENT_DATE - INTERVAL '40 day';
         """)
         
-        # Query to get data ACCUMULATION (positive A/D Line)
-        # Stocks with positive accumulation (money_flow_volume > 0)
         accumulation_sql = """
         SELECT
             t1.symbol,
@@ -925,8 +858,6 @@ def send_accumulation_distribution_report():
         LIMIT 10;
         """
         
-        # Query to get data DISTRIBUTION (negative A/D Line)
-        # Stocks with distribution (money_flow_volume < 0)
         distribution_sql = """
         SELECT
             t1.symbol,
@@ -950,33 +881,25 @@ def send_accumulation_distribution_report():
         LIMIT 10;
         """
         
-        # Execute query for accumulation
         accumulation_df = pd.read_sql(accumulation_sql, conn)
         
-        # Execute query for distribution
         distribution_df = pd.read_sql(distribution_sql, conn)
         
-        # Delete temporary table
         cur.execute("DROP TABLE IF EXISTS temp_mfv;")
         conn.commit()
         conn.close()
         
-        # Check if there is data
         if accumulation_df.empty and distribution_df.empty:
             logger.warning("No significant Accumulation/Distribution Line data")
             return "No A/D Line data"
         
-        # Create Telegram message
         message = "📊 *LAPORAN ACCUMULATION/DISTRIBUTION LINE* 📊\n\n"
         message += "Berdasarkan indikator A/D Line 40 hari terakhir\n\n"
         
-        # ACCUMULATION SECTION
         if not accumulation_df.empty:
             message += "📈 *TOP 10 SAHAM DENGAN AKUMULASI TERTINGGI*\n\n"
             
-            # Format for accumulation table
             for i, row in enumerate(accumulation_df.itertuples(), 1):
-                # Format money_flow_volume and ad_line for better readability
                 mfv_formatted = f"{row.money_flow_volume:,.0f}" if abs(row.money_flow_volume) >= 1000 else f"{row.money_flow_volume:.2f}"
                 ad_line_formatted = f"{row.ad_line:,.0f}" if abs(row.ad_line) >= 1000 else f"{row.ad_line:.2f}"
                 
@@ -984,13 +907,10 @@ def send_accumulation_distribution_report():
                 message += f"   Harga: Rp{row.close:,.0f} | A/D Line: {ad_line_formatted}\n"
                 message += f"   Money Flow Volume: {mfv_formatted}\n\n"
         
-        # DISTRIBUTION SECTION
         if not distribution_df.empty:
             message += "📉 *TOP 10 SAHAM DENGAN DISTRIBUSI TERTINGGI*\n\n"
             
-            # Format for distribution table
             for i, row in enumerate(distribution_df.itertuples(), 1):
-                # Format money_flow_volume and ad_line for better readability
                 mfv_formatted = f"{row.money_flow_volume:,.0f}" if abs(row.money_flow_volume) >= 1000 else f"{row.money_flow_volume:.2f}"
                 ad_line_formatted = f"{row.ad_line:,.0f}" if abs(row.ad_line) >= 1000 else f"{row.ad_line:.2f}"
                 
@@ -998,14 +918,12 @@ def send_accumulation_distribution_report():
                 message += f"   Harga: Rp{row.close:,.0f} | A/D Line: {ad_line_formatted}\n"
                 message += f"   Money Flow Volume: {mfv_formatted}\n\n"
         
-        # Add explanation about A/D Line indicator
         message += "*Tentang A/D Line:*\n"
         message += "Indikator A/D Line menunjukkan aliran uang ke dalam saham (akumulasi) vs. aliran keluar (distribusi). "
         message += "• Nilai positif & meningkat: Akumulasi oleh investor, potensi kenaikan harga.\n"
         message += "• Nilai negatif & menurun: Distribusi oleh investor, potensi penurunan harga.\n\n"
         message += "Data diambil dari 40 hari terakhir."
         
-        # Send to Telegram
         result = send_telegram_message(message)
         if "successfully" in result:
             return f"A/D Line report sent: {len(accumulation_df) + len(distribution_df)} stocks"
@@ -1022,7 +940,6 @@ def send_bandarmology_report():
     try:
         conn = get_database_connection()
         
-        # Check if required table exists
         cursor = conn.cursor()
         check_summary_table_sql = """
         SELECT EXISTS (
@@ -1039,7 +956,6 @@ def send_bandarmology_report():
             logger.warning("Table public.daily_stock_summary does not exist")
             return "Required summary table does not exist. Skipping Bandarmology report."
         
-        # Get latest date from database
         latest_date = get_latest_stock_date()
         if not latest_date:
             logger.warning("No date data available")
@@ -1048,7 +964,6 @@ def send_bandarmology_report():
         date_filter = latest_date.strftime('%Y-%m-%d')
         logger.info(f"Running Bandarmology analysis for date: {date_filter}")
         
-        # Execute Bandarmology query
         bandar_sql = """
         WITH volume_analysis AS (
             -- Analisis volume selama 20 hari terakhir
@@ -1150,23 +1065,19 @@ def send_bandarmology_report():
         LIMIT 15;
         """
         
-        # Execute query
         bandar_df = fetch_data(bandar_sql)
         
         if bandar_df.empty:
             logger.warning("No significant bandarmology patterns found")
             return "No bandarmology patterns found"
         
-        # Create Telegram message
         message = "🔍 *ANALISIS BANDARMOLOGY HARI INI* 🔍\n\n"
         message += f"Saham-saham berikut menunjukkan pola akumulasi \"bandar\" ({date_filter}):\n\n"
         
-        # Group by signal strength
         strong_signals = bandar_df[bandar_df['signal_strength'] == 'Sangat Kuat']
         medium_signals = bandar_df[bandar_df['signal_strength'] == 'Kuat']
         weak_signals = bandar_df[bandar_df['signal_strength'] == 'Sedang']
         
-        # Add strong signals
         if not strong_signals.empty:
             message += "💪 *Sinyal Akumulasi Sangat Kuat:*\n\n"
             for i, row in enumerate(strong_signals.itertuples(), 1):
@@ -1174,14 +1085,12 @@ def send_bandarmology_report():
                 message += f"   Harga: Rp{row.close:,.0f} | Rasio Volume: {row.volume_ratio:.2f}x\n"
                 message += f"   Skor Bandar: {row.bandar_score}/5 | Hari Positif: {row.positive_days_last5}/5\n"
                 
-                # Add foreign flow if available
                 if row.foreign_net and row.foreign_net != 0:
                     foreign_net_formatted = f"{row.foreign_net:,.0f}" if abs(row.foreign_net) >= 1000 else f"{row.foreign_net:.2f}"
                     message += f"   Net Asing: {foreign_net_formatted}\n"
                 
                 message += "\n"
         
-        # Add medium signals
         if not medium_signals.empty:
             message += "⚡ *Sinyal Akumulasi Kuat:*\n\n"
             for i, row in enumerate(medium_signals.itertuples(), 1):
@@ -1189,7 +1098,6 @@ def send_bandarmology_report():
                 message += f"   Harga: Rp{row.close:,.0f} | Rasio Volume: {row.volume_ratio:.2f}x\n"
                 message += f"   Skor Bandar: {row.bandar_score}/5\n\n"
         
-        # Add weak signals (limited to save space)
         if not weak_signals.empty:
             message += "🔎 *Sinyal Akumulasi Sedang:*\n"
             for i, row in enumerate(weak_signals.head(5).itertuples(), 1):
@@ -1197,7 +1105,6 @@ def send_bandarmology_report():
             
             message += "\n"
         
-        # Add explanation about Bandarmology
         message += "*Tentang Analisis Bandarmology:*\n"
         message += "Analisis ini mengidentifikasi pola akumulasi \"bandar\" berdasarkan 5 indikator:\n"
         message += "• Volume Spike: Lonjakan volume signifikan (>2x rata-rata)\n"
@@ -1207,7 +1114,6 @@ def send_bandarmology_report():
         message += "• Positive Close: Penutupan dengan harga positif\n\n"
         message += "*Disclaimer:* Analisis ini bersifat teknikal dan tidak menjamin kenaikan. Lakukan analisis tambahan sebelum mengambil keputusan investasi."
         
-        # Send to Telegram
         result = send_telegram_message(message)
         if "successfully" in result:
             return f"Bandarmology report sent: {len(bandar_df)} stocks"
@@ -1224,7 +1130,6 @@ def send_high_probability_signals():
     try:
         conn = get_database_connection()
         
-        # Verificar si la tabla existe antes de ejecutar la consulta
         check_table_sql = """
         SELECT EXISTS (
             SELECT FROM information_schema.tables 
@@ -1241,7 +1146,6 @@ def send_high_probability_signals():
             logger.warning("Table public_analytics.advanced_trading_signals does not exist")
             return "Table advanced_trading_signals does not exist yet. Skipping report."
             
-        # Get latest available date
         latest_date = get_latest_stock_date()
         if not latest_date:
             logger.warning("No date data available")
@@ -1249,7 +1153,6 @@ def send_high_probability_signals():
             
         date_filter = latest_date.strftime('%Y-%m-%d')
         
-        # Query for high probability signals
         signals_sql = f"""
         WITH stock_info AS (
             SELECT 
@@ -1289,7 +1192,6 @@ def send_high_probability_signals():
             logger.warning(f"No high probability signals for date {date_filter}")
             return f"No high probability signals found for date {date_filter}"
         
-        # Create Telegram message
         message = f"🎯 *SINYAL TRADING PROBABILITAS TINGGI ({date_filter})* 🎯\n\n"
         message += "Saham-saham berikut menunjukkan pola dengan probabilitas kemenangan tinggi:\n\n"
         
@@ -1306,10 +1208,8 @@ def send_high_probability_signals():
                 
             message += "\n"
         
-        # Add disclaimer
         message += "*Disclaimer:* Sinyal ini dihasilkan dari algoritma dan tidak menjamin keberhasilan. Selalu lakukan analisis tambahan sebelum mengambil keputusan investasi."
         
-        # Send to Telegram
         result = send_telegram_message(message)
         if "successfully" in result:
             return f"High probability signals report sent: {len(signals_df)} stocks"
@@ -1319,7 +1219,6 @@ def send_high_probability_signals():
         logger.error(f"Error in send_high_probability_signals: {str(e)}")
         return f"Error: {str(e)}"
 
-# DAG definition
 with DAG(
     dag_id="reporting_and_alerting",
     start_date=pendulum.datetime(2024, 1, 1, tz=local_tz),
@@ -1340,7 +1239,6 @@ with DAG(
         failed_states=["failed", "skipped"]
     )
     
-    # Tambahkan wait for newsapi data
     wait_for_newsapi = ExternalTaskSensor(
         task_id="wait_for_newsapi",
         external_dag_id="newsapi_data_ingestion",
@@ -1367,60 +1265,50 @@ with DAG(
         task_id="wait"
     )
     
-    # Stock movement report
     send_movement = PythonOperator(
         task_id="send_stock_movement_alert",
         python_callable=send_stock_movement_alert
     )
     
-    # News sentiment report (Detik)
     send_sentiment = PythonOperator(
         task_id="send_news_sentiment_report",
         python_callable=send_news_sentiment_report
     )
     
-    # News sentiment report (NewsAPI)
     send_newsapi_sentiment = PythonOperator(
         task_id="send_newsapi_sentiment_report",
         python_callable=send_newsapi_sentiment_report
     )
     
-    # Combined news sentiment report
     send_combined_sentiment = PythonOperator(
         task_id="send_combined_news_sentiment_report",
         python_callable=send_combined_news_sentiment_report
     )
     
-    # Technical signal report
     send_technical = PythonOperator(
         task_id="send_technical_signal_report",
         python_callable=send_technical_signal_report
     )
     
-    # Accumulation/Distribution report
     send_ad_report = PythonOperator(
         task_id="send_accumulation_distribution_report",
         python_callable=send_accumulation_distribution_report
     )
     
-    # Bandarmology report
     send_bandar = PythonOperator(
         task_id="send_bandarmology_report",
         python_callable=send_bandarmology_report
     )
     
-    # High probability signals report - new task
     send_signals = PythonOperator(
         task_id="send_high_probability_signals",
         python_callable=send_high_probability_signals
     )
 
-    # End marker
     end_task = DummyOperator(
         task_id="end_task"
     )
     
-    # Define task dependencies
     [wait_for_transformation, wait_for_detik, wait_for_newsapi] >> wait >> [send_movement, send_sentiment, send_newsapi_sentiment, send_technical, send_ad_report, send_bandar, send_signals]
     [send_sentiment, send_newsapi_sentiment] >> send_combined_sentiment
     [send_movement, send_technical, send_ad_report, send_bandar, send_combined_sentiment, send_signals] >> end_task

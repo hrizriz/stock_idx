@@ -33,7 +33,6 @@ def verify_source_tables():
     )
     cur = conn.cursor()
     
-    # Daftar tabel yang dibutuhkan untuk model DBT
     required_tables = [
         "daily_stock_summary",
         "dim_companies",
@@ -41,7 +40,6 @@ def verify_source_tables():
         "detik_news"
     ]
     
-    # Periksa apakah tabel ada
     missing_tables = []
     for table in required_tables:
         cur.execute(f"""
@@ -55,11 +53,9 @@ def verify_source_tables():
         if not exists:
             missing_tables.append(table)
     
-    # Jika ada tabel yang hilang, buat tabel kosong
     if missing_tables:
         print(f"⚠️ Tabel yang hilang: {missing_tables}")
         
-        # Buat tabel yang hilang
         for table in missing_tables:
             if table == "daily_stock_summary":
                 cur.execute("""
@@ -151,16 +147,7 @@ def verify_source_tables():
     
     return len(missing_tables)
 
-# def check_parameters(**context):
-#     dag_run = context["dag_run"]
-#     if dag_run and dag_run.conf and dag_run.conf.get("bulk_load_complete"):
-#         print("Bulk load selesai, lanjutkan dengan transformasi")
-#         return "verify_source_tables"  # Ubah ke "verify_tables" agar sesuai
-#     else:
-#         print("Bulk load belum selesai, berhenti")
-#         return "end_task"
 
-# DAG definition - Data Transformation
 with DAG(
     dag_id="data_transformation",
     start_date=pendulum.datetime(2024, 1, 1, tz=local_tz),
@@ -170,7 +157,6 @@ with DAG(
     tags=["dbt", "transformation", "analytics"]
 ) as dag:
 
-    # Tunggu hingga DAG ingestion selesai
     wait_for_stock_data = ExternalTaskSensor(
     task_id="wait_for_stock_data",
     external_dag_id="stock_data_ingestion",
@@ -193,13 +179,7 @@ with DAG(
         failed_states=["failed", "skipped"]
     )
 
-    # check_bulk_load = BranchPythonOperator(  # Ganti wait_for_bulk_load menjadi check_bulk_load
-    # task_id="check_bulk_load",
-    # python_callable=check_parameters,
-    # provide_context=True
-    # )
     
-    # Verify tabel
     verify_tables = PythonOperator(
         task_id="verify_source_tables",
         python_callable=verify_source_tables
@@ -210,25 +190,21 @@ with DAG(
         bash_command='cd /opt/airflow/dbt && dbt run --profiles-dir /opt/airflow/dbt --select staging --exclude stg_stock_predictions',
     )
 
-    # Jalankan model core tanpa LSTM
     run_dbt_core = BashOperator(
         task_id='run_dbt_core',
         bash_command='cd /opt/airflow/dbt && dbt run --profiles-dir /opt/airflow/dbt --select marts.core --exclude fct_stock_predictions',
     )
 
-    # Jalankan model analytics tanpa LSTM
     run_dbt_analytics = BashOperator(
         task_id='run_dbt_analytics',
         bash_command='cd /opt/airflow/dbt && dbt run --profiles-dir /opt/airflow/dbt --select marts.analytics --exclude lstm_performance_metrics stock_prediction_dashboard',
     )
 
-    # Jalankan test
     test_dbt = BashOperator(
         task_id='test_dbt_models',
         bash_command='cd /opt/airflow/dbt && dbt test --profiles-dir /opt/airflow/dbt --exclude stg_stock_predictions fct_stock_predictions lstm_performance_metrics stock_prediction_dashboard',
     )
     
-    # Marker task
     end_task = DummyOperator(
         task_id="end_task"
     )

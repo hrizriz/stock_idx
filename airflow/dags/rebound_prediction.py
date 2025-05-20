@@ -24,7 +24,6 @@ def identify_potential_rebounds():
     try:
         conn = get_database_connection()
         
-        # Query for stocks in downtrend but showing accumulation patterns
         rebound_query = """
         WITH price_trends AS (
             -- Calculate recent trend (last 10 days)
@@ -163,7 +162,6 @@ def identify_potential_rebounds():
         
         rebound_df = pd.read_sql(rebound_query, conn)
         
-        # Calculate expected rebound percentage based on historical patterns
         rebound_df['expected_rebound_pct'] = rebound_df.apply(
             lambda x: min(abs(x['price_change_10d']) * 0.4, 15) if x['rebound_score'] >= 15 else
                       min(abs(x['price_change_10d']) * 0.3, 10) if x['rebound_score'] >= 10 else
@@ -171,11 +169,9 @@ def identify_potential_rebounds():
             axis=1
         )
         
-        # Save results to database
         if not rebound_df.empty:
             cursor = conn.cursor()
             
-            # Create table if not exists
             cursor.execute("""
             CREATE TABLE IF NOT EXISTS public_analytics.potential_rebounds (
                 id SERIAL PRIMARY KEY,
@@ -193,11 +189,9 @@ def identify_potential_rebounds():
             )
             """)
             
-            # Clear previous data for today
             today = pd.Timestamp.now().strftime('%Y-%m-%d')
             cursor.execute(f"DELETE FROM public_analytics.potential_rebounds WHERE date = '{today}'")
             
-            # Insert new data
             for _, row in rebound_df.iterrows():
                 cursor.execute("""
                 INSERT INTO public_analytics.potential_rebounds
@@ -250,12 +244,10 @@ def send_rebound_signals():
         if df.empty:
             return "No rebound candidates found"
         
-        # Format message
         message = "🔄 *POTENTIAL REBOUND CANDIDATES* 🔄\n\n"
         message += "The following stocks show significant rebound potential based on transaction patterns:\n\n"
         
         for i, row in enumerate(df.itertuples(), 1):
-            # Emoji based on rebound score
             if row.rebound_score >= 18:
                 emoji = "⭐⭐⭐"  # Strong signal
             elif row.rebound_score >= 15:
@@ -268,7 +260,6 @@ def send_rebound_signals():
             message += f"   Rebound Score: {row.rebound_score}/25 | Probability: {row.rebound_probability*100:.0f}%\n"
             message += f"   Expected Rebound: +{row.expected_rebound_pct:.1f}%\n"
             
-            # Add supporting indicators
             indicators = []
             if row.rsi is not None and row.rsi < 40:
                 indicators.append(f"RSI: {row.rsi:.1f}")
@@ -280,7 +271,6 @@ def send_rebound_signals():
                 
             message += "\n"
         
-        # Strategy tips
         message += "*Rebound Strategy Tips:*\n"
         message += "• Enter on morning weakness or consolidation\n"
         message += "• Target: +5-15% from entry\n"
@@ -289,7 +279,6 @@ def send_rebound_signals():
         
         message += "*Disclaimer:* Rebound predictions are based on transaction patterns and technical analysis. Always conduct your own research."
         
-        # Send to Telegram
         send_telegram_message(message)
         
         return f"Sent {len(df)} rebound signals to Telegram"
@@ -297,7 +286,6 @@ def send_rebound_signals():
         logging.error(f"Error sending rebound signals: {str(e)}")
         return f"Error: {str(e)}"
 
-# Define the DAG
 with DAG(
     dag_id="rebound_prediction",
     start_date=pendulum.datetime(2024, 1, 1, tz=local_tz),
@@ -318,22 +306,18 @@ with DAG(
         failed_states=["failed", "skipped"]
     )
     
-    # Identify potential rebounds
     identify_rebounds = PythonOperator(
         task_id="identify_potential_rebounds",
         python_callable=identify_potential_rebounds
     )
     
-    # Send signals
     send_signals = PythonOperator(
         task_id="send_rebound_signals",
         python_callable=send_rebound_signals
     )
     
-    # End marker
     end_task = DummyOperator(
         task_id="end_task"
     )
     
-    # Define task dependencies
     wait_for_transformation >> identify_rebounds >> send_signals >> end_task

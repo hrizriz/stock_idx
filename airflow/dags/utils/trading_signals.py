@@ -7,7 +7,6 @@ from airflow.models import Variable
 from .database import get_database_connection, get_latest_stock_date
 from .telegram import send_telegram_message
 
-# Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -24,16 +23,12 @@ def send_performance_report(report_type='DAILY', lookback_days=60):
     except Exception as e:
         return f"Database connection error: {str(e)}"
     
-    # Get latest date
     latest_date = get_latest_stock_date()
     
-    # Query to get previous signal performance (backtest)
     try:
-        # Table names based on report_type
         backtest_table = f"public_analytics.backtest_results_{report_type.lower()}" if report_type != 'DAILY' else "public_analytics.backtest_results"
         signals_table = f"public_analytics.advanced_trading_signals_{report_type.lower()}" if report_type != 'DAILY' else "public_analytics.advanced_trading_signals"
         
-        # Check if tables exist
         cursor = conn.cursor()
         cursor.execute(f"""
         SELECT EXISTS (
@@ -86,12 +81,9 @@ def send_performance_report(report_type='DAILY', lookback_days=60):
         try:
             performance_df = pd.read_sql(sql, conn)
         except:
-            # If backtest_results table doesn't exist yet
             performance_df = pd.DataFrame()
             logger.warning(f"{backtest_table} table does not exist yet")
         
-        # Query for recent completed signals (5+ days)
-        # Adjust hold period based on report_type
         hold_period = 5  # Default for DAILY
         if report_type == 'WEEKLY':
             hold_period = 10
@@ -126,7 +118,6 @@ def send_performance_report(report_type='DAILY', lookback_days=60):
         try:
             recent_df = pd.read_sql(recent_sql, conn)
         except:
-            # If no completed signals yet
             recent_df = pd.DataFrame()
             logger.warning("No completed signals found")
             
@@ -137,10 +128,8 @@ def send_performance_report(report_type='DAILY', lookback_days=60):
             conn.close()
         return f"Error querying performance data: {str(e)}"
     
-    # Create Telegram message
     message = f"📊 *LAPORAN PERFORMA SINYAL TRADING {report_type}* 📊\n\n"
     
-    # Part 1: Win rate statistics
     if not performance_df.empty:
         message += "*Statistik Win Rate Berdasarkan Skor:*\n\n"
         message += "| Skor | Jumlah | Win Rate | Avg Return |\n"
@@ -149,7 +138,6 @@ def send_performance_report(report_type='DAILY', lookback_days=60):
         for _, row in performance_df.iterrows():
             message += f"| {row['buy_score']} | {row['total_signals']} | {row['win_rate']}% | {row['avg_return']}% |\n"
         
-        # Overall statistics
         total_signals = performance_df['total_signals'].sum()
         total_wins = performance_df['win_count'].sum()
         overall_win_rate = (total_wins / total_signals * 100) if total_signals > 0 else 0
@@ -159,18 +147,15 @@ def send_performance_report(report_type='DAILY', lookback_days=60):
     else:
         message += "*Belum ada data backtest yang cukup*\n\n"
     
-    # Part 2: Recent completed signals performance
     if not recent_df.empty:
         message += "*Performance Sinyal Terbaru:*\n\n"
         
         win_count = 0
         for i, row in enumerate(recent_df.itertuples(), 1):
-            # Format date
             signal_date = row.signal_date
             if isinstance(signal_date, pd.Timestamp):
                 signal_date = signal_date.strftime('%Y-%m-%d')
                 
-            # Emoji based on win/loss
             emoji = "✅" if row.is_win else "❌"
             
             message += f"{emoji} *{row.symbol}* ({row.name}): {row.percent_change}%\n"
@@ -185,7 +170,6 @@ def send_performance_report(report_type='DAILY', lookback_days=60):
     else:
         message += f"*Belum ada sinyal yang complete dalam {lookback_days} hari terakhir*\n\n"
     
-    # Part 3: Tips to improve win rate - adjust based on report_type
     message += "*Tips Meningkatkan Win Rate:*\n"
     
     if report_type == 'WEEKLY':
@@ -204,7 +188,6 @@ def send_performance_report(report_type='DAILY', lookback_days=60):
         message += "3. Gunakan money management yang ketat (max 2% risiko per trade)\n"
         message += "4. Take profit bertahap pada +5% dan +10%\n"
     
-    # Send to Telegram
     result = send_telegram_message(message)
     if "successfully" in result:
         return f"Performance report for {report_type} sent successfully"
@@ -224,10 +207,8 @@ def calculate_advanced_indicators(lookback_period=300, signal_type='DAILY'):
     except Exception as e:
         return f"Failed to connect to database: {str(e)}"
     
-    # Dapatkan tanggal terakhir
     latest_date = get_latest_stock_date()
     
-    # Get stock data for analysis
     query = f"""
     SELECT 
         d.symbol, 
@@ -260,16 +241,13 @@ def calculate_advanced_indicators(lookback_period=300, signal_type='DAILY'):
         conn.close()
         return f"Error querying stock data: {str(e)}"
     
-    # If no data
     if df.empty:
         logger.warning(f"No stock data for calculating advanced indicators {signal_type}")
         conn.close()
         return f"No data for {signal_type}"
     
-    # Table name based on signal_type
     signals_table = f"public_analytics.advanced_trading_signals_{signal_type.lower()}" if signal_type != 'DAILY' else "public_analytics.advanced_trading_signals"
     
-    # Create table if it doesn't exist
     try:
         cursor = conn.cursor()
         cursor.execute(f"""
@@ -292,9 +270,7 @@ def calculate_advanced_indicators(lookback_period=300, signal_type='DAILY'):
         conn.close()
         return f"Error creating signals table: {str(e)}"
     
-    # Get dynamic scoring from backtest results
     try:
-        # Check if indicator_performance_metrics table exists
         cursor.execute("""
         SELECT EXISTS (
             SELECT FROM information_schema.tables 
@@ -307,7 +283,6 @@ def calculate_advanced_indicators(lookback_period=300, signal_type='DAILY'):
         indicator_weights = {}
         
         if metrics_table_exists:
-            # Dynamic scoring from backtest results
             backtest_sql = """
             SELECT 
                 indicator_name,
@@ -322,7 +297,6 @@ def calculate_advanced_indicators(lookback_period=300, signal_type='DAILY'):
                     indicator_weights[row['indicator_name']] = row['avg_win_rate']
             except Exception as e:
                 logger.warning(f"Error fetching indicator weights: {str(e)}")
-                # Fall back to default weights
                 indicator_weights = {
                     'rsi_oversold': 1.0,
                     'macd_bullish': 1.0,
@@ -336,7 +310,6 @@ def calculate_advanced_indicators(lookback_period=300, signal_type='DAILY'):
                     'fibonacci_support': 1.0
                 }
         else:
-            # Default weights if no metrics data
             indicator_weights = {
                 'rsi_oversold': 1.0,
                 'macd_bullish': 1.0,
@@ -350,7 +323,6 @@ def calculate_advanced_indicators(lookback_period=300, signal_type='DAILY'):
                 'fibonacci_support': 1.0
             }
         
-        # Process each stock
         results = []
         processed_count = 0
         
@@ -358,24 +330,18 @@ def calculate_advanced_indicators(lookback_period=300, signal_type='DAILY'):
             if len(group) < 20:  # Need enough data
                 continue
                 
-            # Sort by date
             group = group.sort_values('date')
             
-            # Calculate basic technical indicators
             try:
-                # Volume Shock (sudden increase in volume)
                 group['avg_volume_10d'] = group['volume'].rolling(window=10).mean()
                 group['volume_shock'] = group['volume'] > group['avg_volume_10d'] * 3
                 
-                # Price Channel
                 group['high_20d'] = group['high'].rolling(window=20).max()
                 group['low_20d'] = group['low'].rolling(window=20).min()
                 
-                # Check if near support/resistance
                 group['near_support'] = group['close'] < group['low_20d'] * 1.03
                 group['near_resistance'] = group['close'] > group['high_20d'] * 0.97
                 
-                # Check for bullish engulfing pattern
                 group['prev_open'] = group['open'].shift(1)
                 group['prev_close'] = group['close'].shift(1)
                 group['bullish_engulfing'] = (
@@ -385,27 +351,18 @@ def calculate_advanced_indicators(lookback_period=300, signal_type='DAILY'):
                     (group['prev_close'] < group['prev_open'])
                 )
                 
-                # Filter latest data only - adjust based on signal_type
                 if signal_type == 'WEEKLY':
-                    # For weekly, take latest 5 trading days
                     latest_data = group.tail(5)
                 elif signal_type == 'MONTHLY':
-                    # For monthly, take latest 20 trading days
                     latest_data = group.tail(20)
                 else:
-                    # For daily, take latest 2 trading days
                     latest_data = group.tail(2)
                 
-                # Process latest data for signals
                 for i, (idx, row) in enumerate(latest_data.iterrows()):
-                    # Only process last day
                     if i != len(latest_data) - 1:
                         continue
                     
-                    # Get technical data from other tables
                     try:
-                        # Check if the technical indicator tables exist
-                        # RSI table
                         rsi_table = f"public_analytics.technical_indicators_rsi_{signal_type.lower()}" if signal_type != 'DAILY' else "public_analytics.technical_indicators_rsi"
                         cursor.execute(f"""
                         SELECT EXISTS (
@@ -416,7 +373,6 @@ def calculate_advanced_indicators(lookback_period=300, signal_type='DAILY'):
                         """)
                         rsi_table_exists = cursor.fetchone()[0]
                         
-                        # MACD table
                         macd_table = f"public_analytics.technical_indicators_macd_{signal_type.lower()}" if signal_type != 'DAILY' else "public_analytics.technical_indicators_macd"
                         cursor.execute(f"""
                         SELECT EXISTS (
@@ -427,7 +383,6 @@ def calculate_advanced_indicators(lookback_period=300, signal_type='DAILY'):
                         """)
                         macd_table_exists = cursor.fetchone()[0]
                         
-                        # Bollinger Bands table
                         bb_table = f"public_analytics.technical_indicators_bollinger_{signal_type.lower()}" if signal_type != 'DAILY' else "public_analytics.technical_indicators_bollinger"
                         cursor.execute(f"""
                         SELECT EXISTS (
@@ -438,12 +393,10 @@ def calculate_advanced_indicators(lookback_period=300, signal_type='DAILY'):
                         """)
                         bb_table_exists = cursor.fetchone()[0]
                         
-                        # Initialize RSI, MACD, and BB data frames
                         rsi_df = pd.DataFrame()
                         macd_df = pd.DataFrame()
                         bb_df = pd.DataFrame()
                         
-                        # Query RSI if table exists
                         if rsi_table_exists:
                             rsi_query = f"""
                             SELECT rsi, rsi_signal 
@@ -452,7 +405,6 @@ def calculate_advanced_indicators(lookback_period=300, signal_type='DAILY'):
                             """
                             rsi_df = pd.read_sql(rsi_query, conn)
                         
-                        # Query MACD if table exists
                         if macd_table_exists:
                             macd_query = f"""
                             SELECT macd_line, signal_line, macd_histogram, macd_signal
@@ -461,7 +413,6 @@ def calculate_advanced_indicators(lookback_period=300, signal_type='DAILY'):
                             """
                             macd_df = pd.read_sql(macd_query, conn)
                         
-                        # Query Bollinger Bands if table exists
                         if bb_table_exists:
                             bb_query = f"""
                             SELECT middle_band, upper_band, lower_band, percent_b, bb_signal
@@ -470,41 +421,33 @@ def calculate_advanced_indicators(lookback_period=300, signal_type='DAILY'):
                             """
                             bb_df = pd.read_sql(bb_query, conn)
                         
-                        # Initialize buy score and triggered indicators
                         buy_score = 0
                         indicators_triggered = []
                         
-                        # 1. RSI Oversold
                         if not rsi_df.empty and 'rsi_signal' in rsi_df.columns and rsi_df.iloc[0]['rsi_signal'] == 'Oversold':
                             buy_score += indicator_weights.get('rsi_oversold', 1.0)
                             indicators_triggered.append('RSI Oversold')
                         
-                        # 2. MACD Bullish
                         if not macd_df.empty and 'macd_signal' in macd_df.columns and macd_df.iloc[0]['macd_signal'] == 'Bullish':
                             buy_score += indicator_weights.get('macd_bullish', 1.0)
                             indicators_triggered.append('MACD Bullish')
                         
-                        # 3. Volume Shock
                         if row['volume_shock']:
                             buy_score += indicator_weights.get('volume_shock', 1.0)
                             indicators_triggered.append('Volume Shock')
                         
-                        # 4. Near Support (Demand Zone)
                         if row['near_support']:
                             buy_score += indicator_weights.get('demand_zone', 2.0)
                             indicators_triggered.append('Near Support')
                         
-                        # 5. Bullish Engulfing
                         if row['bullish_engulfing']:
                             buy_score += indicator_weights.get('bullish_engulfing', 2.0)
                             indicators_triggered.append('Bullish Engulfing')
                         
-                        # 6. Bollinger Band Oversold
                         if not bb_df.empty and 'bb_signal' in bb_df.columns and (bb_df.iloc[0]['bb_signal'] == 'Oversold' or bb_df.iloc[0]['bb_signal'] == 'Near Oversold'):
                             buy_score += indicator_weights.get('bollinger_oversold', 1.0)
                             indicators_triggered.append('Bollinger Oversold')
                         
-                        # Normalize buy score to 0-10 scale
                         max_possible_score = sum([
                             indicator_weights.get('rsi_oversold', 1.0),
                             indicator_weights.get('macd_bullish', 1.0),
@@ -516,7 +459,6 @@ def calculate_advanced_indicators(lookback_period=300, signal_type='DAILY'):
                         
                         normalized_score = min(10, round(buy_score * 10 / max_possible_score))
                         
-                        # Signal strength based on score
                         if normalized_score >= 8:
                             signal_strength = 'Strong'
                         elif normalized_score >= 6:
@@ -526,8 +468,6 @@ def calculate_advanced_indicators(lookback_period=300, signal_type='DAILY'):
                         else:
                             signal_strength = 'No Signal'
                         
-                        # Calculate winning probability based on historical backtest
-                        # Check if backtest table exists
                         backtest_table = f"public_analytics.backtest_results_{signal_type.lower()}" if signal_type != 'DAILY' else "public_analytics.backtest_results"
                         cursor.execute(f"""
                         SELECT EXISTS (
@@ -552,17 +492,13 @@ def calculate_advanced_indicators(lookback_period=300, signal_type='DAILY'):
                                 if not win_prob_df.empty and not pd.isna(win_prob_df.iloc[0]['win_rate']):
                                     winning_probability = win_prob_df.iloc[0]['win_rate']
                                 else:
-                                    # Default probability based on score
                                     winning_probability = min(0.95, 0.5 + normalized_score * 0.05)
                             except Exception as e:
                                 logger.warning(f"Error calculating win probability for {symbol}: {str(e)}")
-                                # Fallback calculation
                                 winning_probability = min(0.95, 0.5 + normalized_score * 0.05)
                         else:
-                            # Fallback calculation if backtest table doesn't exist
                             winning_probability = min(0.95, 0.5 + normalized_score * 0.05)
                         
-                        # Only save signals with enough strength
                         if normalized_score >= 3:  # Minimum score threshold
                             results.append({
                                 'symbol': symbol,
@@ -584,7 +520,6 @@ def calculate_advanced_indicators(lookback_period=300, signal_type='DAILY'):
                 logger.warning(f"Error calculating indicators for {symbol}: {str(e)}")
                 continue
         
-        # Save results to database
         if results:
             for result in results:
                 cursor.execute(f"""
@@ -639,10 +574,8 @@ def filter_by_volatility_liquidity(analysis_period=30, signal_type='DAILY', vola
     except Exception as e:
         return f"Database connection error: {str(e)}"
     
-    # Get latest date
     latest_date = get_latest_stock_date()
     
-    # Query to get volatility and liquidity metrics
     try:
         query = f"""
         WITH stock_metrics AS (
@@ -675,7 +608,6 @@ def filter_by_volatility_liquidity(analysis_period=30, signal_type='DAILY', vola
         
         filtered_stocks = pd.read_sql(query, conn)
         
-        # Create filtered stocks table if not exists
         table_name = f"public_analytics.filtered_stocks_{signal_type.lower()}" if signal_type != 'DAILY' else "public_analytics.filtered_stocks"
         
         cursor = conn.cursor()
@@ -690,10 +622,8 @@ def filter_by_volatility_liquidity(analysis_period=30, signal_type='DAILY', vola
         )
         """)
         
-        # Clear existing data
         cursor.execute(f"DELETE FROM {table_name}")
         
-        # Insert filtered stocks
         for _, row in filtered_stocks.iterrows():
             cursor.execute(f"""
             INSERT INTO {table_name} (symbol, volatility_pct, avg_volume, price_volatility)
@@ -733,11 +663,9 @@ def backtest_trading_signals(test_period=180, hold_period=5, signal_type='DAILY'
     except Exception as e:
         return f"Database connection error: {str(e)}"
     
-    # Table names based on signal_type
     signals_table = f"public_analytics.advanced_trading_signals_{signal_type.lower()}" if signal_type != 'DAILY' else "public_analytics.advanced_trading_signals"
     backtest_table = f"public_analytics.backtest_results_{signal_type.lower()}" if signal_type != 'DAILY' else "public_analytics.backtest_results"
     
-    # Check if signals table exists
     try:
         cursor = conn.cursor()
         cursor.execute(f"""
@@ -750,7 +678,6 @@ def backtest_trading_signals(test_period=180, hold_period=5, signal_type='DAILY'
         signals_table_exists = cursor.fetchone()[0]
         
         if not signals_table_exists:
-            # Create signals table if it doesn't exist
             cursor.execute(f"""
             CREATE TABLE IF NOT EXISTS {signals_table} (
                 symbol TEXT,
@@ -777,7 +704,6 @@ def backtest_trading_signals(test_period=180, hold_period=5, signal_type='DAILY'
             conn.close()
         return f"Error checking signals table: {str(e)}"
     
-    # Create backtest table if not exists
     try:
         cursor.execute(f"""
         CREATE TABLE IF NOT EXISTS {backtest_table} (
@@ -800,10 +726,8 @@ def backtest_trading_signals(test_period=180, hold_period=5, signal_type='DAILY'
         conn.close()
         return f"Error creating backtest table: {str(e)}"
     
-    # Get latest date
     latest_date = get_latest_stock_date()
     
-    # Query to find historical signals and their outcomes
     try:
         query = f"""
         WITH historical_signals AS (
@@ -839,21 +763,17 @@ def backtest_trading_signals(test_period=180, hold_period=5, signal_type='DAILY'
         try:
             backtest_df = pd.read_sql(query, conn)
         except Exception as e:
-            # If the query fails, it might be due to no data in signals table
             logger.warning(f"Error querying historical signals: {str(e)}")
             cursor.close()
             conn.close()
             return f"No historical signals found for {signal_type} backtest"
         
-        # If no data
         if backtest_df.empty:
             logger.warning(f"No historical signals found for {signal_type} backtest")
             cursor.close()
             conn.close()
             return f"No data for {signal_type} backtest"
         
-        # Calculate win/loss
-        # Adjust win threshold based on signal_type
         if signal_type == 'WEEKLY':
             win_threshold = 3.0  # Higher for weekly
         elif signal_type == 'MONTHLY':
@@ -863,7 +783,6 @@ def backtest_trading_signals(test_period=180, hold_period=5, signal_type='DAILY'
             
         backtest_df['is_win'] = backtest_df['percent_change'] > win_threshold
         
-        # Insert into backtest table
         for _, row in backtest_df.iterrows():
             cursor.execute(f"""
             INSERT INTO {backtest_table}
@@ -883,7 +802,6 @@ def backtest_trading_signals(test_period=180, hold_period=5, signal_type='DAILY'
         
         conn.commit()
         
-        # Calculate win rates per score
         win_rates_query = f"""
         SELECT 
             buy_score,
@@ -898,12 +816,10 @@ def backtest_trading_signals(test_period=180, hold_period=5, signal_type='DAILY'
         
         win_rates_df = pd.read_sql(win_rates_query, conn)
         
-        # Log win rates
         logger.info(f"Backtest results for {signal_type}:")
         for _, row in win_rates_df.iterrows():
             logger.info(f"Score {row['buy_score']}: {row['win_rate']}% win rate, {row['avg_return']}% avg return, {row['total_signals']} signals")
         
-        # Update winning_probability in signals table based on backtest
         update_query = f"""
         WITH win_rates AS (
             SELECT 
@@ -948,12 +864,10 @@ def send_high_probability_signals(signal_type='DAILY', min_probability=0.8):
     try:
         conn = get_database_connection()
         
-        # Table name based on signal_type
         signals_table = f"public_analytics.advanced_trading_signals_{signal_type.lower()}" if signal_type != 'DAILY' else "public_analytics.advanced_trading_signals"
         rsi_table = f"public_analytics.technical_indicators_rsi_{signal_type.lower()}" if signal_type != 'DAILY' else "public_analytics.technical_indicators_rsi"
         macd_table = f"public_analytics.technical_indicators_macd_{signal_type.lower()}" if signal_type != 'DAILY' else "public_analytics.technical_indicators_macd"
         
-        # Check if signals table exists
         cursor = conn.cursor()
         cursor.execute(f"""
         SELECT EXISTS (
@@ -970,7 +884,6 @@ def send_high_probability_signals(signal_type='DAILY', min_probability=0.8):
             conn.close()
             return f"Table {signals_table} does not exist yet. Skipping report."
             
-        # Get latest available date
         latest_date = get_latest_stock_date()
         if not latest_date:
             logger.warning("No date data available")
@@ -980,7 +893,6 @@ def send_high_probability_signals(signal_type='DAILY', min_probability=0.8):
             
         date_filter = latest_date.strftime('%Y-%m-%d')
         
-        # Check if RSI and MACD tables exist
         cursor.execute(f"""
         SELECT EXISTS (
             SELECT FROM information_schema.tables 
@@ -999,14 +911,12 @@ def send_high_probability_signals(signal_type='DAILY', min_probability=0.8):
         """)
         macd_table_exists = cursor.fetchone()[0]
         
-        # Build the query based on table existence
         left_join_rsi = f"LEFT JOIN {rsi_table} r ON s.symbol = r.symbol AND s.date = r.date" if rsi_table_exists else ""
         left_join_macd = f"LEFT JOIN {macd_table} mc ON s.symbol = mc.symbol AND s.date = mc.date" if macd_table_exists else ""
         
         select_rsi = "r.rsi," if rsi_table_exists else ""
         select_macd = "mc.macd_signal" if macd_table_exists else ""
         
-        # Query for high probability signals
         signals_sql = f"""
         WITH stock_info AS (
             SELECT 
@@ -1048,7 +958,6 @@ def send_high_probability_signals(signal_type='DAILY', min_probability=0.8):
             conn.close()
             return f"No high probability signals found for date {date_filter}"
         
-        # Create Telegram message
         timeframe_label = {
             'DAILY': 'HARIAN (1-5 HARI)',
             'WEEKLY': 'MINGGUAN (1-3 MINGGU)',
@@ -1074,7 +983,6 @@ def send_high_probability_signals(signal_type='DAILY', min_probability=0.8):
             if hasattr(row, 'macd_signal') and row.macd_signal:
                 message += f"   MACD: {row.macd_signal}\n"
             
-            # Calculate target prices based on timeframe
             if signal_type == 'WEEKLY':
                 tp1 = row.close * 1.08  # 8% target
                 tp2 = row.close * 1.15  # 15% target
@@ -1091,7 +999,6 @@ def send_high_probability_signals(signal_type='DAILY', min_probability=0.8):
             message += f"   🎯 TP1: Rp{tp1:,.0f} | TP2: Rp{tp2:,.0f}\n"
             message += f"   🛑 SL: Rp{sl:,.0f}\n\n"
         
-        # Add tips based on timeframe
         message += "*Tips Trading:*\n"
         
         if signal_type == 'WEEKLY':
@@ -1107,10 +1014,8 @@ def send_high_probability_signals(signal_type='DAILY', min_probability=0.8):
             message += "• Perhatikan level support/resistance terdekat\n"
             message += "• Target profit 5-10% dalam 1-5 hari\n"
         
-        # Add disclaimer
         message += "\n*Disclaimer:* Sinyal ini dihasilkan dari algoritma dan tidak menjamin keberhasilan. Selalu lakukan analisis tambahan sebelum mengambil keputusan investasi."
         
-        # Send to Telegram
         result = send_telegram_message(message)
         cursor.close()
         conn.close()

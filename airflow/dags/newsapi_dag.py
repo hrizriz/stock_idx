@@ -14,7 +14,6 @@ import time
 import random
 import logging
 
-# Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
@@ -33,7 +32,6 @@ default_args = {
     'retry_delay': pendulum.duration(minutes=5)
 }
 
-# Daftar saham Kompas100 - Fokus pada 30 saham paling aktif
 active_tickers = [
     "AKRA", "AMMN", "AMRT", "ANTM", "ARTO", "ASII", "AUTO", "AVIA", "BBCA", "BBNI", 
     "BBRI", "BBTN", "BBYB", "BDKR", "BFIN", "BMRI", "BMTR", "BNGA", "BRIS", "BRMS", 
@@ -72,7 +70,6 @@ def create_news_tables_if_not_exist():
         )
         cur = conn.cursor()
         
-        # Buat tabel newsapi_news jika belum ada
         cur.execute("""
         CREATE TABLE IF NOT EXISTS newsapi_news (
             id SERIAL PRIMARY KEY,
@@ -91,7 +88,6 @@ def create_news_tables_if_not_exist():
         )
         """)
         
-        # Buat tabel newsapi_ticker_sentiment jika belum ada
         cur.execute("""
         CREATE TABLE IF NOT EXISTS newsapi_ticker_sentiment (
             id SERIAL PRIMARY KEY,
@@ -106,7 +102,6 @@ def create_news_tables_if_not_exist():
         )
         """)
         
-        # Add index untuk performa query
         cur.execute("CREATE INDEX IF NOT EXISTS idx_newsapi_news_ticker ON newsapi_news(ticker)")
         cur.execute("CREATE INDEX IF NOT EXISTS idx_newsapi_news_date ON newsapi_news(published_at)")
         cur.execute("CREATE INDEX IF NOT EXISTS idx_newsapi_ticker_sentiment_date ON newsapi_ticker_sentiment(date)")
@@ -127,7 +122,6 @@ def sentiment_analysis(text):
     """
     Analisis sentimen sederhana berbasis keyword
     """
-    # Kata positif dalam bahasa Indonesia (diperluas)
     positives = ['naik', 'untung', 'profit', 'positif', 'optimis', 'meningkat', 
                 'berkembang', 'pesat', 'melejit', 'melonjak', 'surplus', 'prospek',
                 'menjanjikan', 'apresiasi', 'bullish', 'pemulihan', 'efisien', 'potensi', 
@@ -138,7 +132,6 @@ def sentiment_analysis(text):
                 'sukses', 'berhasil', 'capaian', 'kemajuan', 'prestasi', 'capaian', 'kemajuan',
                 'bangkit', 'penguatan', 'penguatan']
 
-    # Kata negatif dalam bahasa Indonesia (diperluas)
     negatives = ['turun', 'rugi', 'negatif', 'pesimis', 'menurun', 'merosot', 
                 'anjlok', 'krisis', 'gagal', 'turunkan', 'defisit', 'bearish',
                 'koreksi', 'resesi', 'lambat', 'tekanan', 'kesulitan', 'meredup', 
@@ -149,7 +142,6 @@ def sentiment_analysis(text):
                 'merugi', 'kolaps', 'bangkrut', 'pailit', 'delisting', 'suspend', 'terjun',
                 'meluncur', 'ambrol', 'ambruk', 'tumbang', 'mati']
     
-    # Juga menyertakan versi bahasa Inggris untuk berita internasional
     positives_en = ['rise', 'profit', 'positive', 'optimistic', 'increase', 
                   'growth', 'rapid', 'surge', 'jump', 'surplus', 'prospect',
                   'promising', 'appreciation', 'bullish', 'recovery', 'efficient', 'potential', 
@@ -168,18 +160,14 @@ def sentiment_analysis(text):
                   'lose', 'collapse', 'bankrupt', 'bankruptcy', 'delisting', 'suspend', 'dive',
                   'tumble', 'crash', 'crisis', 'fail']
     
-    # Tambahkan daftar kata dari bahasa Inggris
     positives.extend(positives_en)
     negatives.extend(negatives_en)
     
-    # Lowercase text untuk konsistensi
     text = text.lower() if text else ""
     
-    # Hitung kata positif dan negatif
     positive_count = sum([1 for word in positives if word in text])
     negative_count = sum([1 for word in negatives if word in text])
     
-    # Tentukan sentimen berdasarkan kata yang ditemukan
     if positive_count > negative_count:
         sentiment = "Positive"
         sentiment_score = positive_count / (positive_count + negative_count) if (positive_count + negative_count) > 0 else 0
@@ -212,26 +200,20 @@ def fetch_newsapi_articles():
     all_articles = []
     failed_tickers = []
     
-    # Tanggal untuk query (7 hari terakhir)
     end_date = datetime.now()
     start_date = end_date - timedelta(days=7)
     
-    # Format tanggal untuk API
     from_date = start_date.strftime('%Y-%m-%d')
     to_date = end_date.strftime('%Y-%m-%d')
     
     logger.info(f"Mengambil berita dari {from_date} hingga {to_date}")
     
-    # Base URL NewsAPI
     base_url = "https://newsapi.org/v2/everything"
     
-    # Loop untuk setiap ticker
     for ticker in active_tickers:
         try:
             logger.info(f"Mencari berita untuk ticker: {ticker}")
             
-            # Parameter untuk API request
-            # Mencari berita dengan kata kunci ticker dan kata "saham" atau "stock"
             query = f"{ticker} AND (saham OR stock)"
             params = {
                 'q': query,
@@ -243,58 +225,45 @@ def fetch_newsapi_articles():
                 'apiKey': NEWS_API_KEY
             }
             
-            # Request ke NewsAPI
             try:
                 response = requests.get(base_url, params=params, timeout=10)
                 
-                # Cek status response
                 if response.status_code != 200:
                     logger.warning(f"Error response dari NewsAPI: {response.status_code}")
                     logger.warning(f"Message: {response.json().get('message', 'No message')}")
                     failed_tickers.append(ticker)
                     continue
                 
-                # Parse response JSON
                 data = response.json()
                 
-                # Cek hasil
                 if data.get('status') != 'ok':
                     logger.warning(f"API status tidak ok: {data.get('status')}")
                     failed_tickers.append(ticker)
                     continue
                 
-                # Log jumlah artikel yang ditemukan
                 total_results = data.get('totalResults', 0)
                 logger.info(f"Ditemukan {total_results} artikel untuk {ticker}")
                 
-                # Ambil artikel dari response
                 articles = data.get('articles', [])
                 
-                # Proses artikel
                 for article in articles:
-                    # Ambil data yang relevan
                     title = article.get('title', '')
                     description = article.get('description', '')
                     url = article.get('url', '')
                     source_name = article.get('source', {}).get('name', '')
                     published_at = article.get('publishedAt', '')
                     
-                    # Skip artikel yang tidak memiliki judul atau URL
                     if not title or not url:
                         continue
                     
-                    # Konversi published_at ke format datetime
                     try:
                         published_at_dt = datetime.strptime(published_at, '%Y-%m-%dT%H:%M:%SZ')
                     except:
-                        # Jika format tanggal tidak sesuai, gunakan waktu sekarang
                         published_at_dt = datetime.now()
                     
-                    # Analisis sentimen dari judul dan deskripsi
                     content_for_analysis = f"{title} {description}"
                     sentiment, sentiment_score, positive_count, negative_count = sentiment_analysis(content_for_analysis)
                     
-                    # Tambahkan artikel ke list
                     all_articles.append({
                         'ticker': ticker,
                         'title': title,
@@ -309,7 +278,6 @@ def fetch_newsapi_articles():
                         'scrape_date': datetime.now().strftime('%Y-%m-%d')
                     })
                 
-                # Jeda antara request untuk menghindari rate limiting
                 time.sleep(1)
                 
             except requests.exceptions.RequestException as e:
@@ -322,16 +290,13 @@ def fetch_newsapi_articles():
             failed_tickers.append(ticker)
             continue
     
-    # Jika tidak cukup artikel yang dikumpulkan, generate sample data
     if len(all_articles) < 10 or len(failed_tickers) > len(active_tickers) * 0.7:
         logger.warning("Terlalu sedikit artikel dikumpulkan atau terlalu banyak ticker gagal")
         logger.warning(f"Failed tickers: {failed_tickers}")
         
-        # Generate dan tambahkan sampel data
         sample_news = generate_sample_news(active_tickers)
         all_articles.extend(sample_news)
     
-    # Simpan hasil ke file JSON
     data_folder = Path("/opt/airflow/data")
     data_folder.mkdir(exist_ok=True)
     with open(data_folder / "newsapi_articles.json", 'w', encoding='utf-8') as f:
@@ -339,7 +304,6 @@ def fetch_newsapi_articles():
     
     logger.info(f"Berhasil kumpulkan {len(all_articles)} artikel untuk {len(active_tickers) - len(failed_tickers)} ticker")
     
-    # Simpan log ticker yang gagal
     if failed_tickers:
         with open(data_folder / "newsapi_failed_tickers.json", 'w', encoding='utf-8') as f:
             json.dump({
@@ -357,7 +321,6 @@ def generate_sample_news(tickers):
     """
     sample_news = []
     
-    # Berita positif
     positive_titles = [
         "Saham {} Melompat {}%, Ini Penyebabnya",
         "Kinerja Cemerlang, {} Catat Kenaikan Laba {}%",
@@ -366,7 +329,6 @@ def generate_sample_news(tickers):
         "Analis Rekomendasikan Buy untuk Saham {}, Target Harga Rp {}"
     ]
     
-    # Berita negatif
     negative_titles = [
         "Saham {} Anjlok {}%, Investor Khawatir",
         "Kinerja Mengecewakan, Laba {} Turun {}%",
@@ -375,7 +337,6 @@ def generate_sample_news(tickers):
         "Analis Rekomendasikan Sell untuk Saham {}, Revisi Turun Target Harga"
     ]
     
-    # Berita netral
     neutral_titles = [
         "{} Gelar RUPST, Ini Agenda Utamanya",
         "Direktur Utama {} Bicara Strategi Perusahaan",
@@ -384,23 +345,18 @@ def generate_sample_news(tickers):
         "Mengenal Lebih Dekat Bisnis {}"
     ]
     
-    # Sumber berita sampel
     news_sources = ["CNN Indonesia", "CNBC Indonesia", "Bisnis.com", "Kompas", "Kontan", 
                    "Bloomberg", "Reuters", "Financial Times", "Wall Street Journal"]
     
     now = datetime.now()
     
-    # Pilih subset dari tickers untuk sample data (maksimal 30)
     selected_tickers = random.sample(tickers, min(30, len(tickers)))
     logger.info(f"Generating sample news for {len(selected_tickers)} tickers")
     
-    # Generate berita untuk setiap ticker
     for ticker in selected_tickers:
-        # 2-5 berita per ticker
         num_news = random.randint(2, 5)
         
         for i in range(num_news):
-            # Acak jenis berita (60% positif, 30% negatif, 10% netral)
             rand = random.random()
             
             if rand < 0.6:  # Positif
@@ -431,19 +387,15 @@ def generate_sample_news(tickers):
                 negative_count = random.randint(1, 2)
                 description = f"Manajemen {ticker} memaparkan strategi perusahaan untuk tahun 2025. Mereka fokus pada optimalisasi operasional dan diversifikasi pendapatan."
             
-            # Acak tanggal dan waktu dalam 7 hari terakhir
             days_ago = random.randint(0, 6)
             hours_ago = random.randint(0, 23)
             minutes_ago = random.randint(0, 59)
             published_at = now - timedelta(days=days_ago, hours=hours_ago, minutes=minutes_ago)
             
-            # URL dummy
             url = f"https://samplenews.com/{ticker.lower()}/{published_at.strftime('%Y%m%d')}-{ticker.lower()}-news.html"
             
-            # Source name
             source_name = random.choice(news_sources)
             
-            # Tambahkan ke daftar berita
             sample_news.append({
                 'ticker': ticker,
                 'title': title,
@@ -465,7 +417,6 @@ def process_newsapi_articles():
     Proses hasil dari NewsAPI dan simpan ke database
     """
     try:
-        # Baca file JSON
         json_file = '/opt/airflow/data/newsapi_articles.json'
         if not os.path.exists(json_file):
             logger.error("File JSON tidak ditemukan!")
@@ -476,7 +427,6 @@ def process_newsapi_articles():
         
         logger.info(f"Memproses {len(articles)} artikel dari NewsAPI...")
         
-        # Validasi data sebelum diproses
         valid_articles = []
         for item in articles:
             if not all(k in item for k in ['ticker', 'title', 'url', 'published_at']):
@@ -486,7 +436,6 @@ def process_newsapi_articles():
         
         logger.info(f"{len(valid_articles)} artikel valid setelah validasi")
         
-        # Hitung jumlah artikel dan aggregate sentimen per ticker
         ticker_sentiments = {}
         
         for item in valid_articles:
@@ -511,14 +460,12 @@ def process_newsapi_articles():
             else:
                 ticker_sentiments[ticker]['neutral_count'] += 1
         
-        # Hitung sentimen rata-rata
         for ticker, data in ticker_sentiments.items():
             if data['news_count'] > 0:
                 data['avg_sentiment'] = data['total_sentiment'] / data['news_count']
             else:
                 data['avg_sentiment'] = 0
         
-        # Simpan ke dalam database
         conn = psycopg2.connect(
             host="postgres",
             dbname="airflow",
@@ -527,17 +474,14 @@ def process_newsapi_articles():
             connect_timeout=15
         )
         
-        # Set autocommit ke False untuk transaction control
         conn.autocommit = False
         
         try:
             cur = conn.cursor()
             
-            # Batch size untuk insert
             batch_size = 50
             articles_inserted = 0
             
-            # Simpan artikel dalam batch
             for i in range(0, len(valid_articles), batch_size):
                 batch = valid_articles[i:i+batch_size]
                 
@@ -572,11 +516,9 @@ def process_newsapi_articles():
                     except Exception as e:
                         logger.error(f"Error menyimpan artikel: {e}")
                 
-                # Commit per batch
                 conn.commit()
                 logger.info(f"Batch {i//batch_size + 1} committed: {len(batch)} items")
             
-            # Simpan sentimen per ticker
             today = datetime.now().strftime('%Y-%m-%d')
             sentiments_inserted = 0
             
@@ -606,10 +548,8 @@ def process_newsapi_articles():
                 except Exception as e:
                     logger.error(f"Error menyimpan sentimen ticker {ticker}: {e}")
             
-            # Final commit for sentiment data
             conn.commit()
             
-            # Cetak jumlah data yang disimpan
             cur.execute("SELECT COUNT(*) FROM newsapi_news")
             news_count = cur.fetchone()[0]
             
@@ -620,7 +560,6 @@ def process_newsapi_articles():
             
             logger.info(f"Data artikel NewsAPI berhasil disimpan: {news_count} artikel, {sentiment_count} ticker sentiment")
             
-            # Save success metrics
             success_metrics = {
                 'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                 'total_processed': len(valid_articles),
@@ -647,7 +586,6 @@ def process_newsapi_articles():
         logger.error(f"Error in process_newsapi_articles: {str(e)}")
         return f"Error: {str(e)}"
 
-# Define the DAG
 with DAG(
     dag_id="newsapi_data_ingestion",
     start_date=pendulum.datetime(2024, 1, 1, tz=local_tz),
@@ -658,7 +596,6 @@ with DAG(
     description="Ingests news data from NewsAPI and performs sentiment analysis"
     ) as dag:
 
-    # Task untuk membuat tabel
     create_tables = PythonOperator(
         task_id="create_newsapi_tables",
         python_callable=create_news_tables_if_not_exist,
@@ -666,7 +603,6 @@ with DAG(
         retry_delay=pendulum.duration(minutes=2)
     )
 
-    # Task untuk mengambil berita dari NewsAPI
     fetch_newsapi = PythonOperator(
         task_id="fetch_newsapi_articles",
         python_callable=fetch_newsapi_articles,
@@ -675,7 +611,6 @@ with DAG(
         execution_timeout=pendulum.duration(minutes=30)  # Timeout 30 menit
     )
 
-    # Task untuk memproses hasil dari NewsAPI
     process_articles = PythonOperator(
         task_id="process_newsapi_articles",
         python_callable=process_newsapi_articles,
@@ -683,10 +618,8 @@ with DAG(
         retry_delay=pendulum.duration(minutes=3)
     )
 
-    # Marker task
     end_task = DummyOperator(
         task_id="end_task"
     )
 
-    # Task dependencies
     create_tables >> fetch_newsapi >> process_articles >> end_task

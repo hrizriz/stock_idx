@@ -8,7 +8,6 @@ import pendulum
 import pandas as pd
 import logging
 
-# Import utility modules
 from utils.database import get_database_connection, get_latest_stock_date
 from utils.telegram import send_telegram_message
 from utils.technical_indicators import (
@@ -25,14 +24,11 @@ from utils.trading_signals import (
     send_performance_report
 )
 
-# Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Configure timezone
 local_tz = pendulum.timezone("Asia/Jakarta")
 
-# Default arguments for DAG
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
@@ -43,7 +39,6 @@ default_args = {
     'retry_delay': pendulum.duration(minutes=5)
 }
 
-# Timeframe parameters
 timeframe_params = {
     'DAILY': {
         'lookback_periods': {
@@ -110,7 +105,6 @@ timeframe_params = {
     }
 }
 
-# Helper functions for conditional execution
 def should_run_weekly():
     """Check if today is Friday (when we run weekly signals)"""
     now = pendulum.now(local_tz)
@@ -156,29 +150,24 @@ def send_unified_trading_report(**context):
     """
     Send a unified report combining signals from all timeframes
     """
-    # Get execution dates for the different timeframes
     daily_exec = context['ti'].xcom_pull(task_ids='send_daily_high_probability_signals')
     weekly_exec = context['ti'].xcom_pull(task_ids='send_weekly_high_probability_signals')
     monthly_exec = context['ti'].xcom_pull(task_ids='send_monthly_high_probability_signals')
     
-    # Get the latest date
     latest_date = get_latest_stock_date()
     if not latest_date:
         return "No data available for reporting"
     
     date_str = latest_date.strftime('%Y-%m-%d')
     
-    # Create report header
     message = f"🚀 *UNIFIED TRADING SIGNALS REPORT ({date_str})* 🚀\n\n"
     message += "This report combines trading signals across multiple timeframes.\n\n"
     
-    # Function to get signals for a specific timeframe
     def get_signals_for_timeframe(timeframe):
         try:
             conn = get_database_connection()
             cursor = conn.cursor()
             
-            # Check if table exists
             table_name = f"public_analytics.advanced_trading_signals_{timeframe.lower()}" if timeframe != 'DAILY' else "public_analytics.advanced_trading_signals"
             
             cursor.execute(f"""
@@ -229,12 +218,10 @@ def send_unified_trading_report(**context):
             logger.error(f"Database connection error: {str(e)}")
             return None
     
-    # Add DAILY signals (always included)
     daily_df = get_signals_for_timeframe('DAILY')
     if daily_df is not None and not daily_df.empty:
         message += "📈 *DAILY TRADING SIGNALS (1-5 DAYS)*\n"
         for i, row in enumerate(daily_df.itertuples(), 1):
-            # Strength emoji based on score
             if row.buy_score >= 8:
                 strength_emoji = "💪"
             elif row.buy_score >= 6:
@@ -246,7 +233,6 @@ def send_unified_trading_report(**context):
             message += f"   Harga: Rp{row.close:,.0f} | Skor: {row.buy_score}/10\n"
             message += f"   Probabilitas: {row.winning_probability*100:.0f}%\n"
             
-            # Daily targets
             tp1 = row.close * 1.05  # 5% target
             tp2 = row.close * 1.10  # 10% target
             sl = row.close * 0.97   # 3% stop loss
@@ -258,7 +244,6 @@ def send_unified_trading_report(**context):
     else:
         message += "*No DAILY signals found for today*\n\n"
     
-    # Add WEEKLY signals (if run today)
     if weekly_exec:
         weekly_df = get_signals_for_timeframe('WEEKLY')
         if weekly_df is not None and not weekly_df.empty:
@@ -268,7 +253,6 @@ def send_unified_trading_report(**context):
                 message += f"   Harga: Rp{row.close:,.0f} | Skor: {row.buy_score}/10\n"
                 message += f"   Probabilitas: {row.winning_probability*100:.0f}%\n"
                 
-                # Weekly targets
                 tp1 = row.close * 1.08  # 8% target
                 tp2 = row.close * 1.15  # 15% target
                 sl = row.close * 0.95   # 5% stop loss
@@ -280,7 +264,6 @@ def send_unified_trading_report(**context):
         else:
             message += "*No WEEKLY signals found for today*\n\n"
     
-    # Add MONTHLY signals (if run today)
     if monthly_exec:
         monthly_df = get_signals_for_timeframe('MONTHLY')
         if monthly_df is not None and not monthly_df.empty:
@@ -290,7 +273,6 @@ def send_unified_trading_report(**context):
                 message += f"   Harga: Rp{row.close:,.0f} | Skor: {row.buy_score}/10\n"
                 message += f"   Probabilitas: {row.winning_probability*100:.0f}%\n"
                 
-                # Monthly targets
                 tp1 = row.close * 1.12  # 12% target
                 tp2 = row.close * 1.20  # 20% target
                 sl = row.close * 0.92   # 8% stop loss
@@ -302,10 +284,8 @@ def send_unified_trading_report(**context):
         else:
             message += "*No MONTHLY signals found for today*\n\n"
     
-    # Add cross-timeframe confluence signals
     message += "🔍 *CROSS-TIMEFRAME CONFLUENCE*\n\n"
     
-    # Get all symbols across timeframes
     symbols = set()
     for df in [daily_df, weekly_df if weekly_exec else None, monthly_df if monthly_exec else None]:
         if df is not None and not df.empty:
@@ -322,7 +302,6 @@ def send_unified_trading_report(**context):
             timeframes.append("Monthly")
         
         if len(timeframes) > 1:
-            # Get symbol name and price
             symbol_data = None
             for df in [daily_df, weekly_df, monthly_df]:
                 if df is not None and not df.empty and symbol in df['symbol'].values:
@@ -337,24 +316,20 @@ def send_unified_trading_report(**context):
     if not confluence_found:
         message += "No stocks with signals across multiple timeframes today.\n\n"
     
-    # Add trading strategy tips
     message += "📝 *TRADING STRATEGY TIPS*\n\n"
     message += "• Match your holding period with the signal timeframe\n"
     message += "• Prioritize signals with score 8+ (highest probability)\n"
     message += "• Look for confluence across multiple timeframes\n"
     message += "• Always use proper position sizing and risk management\n\n"
     
-    # Add disclaimer
     message += "*Disclaimer:* These signals are generated by algorithms and are not financial advice. Always do your own research before trading."
     
-    # Send to Telegram
     result = send_telegram_message(message)
     if "successfully" in result:
         return f"Unified trading report sent successfully"
     else:
         return result
 
-# Create DAG
 with DAG(
     dag_id="unified_trading_signals",
     schedule_interval="0 17 * * 1-5",  # Every weekday at 17:00 Jakarta time
@@ -363,7 +338,6 @@ with DAG(
     tags=["trading", "technical", "signals", "unified"]
 ) as dag:
     
-    # Wait for data transformation to complete
     wait_for_transformation = ExternalTaskSensor(
         task_id="wait_for_transformation",
         external_dag_id="data_transformation",
@@ -375,13 +349,11 @@ with DAG(
         failed_states=["failed", "skipped"]
     )
     
-    # Check BB tables setup
     check_bb = PythonOperator(
         task_id="check_bollinger_bands_table",
         python_callable=check_and_create_bollinger_bands_table
     )
     
-    # Conditional execution gates
     check_weekly = ShortCircuitOperator(
         task_id="check_weekly_run",
         python_callable=should_run_weekly
@@ -392,11 +364,7 @@ with DAG(
         python_callable=should_run_monthly
     )
     
-    #
-    # DAILY TASKS
-    #
     
-    # Calculate RSI indicators
     calc_daily_rsi = PythonOperator(
         task_id="calculate_daily_rsi",
         python_callable=calculate_all_rsi_indicators,
@@ -407,7 +375,6 @@ with DAG(
         }
     )
     
-    # Calculate MACD indicators
     calc_daily_macd = PythonOperator(
         task_id="calculate_daily_macd",
         python_callable=calculate_all_macd_indicators,
@@ -420,7 +387,6 @@ with DAG(
         }
     )
     
-    # Calculate Bollinger Bands
     calc_daily_bb = PythonOperator(
         task_id="calculate_daily_bollinger",
         python_callable=calculate_all_bollinger_bands,
@@ -432,7 +398,6 @@ with DAG(
         }
     )
     
-    # Filter stocks by volatility and liquidity
     filter_daily_stocks = PythonOperator(
         task_id="filter_daily_stocks",
         python_callable=filter_by_volatility_liquidity,
@@ -445,7 +410,6 @@ with DAG(
         }
     )
     
-    # Calculate advanced indicators
     calc_daily_advanced = PythonOperator(
         task_id="calculate_daily_advanced_indicators",
         python_callable=calculate_advanced_indicators,
@@ -455,14 +419,12 @@ with DAG(
         }
     )
     
-    # Check if signals table exists before running backtest
     check_daily_signals_table = ShortCircuitOperator(
         task_id="check_daily_signals_table",
         python_callable=check_signals_table_exists,
         op_kwargs={'signal_type': 'DAILY'}
     )
     
-    # Run backtesting
     run_daily_backtest = PythonOperator(
         task_id="run_daily_backtest",
         python_callable=backtest_trading_signals,
@@ -474,7 +436,6 @@ with DAG(
         }
     )
     
-    # Send high probability signals
     send_daily_signals = PythonOperator(
         task_id="send_daily_high_probability_signals",
         python_callable=send_high_probability_signals,
@@ -484,11 +445,7 @@ with DAG(
         }
     )
     
-    #
-    # WEEKLY TASKS
-    #
     
-    # Calculate Weekly RSI
     calc_weekly_rsi = PythonOperator(
         task_id="calculate_weekly_rsi",
         python_callable=calculate_all_rsi_indicators,
@@ -499,7 +456,6 @@ with DAG(
         }
     )
     
-    # Calculate Weekly MACD
     calc_weekly_macd = PythonOperator(
         task_id="calculate_weekly_macd",
         python_callable=calculate_all_macd_indicators,
@@ -512,7 +468,6 @@ with DAG(
         }
     )
     
-    # Calculate Weekly Bollinger Bands
     calc_weekly_bb = PythonOperator(
         task_id="calculate_weekly_bollinger",
         python_callable=calculate_all_bollinger_bands,
@@ -524,7 +479,6 @@ with DAG(
         }
     )
     
-    # Filter Weekly stocks
     filter_weekly_stocks = PythonOperator(
         task_id="filter_weekly_stocks",
         python_callable=filter_by_volatility_liquidity,
@@ -537,7 +491,6 @@ with DAG(
         }
     )
     
-    # Calculate Weekly advanced indicators
     calc_weekly_advanced = PythonOperator(
         task_id="calculate_weekly_advanced_indicators",
         python_callable=calculate_advanced_indicators,
@@ -547,14 +500,12 @@ with DAG(
         }
     )
     
-    # Check if signals table exists before running backtest
     check_weekly_signals_table = ShortCircuitOperator(
         task_id="check_weekly_signals_table",
         python_callable=check_signals_table_exists,
         op_kwargs={'signal_type': 'WEEKLY'}
     )
     
-    # Run Weekly backtesting
     run_weekly_backtest = PythonOperator(
         task_id="run_weekly_backtest",
         python_callable=backtest_trading_signals,
@@ -566,7 +517,6 @@ with DAG(
         }
     )
     
-    # Send Weekly high probability signals
     send_weekly_signals = PythonOperator(
         task_id="send_weekly_high_probability_signals",
         python_callable=send_high_probability_signals,
@@ -576,11 +526,7 @@ with DAG(
         }
     )
     
-    #
-    # MONTHLY TASKS
-    #
     
-    # Calculate Monthly RSI
     calc_monthly_rsi = PythonOperator(
         task_id="calculate_monthly_rsi",
         python_callable=calculate_all_rsi_indicators,
@@ -591,7 +537,6 @@ with DAG(
         }
     )
     
-    # Calculate Monthly MACD
     calc_monthly_macd = PythonOperator(
         task_id="calculate_monthly_macd",
         python_callable=calculate_all_macd_indicators,
@@ -604,7 +549,6 @@ with DAG(
         }
     )
     
-    # Calculate Monthly Bollinger Bands
     calc_monthly_bb = PythonOperator(
         task_id="calculate_monthly_bollinger",
         python_callable=calculate_all_bollinger_bands,
@@ -616,7 +560,6 @@ with DAG(
         }
     )
     
-    # Filter Monthly stocks
     filter_monthly_stocks = PythonOperator(
         task_id="filter_monthly_stocks",
         python_callable=filter_by_volatility_liquidity,
@@ -629,7 +572,6 @@ with DAG(
         }
     )
     
-    # Calculate Monthly advanced indicators
     calc_monthly_advanced = PythonOperator(
         task_id="calculate_monthly_advanced_indicators",
         python_callable=calculate_advanced_indicators,
@@ -639,14 +581,12 @@ with DAG(
         }
     )
     
-    # Check if signals table exists before running backtest
     check_monthly_signals_table = ShortCircuitOperator(
         task_id="check_monthly_signals_table",
         python_callable=check_signals_table_exists,
         op_kwargs={'signal_type': 'MONTHLY'}
     )
     
-    # Run Monthly backtesting
     run_monthly_backtest = PythonOperator(
         task_id="run_monthly_backtest",
         python_callable=backtest_trading_signals,
@@ -658,7 +598,6 @@ with DAG(
         }
     )
     
-    # Send Monthly high probability signals
     send_monthly_signals = PythonOperator(
         task_id="send_monthly_high_probability_signals",
         python_callable=send_high_probability_signals,
@@ -668,43 +607,34 @@ with DAG(
         }
     )
     
-    # Join branches
     join_timeframes = DummyOperator(
         task_id="join_timeframes",
         trigger_rule="none_failed"
     )
     
-    # Send unified report
     unified_report = PythonOperator(
         task_id="send_unified_trading_report",
         python_callable=send_unified_trading_report,
         provide_context=True
     )
     
-    # End marker
     end_task = DummyOperator(
         task_id="end_task"
     )
     
-    # Define dependencies
     
-    # Setup phase
     wait_for_transformation >> check_bb
     
-    # Daily task dependencies
     check_bb >> [calc_daily_rsi, calc_daily_macd, calc_daily_bb]
     [calc_daily_rsi, calc_daily_macd, calc_daily_bb] >> filter_daily_stocks >> calc_daily_advanced >> check_daily_signals_table >> run_daily_backtest >> send_daily_signals
     
-    # Weekly task dependencies
     check_bb >> check_weekly
     check_weekly >> [calc_weekly_rsi, calc_weekly_macd, calc_weekly_bb]
     [calc_weekly_rsi, calc_weekly_macd, calc_weekly_bb] >> filter_weekly_stocks >> calc_weekly_advanced >> check_weekly_signals_table >> run_weekly_backtest >> send_weekly_signals
     
-    # Monthly task dependencies
     check_bb >> check_monthly
     check_monthly >> [calc_monthly_rsi, calc_monthly_macd, calc_monthly_bb]
     [calc_monthly_rsi, calc_monthly_macd, calc_monthly_bb] >> filter_monthly_stocks >> calc_monthly_advanced >> check_monthly_signals_table >> run_monthly_backtest >> send_monthly_signals
     
-    # Join all timeframes and final tasks
     [send_daily_signals, send_weekly_signals, send_monthly_signals] >> join_timeframes
     join_timeframes >> unified_report >> end_task

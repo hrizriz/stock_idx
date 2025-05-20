@@ -5,7 +5,6 @@ import time
 import random
 from airflow.models import Variable
 
-# Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -13,18 +12,15 @@ def get_telegram_credentials():
     """
     Get Telegram credentials from environment variables or Airflow Variables
     """
-    # Try from environment variables first
     telegram_bot_token = os.environ.get("TELEGRAM_BOT_TOKEN")
     telegram_chat_id = os.environ.get("TELEGRAM_CHAT_ID")
     
-    # If not found, try from Airflow Variables
     if not telegram_bot_token:
         try:
             telegram_bot_token = Variable.get("telegram_bot_token")
             logger.info("Successfully retrieved bot token from Airflow Variables")
         except:
             try:
-                # Try alternative variable name
                 telegram_bot_token = Variable.get("TELEGRAM_BOT_TOKEN")
                 logger.info("Successfully retrieved bot token from Airflow Variables (uppercase)")
             except:
@@ -36,7 +32,6 @@ def get_telegram_credentials():
             logger.info("Successfully retrieved chat ID from Airflow Variables")
         except:
             try:
-                # Try alternative variable name
                 telegram_chat_id = Variable.get("TELEGRAM_CHAT_ID")
                 logger.info("Successfully retrieved chat ID from Airflow Variables (uppercase)")
             except:
@@ -63,16 +58,13 @@ def send_with_retry(url, payload, max_retries=5):
         try:
             response = requests.post(url, json=payload, timeout=10)
             
-            # Check if rate limited
             if response.status_code == 429:
-                # Get retry_after if available
                 retry_after = 3
                 try:
                     retry_after = response.json().get('parameters', {}).get('retry_after', 3)
                 except:
                     pass
                 
-                # Add jitter to avoid thundering herd
                 wait_time = retry_after + random.uniform(0, 1)
                 logging.warning(f"Rate limited by Telegram API, waiting {wait_time} seconds...")
                 time.sleep(wait_time)
@@ -99,11 +91,9 @@ def send_telegram_message(message, chat_id=None, token=None, disable_web_page_pr
     Returns:
     str: Response message
     """
-    # Get credentials if not provided
     if not token or not chat_id:
         token_from_env, chat_id_from_env = get_telegram_credentials()
         
-        # Use provided values or fallback to environment values
         token = token or token_from_env
         chat_id = chat_id or chat_id_from_env
     
@@ -113,10 +103,8 @@ def send_telegram_message(message, chat_id=None, token=None, disable_web_page_pr
         
     url = f"https://api.telegram.org/bot{token}/sendMessage"
     
-    # Telegram message length limit is 4096 characters
     MAX_MESSAGE_LENGTH = 4000  # Small margin for safety
     
-    # If message is shorter than the limit, send directly
     if len(message) <= MAX_MESSAGE_LENGTH:
         payload = {
             "chat_id": chat_id,
@@ -125,15 +113,12 @@ def send_telegram_message(message, chat_id=None, token=None, disable_web_page_pr
             "disable_web_page_preview": disable_web_page_preview
         }
         
-        # Tambahkan try-except untuk mengatasi kegagalan Telegram
         try:
-            # Gunakan fungsi retry
             response = send_with_retry(url, payload)
             
             if response and response.status_code == 200:
                 return "Message sent successfully"
             else:
-                # Save to backup file if Telegram fails
                 backup_file = "/opt/airflow/logs/telegram_backup.txt"
                 with open(backup_file, "a") as f:
                     f.write(f"\n--- MESSAGE {time.strftime('%Y-%m-%d %H:%M:%S')} ---\n")
@@ -146,7 +131,6 @@ def send_telegram_message(message, chat_id=None, token=None, disable_web_page_pr
                     return f"Failed to contact Telegram API after multiple retries. Backed up to file."
         except Exception as e:
             logger.error(f"Exception sending to Telegram: {str(e)}")
-            # Backup ke file
             backup_file = "/opt/airflow/logs/telegram_backup.txt"
             try:
                 with open(backup_file, "a") as f:
@@ -158,24 +142,20 @@ def send_telegram_message(message, chat_id=None, token=None, disable_web_page_pr
             return f"Error exception: {str(e)}"
     else:
         logger.info(f"Message too long ({len(message)} chars), splitting into parts")
-        # Find newline positions to split message cleanly
         parts = []
         start_idx = 0
         
         while start_idx < len(message):
-            # If remaining message fits in one part
             if len(message) - start_idx <= MAX_MESSAGE_LENGTH:
                 parts.append(message[start_idx:])
                 break
             
-            # Find the last newline within the length limit
             cut_idx = start_idx + MAX_MESSAGE_LENGTH
             while cut_idx > start_idx:
                 if cut_idx < len(message) and message[cut_idx] == '\n':
                     break
                 cut_idx -= 1
                 
-            # If no newline found, try to cut at a space
             if cut_idx == start_idx:
                 cut_idx = start_idx + MAX_MESSAGE_LENGTH
                 while cut_idx > start_idx:
@@ -183,15 +163,12 @@ def send_telegram_message(message, chat_id=None, token=None, disable_web_page_pr
                         break
                     cut_idx -= 1
                     
-            # If still not found, just cut at MAX_MESSAGE_LENGTH
             if cut_idx == start_idx:
                 cut_idx = start_idx + MAX_MESSAGE_LENGTH - 1
                 
-            # Add this part to the list
             parts.append(message[start_idx:cut_idx+1])
             start_idx = cut_idx + 1
             
-        # Send each part
         success_count = 0
         for i, part in enumerate(parts):
             logger.info(f"Sending part {i+1}/{len(parts)}, length: {len(part)} chars")
@@ -208,7 +185,6 @@ def send_telegram_message(message, chat_id=None, token=None, disable_web_page_pr
                     success_count += 1
                 else:
                     logger.error(f"Error sending part {i+1}: {response.status_code}, {response.text}")
-                # Wait a moment to avoid rate limiting
                 import time
                 time.sleep(1)
             except Exception as e:
@@ -225,16 +201,13 @@ def send_with_retry(url, payload, max_retries=5):
         try:
             response = requests.post(url, json=payload, timeout=10)
             
-            # Check if rate limited
             if response.status_code == 429:
-                # Get retry_after if available
                 retry_after = 3
                 try:
                     retry_after = response.json().get('parameters', {}).get('retry_after', 3)
                 except:
                     pass
                 
-                # Add jitter to avoid thundering herd
                 wait_time = retry_after + random.uniform(0, 1)
                 logging.warning(f"Rate limited by Telegram API, waiting {wait_time} seconds...")
                 time.sleep(wait_time)

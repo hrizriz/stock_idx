@@ -4,7 +4,6 @@ import logging
 from datetime import datetime
 from .database import get_database_connection, get_latest_stock_date, execute_query, fetch_data, create_table_if_not_exists
 
-# Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -12,27 +11,20 @@ def calculate_rsi(data, period=14):
     """
     Calculate RSI (Relative Strength Index) indicator with improved handling
     """
-    # Calculate price changes
     delta = data.diff()
     
-    # Split into gains and losses
     gain = delta.clip(lower=0)
     loss = -1 * delta.clip(upper=0)
     
-    # Calculate average gains and losses
     avg_gain = gain.rolling(window=period).mean()
     avg_loss = loss.rolling(window=period).mean()
     
-    # Handle division by zero
     avg_loss = avg_loss.replace(0, 1e-10)  # Avoid divide by zero
     
-    # Calculate RS
     rs = avg_gain / avg_loss
     
-    # Calculate RSI
     rsi = 100 - (100 / (1 + rs))
     
-    # Clip to valid range
     rsi = rsi.clip(0, 100)
     
     return rsi
@@ -41,17 +33,13 @@ def calculate_vwap(data_df, period=20):
     """Calculate VWAP indicator for given data"""
     df = data_df.copy()
     
-    # Calculate typical price
     df['typical_price'] = (df['high'] + df['low'] + df['close']) / 3
     
-    # Calculate price * volume
     df['pv'] = df['typical_price'] * df['volume']
     
-    # Calculate cumulative values for the period
     df['cumulative_pv'] = df['pv'].rolling(window=period).sum()
     df['cumulative_volume'] = df['volume'].rolling(window=period).sum()
     
-    # Calculate VWAP
     df['vwap'] = df['cumulative_pv'] / df['cumulative_volume']
     
     return df['vwap']
@@ -60,17 +48,13 @@ def calculate_macd(data, fast_period=12, slow_period=26, signal_period=9):
     """
     Calculate MACD (Moving Average Convergence Divergence) indicator
     """
-    # Calculate EMAs
     ema_fast = data.ewm(span=fast_period, adjust=False).mean()
     ema_slow = data.ewm(span=slow_period, adjust=False).mean()
     
-    # Calculate MACD line
     macd_line = ema_fast - ema_slow
     
-    # Calculate signal line
     signal_line = macd_line.ewm(span=signal_period, adjust=False).mean()
     
-    # Calculate histogram
     macd_histogram = macd_line - signal_line
     
     return macd_line, signal_line, macd_histogram
@@ -79,17 +63,13 @@ def calculate_bollinger_bands(data, period=20, std_dev=2):
     """
     Calculate Bollinger Bands
     """
-    # Calculate moving average
     middle_band = data.rolling(window=period).mean()
     
-    # Calculate standard deviation
     std = data.rolling(window=period).std()
     
-    # Calculate upper and lower bands
     upper_band = middle_band + (std * std_dev)
     lower_band = middle_band - (std * std_dev)
     
-    # Calculate %B (price position relative to bands)
     percent_b = (data - lower_band) / (upper_band - lower_band)
     
     return middle_band, upper_band, lower_band, percent_b
@@ -103,7 +83,6 @@ def calculate_all_rsi_indicators(lookback_period=100, rsi_period=14, signal_type
     rsi_period (int): Period for RSI calculation (default: 14)
     signal_type (str): Signal type - DAILY, WEEKLY, or MONTHLY
     """
-    # Get stock price data with appropriate lookback period
     query = f"""
         SELECT 
             symbol, 
@@ -116,15 +95,12 @@ def calculate_all_rsi_indicators(lookback_period=100, rsi_period=14, signal_type
     
     df = fetch_data(query)
     
-    # If no data
     if df.empty:
         logger.warning(f"No stock price data for RSI calculation {signal_type}")
         return f"No data for {signal_type}"
     
-    # Table name based on signal_type
     table_name = f"public_analytics.technical_indicators_rsi_{signal_type.lower()}" if signal_type != 'DAILY' else "public_analytics.technical_indicators_rsi"
     
-    # Create table if it doesn't exist
     create_table_if_not_exists(
         table_name,
         f"""
@@ -138,24 +114,18 @@ def calculate_all_rsi_indicators(lookback_period=100, rsi_period=14, signal_type
         """
     )
     
-    # Create DataFrame to store results
     results = []
     
-    # Calculate RSI for each stock with given period
     for symbol, group in df.groupby('symbol'):
         if len(group) < rsi_period + 1:  # Minimum required data
             continue
             
-        # Sort by date
         group = group.sort_values('date')
         
-        # Calculate RSI with given period
         group['rsi'] = calculate_rsi(group['close'], period=rsi_period)
         
-        # Filter only latest data
         latest_data = group.dropna().tail(10)  # Get 10 latest days with valid RSI
         
-        # Adjust RSI threshold based on timeframe
         if signal_type == 'WEEKLY':
             oversold_threshold = 35  # More relaxed for weekly
             overbought_threshold = 65
@@ -166,7 +136,6 @@ def calculate_all_rsi_indicators(lookback_period=100, rsi_period=14, signal_type
             oversold_threshold = 30  # Standard for daily
             overbought_threshold = 70
         
-        # Determine signal based on RSI value and threshold
         for _, row in latest_data.iterrows():
             rsi_signal = "Neutral"
             if row['rsi'] <= oversold_threshold:
@@ -181,23 +150,19 @@ def calculate_all_rsi_indicators(lookback_period=100, rsi_period=14, signal_type
                 'rsi_signal': rsi_signal
             })
     
-    # Convert results to DataFrame
     result_df = pd.DataFrame(results)
     
     if result_df.empty:
         logger.warning("No valid RSI results")
         return "No RSI results"
     
-    # Save results to database
     conn = get_database_connection()
     cursor = conn.cursor()
     
-    # Delete existing data for dates to be updated
     dates_to_update = result_df['date'].unique()
     for date in dates_to_update:
         cursor.execute(f"DELETE FROM {table_name} WHERE date = '{date}'")
     
-    # Insert new data
     for _, row in result_df.iterrows():
         cursor.execute(f"""
         INSERT INTO {table_name} (symbol, date, rsi, rsi_signal)
@@ -221,7 +186,6 @@ def calculate_all_macd_indicators(lookback_period=150, fast_period=12, slow_peri
     signal_period (int): Signal line period
     signal_type (str): Signal type - DAILY, WEEKLY, or MONTHLY
     """
-    # Get data with appropriate lookback period
     df = fetch_data(f"""
         SELECT 
             symbol, 
@@ -232,12 +196,10 @@ def calculate_all_macd_indicators(lookback_period=150, fast_period=12, slow_peri
         ORDER BY symbol, date
     """)
     
-    # If no data
     if df.empty:
         logger.warning(f"No stock price data for MACD calculation {signal_type}")
         return f"No data {signal_type}"
     
-    # For weekly/monthly, use longer MACD period
     if signal_type == 'WEEKLY':
         min_days_required = 40  # More data for weekly
     elif signal_type == 'MONTHLY':
@@ -245,10 +207,8 @@ def calculate_all_macd_indicators(lookback_period=150, fast_period=12, slow_peri
     else:
         min_days_required = 30  # Default for daily
     
-    # Table name based on signal_type
     table_name = f"public_analytics.technical_indicators_macd_{signal_type.lower()}" if signal_type != 'DAILY' else "public_analytics.technical_indicators_macd"
     
-    # Create table if it doesn't exist
     create_table_if_not_exists(
         table_name,
         f"""
@@ -264,18 +224,14 @@ def calculate_all_macd_indicators(lookback_period=150, fast_period=12, slow_peri
         """
     )
     
-    # Create DataFrame to store results
     results = []
     
-    # Calculate MACD for each stock
     for symbol, group in df.groupby('symbol'):
         if len(group) < min_days_required:  # Minimum required data
             continue
             
-        # Sort by date
         group = group.sort_values('date')
         
-        # Calculate MACD with given parameters
         macd_line, signal_line, macd_histogram = calculate_macd(
             group['close'], 
             fast_period=fast_period, 
@@ -283,22 +239,17 @@ def calculate_all_macd_indicators(lookback_period=150, fast_period=12, slow_peri
             signal_period=signal_period
         )
         
-        # Combine results
         group['macd_line'] = macd_line
         group['signal_line'] = signal_line
         group['macd_histogram'] = macd_histogram
         
-        # Determine signal based on MACD
         group['prev_macd_histogram'] = group['macd_histogram'].shift(1)
         
-        # Filter only latest data
         latest_data = group.dropna().tail(10)  # Get 10 latest days with valid MACD
         
         for _, row in latest_data.iterrows():
-            # Determine MACD signal
             macd_signal = "Neutral"
             
-            # Adjust crossover sensitivity based on timeframe
             if signal_type == 'WEEKLY':
                 hist_threshold = 0.03  # Higher for weekly (reducing false signals)
             elif signal_type == 'MONTHLY':
@@ -306,16 +257,12 @@ def calculate_all_macd_indicators(lookback_period=150, fast_period=12, slow_peri
             else:
                 hist_threshold = 0.0   # Standard for daily
             
-            # Bullish crossover (histogram changes from negative to positive)
             if row['macd_histogram'] > hist_threshold and row['prev_macd_histogram'] <= hist_threshold:
                 macd_signal = "Bullish"  # Bullish crossover
-            # Bearish crossover (histogram changes from positive to negative)
             elif row['macd_histogram'] < -hist_threshold and row['prev_macd_histogram'] >= -hist_threshold:
                 macd_signal = "Bearish"  # Bearish crossover
-            # Bullish momentum (positive histogram and increasing)
             elif row['macd_histogram'] > 0 and row['macd_histogram'] > row['prev_macd_histogram']:
                 macd_signal = "Bullish"  # Bullish momentum
-            # Bearish momentum (negative histogram and decreasing)
             elif row['macd_histogram'] < 0 and row['macd_histogram'] < row['prev_macd_histogram']:
                 macd_signal = "Bearish"  # Bearish momentum
             
@@ -328,23 +275,19 @@ def calculate_all_macd_indicators(lookback_period=150, fast_period=12, slow_peri
                 'macd_signal': macd_signal
             })
     
-    # Convert results to DataFrame
     result_df = pd.DataFrame(results)
     
     if result_df.empty:
         logger.warning(f"No valid MACD {signal_type} results")
         return f"No MACD {signal_type} results"
     
-    # Save results to database
     conn = get_database_connection()
     cursor = conn.cursor()
     
-    # Delete existing data for dates to be updated
     dates_to_update = result_df['date'].unique()
     for date in dates_to_update:
         cursor.execute(f"DELETE FROM {table_name} WHERE date = '{date}'")
     
-    # Insert new data
     for _, row in result_df.iterrows():
         cursor.execute(f"""
         INSERT INTO {table_name} 
@@ -371,7 +314,6 @@ def calculate_all_bollinger_bands(lookback_period=50, band_period=20, std_dev=2,
     std_dev (int): Number of standard deviations for band
     signal_type (str): Signal type - DAILY, WEEKLY, or MONTHLY
     """
-    # Get stock price data with adjusted lookback period
     df = fetch_data(f"""
         SELECT 
             symbol, 
@@ -382,15 +324,12 @@ def calculate_all_bollinger_bands(lookback_period=50, band_period=20, std_dev=2,
         ORDER BY symbol, date
     """)
     
-    # If no data
     if df.empty:
         logger.warning(f"No stock price data for Bollinger Bands calculation {signal_type}")
         return f"No data {signal_type}"
     
-    # Table name based on signal_type
     table_name = f"public_analytics.technical_indicators_bollinger_{signal_type.lower()}" if signal_type != 'DAILY' else "public_analytics.technical_indicators_bollinger"
     
-    # Create table if it doesn't exist
     create_table_if_not_exists(
         table_name,
         f"""
@@ -407,7 +346,6 @@ def calculate_all_bollinger_bands(lookback_period=50, band_period=20, std_dev=2,
         """
     )
     
-    # Adjust minimum number of days data based on timeframe
     if signal_type == 'WEEKLY':
         min_days_required = 30  # More data for weekly
     elif signal_type == 'MONTHLY':
@@ -415,34 +353,27 @@ def calculate_all_bollinger_bands(lookback_period=50, band_period=20, std_dev=2,
     else:
         min_days_required = 20  # Default for daily
     
-    # Create DataFrame to store results
     results = []
     
-    # Calculate Bollinger Bands for each stock
     for symbol, group in df.groupby('symbol'):
         if len(group) < min_days_required:  # Minimum required data
             continue
             
-        # Sort by date
         group = group.sort_values('date')
         
-        # Calculate Bollinger Bands with given parameters
         middle_band, upper_band, lower_band, percent_b = calculate_bollinger_bands(
             group['close'], 
             period=band_period, 
             std_dev=std_dev
         )
         
-        # Combine results
         group['middle_band'] = middle_band
         group['upper_band'] = upper_band
         group['lower_band'] = lower_band
         group['percent_b'] = percent_b
         
-        # Filter only latest data
         latest_data = group.dropna().tail(10)  # Get 10 latest days
         
-        # Adjust threshold based on timeframe
         if signal_type == 'WEEKLY':
             near_overbought = 0.75  # More relaxed for weekly
             near_oversold = 0.25
@@ -453,7 +384,6 @@ def calculate_all_bollinger_bands(lookback_period=50, band_period=20, std_dev=2,
             near_overbought = 0.8   # Standard for daily
             near_oversold = 0.2
         
-        # Determine signal based on Bollinger Bands
         for _, row in latest_data.iterrows():
             bb_signal = "Neutral"
             
@@ -476,23 +406,19 @@ def calculate_all_bollinger_bands(lookback_period=50, band_period=20, std_dev=2,
                 'bb_signal': bb_signal
             })
     
-    # Convert results to DataFrame
     result_df = pd.DataFrame(results)
     
     if result_df.empty:
         logger.warning(f"No valid Bollinger Bands {signal_type} results")
         return f"No Bollinger Bands {signal_type} results"
     
-    # Save results to database
     conn = get_database_connection()
     cursor = conn.cursor()
     
-    # Delete existing data for dates to be updated
     dates_to_update = result_df['date'].unique()
     for date in dates_to_update:
         cursor.execute(f"DELETE FROM {table_name} WHERE date = '{date}'")
     
-    # Insert new data
     for _, row in result_df.iterrows():
         cursor.execute(f"""
         INSERT INTO {table_name} 
@@ -518,7 +444,6 @@ def check_and_create_bollinger_bands_table():
         conn = get_database_connection()
         cursor = conn.cursor()
         
-        # Check if table already exists
         cursor.execute("""
         SELECT EXISTS (
             SELECT FROM information_schema.tables 
@@ -529,14 +454,11 @@ def check_and_create_bollinger_bands_table():
         
         table_exists = cursor.fetchone()[0]
         
-        # If table doesn't exist, create new
         if not table_exists:
             logger.info("Creating technical_indicators_bollinger table as it doesn't exist")
             
-            # Ensure public_analytics schema exists
             cursor.execute("CREATE SCHEMA IF NOT EXISTS public_analytics")
             
-            # Create Bollinger Bands table
             cursor.execute("""
             CREATE TABLE public_analytics.technical_indicators_bollinger (
                 symbol TEXT,
@@ -550,11 +472,8 @@ def check_and_create_bollinger_bands_table():
             )
             """)
             
-            # Get latest date
             latest_date = get_latest_stock_date()
             
-            # Calculate Bollinger Bands from price data and insert into table separately
-            # Step 1: Calculate values for each stock
             cursor.execute(f"""
             WITH daily_prices AS (
                 SELECT
@@ -586,7 +505,6 @@ def check_and_create_bollinger_bands_table():
             WHERE middle_band IS NOT NULL AND std_dev IS NOT NULL;
             """)
             
-            # Step 2: Insert data with percent_b and bb_signal calculation
             cursor.execute("""
             INSERT INTO public_analytics.technical_indicators_bollinger (
                 symbol, date, middle_band, upper_band, lower_band, percent_b, bb_signal

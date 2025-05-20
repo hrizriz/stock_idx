@@ -15,7 +15,6 @@ from pathlib import Path
 
 from .database import get_database_connection, get_latest_stock_date
 
-# Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -55,7 +54,6 @@ def train_win_rate_predictor():
         logger.info("Starting win rate predictor training...")
         conn = get_database_connection()
         
-        # Get historical signals and outcomes
         query = """
         WITH signal_results AS (
             SELECT 
@@ -99,38 +97,30 @@ def train_win_rate_predictor():
             logger.error(f"Error querying signal data: {str(e)}")
             return f"Error querying signal data: {str(e)}"
         
-        # Check if enough data
         if len(df) < 50:
             logger.warning("Not enough data for win rate predictor training")
             return "Not enough data for win rate predictor training"
         
-        # Prepare features and target
         features = ['buy_score', 'rsi', 'macd_line', 'macd_histogram', 'percent_b', 'volume_ratio', 'daily_change']
         
-        # Handle missing values
         df = df.dropna(subset=['is_win'])  # Must have outcome
         df = df.fillna(0)  # Fill missing features with 0
         
-        # Prepare data
         X = df[features]
         y = df['is_win']
         
-        # Train-test split
         from sklearn.model_selection import train_test_split
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
         
-        # Train RandomForest classifier
         from sklearn.ensemble import RandomForestClassifier
         clf = RandomForestClassifier(n_estimators=100, max_depth=5, random_state=42)
         clf.fit(X_train, y_train)
         
-        # Evaluate
         train_accuracy = clf.score(X_train, y_train)
         test_accuracy = clf.score(X_test, y_test)
         
         logger.info(f"Win rate predictor trained. Train accuracy: {train_accuracy:.4f}, Test accuracy: {test_accuracy:.4f}")
         
-        # Save model
         import pickle
         import os
         
@@ -140,18 +130,15 @@ def train_win_rate_predictor():
         with open(os.path.join(model_dir, "win_rate_predictor.pkl"), 'wb') as f:
             pickle.dump(clf, f)
         
-        # Save feature importance
         feature_importance = pd.DataFrame({
             'feature': features,
             'importance': clf.feature_importances_
         }).sort_values('importance', ascending=False)
         
-        # Log feature importance
         logger.info("Feature importance:")
         for _, row in feature_importance.iterrows():
             logger.info(f"{row['feature']}: {row['importance']:.4f}")
         
-        # Save feature importance to database
         cursor = conn.cursor()
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS model_feature_importance (
@@ -198,7 +185,6 @@ def train_lstm_model(symbol):
         logger.info(f"Starting LSTM model training for {symbol}")
         conn = get_database_connection()
         
-        # Get historical price data
         query = f"""
         SELECT 
             date, 
@@ -223,62 +209,48 @@ def train_lstm_model(symbol):
         
         df = pd.read_sql(query, conn)
         
-        # Check if enough data
         if len(df) < 200:
             logger.warning(f"Not enough data for {symbol} LSTM training")
             return f"Not enough data for {symbol}"
         
-        # Fill missing values
         df = df.fillna(method='ffill').fillna(method='bfill')
         
-        # Add technical indicators as features
-        # EMA
         df['ema12'] = df['close'].ewm(span=12, adjust=False).mean()
         df['ema26'] = df['close'].ewm(span=26, adjust=False).mean()
         df['macd_line'] = df['ema12'] - df['ema26']
         
-        # RSI
         delta = df['close'].diff()
         gain = (delta.where(delta > 0, 0)).fillna(0)
         loss = (-delta.where(delta < 0, 0)).fillna(0)
         avg_gain = gain.rolling(window=14).mean()
         avg_loss = loss.rolling(window=14).mean()
-        # Avoid division by zero
         avg_loss = avg_loss.replace(0, 1e-10)
         rs = avg_gain / avg_loss
         df['rsi'] = 100 - (100 / (1 + rs))
         
-        # Features for model
         features = ['close', 'volume', 'percent_change', 'macd_line', 'rsi']
         
-        # Remove NaN values
         df = df.dropna(subset=features)
         
-        # Create directory for model
         import os
         from pathlib import Path
         
         model_dir = Path(f"/opt/airflow/data/lstm/{symbol}")
         model_dir.mkdir(parents=True, exist_ok=True)
         
-        # Prepare data for LSTM
         from sklearn.preprocessing import MinMaxScaler
         import numpy as np
         import torch
         import torch.nn as nn
         
-        # Normalize features
         scaler = MinMaxScaler()
         close_scaler = MinMaxScaler()  # Separate scaler for close price
         
-        # Fit close price scaler
         close_values = df['close'].values.reshape(-1, 1)
         close_scaler.fit(close_values)
         
-        # Scale all features
         scaled_data = scaler.fit_transform(df[features].values)
         
-        # Save scalers
         import pickle
         with open(model_dir / f"{symbol}_scaler.pkl", 'wb') as f:
             pickle.dump(scaler, f)
@@ -286,7 +258,6 @@ def train_lstm_model(symbol):
         with open(model_dir / f"{symbol}_close_scaler.pkl", 'wb') as f:
             pickle.dump(close_scaler, f)
         
-        # Create sequences
         seq_length = 10
         X, y = [], []
         
@@ -297,25 +268,21 @@ def train_lstm_model(symbol):
         X = np.array(X)
         y = np.array(y).reshape(-1, 1)
         
-        # Train-test split
         train_size = int(len(X) * 0.8)
         X_train, X_test = X[:train_size], X[train_size:]
         y_train, y_test = y[:train_size], y[train_size:]
         
-        # Convert to PyTorch tensors
         X_train = torch.FloatTensor(X_train)
         y_train = torch.FloatTensor(y_train)
         X_test = torch.FloatTensor(X_test)
         y_test = torch.FloatTensor(y_test)
         
-        # Define LSTM model
         class LSTMModel(nn.Module):
             def __init__(self, input_dim, hidden_dim, output_dim=1, num_layers=2):
                 super(LSTMModel, self).__init__()
                 self.hidden_dim = hidden_dim
                 self.num_layers = num_layers
                 
-                # LSTM layer
                 self.lstm = nn.LSTM(input_dim, hidden_dim, num_layers, batch_first=True)
                 self.fc = nn.Linear(hidden_dim, output_dim)
                 
@@ -327,66 +294,51 @@ def train_lstm_model(symbol):
                 out = self.fc(out[:, -1, :])
                 return out
         
-        # Hyperparameters
         input_dim = len(features)
         hidden_dim = 32
         num_layers = 2
         output_dim = 1
         
-        # Initialize model
         model = LSTMModel(input_dim, hidden_dim, output_dim, num_layers)
         
-        # Loss function and optimizer
         criterion = nn.MSELoss()
         optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
         
-        # Training parameters
         num_epochs = 100
         batch_size = 16
         
-        # Training loop
         for epoch in range(num_epochs):
-            # Mini-batch training
             for i in range(0, len(X_train), batch_size):
                 batch_X = X_train[i:i+batch_size]
                 batch_y = y_train[i:i+batch_size]
                 
-                # Forward pass
                 outputs = model(batch_X)
                 loss = criterion(outputs, batch_y)
                 
-                # Backward and optimize
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
             
-            # Log progress
             if (epoch+1) % 20 == 0:
                 logger.info(f'Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item():.6f}')
         
-        # Evaluate model
         model.eval()
         with torch.no_grad():
             test_pred = model(X_test)
             test_loss = criterion(test_pred, y_test).item()
             
-            # Denormalize predictions for RMSE calculation
             y_test_denorm = close_scaler.inverse_transform(y_test.numpy())
             test_pred_denorm = close_scaler.inverse_transform(test_pred.numpy())
             
-            # Calculate RMSE, MAE, MAPE
             from sklearn.metrics import mean_squared_error, mean_absolute_error
             rmse = np.sqrt(mean_squared_error(y_test_denorm, test_pred_denorm))
             mae = mean_absolute_error(y_test_denorm, test_pred_denorm)
-            # Avoid division by zero in MAPE calculation
             mape = np.mean(np.abs((y_test_denorm - test_pred_denorm) / np.maximum(y_test_denorm, 1e-10))) * 100
             
             logger.info(f"{symbol} LSTM Evaluation: RMSE={rmse:.2f}, MAE={mae:.2f}, MAPE={mape:.2f}%")
         
-        # Save model with versioning
         version = save_model_with_version(model, model_dir, symbol)
         
-        # Save performance metrics to database
         cursor = conn.cursor()
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS model_performance_metrics (
@@ -433,16 +385,13 @@ def predict_stock_price(symbol):
     symbol (str): Stock symbol to predict price for
     """
     try:
-        # Check if model exists
         model_dir = Path(f"/opt/airflow/data/lstm/{symbol}")
         model_path = model_dir / f"{symbol}_lstm_model.pth"
         
-        # Tambahkan validasi model
         if not model_path.exists():
             logger.error(f"LSTM model for {symbol} not found")
             return f"LSTM model for {symbol} not found"
         
-        # Get latest data
         conn = get_database_connection()
         query = f"""
         SELECT 
@@ -470,23 +419,19 @@ def predict_stock_price(symbol):
         df = pd.read_sql(query, conn)
         df = df.sort_values('date')  # Ensure data is in chronological order
         
-        # Tambahkan validasi data minimal sebelum prediksi
         seq_length = 10  # Sesuaikan dengan model
         if len(df) < seq_length + 5:  # Pastikan ada cukup data plus margin
             logger.error(f"Not enough data for {symbol} prediction (need at least {seq_length+5} days)")
             return f"Not enough data for prediction"
         
-        # Load scalers
         with open(model_dir / f"{symbol}_scaler.pkl", 'rb') as f:
             scaler = pickle.load(f)
         
         with open(model_dir / f"{symbol}_close_scaler.pkl", 'rb') as f:
             close_scaler = pickle.load(f)
         
-        # Prepare features
         features = ['close', 'volume', 'percent_change']
         if len(df) > 14:
-            # Add technical features as in training
             df['ema12'] = df['close'].ewm(span=12, adjust=False).mean()
             df['ema26'] = df['close'].ewm(span=26, adjust=False).mean()
             df['macd_line'] = df['ema12'] - df['ema26']
@@ -501,15 +446,12 @@ def predict_stock_price(symbol):
             
             features.extend(['macd_line', 'rsi'])
         
-        # Handle missing features
         for feature in features:
             if feature not in df.columns:
                 df[feature] = 0
         
-        # Fill missing values
         df = df.ffill().fillna(0)
         
-        # Get last sequence for prediction
         seq_length = 10
         if len(df) < seq_length:
             logger.error(f"Not enough data for {symbol} prediction (need at least {seq_length} days)")
@@ -517,24 +459,19 @@ def predict_stock_price(symbol):
         
         last_sequence = df[features].tail(seq_length).values
         
-        # Scale the sequence
         last_sequence_scaled = scaler.transform(last_sequence)
         
-        # Convert to tensor
         X_pred = torch.FloatTensor(last_sequence_scaled).unsqueeze(0)
         
-        # Load the model
         input_dim = len(features)
         hidden_dim = 32
         
-        # Create LSTM model class
         class LSTMModel(nn.Module):
             def __init__(self, input_dim, hidden_dim, output_dim=1, num_layers=2):
                 super(LSTMModel, self).__init__()
                 self.hidden_dim = hidden_dim
                 self.num_layers = num_layers
                 
-                # LSTM layer
                 self.lstm = nn.LSTM(input_dim, hidden_dim, num_layers, batch_first=True)
                 self.fc = nn.Linear(hidden_dim, output_dim)
                 
@@ -549,27 +486,21 @@ def predict_stock_price(symbol):
         model = LSTMModel(input_dim, hidden_dim, output_dim=1, num_layers=2)
         model.load_state_dict(torch.load(model_path))
         
-        # Make prediction
         model.eval()
         with torch.no_grad():
             pred = model(X_pred)
             pred_np = pred.numpy()
             
-            # Inverse transform
             pred_denorm = close_scaler.inverse_transform(pred_np)[0][0]
         
-        # Get the next business date
         last_date = df['date'].iloc[-1]
         next_date = pd.to_datetime(last_date) + pd.Timedelta(days=1)
         
-        # Skip weekends
         while next_date.weekday() >= 5:  # 5=Saturday, 6=Sunday
             next_date = next_date + pd.Timedelta(days=1)
         
-        # Save prediction to database
         cursor = conn.cursor()
         
-        # Create table if not exists
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS stock_predictions (
             symbol VARCHAR(10),
@@ -583,10 +514,8 @@ def predict_stock_price(symbol):
         )
         """)
         
-        # Convert to standard Python float
         pred_value = float(pred_denorm)
     
-        # Save prediction
         cursor.execute("""
         INSERT INTO stock_predictions (symbol, prediction_date, predicted_close)
         VALUES (%s, %s, %s)
@@ -615,7 +544,6 @@ def update_actual_prices():
         conn = get_database_connection()
         cursor = conn.cursor()
         
-        # Update actual prices from daily_stock_summary
         cursor.execute("""
         UPDATE stock_predictions sp
         SET 
@@ -631,7 +559,6 @@ def update_actual_prices():
         
         rows_updated = cursor.rowcount
         
-        # Calculate performance metrics for existing predictions
         cursor.execute("""
         SELECT 
             symbol,
@@ -644,10 +571,8 @@ def update_actual_prices():
         GROUP BY symbol
         """)
         
-        # Get results
         model_scores = cursor.fetchall()
         
-        # Save metrics to model_performance_metrics table
         for row in model_scores:
             if len(row) >= 4:  # Ensure row has enough elements
                 symbol, rmse, mae, mape, pred_count = row
@@ -681,16 +606,13 @@ def update_actual_prices():
 def save_model_with_version(model, model_dir, symbol, version=None):
     """Save model with versioning"""
     if version is None:
-        # Auto-incrementing version
         version = 1
         while (model_dir / f"{symbol}_lstm_model_v{version}.pth").exists():
             version += 1
     
-    # Save model with version
     model_path = model_dir / f"{symbol}_lstm_model_v{version}.pth"
     torch.save(model.state_dict(), model_path)
     
-    # Save latest symlink
     latest_path = model_dir / f"{symbol}_lstm_model.pth"
     torch.save(model.state_dict(), latest_path)
     

@@ -1,7 +1,6 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.operators.dummy import DummyOperator
-# from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 from datetime import datetime
 import pandas as pd
 import psycopg2
@@ -10,7 +9,6 @@ from pathlib import Path
 import pendulum
 import logging
 
-# Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -37,7 +35,6 @@ def create_tables_if_not_exist():
         )
         cur = conn.cursor()
         
-        # Buat tabel daily_stock_summary jika belum ada
         cur.execute("""
         CREATE TABLE IF NOT EXISTS daily_stock_summary (
             symbol TEXT,
@@ -70,7 +67,6 @@ def create_tables_if_not_exist():
         );
         """)
         
-        # Buat tabel dim_companies untuk menyimpan informasi perusahaan
         cur.execute("""
         CREATE TABLE IF NOT EXISTS dim_companies (
             symbol TEXT PRIMARY KEY,
@@ -82,7 +78,6 @@ def create_tables_if_not_exist():
         );
         """)
         
-        # Create processing_log table for tracking import results
         cur.execute("""
         CREATE TABLE IF NOT EXISTS processing_log (
             id SERIAL PRIMARY KEY,
@@ -136,10 +131,8 @@ def bulk_import_excel_files():
     
     logger.info(f"🔍 Menemukan {total_files} file Excel untuk diimpor.")
     
-    # Batch size for processing
     BATCH_SIZE = 500
     
-    # Column mapping for consistency
     column_map = {
         "kode_saham": "symbol",
         "nama_perusahaan": "name",
@@ -167,7 +160,6 @@ def bulk_import_excel_files():
         "non_regular_frequency": "non_regular_frequency"
     }
     
-    # Prepare SQL statements once for repeated execution
     stock_sql = """
         INSERT INTO daily_stock_summary (
             symbol, name, date,
@@ -228,25 +220,19 @@ def bulk_import_excel_files():
     for file in all_files:
         logger.info(f"📥 Import file: {file.name}")
         try:
-            # Ekstrak tanggal dari nama file
             tanggal_str = file.stem.split("-")[-1]
             file_date = datetime.strptime(tanggal_str, "%Y%m%d").date()
             
-            # Baca file Excel
             df = pd.read_excel(file)
             df.columns = df.columns.str.strip().str.lower().str.replace(" ", "_")
             
-            # Apply column mapping
             df = df.rename(columns=column_map)
             
-            # Keep only mapped columns
             df = df[list(column_map.values())]
             
-            # Add date and filename columns
             df["date"] = file_date
             df["upload_file"] = file.name
             
-            # Establish database connection
             conn = psycopg2.connect(
                 host="postgres",
                 dbname="airflow",
@@ -257,38 +243,30 @@ def bulk_import_excel_files():
             cur = conn.cursor()
             
             try:
-                # Prepare all rows as dictionaries for batch processing
                 stock_rows = df.to_dict('records')
                 
-                # Prepare company data (unique symbols only)
                 company_rows = []
                 for symbol, name in df[['symbol', 'name']].drop_duplicates().itertuples(index=False):
                     company_rows.append({'symbol': symbol, 'name': name})
                 
-                # Process stock data in batches
                 rows_imported = 0
                 for i in range(0, len(stock_rows), BATCH_SIZE):
                     batch = stock_rows[i:i + BATCH_SIZE]
                     execute_batch(cur, stock_sql, batch)
                     rows_imported += len(batch)
                     
-                    # Log progress for large files
                     if len(stock_rows) > 1000 and (i + BATCH_SIZE) % 1000 == 0:
                         logger.info(f"   Progress: {i + BATCH_SIZE}/{len(stock_rows)} rows")
                 
-                # Process company data in a single batch (usually small)
                 execute_batch(cur, company_sql, company_rows)
                 
-                # Commit all changes at once
                 conn.commit()
                 
                 imported_files += 1
                 total_records += rows_imported
                 
-                # Log success
                 logger.info(f"✅ File {file.name}: {rows_imported} baris berhasil diimpor")
                 
-                # Record success in processing_log
                 cur.execute("""
                     INSERT INTO processing_log 
                     (process_name, file_name, process_date, records_processed, status)
@@ -297,11 +275,9 @@ def bulk_import_excel_files():
                 conn.commit()
                 
             except Exception as e:
-                # Rollback on error
                 conn.rollback()
                 logger.error(f"❌ Database error processing {file.name}: {str(e)}")
                 
-                # Record error in processing_log
                 try:
                     cur.execute("""
                         INSERT INTO processing_log 
@@ -363,7 +339,6 @@ def log_import_summary(**context):
     logger.info(f"   - Kecepatan: {records_per_second:.2f} baris/detik" if duration > 0 else "")
     logger.info(f"   - Waktu selesai: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     
-    # Record summary in database
     try:
         conn = psycopg2.connect(
             host="postgres",
@@ -394,7 +369,6 @@ def log_import_summary(**context):
     
     return f"Bulk import selesai: {imported_files}/{total_files} file, {total_records} record"
 
-# DAG definition
 with DAG(
     dag_id="bulk_stock_loader",
     start_date=pendulum.datetime(2024, 1, 1, tz=local_tz),
@@ -404,35 +378,29 @@ with DAG(
     tags=["idx", "bulk", "excel", "historical"]
 ) as dag:
 
-    # Task untuk verifikasi folder
     verify_folder = PythonOperator(
         task_id="verify_data_folder",
         python_callable=verify_data_folder
     )
     
-    # Task untuk membuat tabel
     create_tables = PythonOperator(
         task_id="create_tables",
         python_callable=create_tables_if_not_exist
     )
     
-    # Task untuk bulk import
     run_bulk_import = PythonOperator(
         task_id="run_bulk_import",
         python_callable=bulk_import_excel_files
     )
     
-    # Task untuk log summary
     log_summary = PythonOperator(
         task_id="log_import_summary",
         python_callable=log_import_summary,
         provide_context=True
     )
     
-    # Task marker untuk end
     end_task = DummyOperator(
         task_id="end_task"
     )
     
-    # Task dependencies
     verify_folder >> create_tables >> run_bulk_import >> log_summary >> end_task

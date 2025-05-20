@@ -1,15 +1,12 @@
-# Contoh integrasi Kafka di utils/messaging.py
 from kafka import KafkaProducer, KafkaConsumer
 import json
 import logging
 
 logger = logging.getLogger(__name__)
 
-# Konfigurasi Kafka
 KAFKA_BOOTSTRAP_SERVERS = ['kafka:9092']
 DEFAULT_TOPIC = 'trading-signals'
 
-# Producer untuk mengirim sinyal ke Kafka
 def send_trading_signal(symbol, signal_type, probability, timestamp, data=None):
    try:
        producer = KafkaProducer(
@@ -17,7 +14,6 @@ def send_trading_signal(symbol, signal_type, probability, timestamp, data=None):
            value_serializer=lambda v: json.dumps(v).encode('utf-8')
        )
        
-       # Prepare message
        message = {
            'symbol': symbol,
            'signal_type': signal_type,
@@ -26,7 +22,6 @@ def send_trading_signal(symbol, signal_type, probability, timestamp, data=None):
            'data': data or {}
        }
        
-       # Send message
        future = producer.send(DEFAULT_TOPIC, message)
        producer.flush()
        future.get(timeout=10)  # Wait for the future to complete
@@ -37,7 +32,6 @@ def send_trading_signal(symbol, signal_type, probability, timestamp, data=None):
        logger.error(f"Error sending trading signal to Kafka: {str(e)}")
        return False
 
-# Consumer untuk menerima sinyal dari Kafka
 def consume_trading_signals(callback, topics=None, group_id='trading-signal-consumer'):
    try:
        if topics is None:
@@ -55,7 +49,6 @@ def consume_trading_signals(callback, topics=None, group_id='trading-signal-cons
        
        for message in consumer:
            try:
-               # Call the callback with the message value
                callback(message.value)
            except Exception as e:
                logger.error(f"Error processing Kafka message: {str(e)}")
