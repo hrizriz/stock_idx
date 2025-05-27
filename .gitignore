@@ -1,9 +1,8 @@
 airflow/data/
 airflow/logs/
 airflow/dags/__pycache__/
-airflow/dags/__pycache__/
 airflow/plugins/__pycache__/
-airflow/utils/__pycache__/
+airflow/dags/utils/__pycache__/
 venv/
 ignore/
 init-airflow.sh/
