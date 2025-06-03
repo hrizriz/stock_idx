@@ -239,33 +239,6 @@ class StockAnalysisQueries:
         SELECT * FROM ad_line
         ORDER BY date DESC
         """
-    
-    @staticmethod
-    def get_high_probability_signals(symbol):
-        """Based on send_high_probability_signals function"""
-        return f"""
-        SELECT 
-            s.symbol,
-            s.date,
-            s.buy_score,
-            s.signal_strength,
-            s.winning_probability,
-            m.name,
-            m.close,
-            m.volume,
-            r.rsi,
-            mc.macd_signal
-        FROM public_analytics.advanced_trading_signals s
-        JOIN public.daily_stock_summary m 
-            ON s.symbol = m.symbol AND s.date = m.date
-        LEFT JOIN public_analytics.technical_indicators_rsi r 
-            ON s.symbol = r.symbol AND s.date = r.date
-        LEFT JOIN public_analytics.technical_indicators_macd mc 
-            ON s.symbol = mc.symbol AND s.date = mc.date
-        WHERE s.symbol = '{symbol}'
-        AND s.date >= CURRENT_DATE - INTERVAL '30 days'
-        ORDER BY s.date DESC
-        """
 
 def get_available_stocks():
     """Get list of available stocks for search"""
@@ -288,6 +261,12 @@ def show_stock_search():
     """Stock search interface"""
     st.markdown("### 🔍 Select Stock for Comprehensive Analysis")
     
+    # Check if stock is pre-selected from Overview page
+    default_symbol = None
+    if 'selected_stock' in st.session_state and st.session_state.selected_stock:
+        default_symbol = st.session_state.selected_stock
+        st.info(f"🎯 **{default_symbol}** selected from Overview page. You can change selection below.")
+    
     # Get available stocks
     stocks_df = get_available_stocks()
     
@@ -297,11 +276,17 @@ def show_stock_search():
     
     # Create search options
     stock_options = []
-    for _, row in stocks_df.iterrows():
+    default_index = 0
+    
+    for i, (_, row) in enumerate(stocks_df.iterrows()):
         price_change = f"{row['percent_change']:+.2f}%" if pd.notna(row['percent_change']) else "N/A"
         price = f"Rp{row['close']:,.0f}" if pd.notna(row['close']) else "N/A"
         option = f"{row['symbol']} - {row['name']} | {price} ({price_change})"
         stock_options.append(option)
+        
+        # Set default index if stock is pre-selected
+        if default_symbol and row['symbol'] == default_symbol:
+            default_index = i
     
     # Search interface
     col1, col2, col3 = st.columns([3, 1, 1])
@@ -310,12 +295,14 @@ def show_stock_search():
         selected_option = st.selectbox(
             "Choose Stock:",
             stock_options,
-            index=0,
+            index=default_index,
             help="Select a stock to view comprehensive analysis including technical, sentiment, and trading signals"
         )
         
         if selected_option:
             selected_symbol = selected_option.split(" - ")[0]
+            # Update session state
+            st.session_state.selected_stock = selected_symbol
             return selected_symbol
     
     with col2:
@@ -714,68 +701,6 @@ def show_accumulation_distribution(symbol):
         
         st.plotly_chart(fig_ad, use_container_width=True)
 
-def show_high_probability_signals(symbol):
-    """Show high probability trading signals"""
-    st.markdown("### 🎯 High Probability Trading Signals")
-    
-    try:
-        signals_data = fetch_data_cached(
-            StockAnalysisQueries.get_high_probability_signals(symbol),
-            f"High Probability Signals for {symbol}"
-        )
-        
-        if signals_data.empty:
-            st.info(f"ℹ️ No high probability signals data available for {symbol}")
-            st.markdown("💡 This feature requires the `advanced_trading_signals` table from your analytics pipeline.")
-            return
-        
-        latest_signal = signals_data.iloc[0]
-        
-        col1, col2, col3 = st.columns(3)
-        
-        with col1:
-            buy_score = latest_signal['buy_score'] if pd.notna(latest_signal['buy_score']) else 0
-            st.metric(
-                "🎯 Buy Score",
-                f"{buy_score}/10",
-                "algorithm score"
-            )
-        
-        with col2:
-            probability = latest_signal['winning_probability'] if pd.notna(latest_signal['winning_probability']) else 0
-            prob_color = "🟢" if probability >= 0.8 else "🟡" if probability >= 0.6 else "🔴"
-            st.metric(
-                "📊 Win Probability",
-                f"{probability:.1%} {prob_color}",
-                "historical accuracy"
-            )
-        
-        with col3:
-            signal_strength = latest_signal['signal_strength'] if pd.notna(latest_signal['signal_strength']) else 'Weak'
-            st.metric(
-                "💪 Signal Strength",
-                signal_strength,
-                "confidence level"
-            )
-        
-        # Show signals history
-        if len(signals_data) > 1:
-            st.markdown("#### 📈 Signals History")
-            
-            # Filter high probability signals
-            high_prob = signals_data[signals_data['winning_probability'] >= 0.7]
-            
-            if not high_prob.empty:
-                st.dataframe(
-                    high_prob[['date', 'buy_score', 'winning_probability', 'signal_strength']].head(10),
-                    use_container_width=True
-                )
-            else:
-                st.info("No high probability signals (>70%) found in recent data")
-    
-    except Exception as e:
-        st.info(f"ℹ️ Advanced trading signals not available: {str(e)}")
-
 def show():
     """Main function for Individual Stock Analysis page"""
     
@@ -809,13 +734,12 @@ def show():
     
     st.markdown("---")
     
-    # Create tabs for different analysis types
-    tab1, tab2, tab3, tab4, tab5 = st.tabs([
+    # Create tabs for different analysis types (REMOVED AI Signals)
+    tab1, tab2, tab3, tab4 = st.tabs([
         "📈 Technical Analysis", 
         "📰 Sentiment Analysis", 
         "🔍 Bandarmology", 
-        "📊 A/D Line",
-        "🎯 AI Signals"
+        "📊 A/D Line"
     ])
     
     with tab1:
@@ -829,9 +753,6 @@ def show():
     
     with tab4:
         show_accumulation_distribution(selected_symbol)
-    
-    with tab5:
-        show_high_probability_signals(selected_symbol)
     
     # Add comprehensive summary at the bottom
     st.markdown("---")
@@ -863,16 +784,10 @@ def show():
         - Cumulative accumulation/distribution line
         - Price vs money flow correlation
         
-        **🎯 AI Trading Signals:**
-        - High probability signals from machine learning models
-        - Win probability percentages based on historical data
-        - Algorithmic buy/sell score recommendations
-        
         **Data Sources:**
         - Real-time stock price data
         - Technical indicators (RSI, MACD)
         - News sentiment analysis
         - Foreign investor flow data
         - Volume and money flow analysis
-        - AI-generated trading signals
         """)

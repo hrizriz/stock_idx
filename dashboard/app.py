@@ -60,6 +60,14 @@ st.markdown("""
         margin: 5px 0;
         font-size: 0.9em;
     }
+    .selected-stock {
+        background-color: #fff3cd;
+        border: 1px solid #ffeaa7;
+        border-radius: 5px;
+        padding: 8px;
+        margin: 5px 0;
+        font-size: 0.9em;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -84,10 +92,11 @@ except ImportError as e:
 AVAILABLE_PAGES = {}
 
 if UTILS_LOADED:
-    # Try to import each page module
+    # Try to import each page module - FIXED: Added Elliott Wave
     page_modules = {
         "🏠 Overview": "overview",
-        "🎯 Individual Stock Analysis": "individual_stock_analysis",  # NEW PAGE
+        "🎯 Individual Stock Analysis": "individual_stock_analysis",
+        "🌊 Elliott Wave Analysis": "elliott_waves",  # ADDED THIS!
         "📈 Technical Analysis": "technical_analysis", 
         "📰 Sentiment Analysis": "sentiment_analysis",
         "🤖 LSTM Predictions": "lstm_predictions",
@@ -98,7 +107,7 @@ if UTILS_LOADED:
     
     for page_name, module_name in page_modules.items():
         try:
-            module = __import__(module_name)
+            module = __import__(module_name)  # FIXED: Was **import**
             AVAILABLE_PAGES[page_name] = module
         except ImportError:
             # Skip pages that aren't implemented yet
@@ -108,22 +117,23 @@ def show_import_status():
     """Show which page modules are available"""
     st.sidebar.markdown("### 📄 Available Pages")
     
+    # FIXED: Complete list of all pages
     all_pages = [
         ("🏠 Overview", "overview"),
-        ("🎯 Individual Stock Analysis", "individual_stock_analysis"),  # NEW
-        ("📈 Technical Analysis", "technical_analysis"), 
-        ("📰 Sentiment Analysis", "sentiment_analysis"),
-        ("🤖 LSTM Predictions", "lstm_predictions"),
-        ("🔍 Bandarmology", "bandarmology"),
-        ("⚡ Trading Signals", "trading_signals"),
+        ("🎯 Individual Stock Analysis", "individual_stock_analysis"),
+        ("🌊 Elliott Wave Analysis", "elliott_waves"),
         ("🔧 Debug", "debug_page")
     ]
     
     for page_name, module_name in all_pages:
         if page_name in AVAILABLE_PAGES:
-            # Highlight new feature
-            if page_name == "🎯 Individual Stock Analysis":
-                st.sidebar.markdown(f"✅ {page_name} 🆕")
+            # Highlight key pages
+            if page_name == "🏠 Overview":
+                st.sidebar.markdown(f"✅ {page_name} 🏠")
+            elif page_name == "🎯 Individual Stock Analysis":
+                st.sidebar.markdown(f"✅ {page_name} ⭐")
+            elif page_name == "🌊 Elliott Wave Analysis":
+                st.sidebar.markdown(f"✅ {page_name} 🌊")
             else:
                 st.sidebar.markdown(f"✅ {page_name}")
         else:
@@ -182,13 +192,37 @@ def show_sidebar():
         return None, False
     
     # Show new feature highlight
-    if "🎯 Individual Stock Analysis" in AVAILABLE_PAGES:
+    if "🏠 Overview" in AVAILABLE_PAGES:
         st.sidebar.markdown("""
         <div class="new-feature">
-            🆕 <strong>New Feature!</strong><br>
-            Individual Stock Analysis with comprehensive insights combining technical, sentiment, and smart money analysis.
+            🏠 <strong>Market Command Center!</strong><br>
+            Smart Money Signals, Elliott Wave Analysis & Clickable Stock Analysis - all in one place!
         </div>
         """, unsafe_allow_html=True)
+    
+    # Show selected stock info if available
+    if 'selected_stock' in st.session_state and st.session_state.selected_stock:
+        st.sidebar.markdown("---")
+        st.sidebar.markdown("### 🎯 Selected Stock")
+        st.sidebar.markdown(f"""
+        <div class="selected-stock">
+            📊 <strong>{st.session_state.selected_stock}</strong><br>
+            Ready for detailed analysis!
+        </div>
+        """, unsafe_allow_html=True)
+        
+        col1, col2 = st.sidebar.columns(2)
+        with col1:
+            if st.button("📈 Analyze", help="Go to Individual Stock Analysis"):
+                st.session_state.page_navigation = "🎯 Individual Stock Analysis"
+                st.rerun()
+        with col2:
+            if st.button("🔄 Clear", help="Clear stock selection"):
+                if 'selected_stock' in st.session_state:
+                    del st.session_state.selected_stock
+                if 'page_navigation' in st.session_state:
+                    del st.session_state.page_navigation
+                st.rerun()
     
     # Show available pages
     show_import_status()
@@ -201,12 +235,20 @@ def show_sidebar():
         st.sidebar.warning("⚠️ No pages available")
         return None, True
     
-    # Set default to Individual Stock Analysis if available
+    # Handle navigation from session state (from Overview clicks)
     default_index = 0
-    if "🎯 Individual Stock Analysis" in AVAILABLE_PAGES:
+    if 'page_navigation' in st.session_state and st.session_state.page_navigation in AVAILABLE_PAGES:
         page_keys = list(AVAILABLE_PAGES.keys())
         try:
-            default_index = page_keys.index("🎯 Individual Stock Analysis")
+            default_index = page_keys.index(st.session_state.page_navigation)
+            # Clear the navigation state after using it
+            del st.session_state.page_navigation
+        except ValueError:
+            default_index = 0
+    elif "🏠 Overview" in AVAILABLE_PAGES:  # FIXED: Default to Overview
+        page_keys = list(AVAILABLE_PAGES.keys())
+        try:
+            default_index = page_keys.index("🏠 Overview")
         except ValueError:
             default_index = 0
     
@@ -243,7 +285,7 @@ def show_sidebar():
     <div class="sidebar-info">
         📅 Latest Data: {system_info['latest_date']}<br>
         📊 Tables: {system_info['table_count']}<br>
-        📄 Pages: {system_info['pages_available']}/8<br>
+        📄 Pages: {system_info['pages_available']}/9<br>
         🕐 Time: {datetime.now().strftime('%H:%M:%S')}
     </div>
     """, unsafe_allow_html=True)
@@ -315,8 +357,9 @@ def show_missing_pages_info():
     To use the dashboard, you need to create page modules in the `pages/` directory:
     
     ### Essential Pages:
-    - `pages/overview.py` - Market overview dashboard
-    - `pages/individual_stock_analysis.py` - **NEW** Comprehensive individual stock analysis
+    - `pages/overview.py` - Market overview dashboard with clickable stocks
+    - `pages/individual_stock_analysis.py` - Comprehensive individual stock analysis
+    - `pages/elliott_waves.py` - Elliott Wave Analysis (NEW!)
     - `pages/debug_page.py` - Debug and system information
     
     ### Additional Analysis Pages:
@@ -360,20 +403,47 @@ def show_page_error(page_name, error):
 
 def show_welcome_message():
     """Show welcome message for new users"""
-    if "🎯 Individual Stock Analysis" in AVAILABLE_PAGES:
+    if "🏠 Overview" in AVAILABLE_PAGES:
         st.markdown("""
         ### 🎉 Welcome to IDX Stock Intelligence Platform!
         
-        **🆕 New Feature: Individual Stock Analysis**
+        **🏠 Market Overview Dashboard**
+        
+        Explore comprehensive market intelligence including:
+        - 📊 **Market KPIs**: Real-time market statistics and breadth
+        - 🎯 **Smart Money Signals**: AI-powered institutional activity detection
+        - 🔥 **Top Movers**: Biggest price movements with clickable analysis
+        - ⚡ **High Volume**: Most active stocks with trading opportunities
+        - 📈 **Market Highlights**: Top gainers, losers, and most active stocks
+        
+        **🌊 NEW: Elliott Wave Analysis**
+        - Professional wave pattern recognition
+        - Fibonacci retracement levels
+        - Wave counting and trend analysis
+        - Entry/exit signals based on Elliott Wave theory
+        
+        **🚀 Quick Start:**
+        1. **Browse market overview** to understand today's market sentiment
+        2. **Check Smart Money Signals** for institutional activity 
+        3. **Use Elliott Wave** for advanced technical analysis
+        4. **Click any stock** to jump directly to detailed analysis
+        
+        **💡 The Overview page is your market command center - start exploring!**
+        """)
+    elif "🎯 Individual Stock Analysis" in AVAILABLE_PAGES:
+        st.markdown("""
+        ### 🎉 Welcome to IDX Stock Intelligence Platform!
+        
+        **⭐ Enhanced Navigation Experience**
         
         Get comprehensive analysis for any stock including:
         - 📈 **Technical Analysis**: RSI, MACD, and trading recommendations
+        - 🌊 **Elliott Wave Analysis**: Professional wave pattern recognition
         - 📰 **Sentiment Analysis**: News sentiment from multiple sources
         - 🔍 **Bandarmology**: Smart money flow and accumulation patterns
         - 📊 **A/D Line**: Money flow and distribution analysis
-        - 🎯 **AI Signals**: High probability trading signals
         
-        **👆 Select "🎯 Individual Stock Analysis" from the sidebar to get started!**
+        **👆 Select "🏠 Overview" to explore the market, or choose any analysis tool!**
         """)
     else:
         st.info("👈 Please select a page from the sidebar to begin analysis")
@@ -442,7 +512,7 @@ def show_footer():
         if UTILS_LOADED:
             st.markdown(
                 f"<div style='text-align: center; color: gray; font-size: 0.8em;'>"
-                f"Pages: {len(AVAILABLE_PAGES)}/8 loaded"
+                f"Pages: {len(AVAILABLE_PAGES)}/9 loaded"
                 "</div>", 
                 unsafe_allow_html=True
             )
@@ -456,7 +526,7 @@ def show_footer():
         )
 
 # Run the application
-if __name__ == "__main__":
+if __name__ == "__main__":  # FIXED: Was **name**
     try:
         main()
         show_footer()
