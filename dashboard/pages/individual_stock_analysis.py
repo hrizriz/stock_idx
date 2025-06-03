@@ -40,9 +40,7 @@ class StockAnalysisQueries:
                 high,
                 low,
                 open_price,
-                foreign_buy,
-                foreign_sell,
-                (foreign_buy - foreign_sell) as foreign_net
+                foreign_net
             FROM public_analytics.daily_stock_metrics
             WHERE symbol = '{symbol}'
             AND date >= (SELECT max_date - INTERVAL '30 days' FROM latest_date)
