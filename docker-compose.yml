@@ -146,6 +146,36 @@ services:
       - /etc/localtime:/etc/localtime:ro
     networks:
       - airflow_network
+  
+  streamlit-dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile.streamlit
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8501:8501"
+    env_file:
+      - ./.env
+    environment:
+      - DB_HOST=postgres
+      - DB_NAME=${POSTGRES_DB:-airflow}
+      - DB_USER=${POSTGRES_USER:-airflow}
+      - DB_PASSWORD=${POSTGRES_PASSWORD:-airflow}
+      - DB_PORT=5432
+    volumes:
+      - ./dashboard:/app
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - airflow_network
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 20s
+      retries: 5
 
 volumes:
   postgres_data:

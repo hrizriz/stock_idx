@@ -1,8 +1,6 @@
 airflow/data/
 airflow/logs/
-airflow/dags/__pycache__/
-airflow/plugins/__pycache__/
-airflow/dags/utils/__pycache__/
+__pycache__/
 venv/
 ignore/
 init-airflow.sh/
@@ -13,3 +11,4 @@ telegram.txt
 *.template
 setup-env.sh
 dbt/logs
+dashboard_backup/
