@@ -14,7 +14,7 @@ Data diambil dari situs resmi Bursa Efek Indonesia (IDX): [Ringkasan Perdagangan
 
 ### Periode Data
 - **Mulai**: 3 Januari 2020
-- **Sampai**: 16 Mei 2025
+- **Sampai**: 5 Juni 2025
 - **Frekuensi**: Data harian (hari kerja bursa)
 
 ### Struktur Data
