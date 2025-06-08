@@ -245,7 +245,7 @@ def send_rebound_signals():
             return "No rebound candidates found"
         
         message = "🔄 *POTENTIAL REBOUND CANDIDATES* 🔄\n\n"
-        message += "The following stocks show significant rebound potential based on transaction patterns:\n\n"
+        message += "Stocks berikut menunjukkan significant rebound potential berdasarkan transaction patterns:\n\n"
         
         for i, row in enumerate(df.itertuples(), 1):
             if row.rebound_score >= 18:
@@ -271,13 +271,13 @@ def send_rebound_signals():
                 
             message += "\n"
         
-        message += "*Rebound Strategy Tips:*\n"
-        message += "• Enter on morning weakness or consolidation\n"
-        message += "• Target: +5-15% from entry\n"
+        message += "*Tips Strategi Rebound:*\n"
+        message += "• Entry: Saat morning weakness atau consolidation\n"
+        message += "• Target: +5-15% dari entry price\n"
         message += "• Stop loss: -3% below entry\n"
-        message += "• Best trades: Scores 15+ with high volume\n\n"
+        message += "• Best trades: Scores 15+ dengan high volume\n\n"
         
-        message += "*Disclaimer:* Rebound predictions are based on transaction patterns and technical analysis. Always conduct your own research."
+        message += "*Disclaimer:* Rebound predictions berdasarkan transaction patterns dan technical analysis. Always conduct your own research."
         
         send_telegram_message(message)
         
