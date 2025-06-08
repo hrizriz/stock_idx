@@ -1,6 +1,11 @@
+__pycache__/
+*.py[cod]
+*$py.class
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
 airflow/data/
 airflow/logs/
-__pycache__/
 venv/
 ignore/
 init-airflow.sh/
