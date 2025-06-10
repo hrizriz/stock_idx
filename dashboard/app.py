@@ -543,12 +543,14 @@ if __name__ == "__main__":  # FIXED: Was **name**
         3. **Review the error details** above
         4. **Check application logs** with `docker-compose logs streamlit-dashboard`
         5. **Restart the dashboard** with `docker-compose restart streamlit-dashboard`
-        """)
+        
+        ###Tips Strategi Rebound:
+        • Entry: Saat harga melemah di pagi hari atau konsolidasi
+        • Target: +5-15% dari harga entry
+        • Stop loss: -3% di bawah harga entry
+        • Trade terbaik: Skor 15+ dengan volume tinggi
 
-Tips Strategi Rebound:
-• Entry: Saat harga melemah di pagi hari atau konsolidasi
-• Target: +5-15% dari harga entry
-• Stop loss: -3% di bawah harga entry
-• Trade terbaik: Skor 15+ dengan volume tinggi
+        ##Disclaimer: Prediksi rebound berdasarkan pola transaksi dan analisis teknikal. Selalu lakukan riset mandiri.
+                    
+                    """)
 
-Disclaimer: Prediksi rebound berdasarkan pola transaksi dan analisis teknikal. Selalu lakukan riset mandiri.
