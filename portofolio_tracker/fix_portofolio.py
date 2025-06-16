@@ -1,4 +1,193 @@
+#!/usr/bin/env python3
+"""
+Portfolio Tracker Fix Script - Clean Version (No Emojis)
+Fixes import issues and file structure problems
+"""
+
+import os
+import shutil
+
+def fix_portfolio_structure():
+    """Fix portfolio tracker file structure and imports"""
+    
+    print("Fixing Portfolio Tracker Structure...")
+    
+    # 1. Move pdf_parser.py to utils directory if it's in wrong location
+    pdf_parser_wrong = "portofolio_tracker/pdf_parser.py"
+    pdf_parser_correct = "portofolio_tracker/utils/pdf_parser.py"
+    
+    if os.path.exists(pdf_parser_wrong) and not os.path.exists(pdf_parser_correct):
+        print(f"Moving {pdf_parser_wrong} to {pdf_parser_correct}")
+        os.makedirs(os.path.dirname(pdf_parser_correct), exist_ok=True)
+        shutil.move(pdf_parser_wrong, pdf_parser_correct)
+    
+    # 2. Create missing __init__.py files
+    init_files = [
+        "portofolio_tracker/__init__.py",
+        "portofolio_tracker/utils/__init__.py", 
+        "portofolio_tracker/pages/__init__.py"
+    ]
+    
+    for init_file in init_files:
+        if not os.path.exists(init_file):
+            print(f"Creating {init_file}")
+            os.makedirs(os.path.dirname(init_file), exist_ok=True)
+            with open(init_file, 'w', encoding='utf-8') as f:
+                f.write("# Portfolio Tracker Module\n")
+    
+    # 3. Fix portfolio_calculator.py
+    calculator_content = '''# ============================================================================
+# PORTFOLIO CALCULATOR
+# File: portofolio_tracker/utils/portfolio_calculator.py
 # ============================================================================
+
+from datetime import datetime, date
+import pandas as pd
+import streamlit as st
+import sys
+import os
+
+# Import database utilities
+try:
+    from .database import PortfolioDatabase
+except ImportError:
+    try:
+        from portofolio_tracker.utils.database import PortfolioDatabase
+    except ImportError:
+        from database import PortfolioDatabase
+
+# Import main dashboard database utilities for price fetching
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'dashboard', 'utils'))
+try:
+    from database import fetch_data_cached
+    MAIN_DB_AVAILABLE = True
+except ImportError:
+    MAIN_DB_AVAILABLE = False
+
+class PortfolioCalculator:
+    def __init__(self):
+        self.db = PortfolioDatabase()
+    
+    def recalculate_portfolio(self, user_id):
+        """Recalculate entire portfolio metrics"""
+        try:
+            self._update_holdings_metrics(user_id)
+            self._update_portfolio_summary(user_id)
+            return True
+        except Exception as e:
+            st.error(f"Error recalculating portfolio: {e}")
+            return False
+    
+    def _update_holdings_metrics(self, user_id):
+        """Update current value and P&L for all holdings"""
+        conn = self.db.get_connection()
+        if not conn:
+            return
+        
+        try:
+            with conn.cursor() as cursor:
+                cursor.execute("""
+                    UPDATE portfolio.holdings 
+                    SET current_value = total_quantity * COALESCE(current_price, average_price),
+                        unrealized_pnl = (total_quantity * COALESCE(current_price, average_price)) - total_cost,
+                        unrealized_pnl_pct = CASE 
+                            WHEN total_cost > 0 
+                            THEN ((total_quantity * COALESCE(current_price, average_price)) - total_cost) / total_cost * 100 
+                            ELSE 0 
+                        END,
+                        last_updated = CURRENT_TIMESTAMP
+                    WHERE user_id = %s
+                """, (user_id,))
+            
+            conn.commit()
+        except Exception as e:
+            st.error(f"Error updating holdings metrics: {e}")
+            conn.rollback()
+        finally:
+            conn.close()
+    
+    def _update_portfolio_summary(self, user_id):
+        """Update portfolio summary for today"""
+        conn = self.db.get_connection()
+        if not conn:
+            return
+        
+        try:
+            with conn.cursor() as cursor:
+                cursor.execute("""
+                    SELECT 
+                        COALESCE(SUM(total_cost), 0) as total_invested,
+                        COALESCE(SUM(current_value), 0) as current_value,
+                        COALESCE(SUM(unrealized_pnl), 0) as unrealized_pnl,
+                        COUNT(*) as total_stocks
+                    FROM portfolio.holdings 
+                    WHERE user_id = %s AND total_quantity > 0
+                """, (user_id,))
+                
+                result = cursor.fetchone()
+                if result:
+                    total_invested, current_value, unrealized_pnl, total_stocks = result
+                    total_pnl = unrealized_pnl
+                    total_pnl_pct = (total_pnl / total_invested * 100) if total_invested > 0 else 0
+                    today = date.today()
+                    
+                    cursor.execute("""
+                        INSERT INTO portfolio.portfolio_summary 
+                        (user_id, summary_date, total_invested, current_value, 
+                         total_pnl, total_pnl_pct, realized_pnl, unrealized_pnl, total_stocks)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                        ON CONFLICT (user_id, summary_date)
+                        DO UPDATE SET
+                            total_invested = EXCLUDED.total_invested,
+                            current_value = EXCLUDED.current_value,
+                            total_pnl = EXCLUDED.total_pnl,
+                            total_pnl_pct = EXCLUDED.total_pnl_pct,
+                            realized_pnl = EXCLUDED.realized_pnl,
+                            unrealized_pnl = EXCLUDED.unrealized_pnl,
+                            total_stocks = EXCLUDED.total_stocks
+                    """, (user_id, today, total_invested, current_value, 
+                         total_pnl, total_pnl_pct, 0, unrealized_pnl, total_stocks))
+            
+            conn.commit()
+        except Exception as e:
+            st.error(f"Error updating portfolio summary: {e}")
+            conn.rollback()
+        finally:
+            conn.close()
+    
+    def calculate_portfolio_metrics(self, user_id):
+        """Calculate comprehensive portfolio metrics"""
+        holdings = self.db.get_current_holdings(user_id)
+        
+        if holdings.empty:
+            return {}
+        
+        metrics = {
+            'total_value': holdings['current_value'].sum(),
+            'total_cost': holdings['total_cost'].sum(),
+            'total_pnl': holdings['unrealized_pnl'].sum(),
+            'total_stocks': len(holdings),
+            'winners': len(holdings[holdings['unrealized_pnl'] > 0]),
+            'losers': len(holdings[holdings['unrealized_pnl'] < 0])
+        }
+        
+        metrics['total_pnl_pct'] = (metrics['total_pnl'] / metrics['total_cost'] * 100) if metrics['total_cost'] > 0 else 0
+        metrics['win_rate'] = (metrics['winners'] / metrics['total_stocks'] * 100) if metrics['total_stocks'] > 0 else 0
+        
+        return metrics
+'''
+    
+    # Write the fixed calculator
+    os.makedirs("portofolio_tracker/utils", exist_ok=True)
+    with open("portofolio_tracker/utils/portfolio_calculator.py", "w", encoding='utf-8') as f:
+        f.write(calculator_content)
+    
+    print("Portfolio structure fixed!")
+
+def create_simple_portfolio_page():
+    """Create a simplified portfolio page that works"""
+    
+    portfolio_page_content = '''# ============================================================================
 # SIMPLIFIED PORTFOLIO TRACKER  
 # File: portofolio_tracker/pages/portofolio_tracker.py
 # ============================================================================
@@ -329,3 +518,42 @@ def show_module_setup_guide():
     - portofolio_tracker/utils/portfolio_calculator.py
     - portofolio_tracker/utils/pdf_parser.py
     """)
+'''
+    
+    # Write the simplified portfolio page
+    os.makedirs("portofolio_tracker/pages", exist_ok=True)
+    with open("portofolio_tracker/pages/portofolio_tracker.py", "w", encoding='utf-8') as f:
+        f.write(portfolio_page_content)
+    
+    print("Simplified portfolio page created!")
+
+def install_dependencies():
+    """Install required dependencies"""
+    print("Installing dependencies...")
+    
+    try:
+        import subprocess
+        import sys
+        
+        dependencies = ["PyPDF2", "openpyxl", "xlsxwriter"]
+        
+        for dep in dependencies:
+            print(f"Installing {dep}...")
+            subprocess.check_call([sys.executable, "-m", "pip", "install", dep])
+        
+        print("Dependencies installed successfully!")
+        
+    except Exception as e:
+        print(f"Failed to install dependencies: {e}")
+        print("Please install manually: pip install PyPDF2 openpyxl xlsxwriter")
+
+if __name__ == "__main__":
+    fix_portfolio_structure()
+    create_simple_portfolio_page()
+    install_dependencies()
+    
+    print("\nPortfolio Tracker setup complete!")
+    print("\nNext steps:")
+    print("1. Execute the database schema SQL in PostgreSQL")
+    print("2. Restart your Streamlit app: streamlit run dashboard/app.py")
+    print("3. Navigate to 'Portfolio Tracker' in the sidebar")
