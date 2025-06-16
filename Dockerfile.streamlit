@@ -7,14 +7,22 @@ RUN apt-get update && apt-get install -y \
     curl \
     build-essential \
     python3-dev \
+    postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements and install Python dependencies
 COPY dashboard/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Install portfolio tracker requirements
+COPY portofolio_tracker/requirements.txt /tmp/portofolio_requirements.txt
+RUN pip install --no-cache-dir -r /tmp/portofolio_requirements.txt
+
 # Copy dashboard files
 COPY dashboard/ .
+
+# Copy portfolio tracker files
+COPY portofolio_tracker/ /app/portofolio_tracker/
 
 # Create streamlit config directory
 RUN mkdir -p ~/.streamlit

@@ -3,11 +3,22 @@ import sys
 import os
 from datetime import datetime
 import traceback
+import pandas as pd
+import yfinance as yf
+from plotly.subplots import make_subplots
+import numpy as np
+from .utils import format_currency, format_percentage, calculate_metrics
+from .stock_analyzer import StockAnalyzer
+from .market_overview import MarketOverview
+from .news_analyzer import NewsAnalyzer
+from .screener import Screener
+from .backtest import Backtest
+from .alerts import Alerts
+from .settings import Settings
 
 # Add directories to Python path for imports
 sys.path.append(os.path.join(os.path.dirname(__file__), 'pages'))
 sys.path.append(os.path.join(os.path.dirname(__file__), 'utils'))
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'portofolio_tracker'))
 
 # Page config
 st.set_page_config(
@@ -80,31 +91,25 @@ except ImportError as e:
     st.error(f"❌ Failed to import database utilities: {e}")
     UTILS_LOADED = False
 
-# Import page modules with better error handling
+# Import page modules
 AVAILABLE_PAGES = {}
 
 if UTILS_LOADED:
     # Try to import each page module
     page_modules = {
         "🏠 Overview": "overview",
-        "🎯 Individual Stock Analysis": "individual_stock_analysis", 
+        "🎯 Individual Stock Analysis": "individual_stock_analysis",
         "🌊 Elliott Wave Analysis": "elliott_waves",
-        "💼 Portfolio Tracker": "portfolio_page",  # Menggunakan bridge module
         "🔧 Debug": "debug_page"
     }
     
     for page_name, module_name in page_modules.items():
         try:
-            # Special handling for Portfolio Tracker
-            if module_name == "portfolio_page":
-                # Import our bridge module
-                import portfolio_page
-                AVAILABLE_PAGES[page_name] = portfolio_page
-            else:
-                module = __import__(module_name)
-                AVAILABLE_PAGES[page_name] = module
+            import importlib
+            module = importlib.import_module(module_name)
+            AVAILABLE_PAGES[page_name] = module
         except ImportError as e:
-            print(f"Warning: Could not load page '{page_name}': {e}")
+            st.error(f"❌ Gagal memuat halaman '{page_name}': {e}")
             continue
 
 def get_system_info():
@@ -119,27 +124,16 @@ def get_system_info():
         tables_query = """
         SELECT COUNT(*) as table_count
         FROM information_schema.tables 
-        WHERE table_schema IN ('public', 'public_analytics', 'portfolio')
+        WHERE table_schema IN ('public', 'public_analytics')
         """
         tables_df = execute_query_safe(tables_query, "Table Count")
         table_count = tables_df['table_count'].iloc[0] if not tables_df.empty else 0
-        
-        # Check portfolio schema
-        portfolio_query = """
-        SELECT EXISTS (
-            SELECT 1 FROM information_schema.schemata 
-            WHERE schema_name = 'portfolio'
-        ) as portfolio_exists
-        """
-        portfolio_df = execute_query_safe(portfolio_query, "Portfolio Schema Check")
-        portfolio_exists = portfolio_df['portfolio_exists'].iloc[0] if not portfolio_df.empty else False
         
         return {
             "latest_date": latest_date,
             "table_count": table_count,
             "pages_available": len(AVAILABLE_PAGES),
-            "utils_loaded": UTILS_LOADED,
-            "portfolio_schema": portfolio_exists
+            "utils_loaded": UTILS_LOADED
         }
     except Exception as e:
         return {
@@ -147,7 +141,6 @@ def get_system_info():
             "table_count": 0,
             "pages_available": len(AVAILABLE_PAGES),
             "utils_loaded": UTILS_LOADED,
-            "portfolio_schema": False,
             "error": str(e)
         }
 
@@ -170,22 +163,6 @@ def show_sidebar():
     else:
         st.sidebar.error("❌ Utilities not loaded")
         return None, False
-    
-    # Show portfolio status
-    system_info = get_system_info()
-    if system_info.get("portfolio_schema", False):
-        st.sidebar.success("💼 Portfolio Ready")
-    else:
-        st.sidebar.warning("💼 Portfolio Setup Needed")
-    
-    # Show new feature highlight
-    if "🏠 Overview" in AVAILABLE_PAGES:
-        st.sidebar.markdown("""
-        <div class="new-feature">
-            💼 <strong>Portfolio Tracker Ready!</strong><br>
-            Track your Indonesian stock investments with real-time P&L calculations!
-        </div>
-        """, unsafe_allow_html=True)
     
     # Show selected stock info if available
     if 'selected_stock' in st.session_state and st.session_state.selected_stock:
@@ -263,12 +240,12 @@ def show_sidebar():
     st.sidebar.markdown("---")
     st.sidebar.markdown("### ℹ️ System Info")
     
+    system_info = get_system_info()
     st.sidebar.markdown(f"""
     <div class="sidebar-info">
         📅 Latest Data: {system_info['latest_date']}<br>
         📊 Tables: {system_info['table_count']}<br>
-        📄 Pages: {system_info['pages_available']}/5<br>
-        💼 Portfolio: {'✅' if system_info['portfolio_schema'] else '❌'}<br>
+        📄 Pages: {system_info['pages_available']}/4<br>
         🕐 Time: {datetime.now().strftime('%H:%M:%S')}
     </div>
     """, unsafe_allow_html=True)
@@ -336,7 +313,6 @@ def show_missing_pages_info():
     - `pages/overview.py` - Market overview dashboard
     - `pages/individual_stock_analysis.py` - Stock analysis
     - `pages/elliott_waves.py` - Elliott Wave Analysis
-    - `pages/portfolio_page.py` - Portfolio tracker bridge
     - `pages/debug_page.py` - Debug and system information
     """)
 
@@ -383,27 +359,7 @@ def show_welcome_message():
         - 🎯 **Smart Money Signals**: AI-powered institutional activity detection
         - 🔥 **Top Movers**: Biggest price movements with clickable analysis
         - ⚡ **High Volume**: Most active stocks with trading opportunities
-        
-        **💼 Portfolio Tracker** - Track your Indonesian stock investments:
-        - Real-time portfolio P&L calculations
-        - Transaction history management
-        - Performance analytics and visualizations
-        - Integration with market data
         """)
-        
-        if not system_info.get("portfolio_schema", False):
-            st.warning("""
-            ⚠️ **Portfolio Database Setup Required**
-            
-            To use Portfolio Tracker, run the database setup first:
-            1. Click on "💼 Portfolio Tracker" in sidebar
-            2. Follow the setup instructions
-            3. Or use the "🔧 Setup Portfolio DB" button below
-            """)
-            
-            if st.button("🔧 Setup Portfolio DB", type="primary"):
-                st.session_state.page_navigation = "💼 Portfolio Tracker"
-                st.rerun()
     else:
         st.info("👈 Please select a page from the sidebar to begin analysis")
 
@@ -461,7 +417,7 @@ def show_footer():
         if UTILS_LOADED:
             st.markdown(
                 f"<div style='text-align: center; color: gray; font-size: 0.8em;'>"
-                f"Pages: {len(AVAILABLE_PAGES)}/5 loaded"
+                f"Pages: {len(AVAILABLE_PAGES)}/4 loaded"
                 "</div>", 
                 unsafe_allow_html=True
             )
