@@ -7,6 +7,7 @@ import traceback
 # Add directories to Python path for imports
 sys.path.append(os.path.join(os.path.dirname(__file__), 'pages'))
 sys.path.append(os.path.join(os.path.dirname(__file__), 'utils'))
+sys.path.append('portofolio_tracker/pages')
 
 # Page config
 st.set_page_config(
@@ -92,11 +93,12 @@ except ImportError as e:
 AVAILABLE_PAGES = {}
 
 if UTILS_LOADED:
-    # Try to import each page module - FIXED: Added Elliott Wave
+    # Try to import each page module
     page_modules = {
         "🏠 Overview": "overview",
         "🎯 Individual Stock Analysis": "individual_stock_analysis",
-        "🌊 Elliott Wave Analysis": "elliott_waves",  # ADDED THIS!
+        "🌊 Elliott Wave Analysis": "elliott_waves",
+        "💼 Portfolio Tracker": "portofolio_tracker",
         "📈 Technical Analysis": "technical_analysis", 
         "📰 Sentiment Analysis": "sentiment_analysis",
         "🤖 LSTM Predictions": "lstm_predictions",
@@ -107,37 +109,11 @@ if UTILS_LOADED:
     
     for page_name, module_name in page_modules.items():
         try:
-            module = __import__(module_name)  # FIXED: Was **import**
+            module = __import__(module_name)
             AVAILABLE_PAGES[page_name] = module
-        except ImportError:
-            # Skip pages that aren't implemented yet
+        except ImportError as e:
+            st.error(f"❌ Gagal memuat halaman '{page_name}': {e}")
             continue
-
-def show_import_status():
-    """Show which page modules are available"""
-    st.sidebar.markdown("### 📄 Available Pages")
-    
-    # FIXED: Complete list of all pages
-    all_pages = [
-        ("🏠 Overview", "overview"),
-        ("🎯 Individual Stock Analysis", "individual_stock_analysis"),
-        ("🌊 Elliott Wave Analysis", "elliott_waves"),
-        ("🔧 Debug", "debug_page")
-    ]
-    
-    for page_name, module_name in all_pages:
-        if page_name in AVAILABLE_PAGES:
-            # Highlight key pages
-            if page_name == "🏠 Overview":
-                st.sidebar.markdown(f"✅ {page_name} 🏠")
-            elif page_name == "🎯 Individual Stock Analysis":
-                st.sidebar.markdown(f"✅ {page_name} ⭐")
-            elif page_name == "🌊 Elliott Wave Analysis":
-                st.sidebar.markdown(f"✅ {page_name} 🌊")
-            else:
-                st.sidebar.markdown(f"✅ {page_name}")
-        else:
-            st.sidebar.markdown(f"⏳ {page_name}")
 
 def get_system_info():
     """Get basic system information"""
@@ -196,7 +172,7 @@ def show_sidebar():
         st.sidebar.markdown("""
         <div class="new-feature">
             🏠 <strong>Market Command Center!</strong><br>
-            Smart Money Signals, Elliott Wave Analysis & Clickable Stock Analysis - all in one place!
+            Smart Money Signals, Elliott Wave Analysis & Portfolio Tracking - all in one place!
         </div>
         """, unsafe_allow_html=True)
     
@@ -224,10 +200,7 @@ def show_sidebar():
                     del st.session_state.page_navigation
                 st.rerun()
     
-    # Show available pages
-    show_import_status()
-    
-    # Navigation
+    # Navigation - This is the MAIN navigation that works
     st.sidebar.markdown("---")
     st.sidebar.markdown("### 🧭 Navigation")
     
@@ -245,7 +218,7 @@ def show_sidebar():
             del st.session_state.page_navigation
         except ValueError:
             default_index = 0
-    elif "🏠 Overview" in AVAILABLE_PAGES:  # FIXED: Default to Overview
+    elif "🏠 Overview" in AVAILABLE_PAGES:
         page_keys = list(AVAILABLE_PAGES.keys())
         try:
             default_index = page_keys.index("🏠 Overview")
@@ -285,7 +258,7 @@ def show_sidebar():
     <div class="sidebar-info">
         📅 Latest Data: {system_info['latest_date']}<br>
         📊 Tables: {system_info['table_count']}<br>
-        📄 Pages: {system_info['pages_available']}/9<br>
+        📄 Pages: {system_info['pages_available']}/10<br>
         🕐 Time: {datetime.now().strftime('%H:%M:%S')}
     </div>
     """, unsafe_allow_html=True)
@@ -359,7 +332,8 @@ def show_missing_pages_info():
     ### Essential Pages:
     - `pages/overview.py` - Market overview dashboard with clickable stocks
     - `pages/individual_stock_analysis.py` - Comprehensive individual stock analysis
-    - `pages/elliott_waves.py` - Elliott Wave Analysis (NEW!)
+    - `pages/elliott_waves.py` - Elliott Wave Analysis
+    - `portfolio_tracker/pages/portfolio_tracker.py` - Portfolio tracking system
     - `pages/debug_page.py` - Debug and system information
     
     ### Additional Analysis Pages:
@@ -422,11 +396,18 @@ def show_welcome_message():
         - Wave counting and trend analysis
         - Entry/exit signals based on Elliott Wave theory
         
+        **💼 NEW: Portfolio Tracker**
+        - Real-time portfolio tracking with P&L calculation
+        - PDF upload for automatic transaction parsing
+        - Performance analysis and portfolio allocation
+        - Integration with market data for current valuations
+        
         **🚀 Quick Start:**
         1. **Browse market overview** to understand today's market sentiment
         2. **Check Smart Money Signals** for institutional activity 
         3. **Use Elliott Wave** for advanced technical analysis
-        4. **Click any stock** to jump directly to detailed analysis
+        4. **Track your portfolio** with Portfolio Tracker
+        5. **Click any stock** to jump directly to detailed analysis
         
         **💡 The Overview page is your market command center - start exploring!**
         """)
@@ -442,6 +423,7 @@ def show_welcome_message():
         - 📰 **Sentiment Analysis**: News sentiment from multiple sources
         - 🔍 **Bandarmology**: Smart money flow and accumulation patterns
         - 📊 **A/D Line**: Money flow and distribution analysis
+        - 💼 **Portfolio Integration**: Track this stock in your portfolio
         
         **👆 Select "🏠 Overview" to explore the market, or choose any analysis tool!**
         """)
@@ -512,7 +494,7 @@ def show_footer():
         if UTILS_LOADED:
             st.markdown(
                 f"<div style='text-align: center; color: gray; font-size: 0.8em;'>"
-                f"Pages: {len(AVAILABLE_PAGES)}/9 loaded"
+                f"Pages: {len(AVAILABLE_PAGES)}/10 loaded"
                 "</div>", 
                 unsafe_allow_html=True
             )
@@ -526,7 +508,7 @@ def show_footer():
         )
 
 # Run the application
-if __name__ == "__main__":  # FIXED: Was **name**
+if __name__ == "__main__":
     try:
         main()
         show_footer()
@@ -544,13 +526,25 @@ if __name__ == "__main__":  # FIXED: Was **name**
         4. **Check application logs** with `docker-compose logs streamlit-dashboard`
         5. **Restart the dashboard** with `docker-compose restart streamlit-dashboard`
         
-        ###Tips Strategi Rebound:
-        • Entry: Saat harga melemah di pagi hari atau konsolidasi
-        • Target: +5-15% dari harga entry
-        • Stop loss: -3% di bawah harga entry
-        • Trade terbaik: Skor 15+ dengan volume tinggi
-
-        ##Disclaimer: Prediksi rebound berdasarkan pola transaksi dan analisis teknikal. Selalu lakukan riset mandiri.
-                    
-                    """)
-
+        ### 💼 Portfolio Tracker Tips:
+        • Upload your Stockbit trade confirmation PDF for automatic parsing
+        • Use manual entry for other brokers
+        • Portfolio automatically syncs with current market prices
+        • Export your portfolio data anytime to Excel format
+        
+        ### 🌊 Elliott Wave Analysis Tips:
+        • Use 250-day period for optimal pattern recognition
+        • Bidirectional analysis shows both bull and bear scenarios
+        • Check market bias calculation for probability-based trading
+        • Combine with technical indicators for better accuracy
+        
+        ### 📈 Trading Strategy Tips:
+        • Entry: Look for confluence of multiple signals
+        • Target: Use Fibonacci levels for profit taking
+        • Stop loss: Always use risk management
+        • Position size: Based on signal strength and confidence
+        
+        ## Disclaimer: 
+        All analysis and predictions are based on historical data and technical patterns. 
+        Always conduct your own research and risk management. Past performance does not guarantee future results.
+        """)
