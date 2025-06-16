@@ -99,11 +99,6 @@ if UTILS_LOADED:
         "🎯 Individual Stock Analysis": "individual_stock_analysis", 
         "🌊 Elliott Wave Analysis": "elliott_waves",
         "💼 Portfolio Tracker": "portofolio_tracker.pages.portofolio_tracker",
-        "📈 Technical Analysis": "technical_analysis",
-        "📰 Sentiment Analysis": "sentiment_analysis", 
-        "🤖 LSTM Predictions": "lstm_predictions",
-        "🔍 Bandarmology": "bandarmology",
-        "⚡ Trading Signals": "trading_signals",
         "🔧 Debug": "debug_page"
     }
     
