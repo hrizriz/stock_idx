@@ -1,213 +1,252 @@
 #!/usr/bin/env python3
 """
-Portfolio Tracker Fix Script - Clean Version (No Emojis)
-Fixes import issues and file structure problems
+Portfolio Tracker Fix Script
+Simpan sebagai: fix_portfolio.py
+Jalankan: python fix_portfolio.py
 """
 
 import os
 import shutil
 
-def fix_portfolio_structure():
-    """Fix portfolio tracker file structure and imports"""
+def fix_portfolio_tracker():
+    """Fix semua masalah portfolio tracker"""
     
-    print("Fixing Portfolio Tracker Structure...")
+    print("🔧 Fixing Portfolio Tracker...")
     
-    # 1. Move pdf_parser.py to utils directory if it's in wrong location
-    pdf_parser_wrong = "portofolio_tracker/pdf_parser.py"
-    pdf_parser_correct = "portofolio_tracker/utils/pdf_parser.py"
+    # 1. Buat direktori yang diperlukan
+    directories = [
+        "portofolio_tracker",
+        "portofolio_tracker/utils", 
+        "portofolio_tracker/pages",
+        "portofolio_tracker/database"
+    ]
     
-    if os.path.exists(pdf_parser_wrong) and not os.path.exists(pdf_parser_correct):
-        print(f"Moving {pdf_parser_wrong} to {pdf_parser_correct}")
-        os.makedirs(os.path.dirname(pdf_parser_correct), exist_ok=True)
-        shutil.move(pdf_parser_wrong, pdf_parser_correct)
+    for directory in directories:
+        os.makedirs(directory, exist_ok=True)
+        print(f"✅ Created directory: {directory}")
     
-    # 2. Create missing __init__.py files
+    # 2. Buat __init__.py files
     init_files = [
         "portofolio_tracker/__init__.py",
-        "portofolio_tracker/utils/__init__.py", 
+        "portofolio_tracker/utils/__init__.py",
         "portofolio_tracker/pages/__init__.py"
     ]
     
     for init_file in init_files:
-        if not os.path.exists(init_file):
-            print(f"Creating {init_file}")
-            os.makedirs(os.path.dirname(init_file), exist_ok=True)
-            with open(init_file, 'w', encoding='utf-8') as f:
-                f.write("# Portfolio Tracker Module\n")
+        with open(init_file, 'w', encoding='utf-8') as f:
+            f.write("# Portfolio Tracker Module\n")
+        print(f"✅ Created: {init_file}")
     
-    # 3. Fix portfolio_calculator.py
-    calculator_content = '''# ============================================================================
-# PORTFOLIO CALCULATOR
-# File: portofolio_tracker/utils/portfolio_calculator.py
-# ============================================================================
-
-from datetime import datetime, date
+    # 3. Buat database.py yang sederhana
+    database_content = '''"""
+Portfolio Database - Simplified Version
+"""
+import psycopg2
 import pandas as pd
-import streamlit as st
-import sys
 import os
+import streamlit as st
 
-# Import database utilities
+class PortfolioDatabase:
+    def __init__(self):
+        self.db_config = {
+            'host': os.getenv('DB_HOST', 'postgres'),
+            'database': os.getenv('DB_NAME', 'airflow'), 
+            'user': os.getenv('DB_USER', 'airflow'),
+            'password': os.getenv('DB_PASSWORD', 'airflow'),
+            'port': int(os.getenv('DB_PORT', '5432'))
+        }
+    
+    def get_connection(self):
+        try:
+            return psycopg2.connect(**self.db_config, connect_timeout=10)
+        except Exception as e:
+            st.error(f"Database connection error: {e}")
+            return None
+    
+    def check_connection(self):
+        conn = self.get_connection()
+        if not conn:
+            return False
+        
+        try:
+            with conn.cursor() as cursor:
+                cursor.execute("SELECT EXISTS (SELECT 1 FROM information_schema.schemata WHERE schema_name = 'portfolio')")
+                schema_exists = cursor.fetchone()[0]
+                
+                if not schema_exists:
+                    st.warning("⚠️ Portfolio schema not found. Please run database setup.")
+                    return False
+                
+            return True
+        except Exception as e:
+            st.error(f"Database check error: {e}")
+            return False
+        finally:
+            conn.close()
+    
+    def add_transaction(self, user_id, transaction_data):
+        conn = self.get_connection()
+        if not conn:
+            return False
+        
+        try:
+            with conn.cursor() as cursor:
+                insert_query = """
+                INSERT INTO portfolio.transactions 
+                (user_id, trade_date, symbol, company_name, transaction_type, quantity, price, total_value, fees, ref_number, source_file)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                """
+                
+                cursor.execute(insert_query, (
+                    user_id,
+                    transaction_data.get('trade_date'),
+                    transaction_data.get('symbol'),
+                    transaction_data.get('company_name'),
+                    transaction_data.get('transaction_type'),
+                    transaction_data.get('quantity'),
+                    transaction_data.get('price'),
+                    transaction_data.get('total_value'),
+                    transaction_data.get('fees', 0),
+                    transaction_data.get('ref_number'),
+                    transaction_data.get('source_file')
+                ))
+            
+            conn.commit()
+            return True
+        except Exception as e:
+            st.error(f"Error adding transaction: {e}")
+            conn.rollback()
+            return False
+        finally:
+            conn.close()
+    
+    def get_current_holdings(self, user_id):
+        conn = self.get_connection()
+        if not conn:
+            return pd.DataFrame()
+        
+        try:
+            query = """
+            SELECT * FROM portfolio.holdings 
+            WHERE user_id = %s AND total_quantity > 0
+            ORDER BY current_value DESC NULLS LAST
+            """
+            df = pd.read_sql(query, conn, params=[user_id])
+            return df
+        except Exception as e:
+            st.error(f"Error getting holdings: {e}")
+            return pd.DataFrame()
+        finally:
+            conn.close()
+    
+    def get_all_transactions(self, user_id):
+        conn = self.get_connection()
+        if not conn:
+            return pd.DataFrame()
+        
+        try:
+            query = """
+            SELECT * FROM portfolio.transactions 
+            WHERE user_id = %s 
+            ORDER BY trade_date DESC, created_at DESC
+            """
+            df = pd.read_sql(query, conn, params=[user_id])
+            return df
+        except Exception as e:
+            st.error(f"Error getting transactions: {e}")
+            return pd.DataFrame()
+        finally:
+            conn.close()
+'''
+    
+    with open("portofolio_tracker/utils/database.py", 'w', encoding='utf-8') as f:
+        f.write(database_content)
+    print("✅ Created: portofolio_tracker/utils/database.py")
+    
+    # 4. Buat portfolio_calculator.py sederhana
+    calculator_content = '''"""
+Portfolio Calculator - Simplified Version
+"""
+from datetime import date
+import streamlit as st
+
 try:
     from .database import PortfolioDatabase
 except ImportError:
-    try:
-        from portofolio_tracker.utils.database import PortfolioDatabase
-    except ImportError:
-        from database import PortfolioDatabase
-
-# Import main dashboard database utilities for price fetching
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'dashboard', 'utils'))
-try:
-    from database import fetch_data_cached
-    MAIN_DB_AVAILABLE = True
-except ImportError:
-    MAIN_DB_AVAILABLE = False
+    from database import PortfolioDatabase
 
 class PortfolioCalculator:
     def __init__(self):
         self.db = PortfolioDatabase()
     
-    def recalculate_portfolio(self, user_id):
-        """Recalculate entire portfolio metrics"""
-        try:
-            self._update_holdings_metrics(user_id)
-            self._update_portfolio_summary(user_id)
-            return True
-        except Exception as e:
-            st.error(f"Error recalculating portfolio: {e}")
-            return False
-    
-    def _update_holdings_metrics(self, user_id):
-        """Update current value and P&L for all holdings"""
-        conn = self.db.get_connection()
-        if not conn:
-            return
-        
-        try:
-            with conn.cursor() as cursor:
-                cursor.execute("""
-                    UPDATE portfolio.holdings 
-                    SET current_value = total_quantity * COALESCE(current_price, average_price),
-                        unrealized_pnl = (total_quantity * COALESCE(current_price, average_price)) - total_cost,
-                        unrealized_pnl_pct = CASE 
-                            WHEN total_cost > 0 
-                            THEN ((total_quantity * COALESCE(current_price, average_price)) - total_cost) / total_cost * 100 
-                            ELSE 0 
-                        END,
-                        last_updated = CURRENT_TIMESTAMP
-                    WHERE user_id = %s
-                """, (user_id,))
-            
-            conn.commit()
-        except Exception as e:
-            st.error(f"Error updating holdings metrics: {e}")
-            conn.rollback()
-        finally:
-            conn.close()
-    
-    def _update_portfolio_summary(self, user_id):
-        """Update portfolio summary for today"""
-        conn = self.db.get_connection()
-        if not conn:
-            return
-        
-        try:
-            with conn.cursor() as cursor:
-                cursor.execute("""
-                    SELECT 
-                        COALESCE(SUM(total_cost), 0) as total_invested,
-                        COALESCE(SUM(current_value), 0) as current_value,
-                        COALESCE(SUM(unrealized_pnl), 0) as unrealized_pnl,
-                        COUNT(*) as total_stocks
-                    FROM portfolio.holdings 
-                    WHERE user_id = %s AND total_quantity > 0
-                """, (user_id,))
-                
-                result = cursor.fetchone()
-                if result:
-                    total_invested, current_value, unrealized_pnl, total_stocks = result
-                    total_pnl = unrealized_pnl
-                    total_pnl_pct = (total_pnl / total_invested * 100) if total_invested > 0 else 0
-                    today = date.today()
-                    
-                    cursor.execute("""
-                        INSERT INTO portfolio.portfolio_summary 
-                        (user_id, summary_date, total_invested, current_value, 
-                         total_pnl, total_pnl_pct, realized_pnl, unrealized_pnl, total_stocks)
-                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-                        ON CONFLICT (user_id, summary_date)
-                        DO UPDATE SET
-                            total_invested = EXCLUDED.total_invested,
-                            current_value = EXCLUDED.current_value,
-                            total_pnl = EXCLUDED.total_pnl,
-                            total_pnl_pct = EXCLUDED.total_pnl_pct,
-                            realized_pnl = EXCLUDED.realized_pnl,
-                            unrealized_pnl = EXCLUDED.unrealized_pnl,
-                            total_stocks = EXCLUDED.total_stocks
-                    """, (user_id, today, total_invested, current_value, 
-                         total_pnl, total_pnl_pct, 0, unrealized_pnl, total_stocks))
-            
-            conn.commit()
-        except Exception as e:
-            st.error(f"Error updating portfolio summary: {e}")
-            conn.rollback()
-        finally:
-            conn.close()
-    
     def calculate_portfolio_metrics(self, user_id):
-        """Calculate comprehensive portfolio metrics"""
         holdings = self.db.get_current_holdings(user_id)
         
         if holdings.empty:
             return {}
         
         metrics = {
-            'total_value': holdings['current_value'].sum(),
+            'total_value': holdings['current_value'].sum() if 'current_value' in holdings.columns else holdings['total_cost'].sum(),
             'total_cost': holdings['total_cost'].sum(),
-            'total_pnl': holdings['unrealized_pnl'].sum(),
+            'total_pnl': holdings['unrealized_pnl'].sum() if 'unrealized_pnl' in holdings.columns else 0,
             'total_stocks': len(holdings),
-            'winners': len(holdings[holdings['unrealized_pnl'] > 0]),
-            'losers': len(holdings[holdings['unrealized_pnl'] < 0])
+            'winners': len(holdings[holdings['unrealized_pnl'] > 0]) if 'unrealized_pnl' in holdings.columns else 0,
+            'losers': len(holdings[holdings['unrealized_pnl'] < 0]) if 'unrealized_pnl' in holdings.columns else 0
         }
         
         metrics['total_pnl_pct'] = (metrics['total_pnl'] / metrics['total_cost'] * 100) if metrics['total_cost'] > 0 else 0
         metrics['win_rate'] = (metrics['winners'] / metrics['total_stocks'] * 100) if metrics['total_stocks'] > 0 else 0
         
         return metrics
+    
+    def recalculate_portfolio(self, user_id):
+        try:
+            # Update current values berdasarkan average price
+            conn = self.db.get_connection()
+            if conn:
+                with conn.cursor() as cursor:
+                    cursor.execute("""
+                        UPDATE portfolio.holdings 
+                        SET current_value = total_quantity * COALESCE(current_price, average_price),
+                            unrealized_pnl = (total_quantity * COALESCE(current_price, average_price)) - total_cost,
+                            unrealized_pnl_pct = CASE 
+                                WHEN total_cost > 0 
+                                THEN ((total_quantity * COALESCE(current_price, average_price)) - total_cost) / total_cost * 100 
+                                ELSE 0 
+                            END
+                        WHERE user_id = %s
+                    """, (user_id,))
+                conn.commit()
+                conn.close()
+            return True
+        except Exception as e:
+            st.error(f"Error recalculating portfolio: {e}")
+            return False
 '''
     
-    # Write the fixed calculator
-    os.makedirs("portofolio_tracker/utils", exist_ok=True)
-    with open("portofolio_tracker/utils/portfolio_calculator.py", "w", encoding='utf-8') as f:
+    with open("portofolio_tracker/utils/portfolio_calculator.py", 'w', encoding='utf-8') as f:
         f.write(calculator_content)
+    print("✅ Created: portofolio_tracker/utils/portfolio_calculator.py")
     
-    print("Portfolio structure fixed!")
-
-def create_simple_portfolio_page():
-    """Create a simplified portfolio page that works"""
-    
-    portfolio_page_content = '''# ============================================================================
-# SIMPLIFIED PORTFOLIO TRACKER  
-# File: portofolio_tracker/pages/portofolio_tracker.py
-# ============================================================================
-
+    # 5. Buat portfolio page yang bekerja
+    page_content = '''"""
+Portfolio Tracker Page - Working Version
+"""
 import streamlit as st
 import pandas as pd
-import sys
-import os
+from datetime import datetime
 
 def show():
-    """Main portfolio tracker interface"""
-    st.markdown("# Portfolio Tracker - Indonesian Stocks")
-    st.markdown("**Real-time portfolio tracking with trade confirmation upload**")
+    """Main portfolio page function"""
+    st.markdown("# 💼 Portfolio Tracker")
+    st.markdown("**Real-time Indonesian stock portfolio tracking**")
     
-    if not check_dependencies():
-        show_setup_guide()
-        return
-    
+    # Import modules
     try:
+        import sys
+        import os
         sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'utils'))
+        
         from database import PortfolioDatabase
         from portfolio_calculator import PortfolioCalculator
         
@@ -215,128 +254,179 @@ def show():
         calculator = PortfolioCalculator()
         
         if not db.check_connection():
-            show_database_setup()
+            show_setup_instructions()
             return
         
+        # Main interface
         show_portfolio_interface(db, calculator)
         
     except ImportError as e:
-        st.error(f"Failed to import portfolio modules: {e}")
-        show_module_setup_guide()
-
-def check_dependencies():
-    """Check if required dependencies are installed"""
-    missing_deps = []
-    
-    for module in ['pandas', 'plotly', 'psycopg2']:
-        try:
-            __import__(module)
-        except ImportError:
-            missing_deps.append(module if module != 'psycopg2' else 'psycopg2-binary')
-    
-    if missing_deps:
-        st.error(f"Missing dependencies: {', '.join(missing_deps)}")
-        st.markdown(f"Install with: `pip install {' '.join(missing_deps)}`")
-        return False
-    
-    return True
+        st.error(f"❌ Module import error: {e}")
+        show_dependency_help()
+    except Exception as e:
+        st.error(f"❌ Application error: {e}")
+        show_troubleshooting()
 
 def show_portfolio_interface(db, calculator):
     """Show main portfolio interface"""
-    st.sidebar.markdown("### Portfolio Controls")
-    user_id = st.sidebar.selectbox("Portfolio Owner:", ["default_user"])
+    user_id = "default_user"
     
-    tab1, tab2, tab3 = st.tabs(["Overview", "Add Transaction", "History"])
+    # Tab layout
+    tab1, tab2, tab3 = st.tabs(["📊 Overview", "➕ Add Transaction", "📋 History"])
     
     with tab1:
-        show_portfolio_overview(db, user_id)
+        show_portfolio_overview(db, calculator, user_id)
     
     with tab2:
-        show_add_transaction(db, user_id)
+        show_add_transaction_form(db, user_id)
     
     with tab3:
         show_transaction_history(db, user_id)
 
-def show_portfolio_overview(db, user_id):
-    """Show portfolio overview"""
-    st.markdown("### Portfolio Overview")
+def show_portfolio_overview(db, calculator, user_id):
+    """Portfolio overview tab"""
+    st.subheader("📊 Portfolio Overview")
     
-    try:
-        holdings = db.get_current_holdings(user_id)
+    # Get data
+    holdings = db.get_current_holdings(user_id)
+    
+    if holdings.empty:
+        st.info("📭 No holdings found. Add your first transaction to get started!")
         
-        if holdings.empty:
-            st.info("No holdings found. Add your first transaction to get started!")
-            
-            if st.button("Load Sample Data"):
-                load_sample_data(db, user_id)
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("🎯 Add Sample Data", help="Load sample transactions for testing"):
+                add_sample_data(db, user_id)
                 st.rerun()
-            return
-        
-        # Summary metrics
-        total_value = holdings['current_value'].sum()
-        total_cost = holdings['total_cost'].sum() 
-        total_pnl = holdings['unrealized_pnl'].sum()
-        total_pnl_pct = (total_pnl / total_cost * 100) if total_cost > 0 else 0
-        
-        col1, col2, col3, col4 = st.columns(4)
-        
-        with col1:
-            st.metric("Total Investment", f"Rp{total_cost:,.0f}")
         
         with col2:
-            st.metric("Current Value", f"Rp{total_value:,.0f}")
-        
-        with col3:
-            st.metric("Total P&L", f"Rp{total_pnl:,.0f}", f"{total_pnl_pct:.2f}%")
-        
-        with col4:
-            st.metric("Holdings", f"{len(holdings)} stocks")
-        
-        # Holdings table
-        st.markdown("---")
-        st.markdown("### Current Holdings")
-        
-        display_holdings = holdings.copy()
-        display_holdings['Market Value'] = display_holdings['current_value'].apply(lambda x: f"Rp{x:,.0f}")
-        display_holdings['Cost Basis'] = display_holdings['total_cost'].apply(lambda x: f"Rp{x:,.0f}")
-        display_holdings['P&L'] = display_holdings['unrealized_pnl'].apply(lambda x: f"Rp{x:,.0f}")
-        display_holdings['P&L %'] = display_holdings['unrealized_pnl_pct'].apply(lambda x: f"{x:.2f}%")
-        
-        st.dataframe(
-            display_holdings[['symbol', 'company_name', 'total_quantity', 'Cost Basis', 'Market Value', 'P&L', 'P&L %']].rename(columns={
-                'symbol': 'Symbol',
-                'company_name': 'Company', 
-                'total_quantity': 'Quantity'
-            }),
-            use_container_width=True,
-            hide_index=True
-        )
-        
-    except Exception as e:
-        st.error(f"Error loading portfolio: {e}")
-
-def show_add_transaction(db, user_id):
-    """Show add transaction form"""
-    st.markdown("### Add Transaction")
+            st.info("👆 Click 'Add Transaction' tab to input manually")
+        return
     
-    with st.form("add_transaction"):
-        col1, col2, col3 = st.columns(3)
+    # Calculate metrics
+    metrics = calculator.calculate_portfolio_metrics(user_id)
+    
+    # Metrics row
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.metric(
+            "💰 Total Investment", 
+            f"Rp {metrics.get('total_cost', 0):,.0f}"
+        )
+    
+    with col2:
+        st.metric(
+            "💎 Current Value", 
+            f"Rp {metrics.get('total_value', 0):,.0f}"
+        )
+    
+    with col3:
+        pnl = metrics.get('total_pnl', 0)
+        pnl_pct = metrics.get('total_pnl_pct', 0)
+        st.metric(
+            "📈 Total P&L", 
+            f"Rp {pnl:,.0f}",
+            f"{pnl_pct:+.2f}%"
+        )
+    
+    with col4:
+        st.metric(
+            "📦 Holdings", 
+            f"{metrics.get('total_stocks', 0)} stocks"
+        )
+    
+    # Holdings table
+    st.markdown("---")
+    st.subheader("🏪 Current Holdings")
+    
+    if not holdings.empty:
+        # Format display
+        display_holdings = holdings.copy()
+        
+        # Format currency columns
+        currency_cols = ['total_cost', 'current_value', 'unrealized_pnl']
+        for col in currency_cols:
+            if col in display_holdings.columns:
+                display_holdings[f"{col}_formatted"] = display_holdings[col].apply(
+                    lambda x: f"Rp {x:,.0f}" if pd.notna(x) else "Rp 0"
+                )
+        
+        # Format percentage
+        if 'unrealized_pnl_pct' in display_holdings.columns:
+            display_holdings['pnl_pct_formatted'] = display_holdings['unrealized_pnl_pct'].apply(
+                lambda x: f"{x:.2f}%" if pd.notna(x) else "0.00%"
+            )
+        
+        # Select columns to display
+        display_cols = []
+        rename_map = {}
+        
+        if 'symbol' in display_holdings.columns:
+            display_cols.append('symbol')
+            rename_map['symbol'] = 'Symbol'
+        
+        if 'company_name' in display_holdings.columns:
+            display_cols.append('company_name')  
+            rename_map['company_name'] = 'Company'
+        
+        if 'total_quantity' in display_holdings.columns:
+            display_cols.append('total_quantity')
+            rename_map['total_quantity'] = 'Qty'
+        
+        if 'total_cost_formatted' in display_holdings.columns:
+            display_cols.append('total_cost_formatted')
+            rename_map['total_cost_formatted'] = 'Cost Basis'
+        
+        if 'current_value_formatted' in display_holdings.columns:
+            display_cols.append('current_value_formatted')
+            rename_map['current_value_formatted'] = 'Market Value'
+        
+        if 'unrealized_pnl_formatted' in display_holdings.columns:
+            display_cols.append('unrealized_pnl_formatted')
+            rename_map['unrealized_pnl_formatted'] = 'P&L'
+        
+        if 'pnl_pct_formatted' in display_holdings.columns:
+            display_cols.append('pnl_pct_formatted')
+            rename_map['pnl_pct_formatted'] = 'P&L %'
+        
+        if display_cols:
+            st.dataframe(
+                display_holdings[display_cols].rename(columns=rename_map),
+                use_container_width=True,
+                hide_index=True
+            )
+        else:
+            st.dataframe(holdings, use_container_width=True, hide_index=True)
+    
+    # Refresh button
+    st.markdown("---")
+    if st.button("🔄 Refresh Portfolio", help="Recalculate portfolio metrics"):
+        calculator.recalculate_portfolio(user_id)
+        st.success("✅ Portfolio refreshed!")
+        st.rerun()
+
+def show_add_transaction_form(db, user_id):
+    """Add transaction form"""
+    st.subheader("➕ Add New Transaction")
+    
+    with st.form("add_transaction_form"):
+        col1, col2 = st.columns(2)
         
         with col1:
-            trade_date = st.date_input("Trade Date")
-            transaction_type = st.selectbox("Type", ["BUY", "SELL"])
-            symbol = st.text_input("Stock Symbol", placeholder="e.g., BBCA").upper()
+            trade_date = st.date_input("📅 Trade Date", value=datetime.now().date())
+            symbol = st.text_input("🏷️ Stock Symbol", placeholder="e.g., BBCA", max_chars=4).upper()
+            company_name = st.text_input("🏢 Company Name", placeholder="e.g., Bank Central Asia Tbk.")
         
         with col2:
-            company_name = st.text_input("Company Name", placeholder="e.g., Bank Central Asia Tbk.")
-            quantity = st.number_input("Quantity", min_value=1, value=100)
-            price = st.number_input("Price per Share", min_value=0.0, value=1000.0)
+            transaction_type = st.selectbox("📊 Transaction Type", ["BUY", "SELL"])
+            quantity = st.number_input("📦 Quantity", min_value=1, value=100, step=1)
+            price = st.number_input("💰 Price per Share", min_value=0.0, value=1000.0, step=50.0)
         
-        with col3:
-            fees = st.number_input("Fees", min_value=0.0, value=0.0)
-            ref_number = st.text_input("Reference #", placeholder="Optional")
-            st.write("")
-            submitted = st.form_submit_button("Add Transaction", type="primary")
+        fees = st.number_input("💸 Fees", min_value=0.0, value=0.0, step=100.0)
+        ref_number = st.text_input("🔖 Reference Number", placeholder="Optional")
+        
+        submitted = st.form_submit_button("✅ Add Transaction", type="primary")
         
         if submitted:
             if symbol and company_name and quantity > 0 and price > 0:
@@ -354,63 +444,77 @@ def show_add_transaction(db, user_id):
                 }
                 
                 if db.add_transaction(user_id, transaction):
-                    st.success("Transaction added successfully!")
+                    st.success(f"✅ {transaction_type} transaction for {quantity} {symbol} added successfully!")
                     st.rerun()
                 else:
-                    st.error("Failed to add transaction")
+                    st.error("❌ Failed to add transaction")
             else:
-                st.error("Please fill in all required fields")
+                st.error("❌ Please fill in all required fields")
 
 def show_transaction_history(db, user_id):
-    """Show transaction history"""
-    st.markdown("### Transaction History")
+    """Transaction history tab"""
+    st.subheader("📋 Transaction History")
     
-    try:
-        transactions = db.get_all_transactions(user_id)
-        
-        if transactions.empty:
-            st.info("No transactions found.")
-            return
-        
-        # Summary
-        col1, col2, col3 = st.columns(3)
-        
-        with col1:
-            st.metric("Total Transactions", len(transactions))
-        
-        with col2:
-            buy_count = len(transactions[transactions['transaction_type'] == 'BUY'])
-            st.metric("Buy Orders", buy_count)
-        
-        with col3:
-            sell_count = len(transactions[transactions['transaction_type'] == 'SELL'])
-            st.metric("Sell Orders", sell_count)
-        
-        # Transactions table
-        st.markdown("---")
-        display_transactions = transactions.copy()
-        display_transactions['Total Value'] = display_transactions['total_value'].apply(lambda x: f"Rp{x:,.0f}")
-        display_transactions['Price'] = display_transactions['price'].apply(lambda x: f"Rp{x:,.0f}")
-        
+    transactions = db.get_all_transactions(user_id)
+    
+    if transactions.empty:
+        st.info("📭 No transactions found.")
+        return
+    
+    # Summary stats
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.metric("Total Transactions", len(transactions))
+    
+    with col2:
+        buy_count = len(transactions[transactions['transaction_type'] == 'BUY'])
+        st.metric("Buy Orders", buy_count)
+    
+    with col3:
+        sell_count = len(transactions[transactions['transaction_type'] == 'SELL'])
+        st.metric("Sell Orders", sell_count)
+    
+    # Transactions table
+    st.markdown("---")
+    
+    # Format for display
+    display_transactions = transactions.copy()
+    
+    if 'total_value' in display_transactions.columns:
+        display_transactions['Total Value'] = display_transactions['total_value'].apply(lambda x: f"Rp {x:,.0f}")
+    
+    if 'price' in display_transactions.columns:
+        display_transactions['Price'] = display_transactions['price'].apply(lambda x: f"Rp {x:,.0f}")
+    
+    # Select display columns
+    display_cols = []
+    rename_map = {}
+    
+    for col, display_name in [
+        ('trade_date', 'Date'),
+        ('symbol', 'Symbol'), 
+        ('company_name', 'Company'),
+        ('transaction_type', 'Type'),
+        ('quantity', 'Quantity'),
+        ('Price', 'Price'),
+        ('Total Value', 'Total Value')
+    ]:
+        if col in display_transactions.columns:
+            display_cols.append(col)
+            rename_map[col] = display_name
+    
+    if display_cols:
         st.dataframe(
-            display_transactions[['trade_date', 'symbol', 'company_name', 'transaction_type', 'quantity', 'Price', 'Total Value']].rename(columns={
-                'trade_date': 'Date',
-                'symbol': 'Symbol',
-                'company_name': 'Company',
-                'transaction_type': 'Type',
-                'quantity': 'Quantity'
-            }).sort_values('Date', ascending=False),
+            display_transactions[display_cols].rename(columns=rename_map).sort_values('Date', ascending=False),
             use_container_width=True,
             hide_index=True
         )
-        
-    except Exception as e:
-        st.error(f"Error loading transactions: {e}")
+    else:
+        st.dataframe(transactions, use_container_width=True, hide_index=True)
 
-def load_sample_data(db, user_id):
-    """Load sample transaction data"""
-    from datetime import datetime
-    
+def add_sample_data(db, user_id):
+    """Add sample transaction data"""
     sample_transactions = [
         {
             'trade_date': datetime(2025, 6, 13).date(),
@@ -440,120 +544,62 @@ def load_sample_data(db, user_id):
     
     for transaction in sample_transactions:
         db.add_transaction(user_id, transaction)
-    
-    st.success("Sample data loaded!")
 
-def show_setup_guide():
-    """Show setup guide"""
-    st.error("Portfolio Tracker Setup Required")
+def show_setup_instructions():
+    """Show database setup instructions"""
+    st.warning("⚠️ Portfolio database not ready")
     
     st.markdown("""
-    ### Setup Steps:
+    ### 🔧 Database Setup Required
     
-    1. **Install Dependencies:**
+    1. **Connect to PostgreSQL:**
     ```bash
-    pip install pandas plotly psycopg2-binary PyPDF2 openpyxl
+    docker-compose exec postgres psql -U airflow -d airflow
     ```
     
-    2. **Run Database Setup:**
-    Execute the portfolio schema SQL in your PostgreSQL database.
+    2. **Run the Portfolio Schema:**
+    Execute the SQL schema from Step 2 above.
     
-    3. **Restart Application:**
-    Restart your Streamlit app after setup.
-    """)
-
-def show_database_setup():
-    """Show database setup guide"""
-    st.warning("Portfolio database not connected")
-    
-    st.markdown("""
-    ### Database Setup Required
-    
-    Run this SQL in your PostgreSQL database:
-    
-    ```sql
-    CREATE SCHEMA IF NOT EXISTS portfolio;
-    
-    CREATE TABLE IF NOT EXISTS portfolio.transactions (
-        id SERIAL PRIMARY KEY,
-        user_id VARCHAR(50) DEFAULT 'default_user',
-        trade_date DATE NOT NULL,
-        symbol VARCHAR(10) NOT NULL,
-        company_name VARCHAR(255),
-        transaction_type VARCHAR(10) NOT NULL,
-        quantity INTEGER NOT NULL,
-        price DECIMAL(15,2) NOT NULL,
-        total_value DECIMAL(20,2) NOT NULL,
-        fees DECIMAL(10,2) DEFAULT 0,
-        ref_number VARCHAR(50),
-        source_file VARCHAR(255),
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
-    
-    CREATE TABLE IF NOT EXISTS portfolio.holdings (
-        id SERIAL PRIMARY KEY,
-        user_id VARCHAR(50) DEFAULT 'default_user',
-        symbol VARCHAR(10) NOT NULL,
-        company_name VARCHAR(255),
-        total_quantity INTEGER NOT NULL DEFAULT 0,
-        average_price DECIMAL(15,2) NOT NULL DEFAULT 0,
-        total_cost DECIMAL(20,2) NOT NULL DEFAULT 0,
-        current_price DECIMAL(15,2),
-        current_value DECIMAL(20,2),
-        unrealized_pnl DECIMAL(20,2),
-        unrealized_pnl_pct DECIMAL(8,4),
-        last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        UNIQUE(user_id, symbol)
-    );
+    3. **Restart the application:**
+    ```bash
+    docker-compose restart streamlit-dashboard
     ```
     """)
 
-def show_module_setup_guide():
-    """Show module setup guide"""
-    st.error("Portfolio modules not found")
+def show_dependency_help():
+    """Show dependency installation help"""
+    st.error("❌ Missing dependencies")
     
     st.markdown("""
-    ### Required Files:
-    - portofolio_tracker/utils/database.py
-    - portofolio_tracker/utils/portfolio_calculator.py
-    - portofolio_tracker/utils/pdf_parser.py
+    ### 📦 Install Required Packages:
+    ```bash
+    pip install pandas plotly psycopg2-binary
+    ```
+    """)
+
+def show_troubleshooting():
+    """Show troubleshooting guide"""
+    st.error("❌ Application error")
+    
+    st.markdown("""
+    ### 🔍 Troubleshooting:
+    
+    1. **Check database connection**
+    2. **Verify schema exists** 
+    3. **Restart the application**
+    4. **Check logs** for detailed errors
     """)
 '''
     
-    # Write the simplified portfolio page
-    os.makedirs("portofolio_tracker/pages", exist_ok=True)
-    with open("portofolio_tracker/pages/portofolio_tracker.py", "w", encoding='utf-8') as f:
-        f.write(portfolio_page_content)
+    with open("portofolio_tracker/pages/portofolio_tracker.py", 'w', encoding='utf-8') as f:
+        f.write(page_content)
+    print("✅ Created: portofolio_tracker/pages/portofolio_tracker.py")
     
-    print("Simplified portfolio page created!")
-
-def install_dependencies():
-    """Install required dependencies"""
-    print("Installing dependencies...")
-    
-    try:
-        import subprocess
-        import sys
-        
-        dependencies = ["PyPDF2", "openpyxl", "xlsxwriter"]
-        
-        for dep in dependencies:
-            print(f"Installing {dep}...")
-            subprocess.check_call([sys.executable, "-m", "pip", "install", dep])
-        
-        print("Dependencies installed successfully!")
-        
-    except Exception as e:
-        print(f"Failed to install dependencies: {e}")
-        print("Please install manually: pip install PyPDF2 openpyxl xlsxwriter")
+    print("\n🎉 Portfolio Tracker fixed!")
+    print("\nNext steps:")
+    print("1. Run the SQL schema (Step 2) in PostgreSQL")
+    print("2. Update app.py with the fixed import (Step 1)")
+    print("3. Restart Streamlit: streamlit run dashboard/app.py")
 
 if __name__ == "__main__":
-    fix_portfolio_structure()
-    create_simple_portfolio_page()
-    install_dependencies()
-    
-    print("\nPortfolio Tracker setup complete!")
-    print("\nNext steps:")
-    print("1. Execute the database schema SQL in PostgreSQL")
-    print("2. Restart your Streamlit app: streamlit run dashboard/app.py")
-    print("3. Navigate to 'Portfolio Tracker' in the sidebar")
+    fix_portfolio_tracker()
