@@ -1,5 +1,4 @@
 import streamlit as st
-import sys
 import os
 from datetime import datetime
 import traceback
@@ -7,18 +6,8 @@ import pandas as pd
 import yfinance as yf
 from plotly.subplots import make_subplots
 import numpy as np
-from .utils import format_currency, format_percentage, calculate_metrics
-from .stock_analyzer import StockAnalyzer
-from .market_overview import MarketOverview
-from .news_analyzer import NewsAnalyzer
-from .screener import Screener
-from .backtest import Backtest
-from .alerts import Alerts
-from .settings import Settings
-
-# Add directories to Python path for imports
-sys.path.append(os.path.join(os.path.dirname(__file__), 'pages'))
-sys.path.append(os.path.join(os.path.dirname(__file__), 'utils'))
+from utils import format_currency, format_percentage, calculate_metrics
+from utils.stock_analyzer import StockAnalyzer
 
 # Page config
 st.set_page_config(
@@ -85,7 +74,7 @@ st.markdown("""
 
 # Import utilities
 try:
-    from database import test_database_connection, clear_all_caches, execute_query_safe
+    from utils.database import test_database_connection, clear_all_caches, execute_query_safe
     UTILS_LOADED = True
 except ImportError as e:
     st.error(f"❌ Failed to import database utilities: {e}")
@@ -106,7 +95,7 @@ if UTILS_LOADED:
     for page_name, module_name in page_modules.items():
         try:
             import importlib
-            module = importlib.import_module(module_name)
+            module = importlib.import_module(f"pages.{module_name}")
             AVAILABLE_PAGES[page_name] = module
         except ImportError as e:
             st.error(f"❌ Gagal memuat halaman '{page_name}': {e}")

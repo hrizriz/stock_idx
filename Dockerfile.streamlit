@@ -14,15 +14,8 @@ RUN apt-get update && apt-get install -y \
 COPY dashboard/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Install portfolio tracker requirements
-COPY portofolio_tracker/requirements.txt /tmp/portofolio_requirements.txt
-RUN pip install --no-cache-dir -r /tmp/portofolio_requirements.txt
-
 # Copy dashboard files
-COPY dashboard/ .
-
-# Copy portfolio tracker files
-COPY portofolio_tracker/ /app/portofolio_tracker/
+COPY dashboard/ /app/dashboard/
 
 # Create streamlit config directory
 RUN mkdir -p ~/.streamlit
@@ -34,4 +27,4 @@ EXPOSE 8501
 HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
 
 # Run streamlit
-CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+CMD ["streamlit", "run", "/app/dashboard/app.py", "--server.port=8501", "--server.address=0.0.0.0"]

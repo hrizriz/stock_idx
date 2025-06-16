@@ -170,21 +170,9 @@ services:
       - DB_PORT=5432
     volumes:
       - ./dashboard:/app
-      - ./portofolio_tracker:/app/portofolio_tracker
-      - ./setup_portofolio_db.py:/app/setup_portofolio_db.py
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-    command: >
-      bash -c "
-      echo '⏳ Menunggu database PostgreSQL untuk Portfolio Tracker...';
-      until pg_isready -h postgres -p 5432 -U ${POSTGRES_USER:-airflow}; do
-        sleep 2;
-      done;
-      echo '✅ PostgreSQL siap! Menjalankan setup database Portfolio Tracker...';
-      python /app/setup_portofolio_db.py && \
-      echo '✅ Setup database Portfolio Tracker selesai. Memulai Streamlit...';
-      streamlit run app.py --server.port=8501 --server.address=0.0.0.0
-      "
+    command: ["streamlit", "run", "/app/app.py", "--server.port=8501", "--server.address=0.0.0.0"]
     networks:
       - airflow_network
     healthcheck:
